@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: tyrex:tyrex:1.0.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/tyrex/tyrex/1.0.1/jars/tyrex.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

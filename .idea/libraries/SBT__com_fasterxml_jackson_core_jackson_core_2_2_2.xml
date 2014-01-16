@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: com.fasterxml.jackson.core:jackson-core:2.2.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/com.fasterxml.jackson.core/jackson-core/2.2.2/jars/jackson-core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
