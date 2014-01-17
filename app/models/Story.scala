@@ -9,7 +9,6 @@ case class Story(id: Long, name: String) {}
 
 object Story {
 
-//  def all(): List[Story] = Nil
   def all(): List[Story] = DB.withConnection { implicit c =>
     SQL("SELECT * FROM story").as(story *)
   }

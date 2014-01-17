@@ -8,31 +8,14 @@ import models.Story
 
 object Application extends Controller {
 
+  def pageNotFound = Action {
+    NotFound(views.html.message(
+      "Page could not be found",
+      "Seems that the page you're looking for went for a walk and could not be found ever since."))
+  }
+
   def index = Action {
-    Redirect(routes.Application.stories)
+    Redirect(routes.StoryApp.index)
   }
-
-  def stories = Action {
-    Ok(views.html.index(Story.all(), storyForm))
-  }
-
-  def newStory = Action { implicit request =>
-    storyForm.bindFromRequest.fold(
-      errors => BadRequest(views.html.index(Story.all(), errors)),
-      name => {
-        Story.create(name)
-        Redirect(routes.Application.stories)
-      }
-    )
-  }
-
-  def deleteStory(id: Long) = Action {
-    Story.delete(id)
-    Redirect(routes.Application.stories)
-  }
-
-  val storyForm = Form(
-    "name" -> nonEmptyText
-  )
 
 }
