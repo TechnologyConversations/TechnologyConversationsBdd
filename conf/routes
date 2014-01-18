@@ -7,9 +7,9 @@ GET     /                           controllers.Application.index
 
 # Stories
 # TODO Switch to GET, POST, PUT, DELETE
-GET     /stories                    controllers.StoryApp.index
-POST    /stories                    controllers.StoryApp.create
-POST    /stories/:id/delete         controllers.StoryApp.delete(id: Long)
+GET     /stories                    controllers.StoryController.index
+POST    /stories                    controllers.StoryController.create
+POST    /stories/:id/delete         controllers.StoryController.delete(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
