@@ -2,6 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# TODO Test all routes
 # Home page
 GET     /                           controllers.Application.index
 
@@ -15,4 +16,5 @@ POST    /stories/:id/delete         controllers.StoryController.delete(id: Long)
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Misc
+# TODO Redirect all other pages here
 GET     /pageNotFound               controllers.Application.pageNotFound

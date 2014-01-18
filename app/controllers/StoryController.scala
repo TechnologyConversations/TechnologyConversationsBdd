@@ -6,12 +6,14 @@ import play.api.data._
 import play.api.data.Forms._
 import models.Story
 
-trait StoryController { this: Controller =>
+object StoryController extends Controller {
 
+  // TODO Test
   def index = Action {
     Ok(views.html.stories(Story.all(), form))
   }
 
+  // TODO Test
   def create = Action { implicit request =>
     form.bindFromRequest.fold(
       errors => BadRequest(views.html.stories(Story.all(), errors)),
@@ -22,13 +24,15 @@ trait StoryController { this: Controller =>
     )
   }
 
+  // TODO Test
   def delete(id: Long) = Action {
     Story.delete(id)
     Redirect(routes.StoryController.index)
   }
 
+  // TODO Test
   val form = Form(
-    "name" -> nonEmptyText
+    "storyNameInput" -> nonEmptyText
   )
+
 }
-object StoryController extends Controller with StoryController

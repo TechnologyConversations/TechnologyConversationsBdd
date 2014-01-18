@@ -10,10 +10,11 @@ object Application extends Controller {
 
   def pageNotFound = Action {
     NotFound(views.html.message(
-      "Page could not be found",
+      "Page Not Found",
       "Seems that the page you're looking for went for a walk and could not be found ever since."))
   }
 
+  // TODO Test
   def index = Action {
     Redirect(routes.StoryController.index)
   }

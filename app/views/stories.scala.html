@@ -2,24 +2,24 @@
 
 @import helper._
 
-@main("Stories List") {
+@main("Stories") {
 
-    <h1>@stories.size stories</h1>
-    <ul>
+    <h1 id="storyListTitle">@stories.size stories</h1>
+    <ul id="storyList">
         @stories.map { story =>
             <li>
-                @story.name
+                <div class="storyListName">@story.name</div>
 
                 @form(routes.StoryController.delete(story.id)) {
-                    <input type="submit" value="Delete">
+                    <input class="storyListDelete" type="submit" value="Delete">
                 }
             </li>
         }
     </ul>
-    <h2>Add a new story</h2>
+    <h2 id="storyAddTitle">Add New Story</h2>
     @form(routes.StoryController.create) {
-        @inputText(storyForm("name"))
-        <input type="submit" value="Create">
+        @inputText(field = storyForm("storyNameInput"), '_label -> "Story Name")
+        <input type="submit" id="storyCreate" value="Create">
     }
 
 }
