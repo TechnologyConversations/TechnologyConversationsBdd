@@ -1,0 +1,9 @@
+language: scala
+scala:
+   - "2.10.0"
+
+notifications:
+  email:
+    - viktor@farcic.com
+    - jordi.falguera@gmail.com
+    - alexgarcer@gmail.com
