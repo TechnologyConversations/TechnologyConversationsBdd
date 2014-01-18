@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/StoryController.scala" afterPath="$PROJECT_DIR$/app/controllers/StoryController.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tcbdd.iws" />
@@ -65,7 +66,55 @@
     <favorites_list name="tcbdd" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="StoryController.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="9" selection-start="336" selection-end="351" vertical-scroll-proportion="0.5492228" vertical-offset="77" max-vertical-offset="731">
+              <folding>
+                <element signature="e#21#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoriesSpec.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/views/StoriesSpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="43" column="29" selection-start="1481" selection-end="1481" vertical-scroll-proportion="0.0" vertical-offset="396" max-vertical-offset="850">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stories.scala.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/stories.scala.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="38" selection-start="607" selection-end="621" vertical-scroll-proportion="-9.269231" vertical-offset="99" max-vertical-offset="527">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Story.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="13" selection-start="321" selection-end="325" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="765">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/routes">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="39" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="442">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -93,17 +142,17 @@
         <option value="$PROJECT_DIR$/test/HelloWorldSpecification.scala" />
         <option value="$PROJECT_DIR$/test/controllers/StoryAppTest.scala" />
         <option value="$PROJECT_DIR$/app/controllers/StoryApp.scala" />
-        <option value="$PROJECT_DIR$/app/models/Story.scala" />
         <option value="$PROJECT_DIR$/conf/routes" />
         <option value="$PROJECT_DIR$/test/views/MessageSpec.scala" />
         <option value="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
         <option value="$PROJECT_DIR$/app/views/message.scala.html" />
         <option value="$PROJECT_DIR$/test/views/PageNotFoundSpec.scala" />
-        <option value="$PROJECT_DIR$/app/views/stories.scala.html" />
-        <option value="$PROJECT_DIR$/app/controllers/StoryController.scala" />
         <option value="$PROJECT_DIR$/app/controllers/Application.scala" />
         <option value="$PROJECT_DIR$/test/views/StoriesSpec.scala" />
         <option value="$PROJECT_DIR$/test/controllers/ApplicationSpec.scala" />
+        <option value="$PROJECT_DIR$/app/views/stories.scala.html" />
+        <option value="$PROJECT_DIR$/app/models/Story.scala" />
+        <option value="$PROJECT_DIR$/app/controllers/StoryController.scala" />
       </list>
     </option>
   </component>
@@ -292,6 +341,10 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -366,7 +419,7 @@
       <recent name="C:\programming\workspace\TechnologyConversationsBdd\app\views" />
     </key>
   </component>
-  <component name="RunManager" selected="Specs2.ApplicationSpec">
+  <component name="RunManager" selected="Specs2.StoriesSpec">
     <configuration default="false" name="HelloWorldSpecification" type="Specs2RunConfiguration" factoryName="Specs2" temporary="true">
       <module name="tcbdd" />
       <setting name="path" value="HelloWorldSpecification" />
@@ -604,8 +657,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Specs2.ApplicationSpec" />
-        <item index="1" class="java.lang.String" itemvalue="Specs2.StoriesSpec" />
+        <item index="0" class="java.lang.String" itemvalue="Specs2.StoriesSpec" />
+        <item index="1" class="java.lang.String" itemvalue="Specs2.ApplicationSpec" />
         <item index="2" class="java.lang.String" itemvalue="Specs2.PageNotFoundSpec" />
         <item index="3" class="java.lang.String" itemvalue="Specs2.StoryControllerSpec" />
         <item index="4" class="java.lang.String" itemvalue="Specs2.HelloWorldSpecification" />
@@ -668,7 +721,11 @@
       <created>1390086226402</created>
       <updated>1390086226402</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added browser tests&#10;">
+      <created>1390086269360</created>
+      <updated>1390086269360</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -693,7 +750,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -713,8 +770,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36706948" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36706948" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -999,33 +1056,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/stories.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="33" selection-start="277" selection-end="277" vertical-scroll-proportion="0.37777779" vertical-offset="51" max-vertical-offset="527">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/views/PageNotFoundSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="6" selection-start="104" selection-end="104" vertical-scroll-proportion="0.27345845" vertical-offset="0" max-vertical-offset="425">
           <folding>
             <element signature="e#15#45#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/views/StoriesSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="39" selection-start="196" selection-end="196" vertical-scroll-proportion="0.04404145" vertical-offset="119" max-vertical-offset="850">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/routes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="39" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="442">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1043,19 +1079,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
+    <entry file="file://$PROJECT_DIR$/test/views/StoriesSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="10" selection-start="664" selection-end="664" vertical-scroll-proportion="0.7927461" vertical-offset="238" max-vertical-offset="731">
-          <folding>
-            <element signature="e#21#38#0" expanded="true" />
-          </folding>
+        <state line="43" column="29" selection-start="1481" selection-end="1481" vertical-scroll-proportion="0.0" vertical-offset="396" max-vertical-offset="850">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/stories.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="38" selection-start="607" selection-end="621" vertical-scroll-proportion="-9.269231" vertical-offset="99" max-vertical-offset="527">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/routes">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="39" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="442">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="0" selection-start="795" selection-end="795" vertical-scroll-proportion="0.9119171" vertical-offset="277" max-vertical-offset="765">
+        <state line="17" column="13" selection-start="321" selection-end="325" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="765">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="9" selection-start="336" selection-end="351" vertical-scroll-proportion="0.5492228" vertical-offset="77" max-vertical-offset="731">
+          <folding>
+            <element signature="e#21#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -32,7 +32,7 @@ object StoryController extends Controller {
 
   // TODO Test
   val form = Form(
-    "name" -> nonEmptyText
+    "storyNameInput" -> nonEmptyText
   )
 
 }
