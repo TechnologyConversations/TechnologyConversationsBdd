@@ -8,10 +8,12 @@ import models.Story
 
 object StoryController extends Controller {
 
+  // TODO Test
   def index = Action {
     Ok(views.html.stories(Story.all(), form))
   }
 
+  // TODO Test
   def create = Action { implicit request =>
     form.bindFromRequest.fold(
       errors => BadRequest(views.html.stories(Story.all(), errors)),
@@ -22,13 +24,15 @@ object StoryController extends Controller {
     )
   }
 
+  // TODO Test
   def delete(id: Long) = Action {
     Story.delete(id)
     Redirect(routes.StoryController.index)
   }
 
+  // TODO Test
   val form = Form(
-    "storyNameInput" -> nonEmptyText
+    "name" -> nonEmptyText
   )
 
 }

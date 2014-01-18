@@ -16,6 +16,13 @@ class ApplicationSpec extends Specification {
       }
     }
 
+    "redirect / to /stories" in {
+      running(FakeApplication()) {
+        val result = route(FakeRequest(GET, "/")).get
+        redirectLocation(result) must beSome.which(_ == "/stories")
+      }
+    }
+
   }
 
 }
