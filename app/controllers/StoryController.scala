@@ -8,7 +8,6 @@ import models.Story
 
 object StoryController extends Controller {
 
-  // TODO Test
   def index = Action {
     Ok(views.html.stories(Story.all(), form))
   }
@@ -19,7 +18,7 @@ object StoryController extends Controller {
       errors => BadRequest(views.html.stories(Story.all(), errors)),
       name => {
         Story.create(name)
-        Redirect(routes.StoryController.index)
+        Redirect(routes.StoryController.index())
       }
     )
   }
@@ -27,7 +26,7 @@ object StoryController extends Controller {
   // TODO Test
   def delete(id: Long) = Action {
     Story.delete(id)
-    Redirect(routes.StoryController.index)
+    Redirect(routes.StoryController.index())
   }
 
   // TODO Test
