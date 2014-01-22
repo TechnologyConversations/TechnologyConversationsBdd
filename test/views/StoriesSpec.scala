@@ -14,7 +14,7 @@ class StoriesSpec extends Specification {
     }
 
     "display the list of stories" in new WithBrowser {
-      (1 to 3).foreach(index => Story.create("mystory" + index))
+      (1 to 3).foreach(index => Story.create(Story("mystory" + index)))
       browser.goTo("/stories")
       browser.find("#storyListTitle").getText must equalTo("3 stories")
       browser.find(".storyListName").size() must equalTo(3)
@@ -24,7 +24,7 @@ class StoriesSpec extends Specification {
     }
 
     "have buttons to delete specific story" in new WithBrowser {
-      (1 to 3).foreach(index => Story.create("mystory" + index))
+      (1 to 3).foreach(index => Story.create(Story("mystory" + index)))
       browser.goTo("/stories")
       val delete = browser.find(".storyListDelete", 1)
       delete.getValue must equalTo("Delete")

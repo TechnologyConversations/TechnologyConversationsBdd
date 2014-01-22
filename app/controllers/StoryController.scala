@@ -1,6 +1,5 @@
 package controllers
 
-import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
@@ -16,22 +15,24 @@ object StoryController extends Controller {
   def create = Action { implicit request =>
     form.bindFromRequest.fold(
       errors => BadRequest(views.html.stories(Story.all(), errors)),
-      name => {
-        Story.create(name)
-        Redirect(routes.StoryController.index())
+      story => {
+        Story.create(story)
+        Redirect(routes.StoryController.index)
       }
     )
   }
 
   // TODO Test
-  def delete(id: Long) = Action {
-    Story.delete(id)
-    Redirect(routes.StoryController.index())
+  def delete(name: String) = Action {
+    Story.delete(name)
+    Redirect(routes.StoryController.index)
   }
 
   // TODO Test
   val form = Form(
-    "storyNameInput" -> nonEmptyText
+    mapping(
+      "storyNameInput" -> nonEmptyText
+    )(Story.apply)(Story.unapply)
   )
 
 }

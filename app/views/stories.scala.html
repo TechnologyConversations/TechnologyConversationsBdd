@@ -1,4 +1,4 @@
-@(stories: List[Story], storyForm: Form[String])
+@(stories: List[Story], storyForm: Form[Story])
 
 @import helper._
 
@@ -6,11 +6,10 @@
 
     <h1 id="storyListTitle">@stories.size stories</h1>
     <ul id="storyList">
-        @stories.map { story =>
+        @for(story <- stories) {
             <li>
                 <div class="storyListName">@story.name</div>
-
-                @form(routes.StoryController.delete(story.id)) {
+                @form(routes.StoryController.delete(story.name)) {
                     <input class="storyListDelete" type="submit" value="Delete">
                 }
             </li>
@@ -18,7 +17,7 @@
     </ul>
     <h2 id="storyAddTitle">Add New Story</h2>
     @form(routes.StoryController.create) {
-        @inputText(field = storyForm("storyNameInput"), '_label -> "Story Name")
+        @inputText(storyForm("storyNameInput"), '_label -> "Story Name")
         <input type="submit" id="storyCreate" value="Create">
     }
 

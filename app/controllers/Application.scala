@@ -15,7 +15,7 @@ object Application extends Controller {
   }
 
   def index = Action {
-    Redirect(routes.StoryController.index())
+    Redirect(routes.StoryController.index)
   }
 
 }

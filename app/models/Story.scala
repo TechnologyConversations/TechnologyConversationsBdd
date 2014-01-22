@@ -5,7 +5,7 @@ import anorm.SqlParser._
 import play.api.db.DB
 import play.api.Play.current
 
-case class Story(id: Long, name: String) {}
+case class Story(name: String)
 
 object Story {
 
@@ -15,27 +15,27 @@ object Story {
   }
 
   // TODO Test
-  def create(name: String) {
+  def create(story: Story) {
     DB.withConnection { implicit c =>
       SQL("insert into story (name) VALUES ({name})").on(
+        'name -> story.name
+      ).executeUpdate
+    }
+  }
+
+  // TODO Test
+  def delete(name: String) {
+    DB.withConnection { implicit c =>
+      SQL("delete from story where name = {name}").on(
         'name -> name
       ).executeUpdate
     }
   }
 
   // TODO Test
-  def delete(id: Long) {
-    DB.withConnection { implicit c =>
-      SQL("delete from story where id = {id}").on(
-        'id -> id
-      ).executeUpdate
-    }
-  }
-
-  // TODO Test
   val story = {
-    get[Long]("id") ~ get[String]("name") map {
-      case id~name => Story(id, name)
+    get[String]("name") map {
+      name => Story(name)
     }
   }
 
