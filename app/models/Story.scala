@@ -1,17 +1,17 @@
 package models
 
-import anorm._
 import anorm.SqlParser._
-import play.api.db.DB
-import play.api.Play.current
+import java.io.File
 
-case class Story(name: String)
+case class Story(fileName: String) {
+  def name = fileName.split('.').init.mkString(".")
+}
 
 object Story {
 
-  // TODO Test
-  def all(): List[Story] = {
-    List(Story("myStory1"), Story("myStory2"))
+  def all(path: String = "stories"): List[Story] = {
+    new File(path).list.filter(_.endsWith(".story")).map( file => Story(file)
+    ).toList
   }
 
   // TODO Test
