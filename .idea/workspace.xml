@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Story.scala" afterPath="$PROJECT_DIR$/app/models/Story.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/models/StorySpec.scala" afterPath="$PROJECT_DIR$/test/models/StorySpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -76,7 +75,16 @@
       <file leaf-file-name="StorySpec.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="86" selection-start="409" selection-end="409" vertical-scroll-proportion="0.42746115" vertical-offset="124" max-vertical-offset="510">
+            <state line="17" column="79" selection-start="402" selection-end="402" vertical-scroll-proportion="0.7487047" vertical-offset="0" max-vertical-offset="510">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Story.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="57" selection-start="428" selection-end="428" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
               <folding />
             </state>
           </provider>
@@ -728,7 +736,11 @@
       <created>1390514560205</created>
       <updated>1390514560205</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Added retrieval of stories from FS&#10;">
+      <created>1390518198178</created>
+      <updated>1390518198178</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -774,7 +786,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36706948" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -831,7 +843,8 @@
     <MESSAGE value="Added file upload" />
     <MESSAGE value="Added function t&#10;" />
     <MESSAGE value="Added retrieval of stories from FS" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added retrieval of stories from FS" />
+    <MESSAGE value="Added retrieval of stories from FS&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added retrieval of stories from FS&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1135,13 +1148,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="57" selection-start="317" selection-end="317" vertical-scroll-proportion="0.5284974" vertical-offset="0" max-vertical-offset="425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/conf/routes">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="2" selection-start="182" selection-end="182" vertical-scroll-proportion="0.3523316" vertical-offset="0" max-vertical-offset="408">
@@ -1149,9 +1155,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="57" selection-start="428" selection-end="428" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="86" selection-start="409" selection-end="409" vertical-scroll-proportion="0.42746115" vertical-offset="124" max-vertical-offset="510">
+        <state line="17" column="79" selection-start="402" selection-end="402" vertical-scroll-proportion="0.7487047" vertical-offset="0" max-vertical-offset="510">
           <folding />
         </state>
       </provider>
