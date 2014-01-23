@@ -15,7 +15,7 @@ class StorySpec extends Specification {
   "Story object" should {
 
     "return all stories from files ending with .story" in {
-      Story.all("test/data") must haveSize(3)
+      Story.all("test/data") must have size(3)
     }
 
   }
