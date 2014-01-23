@@ -12,8 +12,7 @@ object Story {
   // TODO Move stories to the public directory
   // TODO Test stories directory against the distribution
   def all(path: String = "stories"): List[Story] = {
-    new File(path).list.filter(_.endsWith(".story")).map( file => Story(file)
-    ).toList
+    new File(path).list.filter(_.endsWith(".story")).map( file => Story(file)).toList
   }
 
 }
