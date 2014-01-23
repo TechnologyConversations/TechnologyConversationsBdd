@@ -15,8 +15,7 @@ class StorySpec extends Specification {
   "Story object" should {
 
     "return all stories from files ending with .story" in {
-      val expected = (1 to 3).map(number => Story("story" + number + ".story"))
-      Story.all("test/data") must haveTheSameElementsAs(expected)
+      Story.all("test/data") must haveSize(3)
     }
 
   }
