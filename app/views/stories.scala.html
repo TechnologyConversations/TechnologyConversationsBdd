@@ -9,16 +9,13 @@
         @for(story <- stories) {
             <li>
                 <div class="storyListName">@story.name</div>
-                @form(routes.StoryController.delete(story.name)) {
-                    <input class="storyListDelete" type="submit" value="Delete">
-                }
             </li>
         }
     </ul>
-    <h2 id="storyAddTitle">Add New Story</h2>
-    @form(routes.StoryController.create) {
-        @inputText(storyForm("storyNameInput"), '_label -> "Story Name")
-        <input type="submit" id="storyCreate" value="Create">
+    <h2 id="storyAddTitle">Upload Story</h2>
+    @form(routes.StoryController.create, 'enctype -> "multipart/form-data") {
+        <input type="file" name="storyFile" id="storyFile">
+        <input type="submit" id="storyCreate" value="Upload">
     }
 
 }

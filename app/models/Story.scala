@@ -10,26 +10,8 @@ case class Story(name: String)
 object Story {
 
   // TODO Test
-  def all(): List[Story] = DB.withConnection { implicit c =>
-    SQL("SELECT * FROM story").as(story *)
-  }
-
-  // TODO Test
-  def create(story: Story) {
-    DB.withConnection { implicit c =>
-      SQL("insert into story (name) VALUES ({name})").on(
-        'name -> story.name
-      ).executeUpdate
-    }
-  }
-
-  // TODO Test
-  def delete(name: String) {
-    DB.withConnection { implicit c =>
-      SQL("delete from story where name = {name}").on(
-        'name -> name
-      ).executeUpdate
-    }
+  def all(): List[Story] = {
+    List(Story("myStory1"), Story("myStory2"))
   }
 
   // TODO Test
