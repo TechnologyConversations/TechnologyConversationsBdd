@@ -1,10 +1,9 @@
 package controllers
 
-import play.api.test._
 import play.api.test.Helpers._
-import org.specs2.mutable._
-import play.api.test.FakeApplication
+import play.api.test.{FakeRequest, FakeApplication}
 import models.Story
+import org.specs2.mutable.Specification
 
 class StoryControllerSpec extends Specification {
 

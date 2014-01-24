@@ -13,7 +13,7 @@
         }
     </ul>
     <h2 id="storyAddTitle">Upload Story</h2>
-    @form(routes.StoryController.create, 'enctype -> "multipart/form-data") {
+    @form(routes.StoryController.create, 'enctype -> "multipart/form-stories") {
         <input type="file" name="storyFile" id="storyFile">
         <input type="submit" id="storyCreate" value="Upload">
     }
