@@ -8,7 +8,8 @@ import models.Story
 object StoryController extends Controller {
 
   def index = Action {
-    Ok(views.html.stories(Story.all(), form))
+    // TODO Move "stories" to config
+    Ok(views.html.stories(Story.all("stories"), form))
   }
 
   // TODO Test
