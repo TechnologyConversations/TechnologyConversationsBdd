@@ -9,11 +9,17 @@ case class Story(fileName: String) {
 object Story {
 
   def all(path: String): List[Story] = {
-    new File(path).list.filter(_.endsWith(".story")).map( file => Story(file)).toList
+    dir(path).list.filter(_.endsWith(".story")).map( file => Story(file)).toList
   }
 
   def dirs(path: String): List[String] = {
-    new File(path).listFiles.filter(_.isDirectory).map( file => file.getName).toList
+    dir(path).listFiles.filter(_.isDirectory).map( file => file.getName).toList
+  }
+
+  def dir(path: String) = {
+    val dir = new File(path)
+    if (!dir.exists) dir.mkdir
+    dir
   }
 
 
