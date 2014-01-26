@@ -1,21 +1,11 @@
-@(stories: List[Story], storyForm: Form[Story])
+@(stories: List[Story], dirs: List[String], storyForm: Form[Story])
 
 @import helper._
 
-@main("Stories") {
-
-    <h1 id="storyListTitle">@stories.size stories</h1>
-    <ul id="storyList">
-        @for(story <- stories) {
-            <li>
-                <div class="storyListName">@story.name</div>
-            </li>
-        }
-    </ul>
-    <h2 id="storyAddTitle">Upload Story</h2>
-    @form(routes.StoryController.create, 'enctype -> "multipart/form-stories") {
-        <input type="file" name="storyFile" id="storyFile">
-        <input type="submit" id="storyCreate" value="Upload">
-    }
-
+@head = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jstree/style.min.css")">
+    <script src="@routes.Assets.at("javascripts/jstree.min.js")" type="text/javascript"></script>
+}
+@main("Stories")(head){
+    @storiesBrowser(stories, dirs, storyForm)
 }

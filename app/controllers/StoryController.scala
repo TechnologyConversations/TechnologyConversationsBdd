@@ -4,12 +4,13 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 import models.Story
+import play.api.Play
 
 object StoryController extends Controller {
 
   def index = Action {
-    // TODO Move "stories" to config
-    Ok(views.html.stories(Story.all("stories"), form))
+    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+    Ok(views.html.stories(Story.all(dir), Story.dirs(dir), form))
   }
 
   // TODO Test
