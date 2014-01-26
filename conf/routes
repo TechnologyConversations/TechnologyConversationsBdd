@@ -8,6 +8,7 @@ GET     /                           controllers.Application.index
 # Stories
 # TODO Switch to GET, POST, PUT, DELETE
 GET     /stories                    controllers.StoryController.index
+GET     /stories/jstree/json        controllers.StoryController.jsTreeJson
 POST    /stories                    controllers.StoryController.create
 
 # Map static resources from the /public folder to the /assets URL path

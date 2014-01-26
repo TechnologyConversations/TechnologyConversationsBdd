@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="Added JSTree library&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/bdd.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/storiesBrowser.scala.html" />
+    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/StoryController.scala" afterPath="$PROJECT_DIR$/app/controllers/StoryController.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/application.conf" afterPath="$PROJECT_DIR$/conf/application.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/main.scala.html" afterPath="$PROJECT_DIR$/app/views/main.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/message.scala.html" afterPath="$PROJECT_DIR$/app/views/message.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/stories.scala.html" afterPath="$PROJECT_DIR$/app/views/stories.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" afterPath="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tcbdd.iws" />
@@ -81,43 +77,25 @@
       <file leaf-file-name="Story.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="10" selection-start="286" selection-end="290" vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="544">
+            <state line="10" column="10" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="544">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.scala.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/main.scala.html">
+      <file leaf-file-name="routes" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/routes">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="94" selection-start="521" selection-end="521" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="391">
+            <state line="10" column="28" selection-start="298" selection-end="318" vertical-scroll-proportion="0.0" vertical-offset="21" max-vertical-offset="425">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stories.scala.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/stories.scala.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="38" selection-start="363" selection-end="363" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="289">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="storiesBrowser.scala.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/storiesBrowser.scala.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="50" selection-start="371" selection-end="371" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="442">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StoryController.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="StoryController.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="89" selection-start="294" selection-end="294" vertical-scroll-proportion="0.4945355" vertical-offset="6" max-vertical-offset="901">
+            <state line="19" column="27" selection-start="576" selection-end="576" vertical-scroll-proportion="0.0" vertical-offset="38" max-vertical-offset="1088">
               <folding>
                 <element signature="e#21#42#0" expanded="true" />
               </folding>
@@ -125,19 +103,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.conf" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conf/application.conf">
+      <file leaf-file-name="StoryControllerSpec.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="16" selection-start="1673" selection-end="1689" vertical-scroll-proportion="0.0" vertical-offset="741" max-vertical-offset="1122">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StorySpec.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="0" selection-start="769" selection-end="769" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="765">
+            <state line="21" column="71" selection-start="624" selection-end="644" vertical-scroll-proportion="0.56072354" vertical-offset="89" max-vertical-offset="935">
               <folding />
             </state>
           </provider>
@@ -172,11 +141,9 @@
         <option value="$PROJECT_DIR$/conf/evolutions/default/1.sql" />
         <option value="$PROJECT_DIR$/app/controllers/Application.scala" />
         <option value="$PROJECT_DIR$/stories/basic.txt" />
-        <option value="$PROJECT_DIR$/conf/routes" />
         <option value="$PROJECT_DIR$/test/views/StoriesSpec.scala" />
         <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/test/controllers/ApplicationSpec.scala" />
-        <option value="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
         <option value="$PROJECT_DIR$/app/models/Story.scala" />
         <option value="$PROJECT_DIR$/test/models/StorySpec.scala" />
         <option value="$PROJECT_DIR$/app/views/message.scala.html" />
@@ -184,7 +151,9 @@
         <option value="$PROJECT_DIR$/app/views/storiesBrowser.scala.html" />
         <option value="$PROJECT_DIR$/app/views/main.scala.html" />
         <option value="$PROJECT_DIR$/conf/application.conf" />
+        <option value="$PROJECT_DIR$/conf/routes" />
         <option value="$PROJECT_DIR$/app/controllers/StoryController.scala" />
+        <option value="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
       </list>
     </option>
   </component>
@@ -231,6 +200,76 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="TechnologyConversationsBdd" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SBT: com.typesafe.play:play-json_2.10:2.2.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="play-json_2.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="play" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SBT: com.typesafe.play:play-json_2.10:2.2.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="play-json_2.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="play" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="json" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SBT: com.typesafe.play:play-json_2.10:2.2.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="play-json_2.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -312,6 +351,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -475,6 +518,28 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Story.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -919,7 +984,11 @@
       <created>1390735066805</created>
       <updated>1390735066805</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Added JSTree library&#10;">
+      <created>1390735671513</created>
+      <updated>1390735671513</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1035,13 +1104,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0" vertical-offset="22" max-vertical-offset="425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="0" selection-start="16" selection-end="56" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="629">
@@ -1216,11 +1278,6 @@
         <state line="4" column="27" selection-start="71" selection-end="71" vertical-scroll-proportion="0.33663365" vertical-offset="0" max-vertical-offset="306" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/routes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="64" selection-start="520" selection-end="520" vertical-scroll-proportion="1.2623762" vertical-offset="0" max-vertical-offset="408" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stories/thisIsDir/story1.story">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="461">
@@ -1249,15 +1306,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="6" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.9121447" vertical-offset="395" max-vertical-offset="850">
-          <folding>
-            <element signature="e#21#51#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/target/scala-2.10/src_managed/main/views/html/message.template.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="51" selection-start="791" selection-end="791" vertical-scroll-proportion="0.33333334" vertical-offset="131" max-vertical-offset="765">
@@ -1265,23 +1313,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="0" selection-start="769" selection-end="769" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="765">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/message.scala.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="2" selection-start="70" selection-end="70" vertical-scroll-proportion="0.23545706" vertical-offset="0" max-vertical-offset="361">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="10" selection-start="286" selection-end="290" vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="544">
           <folding />
         </state>
       </provider>
@@ -1295,38 +1329,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/storiesBrowser.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="50" selection-start="371" selection-end="371" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="442">
+        <state line="9" column="50" selection-start="371" selection-end="371" vertical-scroll-proportion="0.4238227" vertical-offset="0" max-vertical-offset="442">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/stories.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="38" selection-start="363" selection-end="363" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="289">
+        <state line="9" column="38" selection-start="363" selection-end="363" vertical-scroll-proportion="0.4238227" vertical-offset="0" max-vertical-offset="361">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/main.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="94" selection-start="521" selection-end="521" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="391">
+        <state line="11" column="94" selection-start="521" selection-end="521" vertical-scroll-proportion="0.5373563" vertical-offset="0" max-vertical-offset="391">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/conf/application.conf">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="16" selection-start="1673" selection-end="1689" vertical-scroll-proportion="0.0" vertical-offset="741" max-vertical-offset="1122">
+        <state line="60" column="16" selection-start="1673" selection-end="1689" vertical-scroll-proportion="0.7364341" vertical-offset="735" max-vertical-offset="1122">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="0" selection-start="769" selection-end="769" vertical-scroll-proportion="0.7364341" vertical-offset="378" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/routes">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="28" selection-start="298" selection-end="318" vertical-scroll-proportion="0.0" vertical-offset="21" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="10" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="544">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/com.typesafe.play/play-json_2.10/2.2.1/jars/play-json_2.10.jar!/play/api/libs/json/Json.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="7" selection-start="34" selection-end="34" vertical-scroll-proportion="0.048710603" vertical-offset="0" max-vertical-offset="476">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="89" selection-start="294" selection-end="294" vertical-scroll-proportion="0.4945355" vertical-offset="6" max-vertical-offset="901">
+        <state line="19" column="27" selection-start="576" selection-end="576" vertical-scroll-proportion="0.0" vertical-offset="38" max-vertical-offset="1088">
           <folding>
             <element signature="e#21#42#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="71" selection-start="624" selection-end="644" vertical-scroll-proportion="0.56072354" vertical-offset="89" max-vertical-offset="935">
+          <folding />
         </state>
       </provider>
     </entry>

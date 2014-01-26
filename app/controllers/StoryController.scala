@@ -2,6 +2,7 @@ package controllers
 
 import play.api.mvc._
 import play.api.data._
+import play.api.libs.json._
 import play.api.data.Forms._
 import models.Story
 import play.api.Play
@@ -11,6 +12,16 @@ object StoryController extends Controller {
   def index = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
     Ok(views.html.stories(Story.all(dir), Story.dirs(dir), form))
+  }
+
+  def jsTreeJson = Action {
+//    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+//    val col = Story.all(dir)
+//    val storiesJson = Json.toJson(col.map(story =>
+//      Map("text" -> story.name)
+//    ))
+//    Ok(Json.toJson(storiesJson))
+    Ok(Json.toJson("This is JSON"))
   }
 
   // TODO Test
