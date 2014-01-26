@@ -53,12 +53,10 @@ class StorySpec extends Specification {
   "Story#jsTree" should {
 
     "return JSON with all stories and directories" in {
-      val expected = Json.toJson(
-        Seq(
+      val expected = Json.toJson(Seq(
           Json.toJson(Map("text" -> Json.toJson("myDir1"))),
           Json.toJson(Map("text" -> Json.toJson("myStory1.story")))
-        )
-      )
+      ))
       val story = new StoryUtil() {
         override def all(path: String): List[String] = List("myDir1", "myStory1.story")
       }

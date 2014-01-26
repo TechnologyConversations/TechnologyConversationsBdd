@@ -29,10 +29,7 @@ class StoryUtil() {
   
   def jsTree(path: String) = {
     val data = all(path).map(file => Json.toJson(Map("text" -> file)))
-    println("xxxxxx: " + data)
-    Json.toJson(
-      data
-    )
+    Json.toJson(data)
   }
 
 }

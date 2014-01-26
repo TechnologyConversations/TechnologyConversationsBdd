@@ -15,13 +15,8 @@ object StoryController extends Controller {
   }
 
   def jsTreeJson = Action {
-//    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-//    val col = Story.all(dir)
-//    val storiesJson = Json.toJson(col.map(story =>
-//      Map("text" -> story.name)
-//    ))
-//    Ok(Json.toJson(storiesJson))
-    Ok(Json.toJson("This is JSON"))
+    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+    Ok(StoryUtil().jsTree(dir))
   }
 
   // TODO Test
