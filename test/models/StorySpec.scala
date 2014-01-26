@@ -24,4 +24,16 @@ class StorySpec extends Specification {
 
   }
 
+  "Story#dirs" should {
+
+    "return all directories" in {
+      Story.dirs("test/stories") must have size(1)
+    }
+
+    "return no directories when the destination directory is empty" in {
+      Story.dirs("test/stories/empty") must have size(0)
+    }
+
+  }
+
 }

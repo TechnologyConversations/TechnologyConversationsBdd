@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="Added JSTree library&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/stories/empty/story1.not_story" />
-      <change type="DELETED" beforePath="C:\programming\workspace\TechnologyConversationsBdd\test\views\PageNotFoundSpec.scala" afterPath="" />
-      <change type="DELETED" beforePath="C:\programming\workspace\TechnologyConversationsBdd\test\views\StoriesSpec.scala" afterPath="" />
+    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Story.scala" afterPath="$PROJECT_DIR$/app/models/Story.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/StoryController.scala" afterPath="$PROJECT_DIR$/app/controllers/StoryController.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/models/StorySpec.scala" afterPath="$PROJECT_DIR$/test/models/StorySpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -80,10 +76,17 @@
       <file leaf-file-name="Story.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="20" selection-start="56" selection-end="56" vertical-scroll-proportion="0.13178295" vertical-offset="0" max-vertical-offset="476">
-              <folding>
-                <element signature="e#16#35#0" expanded="true" />
-              </folding>
+            <state line="14" column="35" selection-start="332" selection-end="332" vertical-scroll-proportion="0.6149871" vertical-offset="0" max-vertical-offset="442">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StorySpec.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="9" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="765">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,8 +130,8 @@
         <option value="$PROJECT_DIR$/test/controllers/ApplicationSpec.scala" />
         <option value="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
         <option value="$PROJECT_DIR$/app/controllers/StoryController.scala" />
-        <option value="$PROJECT_DIR$/app/models/Story.scala" />
         <option value="$PROJECT_DIR$/test/models/StorySpec.scala" />
+        <option value="$PROJECT_DIR$/app/models/Story.scala" />
       </list>
     </option>
   </component>
@@ -224,6 +227,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="empty" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TechnologyConversationsBdd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -685,7 +706,11 @@
       <created>1390733749705</created>
       <updated>1390733749705</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added JSTree library&#10;">
+      <created>1390734172412</created>
+      <updated>1390734172412</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -710,7 +735,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -729,8 +754,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36706948" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736155" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36706948" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736155" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -790,7 +815,8 @@
     <MESSAGE value="Added retrieval of stories from FS" />
     <MESSAGE value="Added retrieval of stories from FS&#10;" />
     <MESSAGE value="Added JSTree library" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added JSTree library" />
+    <MESSAGE value="Added JSTree library&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added JSTree library&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -803,9 +829,7 @@
     <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0" vertical-offset="22" max-vertical-offset="425">
-          <folding>
-            <element signature="e#16#35#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1058,17 +1082,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="371" selection-end="371" vertical-scroll-proportion="0.50904393" vertical-offset="143" max-vertical-offset="561">
+        <state line="9" column="9" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="765">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/Story.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="20" selection-start="56" selection-end="56" vertical-scroll-proportion="0.13178295" vertical-offset="0" max-vertical-offset="476">
-          <folding>
-            <element signature="e#16#35#0" expanded="true" />
-          </folding>
+        <state line="14" column="35" selection-start="332" selection-end="332" vertical-scroll-proportion="0.6149871" vertical-offset="0" max-vertical-offset="442">
+          <folding />
         </state>
       </provider>
     </entry>
