@@ -7,7 +7,6 @@ import models.Story
 
 object StoryController extends Controller {
 
-  // TODO Test
   def index = Action {
     Ok(views.html.stories(Story.all(), form))
   }
@@ -38,7 +37,6 @@ object StoryController extends Controller {
     }
   }
 
-  // TODO Test
   val form = Form(
     mapping(
       "storyNameInput" -> nonEmptyText
