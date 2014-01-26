@@ -9,7 +9,7 @@ case class Story(fileName: String) {
 
 class StoryUtil() {
 
-  def all(path: String): List[Story] = {
+  def stories(path: String): List[Story] = {
     dir(path).list.filter(_.endsWith(".story")).map( file => Story(file)).toList
   }
 
@@ -17,16 +17,22 @@ class StoryUtil() {
     dir(path).listFiles.filter(_.isDirectory).map( file => file.getName).toList
   }
 
-  def dir(path: String) = {
+  private def dir(path: String) = {
     val dir = new File(path)
     if (!dir.exists) dir.mkdir
     dir
   }
 
+  def all(path: String) = {
+    dir(path).listFiles.filter(file => file.isDirectory || file.getName.endsWith(".story")).map( file => file.getName).toList
+  }
+  
   def jsTree(path: String) = {
-    Json.toJson(all(path).map(story =>
-      Json.toJson(Map("text" -> story.name))
-    ))
+    val data = all(path).map(file => Json.toJson(Map("text" -> file)))
+    println("xxxxxx: " + data)
+    Json.toJson(
+      data
+    )
   }
 
 }

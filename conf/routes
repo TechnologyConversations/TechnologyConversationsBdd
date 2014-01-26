@@ -1,5 +1,5 @@
 # Routes
-# This file defines all application routes (Higher priority routes first)
+# This file defines stories application routes (Higher priority routes first)
 # ~~~~
 
 # Home page
@@ -15,5 +15,5 @@ POST    /stories                    controllers.StoryController.create
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Misc
-# TODO Redirect all other pages here
+# TODO Redirect stories other pages here
 GET     /pageNotFound               controllers.Application.pageNotFound

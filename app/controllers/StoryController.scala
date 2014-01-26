@@ -11,7 +11,7 @@ object StoryController extends Controller {
 
   def index = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-    Ok(views.html.stories(StoryUtil().all(dir), StoryUtil().dirs(dir), form))
+    Ok(views.html.stories(StoryUtil().stories(dir), StoryUtil().dirs(dir), form))
   }
 
   def jsTreeJson = Action {
