@@ -1,12 +1,13 @@
 package models
 
 import java.io.File
+import play.api.libs.json.Json
 
 case class Story(fileName: String) {
   def name: String = fileName.split('.').init.mkString(".")
 }
 
-object Story {
+class StoryUtil() {
 
   def all(path: String): List[Story] = {
     dir(path).list.filter(_.endsWith(".story")).map( file => Story(file)).toList
@@ -22,5 +23,16 @@ object Story {
     dir
   }
 
+  def jsTree(path: String) = {
+    Json.toJson(all(path).map(story =>
+      Json.toJson(Map("text" -> story.name))
+    ))
+  }
+
+}
+
+object StoryUtil {
+
+  def apply() = new StoryUtil()
 
 }

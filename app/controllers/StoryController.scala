@@ -4,14 +4,14 @@ import play.api.mvc._
 import play.api.data._
 import play.api.libs.json._
 import play.api.data.Forms._
-import models.Story
+import models.{StoryUtil, Story}
 import play.api.Play
 
 object StoryController extends Controller {
 
   def index = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-    Ok(views.html.stories(Story.all(dir), Story.dirs(dir), form))
+    Ok(views.html.stories(StoryUtil().all(dir), StoryUtil().dirs(dir), form))
   }
 
   def jsTreeJson = Action {
