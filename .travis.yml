@@ -1,9 +1,15 @@
 language: scala
 scala:
-   - "2.10.0"
-
+- 2.10.0
 notifications:
   email:
-    - viktor@farcic.com
-    - jordi.falguera@gmail.com
-    - alexgarcer@gmail.com
+  - viktor@farcic.com
+  - jordi.falguera@gmail.com
+  - alexgarcer@gmail.com
+deploy:
+  provider: heroku
+  api_key:
+    secure: e9UT95vZNhE6BEpueJ0quG6a/X0iszZf1zHMdYhMolQDuggF+crAR8VB02GSbpr17RrlQvxP9bxDihLEexy5B0WyVx0KAIIx97o0cz3ekHoiZGH7xaItf+IgSnBFpwHmkFhCrIHcixUoyFzGlfUjeSn/lSh8iC9eg9Zsxe4uSzA=
+  app: TechnologyConversationsBdd
+  on:
+    repo: vfarcic/TechnologyConversationsBdd
