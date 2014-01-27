@@ -10,7 +10,7 @@ deploy:
   provider: heroku
   api_key:
     secure: e9UT95vZNhE6BEpueJ0quG6a/X0iszZf1zHMdYhMolQDuggF+crAR8VB02GSbpr17RrlQvxP9bxDihLEexy5B0WyVx0KAIIx97o0cz3ekHoiZGH7xaItf+IgSnBFpwHmkFhCrIHcixUoyFzGlfUjeSn/lSh8iC9eg9Zsxe4uSzA=
-  app: technologyconversationsbdd
+  app: tcbdd
   buildpack: play
   on:
     repo: vfarcic/TechnologyConversationsBdd
