@@ -9,8 +9,7 @@ notifications:
 deploy:
   provider: heroku
   api_key:
-    secure: e9UT95vZNhE6BEpueJ0quG6a/X0iszZf1zHMdYhMolQDuggF+crAR8VB02GSbpr17RrlQvxP9bxDihLEexy5B0WyVx0KAIIx97o0cz3ekHoiZGH7xaItf+IgSnBFpwHmkFhCrIHcixUoyFzGlfUjeSn/lSh8iC9eg9Zsxe4uSzA=
+    secure: SRT/QPYeRmfKCJjM6OVxWhId4xVG9ZnavYWeumkEPNGn1Ftd51JnrlGC2G7mUfr6ivQrj5bwK8aZJ3g00DvZce/m674to37kvEG9N85VjqoQIEef0OZEs/XIlbqdNHeDO3sz5JZHIcEe4qrHjlbVPtHYaiSaGeBPR1Px85sGiuE=
   app: tcbdd
-  buildpack: play
-#  on:
-#    repo: vfarcic/TechnologyConversationsBdd
+  on:
+    repo: vfarcic/TechnologyConversationsBdd
