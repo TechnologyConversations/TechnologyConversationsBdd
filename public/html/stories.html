@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular tryouts</title>
+    <script src="/assets/javascripts/angular.min.js"></script>
+    <script src="/assets/javascripts/angular-resource.min.js"></script>
+    <script src="stories.js"></script>
+    <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-app="storiesModule">
+    <div>
+        <table class="table table-bordered" ng-controller="storiesCtrl">
+            <tbody ng-repeat="dir in dirs">
+            <tr>
+                <td>DIR</td>
+                <td>{{dir.name}}</td>
+            </tr>
+            </tbody>
+            <tbody ng-repeat="story in stories" ng-click="selectStory(story)" ng-switch on="isSelected(story)">
+                <tr>
+                    <td>STORY</td>
+                    <td>{{story.name}}</td>
+                </tr>
+                <tr ng-switch-when="true">
+                    <td>&nbsp;</td>
+                    <td>DETAILS</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

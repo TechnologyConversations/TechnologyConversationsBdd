@@ -14,9 +14,9 @@ object StoryController extends Controller {
     Ok(views.html.stories(StoryUtil().stories(dir), StoryUtil().dirs(dir), form))
   }
 
-  def jsTreeJson = Action {
+  def allJson = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-    Ok(StoryUtil().jsTree(dir))
+    Ok(StoryUtil().allJson(dir))
   }
 
   // TODO Test

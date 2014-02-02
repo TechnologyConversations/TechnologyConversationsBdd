@@ -3,7 +3,6 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/org.javassist/javassist/3.18.0-GA/bundles/javassist.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>

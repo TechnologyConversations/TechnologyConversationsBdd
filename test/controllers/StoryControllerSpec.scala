@@ -17,9 +17,9 @@ class StoryControllerSpec extends Specification {
       }
     }
 
-    "respond to /stories/jstree/json route" in {
+    "respond to /stories/json route" in {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(GET, "/stories/jstree/json"))
+        val Some(result) = route(FakeRequest(GET, "/stories/json"))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
       }

@@ -5,7 +5,6 @@
       <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/framework/sbt/boot/scala-2.10.2/lib/scala-compiler.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/framework/sbt/boot/scala-2.10.2/lib/scala-reflect.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>

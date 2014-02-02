@@ -23,13 +23,10 @@ class StoryUtil() {
     dir
   }
 
-  def all(path: String) = {
-    dir(path).listFiles.filter(file => file.isDirectory || file.getName.endsWith(".story")).map( file => file.getName).toList
-  }
-  
-  def jsTree(path: String) = {
-    val data = all(path).map(file => Json.toJson(Map("text" -> file)))
-    Json.toJson(data)
+  def allJson(path: String) = {
+    val storiesData = stories(path).map(story => Json.toJson(Map("name" -> story.name)))
+    val dirsData = dirs(path).map(name => Json.toJson(Map("name" -> name)))
+    Json.toJson(Map("stories" -> storiesData, "dirs" -> dirsData))
   }
 
 }
