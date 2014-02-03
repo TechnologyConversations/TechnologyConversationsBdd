@@ -4,11 +4,18 @@ import java.io.File
 import play.api.libs.json.Json
 import org.joda.time._
 import scala.io.Source
+import org.jbehave.core.parsers._
 
 case class Story(fileName: String, content: String) {
   def name: String = fileName.split('.').init.mkString(".")
-  def narrative: String = content.split("Scenario")(0).trim
+  def narrative: String = {
+    val narrative = new RegexStoryParser().parseStory(content).getNarrative
+    if (!narrative.isEmpty)
+      "Narrative:\nIn order to " + narrative.inOrderTo + "\nAs a " + narrative.asA + "\nI want to " + narrative.iWantTo
+    else ""
+  }
 }
+
 
 case class StoryList(fileName: String) {
   def name: String = fileName.split('.').init.mkString(".")

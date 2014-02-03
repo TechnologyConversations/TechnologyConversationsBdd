@@ -18,13 +18,13 @@ class StorySpec extends Specification {
 
   "Story" should {
 
-    val narrative = "Narrative\nIn order to do something\nAs a someone\nI want to be able to"
+    val narrative = "Narrative:\nIn order to do something\nAs a someone\nI want to be able to"
     val scenario1 = "Scenario: My first scenario\nGiven some precondition\nWhen some action\nThen some outcome"
     val scenario2 = "Scenario: My second scenario\nGiven some precondition\nWhen some action\nThen some outcome"
     val storyContent = narrative + "\n\n" + scenario1 + "\n\n" + scenario2
 
     "have name without extension" in {
-      val story = Story("myStory.story", storyContent);
+      val story = Story("myStory.story", storyContent)
       story.name must be equalTo "myStory"
     }
 
@@ -48,7 +48,7 @@ class StorySpec extends Specification {
   "StoryUtil#fileSource" should {
 
     "return contents of the specified file" in {
-      val actual = StoryUtil().fileSource("test/stories/story1.not_story");
+      val actual = StoryUtil().fileSource("test/stories/story1.not_story")
       actual must equalTo("This is\nnot a\nstory file")
     }
 
@@ -63,11 +63,11 @@ class StorySpec extends Specification {
     }
 
     "return Story with name" in {
-      storyUtil.story("myStory.story").name must be equalTo("myStory")
+      storyUtil.story("myStory.story").name must be equalTo "myStory"
     }
 
     "return Story with file content" in {
-      storyUtil.story("myStory.story").content must be equalTo("This is some content")
+      storyUtil.story("myStory.story").content must be equalTo "This is some content"
     }
 
   }

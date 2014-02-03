@@ -13,6 +13,9 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../target/scala-2.10/classes" />
+    <output-test url="file://$MODULE_DIR$/../target/scala-2.10/test-classes" />
+    <exclude-output />
     <content url="file://$MODULE_DIR$/..">
       <sourceFolder url="file://$MODULE_DIR$/../app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../target/scala-2.10/src_managed/main/controllers" isTestSource="false" />
@@ -20,19 +23,36 @@
       <sourceFolder url="file://$MODULE_DIR$/../conf" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../test/resources" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../target" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/../target/native_libraries" />
       <excludeFolder url="file://$MODULE_DIR$/../target/resolution-cache" />
       <excludeFolder url="file://$MODULE_DIR$/../target/scala-2.10/cache" />
       <excludeFolder url="file://$MODULE_DIR$/../target/scala-2.10/classes" />
       <excludeFolder url="file://$MODULE_DIR$/../target/scala-2.10/classes_managed" />
       <excludeFolder url="file://$MODULE_DIR$/../target/scala-2.10/resource_managed" />
+      <excludeFolder url="file://$MODULE_DIR$/../target/scala-2.10/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../target/specs2-reports" />
       <excludeFolder url="file://$MODULE_DIR$/../target/streams" />
+      <excludeFolder url="file://$MODULE_DIR$/../target/test-reports" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.10.2" level="project" />
-    <orderEntry type="library" name="SBT: com.typesafe.play:play-jdbc_2.10:2.2.1" level="project" />
+    <orderEntry type="library" name="SBT: com.github.nscala-time:nscala-time_2.10:0.8.0" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.10.3" level="project" />
+    <orderEntry type="library" name="SBT: joda-time:joda-time:2.3" level="project" />
+    <orderEntry type="library" name="SBT: org.jbehave:jbehave-core:3.9" level="project" />
+    <orderEntry type="library" name="SBT: junit:junit:4.11" level="project" />
+    <orderEntry type="library" name="SBT: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="SBT: org.hamcrest:hamcrest-library:1.3" level="project" />
+    <orderEntry type="library" name="SBT: org.hamcrest:hamcrest-integration:1.3" level="project" />
+    <orderEntry type="library" name="SBT: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="SBT: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="SBT: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="SBT: org.codehaus.plexus:plexus-utils:3.0.10" level="project" />
+    <orderEntry type="library" name="SBT: org.freemarker:freemarker:2.3.19" level="project" />
+    <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.4" level="project" />
+    <orderEntry type="library" name="SBT: com.thoughtworks.xstream:xstream:1.4.5" level="project" />
+    <orderEntry type="library" name="SBT: xmlpull:xmlpull:1.1.3.1" level="project" />
+    <orderEntry type="library" name="SBT: xpp3:xpp3_min:1.1.4c" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play_2.10:2.2.1" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:sbt-link:2.2.1" level="project" />
     <orderEntry type="library" name="SBT: org.javassist:javassist:3.18.0-GA" level="project" />
@@ -47,11 +67,11 @@
     <orderEntry type="library" name="SBT: com.typesafe.play:play-json_2.10:2.2.1" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-functional_2.10:2.2.1" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-datacommons_2.10:2.2.1" level="project" />
-    <orderEntry type="library" name="SBT: joda-time:joda-time:2.2" level="project" />
     <orderEntry type="library" name="SBT: org.joda:joda-convert:1.3.1" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-annotations:2.2.2" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-core:2.2.2" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-databind:2.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-lang:scala-reflect:2.10.3:test" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.10.2" level="project" />
     <orderEntry type="library" name="SBT: io.netty:netty:3.7.0.Final" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.netty:netty-http-pipelining:1.1.2" level="project" />
@@ -76,22 +96,28 @@
     <orderEntry type="library" name="SBT: xerces:xercesImpl:2.11.0" level="project" />
     <orderEntry type="library" name="SBT: xml-apis:xml-apis:1.4.01" level="project" />
     <orderEntry type="library" name="SBT: javax.transaction:jta:1.1" level="project" />
-    <orderEntry type="library" name="SBT: com.jolbox:bonecp:0.8.0.RELEASE" level="project" />
-    <orderEntry type="library" name="SBT: com.google.guava:guava:14.0.1" level="project" />
-    <orderEntry type="library" name="SBT: com.h2database:h2:1.3.172" level="project" />
-    <orderEntry type="library" name="SBT: tyrex:tyrex:1.0.1" level="project" />
-    <orderEntry type="library" name="SBT: com.typesafe.play:anorm_2.10:2.2.1" level="project" />
-    <orderEntry type="library" name="SBT: com.typesafe.play:play-cache_2.10:2.2.1" level="project" />
-    <orderEntry type="library" name="SBT: net.sf.ehcache:ehcache-core:2.6.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.specs2:specs2_2.10:2.3.7:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-lang:scala-compiler:2.10.3:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.mockito:mockito-core:1.9.5:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.objenesis:objenesis:1.0:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scalacheck:scalacheck_2.10:1.11.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scala-sbt:test-interface:1.0:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.pegdown:pegdown:1.2.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.parboiled:parboiled-java:1.1.4:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.parboiled:parboiled-core:1.1.4:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.ow2.asm:asm:4.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.ow2.asm:asm-tree:4.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.ow2.asm:asm-analysis:4.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.ow2.asm:asm-util:4.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.specs2:classycle:1.4.1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: com.chuusai:shapeless_2.10.3:2.0.0-M1:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scalaz:scalaz-core_2.10:7.0.5:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scalaz:scalaz-concurrent_2.10:7.0.5:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: org.scalaz:scalaz-effect_2.10:7.0.5:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: com.typesafe.play:play-test_2.10:2.2.1:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: junit:junit:4.11:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.hamcrest:hamcrest-core:1.3:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.specs2:specs2_2.10:2.1.1:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scalaz:scalaz-core_2.10:7.0.2:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scalaz:scalaz-concurrent_2.10:7.0.2:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: org.scalaz:scalaz-effect_2.10:7.0.2:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: com.novocode:junit-interface:0.10:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.scala-tools.testing:test-interface:0.5:test" level="project" />
+    <orderEntry type="library" scope="TEST" name="SBT: com.google.guava:guava:14.0.1:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: com.google.code.findbugs:jsr305:2.0.1:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.fluentlenium:fluentlenium-festassert:0.8.0:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.fluentlenium:fluentlenium-core:0.8.0:test" level="project" />
@@ -109,13 +135,11 @@
     <orderEntry type="library" scope="TEST" name="SBT: net.sourceforge.htmlunit:htmlunit:2.12:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: xalan:xalan:2.7.1:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: xalan:serializer:2.7.1:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: commons-collections:commons-collections:3.2.1:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.apache.httpcomponents:httpmime:4.2.3:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: net.sourceforge.htmlunit:htmlunit-core-js:2.12:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: net.sourceforge.nekohtml:nekohtml:1.9.18:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: net.sourceforge.cssparser:cssparser:0.9.9:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.w3c.css:sac:1.3:test" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: commons-io:commons-io:2.2:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.eclipse.jetty:jetty-websocket:8.1.9.v20130131:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.eclipse.jetty:jetty-util:8.1.9.v20130131:test" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.eclipse.jetty:jetty-io:8.1.9.v20130131:test" level="project" />
