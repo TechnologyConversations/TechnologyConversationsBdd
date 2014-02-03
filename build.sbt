@@ -4,7 +4,8 @@ version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.3.7" % "test",
-  "org.mockito" % "mockito-core" % "1.9.5"
+  "com.github.nscala-time" %% "nscala-time" % "0.8.0",
+  "org.jbehave" % "jbehave-core" % "3.9"
 )     
 
 play.Project.playScalaSettings

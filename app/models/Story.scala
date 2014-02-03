@@ -2,15 +2,31 @@ package models
 
 import java.io.File
 import play.api.libs.json.Json
+import org.joda.time._
+import scala.io.Source
 
-case class Story(fileName: String) {
+case class Story(fileName: String, content: String) {
+  def name: String = fileName.split('.').init.mkString(".")
+  def narrative: String = content.split("Scenario")(0).trim
+}
+
+case class StoryList(fileName: String) {
   def name: String = fileName.split('.').init.mkString(".")
 }
 
 class StoryUtil() {
 
-  def stories(path: String): List[Story] = {
-    dir(path).list.filter(_.endsWith(".story")).map( file => Story(file)).toList
+  def story(path: String):Story = {
+    val file = new File(path)
+    Story(file.getName, fileSource(path))
+  }
+
+  def fileSource(path: String):String = {
+    Source.fromFile(path).mkString
+  }
+
+  def stories(path: String): List[StoryList] = {
+    dir(path).list.filter(_.endsWith(".story")).map( file => StoryList(file)).toList
   }
 
   def dirs(path: String): List[String] = {

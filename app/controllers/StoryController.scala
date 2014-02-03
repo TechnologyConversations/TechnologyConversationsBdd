@@ -4,7 +4,7 @@ import play.api.mvc._
 import play.api.data._
 import play.api.libs.json._
 import play.api.data.Forms._
-import models.{StoryUtil, Story}
+import models.{StoryUtil, StoryList}
 import play.api.Play
 
 object StoryController extends Controller {
@@ -48,7 +48,7 @@ object StoryController extends Controller {
   val form = Form(
     mapping(
       "storyNameInput" -> nonEmptyText
-    )(Story.apply)(Story.unapply)
+    )(StoryList.apply)(StoryList.unapply)
   )
 
 }

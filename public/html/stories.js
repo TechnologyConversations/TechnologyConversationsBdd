@@ -12,5 +12,12 @@ angular.module('storiesModule', [])
         };
         $scope.isSelected = function(story) {
             return $scope.selectedStory === story;
+        };
+        $scope.detailsClick = function() {
+            console.log('TODO Display story')
         }
+    })
+    .controller('storyCtrl', function($scope) {
+        $scope.name = 'TODO Name'
+        $scope.content = 'TODO Content'
     });

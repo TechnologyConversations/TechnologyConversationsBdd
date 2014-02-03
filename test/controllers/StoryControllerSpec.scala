@@ -2,7 +2,7 @@ package controllers
 
 import play.api.test.Helpers._
 import play.api.test.{FakeRequest, FakeApplication}
-import models.Story
+import models.StoryList
 import org.specs2.mutable.Specification
 
 class StoryControllerSpec extends Specification {
@@ -39,7 +39,7 @@ class StoryControllerSpec extends Specification {
 
     "bind to Story" in {
       val data = Map("storyNameInput" -> "MyTestStory")
-      StoryController.form.bind(data).get must equalTo(Story("MyTestStory"))
+      StoryController.form.bind(data).get must equalTo(StoryList("MyTestStory"))
     }
 
     "throw errors if the input to the form does not match the constraints" in {

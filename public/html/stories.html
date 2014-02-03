@@ -9,24 +9,29 @@
 </head>
 <body ng-app="storiesModule">
     <div>
-        <table class="table table-bordered" ng-controller="storiesCtrl">
+        <table class="table table-striped table-hover" ng-controller="storiesCtrl">
             <tbody ng-repeat="dir in dirs">
             <tr>
                 <td>DIR</td>
                 <td>{{dir.name}}</td>
+                <td>&nbsp;</td>
             </tr>
             </tbody>
             <tbody ng-repeat="story in stories" ng-click="selectStory(story)" ng-switch on="isSelected(story)">
                 <tr>
                     <td>STORY</td>
                     <td>{{story.name}}</td>
+                    <td><button ng-click="detailsClick()">Details</button></td>
                 </tr>
                 <tr ng-switch-when="true">
-                    <td>&nbsp;</td>
-                    <td>DETAILS</td>
+                    <td colspan="3">TODO DETAILS</td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div ng-controller="storyCtrl">
+        <h1>{{name}}</h1>
+        <div>{{content}}</div>
     </div>
 </body>
 </html>

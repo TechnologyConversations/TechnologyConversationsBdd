@@ -3,18 +3,76 @@ package models
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
 import play.api.libs.json.Json
+import org.joda.time.DateTime
+import scala.io.Source
 
 class StorySpec extends Specification {
 
-  "Story" should {
+  "StoryList" should {
 
     "have name without extension" in {
-      Story("myStory.story").name must be matching "myStory"
+      StoryList("myStory.story").name must be equalTo "myStory"
     }
 
   }
 
-  "Story#stories" should {
+  "Story" should {
+
+    val narrative = "Narrative\nIn order to do something\nAs a someone\nI want to be able to"
+    val scenario1 = "Scenario: My first scenario\nGiven some precondition\nWhen some action\nThen some outcome"
+    val scenario2 = "Scenario: My second scenario\nGiven some precondition\nWhen some action\nThen some outcome"
+    val storyContent = narrative + "\n\n" + scenario1 + "\n\n" + scenario2
+
+    "have name without extension" in {
+      val story = Story("myStory.story", storyContent);
+      story.name must be equalTo "myStory"
+    }
+
+    "have content" in {
+      val story = Story("myStory.story", storyContent)
+      story.content must be equalTo storyContent
+    }
+
+    "have narrative" in {
+      val story = Story("myStory.story", storyContent)
+      story.narrative must be equalTo narrative
+    }
+
+    "have narrative empty when not provided in the story" in {
+      val story = Story("myStory.story", scenario1 + "\n\n" + scenario2)
+      story.narrative must be equalTo ""
+    }
+
+  }
+
+  "StoryUtil#fileSource" should {
+
+    "return contents of the specified file" in {
+      val actual = StoryUtil().fileSource("test/stories/story1.not_story");
+      actual must equalTo("This is\nnot a\nstory file")
+    }
+
+  }
+
+  "StoryUtil#story" should {
+
+    val storyUtil = new StoryUtil() {
+      override def fileSource(path: String):String = {
+        "This is some content"
+      }
+    }
+
+    "return Story with name" in {
+      storyUtil.story("myStory.story").name must be equalTo("myStory")
+    }
+
+    "return Story with file content" in {
+      storyUtil.story("myStory.story").content must be equalTo("This is some content")
+    }
+
+  }
+
+  "StoryUtil#stories" should {
 
     "return all stories from files ending with .story" in {
       StoryUtil().stories("test/stories") must have size 3
@@ -26,7 +84,7 @@ class StorySpec extends Specification {
 
   }
 
-  "Story#dirs" should {
+  "StoryUtil#dirs" should {
 
     "return all directories" in {
       StoryUtil().dirs("test/stories") must have size 1
@@ -38,7 +96,7 @@ class StorySpec extends Specification {
 
   }
 
-  "Story#allJson" should {
+  "StoryUtil#allJson" should {
 
     "return JSON with all directories and stories" in {
       val storiesData = Json.toJson(Seq(
@@ -50,17 +108,17 @@ class StorySpec extends Specification {
         Json.toJson(Map("name" -> Json.toJson("myDir2")))
       ))
       val expected = Json.toJson(Map("stories" -> storiesData, "dirs" -> dirsData))
-      val story = new StoryUtil() {
+      val storyUtil = new StoryUtil() {
         override def dirs(path: String) = List(
           "myDir1",
           "myDir2"
         )
         override def stories(path: String) = List(
-          Story("myStory1.story"),
-          Story("myStory2.story")
+          StoryList("myStory1.story"),
+          StoryList("myStory2.story")
         )
       }
-      story.allJson("mock") must be equalTo expected
+      storyUtil.allJson("mock") must be equalTo expected
     }
 
   }
