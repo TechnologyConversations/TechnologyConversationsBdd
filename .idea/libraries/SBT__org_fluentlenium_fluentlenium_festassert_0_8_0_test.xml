@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="SBT: org.fluentlenium:fluentlenium-festassert:0.8.0:test">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/org.fluentlenium/fluentlenium-festassert/0.8.0/jars/fluentlenium-festassert.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.fluentlenium/fluentlenium-festassert/jars/fluentlenium-festassert-0.8.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>

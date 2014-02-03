@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="SBT: ch.qos.logback:logback-core:1.0.13">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/ch.qos.logback/logback-core/1.0.13/jars/logback-core.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-1.0.13.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>

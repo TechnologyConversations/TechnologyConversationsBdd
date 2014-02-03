@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="SBT: net.sourceforge.cssparser:cssparser:0.9.9:test">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/net.sourceforge.cssparser/cssparser/0.9.9/jars/cssparser.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.9.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>

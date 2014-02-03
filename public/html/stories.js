@@ -7,17 +7,8 @@ angular.module('storiesModule', [])
         }, function(response) {
             console.log("FAILURE!!!!")
         });
-        $scope.selectStory = function(story) {
-            $scope.selectedStory = story;
-        };
-        $scope.isSelected = function(story) {
-            return $scope.selectedStory === story;
-        };
         $scope.detailsClick = function() {
-            console.log('TODO Display story')
-        }
+            $scope.storyName = 'TODO Name'
+            $scope.storyContent = 'TODO Content'
+        };
     })
-    .controller('storyCtrl', function($scope) {
-        $scope.name = 'TODO Name'
-        $scope.content = 'TODO Content'
-    });

@@ -6,32 +6,71 @@
     <script src="/assets/javascripts/angular-resource.min.js"></script>
     <script src="stories.js"></script>
     <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/stylesheets/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <body ng-app="storiesModule">
-    <div>
-        <table class="table table-striped table-hover" ng-controller="storiesCtrl">
-            <tbody ng-repeat="dir in dirs">
-            <tr>
-                <td>DIR</td>
-                <td>{{dir.name}}</td>
-                <td>&nbsp;</td>
-            </tr>
-            </tbody>
-            <tbody ng-repeat="story in stories" ng-click="selectStory(story)" ng-switch on="isSelected(story)">
-                <tr>
-                    <td>STORY</td>
-                    <td>{{story.name}}</td>
-                    <td><button ng-click="detailsClick()">Details</button></td>
-                </tr>
-                <tr ng-switch-when="true">
-                    <td colspan="3">TODO DETAILS</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div ng-controller="storyCtrl">
-        <h1>{{name}}</h1>
-        <div>{{content}}</div>
+    <div class="container-fluid">
+        <div class="row" ng-controller="storiesCtrl">
+            <div class="col-md-3">
+                <div class="well">
+                    <label>Search for: <input type="text" ng-model="criteria"></label>
+                </div>
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <th>&nbsp;</th>
+                        <th>Story</th>
+                        <th>&nbsp;</th>
+                    </thead>
+                    <tbody ng-repeat="dir in dirs | filter:criteria">
+                        <tr>
+                            <td>DIR</td>
+                            <td>{{dir.name}}</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-repeat="storyItem in filteredStories  = (stories | filter:criteria)">
+                        <tr>
+                            <td>STORY</td>
+                            <td>{{storyItem.name}}</td>
+                            <td><button ng-click="detailsClick()" class="btn btn-info btn-xs">Details</button></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>TOTAL</td>
+                            <td>{{filteredStories.length}} stories</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-9">
+                <h1>{{storyName}}</h1>
+                <form class="form-horizontal" role="form">
+                    <h3 id="storyNarrativeHeader">Narrative:</h3>
+                    <div class="form-group">
+                        <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
+                        <div class="col-sm-10">
+                            <input id="storyNarrativeInOrderToInput" class="form-control" type="text" ng-model="story.narrative.inOrderTo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="storyNarrativeAsA" for="storyNarrativeAsAInput" class="control-label col-sm-2">As a</label>
+                        <div class="col-sm-10">
+                            <input id="storyNarrativeAsAInput" class="form-control" type="text" ng-model="story.narrative.asA">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="storyNarrativeIWantTo" for="storyNarrativeIWantToInput" class="control-label col-sm-2">I want to</label>
+                        <div class="col-sm-10">
+                            <input id="storyNarrativeIWantToInput" class="form-control" type="text" ng-model="story.narrative.iWantTo">
+                        </div>
+                    </div>
+                    <div>{{storyContent}}</div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import org.specs2.mock.Mockito
 import play.api.libs.json.Json
 import org.joda.time.DateTime
 import scala.io.Source
+import org.jbehave.core.model.Narrative
 
 class StorySpec extends Specification {
 
@@ -35,12 +36,14 @@ class StorySpec extends Specification {
 
     "have narrative" in {
       val story = Story("myStory.story", storyContent)
-      story.narrative must be equalTo narrative
+      story.jBehaveStory.getNarrative.inOrderTo must be equalTo "do something"
+      story.jBehaveStory.getNarrative.asA must be equalTo "someone"
+      story.jBehaveStory.getNarrative.iWantTo must be equalTo "be able to"
     }
 
     "have narrative empty when not provided in the story" in {
       val story = Story("myStory.story", scenario1 + "\n\n" + scenario2)
-      story.narrative must be equalTo ""
+      story.jBehaveStory.getNarrative.isEmpty must be equalTo true
     }
 
   }

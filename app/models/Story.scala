@@ -7,15 +7,12 @@ import scala.io.Source
 import org.jbehave.core.parsers._
 
 case class Story(fileName: String, content: String) {
-  def name: String = fileName.split('.').init.mkString(".")
-  def narrative: String = {
-    val narrative = new RegexStoryParser().parseStory(content).getNarrative
-    if (!narrative.isEmpty)
-      "Narrative:\nIn order to " + narrative.inOrderTo + "\nAs a " + narrative.asA + "\nI want to " + narrative.iWantTo
-    else ""
-  }
-}
 
+  def name: String = fileName.split('.').init.mkString(".")
+
+  def jBehaveStory = new RegexStoryParser().parseStory(content)
+
+}
 
 case class StoryList(fileName: String) {
   def name: String = fileName.split('.').init.mkString(".")

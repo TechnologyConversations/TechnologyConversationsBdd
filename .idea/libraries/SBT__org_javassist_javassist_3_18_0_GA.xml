@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="SBT: org.javassist:javassist:3.18.0-GA">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/org.javassist/javassist/3.18.0-GA/bundles/javassist.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.18.0-GA.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>

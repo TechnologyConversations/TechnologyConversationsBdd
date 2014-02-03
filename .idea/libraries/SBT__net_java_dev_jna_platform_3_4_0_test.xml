@@ -1,9 +1,8 @@
 <component name="libraryTable">
   <library name="SBT: net.java.dev.jna:platform:3.4.0:test">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/net.java.dev.jna/platform/3.4.0/jars/platform.jar!/" />
+      <root url="jar://$USER_HOME$/.ivy2/cache/net.java.dev.jna/platform/jars/platform-3.4.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>
