@@ -14,8 +14,4 @@ object Application extends Controller {
       "Seems that the page you're looking for went for a walk and could not be found ever since."))
   }
 
-  def index = Action {
-    Redirect(routes.StoryController.index)
-  }
-
 }
