@@ -35,8 +35,7 @@ class StorySpec extends Specification with JsonMatchers {
 
   "Story#jBehaveJson" should {
 
-    "have narrative" in {
-      val narrativeAsString = """Narrative:
+    val narrativeAsString = """Narrative:
 In order to communicate effectively to the business some functionality
 As a development team
 I want to use Behaviour-Driven Development
@@ -60,13 +59,20 @@ When a negative event occurs
 Then a the outcome should [be-captured]
 
 Examples:
-|precondition|be-captured|
-|abc|be captured    |
-|xyz|not be captured|"""
-      val narrative = new Story("myStory.story", narrativeAsString).jBehaveJson.toString
-      narrative must /("narrative") */("inOrderTo" -> "communicate effectively to the business some functionality")
-      narrative must /("narrative") */("asA" -> "development team")
-      narrative must /("narrative") */("iWantTo" -> "use Behaviour-Driven Development")
+                              |precondition|be-captured|
+                              |abc|be captured    |
+                              |xyz|not be captured|"""
+
+    "have name" in {
+      val json = new Story("myStory.story", narrativeAsString).jBehaveJson.toString
+      json must /("name" -> "myStory")
+    }
+
+    "have narrative" in {
+      val json = new Story("myStory.story", narrativeAsString).jBehaveJson.toString
+      json must /("narrative") */("inOrderTo" -> "communicate effectively to the business some functionality")
+      json must /("narrative") */("asA" -> "development team")
+      json must /("narrative") */("iWantTo" -> "use Behaviour-Driven Development")
     }
 
   }

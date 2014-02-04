@@ -2,7 +2,6 @@ package models
 
 import java.io.File
 import play.api.libs.json.Json
-import org.joda.time._
 import scala.io.Source
 import org.jbehave.core.parsers._
 
@@ -18,10 +17,14 @@ class Story(fileName: String, val content: String) {
       "inOrderTo" -> narrative.inOrderTo,
       "asA" -> narrative.asA(),
       "iWantTo" -> narrative.iWantTo()))
-    Json.toJson(Map("narrative" -> narrativeJson))
+    Json.toJson(Map(
+      "name" -> Json.toJson(name),
+      "narrative" -> narrativeJson
+    ))
   }
 
 }
+
 object Story {
 
   def apply(path: String) = {

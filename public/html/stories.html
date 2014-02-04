@@ -21,18 +21,18 @@
                         <th>Story</th>
                         <th>&nbsp;</th>
                     </thead>
-                    <tbody ng-repeat="dir in dirs | filter:criteria">
+                    <tbody ng-repeat="dir in files.dirs | filter:criteria">
                         <tr>
                             <td>DIR</td>
                             <td>{{dir.name}}</td>
                             <td>&nbsp;</td>
                         </tr>
                     </tbody>
-                    <tbody ng-repeat="storyItem in filteredStories  = (stories | filter:criteria)">
+                    <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
                         <tr>
                             <td>STORY</td>
                             <td>{{storyItem.name}}</td>
-                            <td><button ng-click="detailsClick()" class="btn btn-info btn-xs">Details</button></td>
+                            <td><button ng-click="detailsClick(storyItem.name)" class="btn btn-info btn-xs">Details</button></td>
                         </tr>
                     </tbody>
                     <tbody>
@@ -45,28 +45,32 @@
                 </table>
             </div>
             <div class="col-md-9">
-                <h1>{{storyName}}</h1>
                 <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input id="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name">
+                        </div>
+                    </div>
                     <h3 id="storyNarrativeHeader">Narrative:</h3>
                     <div class="form-group">
                         <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeInOrderToInput" class="form-control" type="text" ng-model="story.narrative.inOrderTo">
+                            <input id="storyNarrativeInOrderToInput" class="form-control input-sm" type="text" ng-model="story.narrative.inOrderTo">
                         </div>
                     </div>
                     <div class="form-group">
                         <label id="storyNarrativeAsA" for="storyNarrativeAsAInput" class="control-label col-sm-2">As a</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeAsAInput" class="form-control" type="text" ng-model="story.narrative.asA">
+                            <input id="storyNarrativeAsAInput" class="form-control input-sm" type="text" ng-model="story.narrative.asA">
                         </div>
                     </div>
                     <div class="form-group">
                         <label id="storyNarrativeIWantTo" for="storyNarrativeIWantToInput" class="control-label col-sm-2">I want to</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeIWantToInput" class="form-control" type="text" ng-model="story.narrative.iWantTo">
+                            <input id="storyNarrativeIWantToInput" class="form-control input-sm" type="text" ng-model="story.narrative.iWantTo">
                         </div>
                     </div>
-                    <div>{{storyContent}}</div>
+                    <div>TODO {{storyContent}}</div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>

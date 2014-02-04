@@ -1,14 +1,15 @@
 angular.module('storiesModule', [])
     .controller('storiesCtrl', function($scope, $http) {
-        var storiesPromise = $http.get('/stories/json');
-        storiesPromise.then(function(response) {
-            $scope.dirs = response.data.dirs;
-            $scope.stories = response.data.stories;
+        $http.get('/stories/json').then(function(response) {
+            $scope.files = response.data;
         }, function(response) {
-            console.log("FAILURE!!!!")
+            console.log("FAILURE!!!!");
         });
-        $scope.detailsClick = function() {
-            $scope.storyName = 'TODO Name'
-            $scope.storyContent = 'TODO Content'
+        $scope.detailsClick = function(storyName) {
+            $http.get('/stories/json/' + storyName + ".story").then(function(response) {
+                $scope.story = response.data;
+            }, function(response) {
+                console.log("FAILURE!!!!");
+            });
         };
     })
