@@ -1,127 +1,84 @@
 package models
 
 import org.specs2.mutable.Specification
-import org.specs2.mock.Mockito
-import play.api.libs.json.Json
-import org.joda.time.DateTime
-import scala.io.Source
-import org.jbehave.core.model.Narrative
+import java.io.FileNotFoundException
+import org.specs2.matcher.JsonMatchers
 
-class StorySpec extends Specification {
+class StorySpec extends Specification with JsonMatchers {
 
-  "StoryList" should {
+  "Story#name" should {
 
-    "have name without extension" in {
-      StoryList("myStory.story").name must be equalTo "myStory"
-    }
-
-  }
-
-  "Story" should {
-
-    val narrative = "Narrative:\nIn order to do something\nAs a someone\nI want to be able to"
-    val scenario1 = "Scenario: My first scenario\nGiven some precondition\nWhen some action\nThen some outcome"
-    val scenario2 = "Scenario: My second scenario\nGiven some precondition\nWhen some action\nThen some outcome"
-    val storyContent = narrative + "\n\n" + scenario1 + "\n\n" + scenario2
-
-    "have name without extension" in {
-      val story = Story("myStory.story", storyContent)
+    "return story name without extension" in {
+      val story = new Story("myStory.story", "storyContent")
       story.name must be equalTo "myStory"
     }
 
-    "have content" in {
-      val story = Story("myStory.story", storyContent)
-      story.content must be equalTo storyContent
+  }
+
+  "Story#content" should {
+
+    "return content of the story" in {
+      val story = new Story("myStory.story", "storyContent")
+      story.content must be equalTo "storyContent"
     }
+
+  }
+
+  "Story#jBehaveStory" should {
+
+    "return instance of the org.jbehave.core.model.Story" in {
+      val story = new Story("myStory.story", "")
+      story.jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
+    }
+
+  }
+
+  "Story#jBehaveJson" should {
 
     "have narrative" in {
-      val story = Story("myStory.story", storyContent)
-      story.jBehaveStory.getNarrative.inOrderTo must be equalTo "do something"
-      story.jBehaveStory.getNarrative.asA must be equalTo "someone"
-      story.jBehaveStory.getNarrative.iWantTo must be equalTo "be able to"
-    }
+      val narrativeAsString = """Narrative:
+In order to communicate effectively to the business some functionality
+As a development team
+I want to use Behaviour-Driven Development
 
-    "have narrative empty when not provided in the story" in {
-      val story = Story("myStory.story", scenario1 + "\n\n" + scenario2)
-      story.jBehaveStory.getNarrative.isEmpty must be equalTo true
-    }
+Lifecycle:
+Before:
+Given a step that is executed before each scenario
+After:
+Given a step that is executed after each scenario
 
-  }
+Scenario:  A scenario is a collection of executable steps of different type
 
-  "StoryUtil#fileSource" should {
+Given step represents a precondition to an event
+When step represents the occurrence of the event
+Then step represents the outcome of the event
 
-    "return contents of the specified file" in {
-      val actual = StoryUtil().fileSource("test/stories/story1.not_story")
-      actual must equalTo("This is\nnot a\nstory file")
-    }
+Scenario:  Another scenario exploring different combination of events
 
-  }
+Given a [precondition]
+When a negative event occurs
+Then a the outcome should [be-captured]
 
-  "StoryUtil#story" should {
-
-    val storyUtil = new StoryUtil() {
-      override def fileSource(path: String):String = {
-        "This is some content"
-      }
-    }
-
-    "return Story with name" in {
-      storyUtil.story("myStory.story").name must be equalTo "myStory"
-    }
-
-    "return Story with file content" in {
-      storyUtil.story("myStory.story").content must be equalTo "This is some content"
+Examples:
+|precondition|be-captured|
+|abc|be captured    |
+|xyz|not be captured|"""
+      val narrative = new Story("myStory.story", narrativeAsString).jBehaveJson.toString
+      narrative must /("narrative") */("inOrderTo" -> "communicate effectively to the business some functionality")
+      narrative must /("narrative") */("asA" -> "development team")
+      narrative must /("narrative") */("iWantTo" -> "use Behaviour-Driven Development")
     }
 
   }
 
-  "StoryUtil#stories" should {
+  "Story object" should {
 
-    "return all stories from files ending with .story" in {
-      StoryUtil().stories("test/stories") must have size 3
+    "return Story instance when apply is called" in {
+      Story("stories/story1.story") must beAnInstanceOf[Story]
     }
 
-    "return no stories when the destination directory is empty" in {
-      StoryUtil().stories("test/stories/empty") must have size 0
-    }
-
-  }
-
-  "StoryUtil#dirs" should {
-
-    "return all directories" in {
-      StoryUtil().dirs("test/stories") must have size 1
-    }
-
-    "return no directories when the destination directory is empty" in {
-      StoryUtil().dirs("test/stories/empty") must have size 0
-    }
-
-  }
-
-  "StoryUtil#allJson" should {
-
-    "return JSON with all directories and stories" in {
-      val storiesData = Json.toJson(Seq(
-        Json.toJson(Map("name" -> Json.toJson("myStory1"))),
-        Json.toJson(Map("name" -> Json.toJson("myStory2")))
-      ))
-      val dirsData = Json.toJson(Seq(
-        Json.toJson(Map("name" -> Json.toJson("myDir1"))),
-        Json.toJson(Map("name" -> Json.toJson("myDir2")))
-      ))
-      val expected = Json.toJson(Map("stories" -> storiesData, "dirs" -> dirsData))
-      val storyUtil = new StoryUtil() {
-        override def dirs(path: String) = List(
-          "myDir1",
-          "myDir2"
-        )
-        override def stories(path: String) = List(
-          StoryList("myStory1.story"),
-          StoryList("myStory2.story")
-        )
-      }
-      storyUtil.allJson("mock") must be equalTo expected
+    "throw an exception when story is not found" in {
+      Story("stories/non_existent.story") must throwA[FileNotFoundException]
     }
 
   }

@@ -1,17 +1,19 @@
 package controllers
 
 import play.api.mvc._
-import play.api.data._
-import play.api.libs.json._
-import play.api.data.Forms._
-import models.{StoryUtil, StoryList}
+import models.{Story, StoryList}
 import play.api.Play
 
 object StoryController extends Controller {
 
   def allJson = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-    Ok(StoryUtil().allJson(dir))
+    Ok(StoryList(dir).json)
+  }
+
+  def storyJson(storyPath: String) = Action {
+    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+    Ok(Story(dir + "/" + storyPath).jBehaveJson)
   }
 
 }
