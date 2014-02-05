@@ -9,7 +9,7 @@ class StorySpec extends Specification with JsonMatchers {
   "Story#name" should {
 
     "return story name without extension" in {
-      val story = new Story("myStory.story", "storyContent")
+      val story = new Story("myStory.story")
       story.name must be equalTo "myStory"
     }
 
@@ -18,7 +18,7 @@ class StorySpec extends Specification with JsonMatchers {
   "Story#content" should {
 
     "return content of the story" in {
-      val story = new Story("myStory.story", "storyContent")
+      val story = new Story("test/stories/story1.story")
       story.content must be equalTo "storyContent"
     }
 
@@ -27,15 +27,17 @@ class StorySpec extends Specification with JsonMatchers {
   "Story#jBehaveStory" should {
 
     "return instance of the org.jbehave.core.model.Story" in {
-      val story = new Story("myStory.story", "")
+      val story = new Story("myStory.story") {
+        override def content = "MOCK"
+      }
       story.jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
     }
 
   }
 
-  "Story#jBehaveJson" should {
+  "Story#json" should {
 
-    val narrativeAsString = """Narrative:
+    val storyAsString = """Narrative:
 In order to communicate effectively to the business some functionality
 As a development team
 I want to use Behaviour-Driven Development
@@ -59,17 +61,21 @@ When a negative event occurs
 Then a the outcome should [be-captured]
 
 Examples:
-                              |precondition|be-captured|
-                              |abc|be captured    |
-                              |xyz|not be captured|"""
+|precondition|be-captured|
+|abc|be captured    |
+|xyz|not be captured|"""
+
+    val story = new Story("MOCK") {
+      override def content = storyAsString
+      override def name = "myStory"
+    }
 
     "have name" in {
-      val json = new Story("myStory.story", narrativeAsString).jBehaveJson.toString
-      json must /("name" -> "myStory")
+      story.json.toString must /("name" -> "myStory")
     }
 
     "have narrative" in {
-      val json = new Story("myStory.story", narrativeAsString).jBehaveJson.toString
+      val json = story.json.toString
       json must /("narrative") */("inOrderTo" -> "communicate effectively to the business some functionality")
       json must /("narrative") */("asA" -> "development team")
       json must /("narrative") */("iWantTo" -> "use Behaviour-Driven Development")
@@ -80,11 +86,7 @@ Examples:
   "Story object" should {
 
     "return Story instance when apply is called" in {
-      Story("stories/story1.story") must beAnInstanceOf[Story]
-    }
-
-    "throw an exception when story is not found" in {
-      Story("stories/non_existent.story") must throwA[FileNotFoundException]
+      Story("test/stories/story1.story") must beAnInstanceOf[Story]
     }
 
   }

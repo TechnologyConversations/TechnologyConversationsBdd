@@ -13,7 +13,7 @@ object StoryController extends Controller {
 
   def storyJson(storyPath: String) = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-    Ok(Story(dir + "/" + storyPath).jBehaveJson)
+    Ok(Story(dir + "/" + storyPath).json)
   }
 
 }
