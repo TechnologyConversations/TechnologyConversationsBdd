@@ -12,4 +12,19 @@ angular.module('storiesModule', [])
                 console.log("FAILURE!!!!");
             });
         };
+        $scope.getCssClass = function(ngModelController) {
+            return {
+                'has-error': ngModelController.$invalid && ngModelController.$dirty,
+                'has-success': ngModelController.$valid && ngModelController.$dirty
+            };
+        };
+        $scope.getButtonCssClass = function() {
+            return {
+                'btn-success': $scope.storyForm.$valid,
+                'btn-danger': $scope.storyForm.$invalid
+            };
+        };
+        $scope.getButtonEnabled = function() {
+            return $scope.storyForm.$dirty && $scope.storyForm.$valid
+        }
     })

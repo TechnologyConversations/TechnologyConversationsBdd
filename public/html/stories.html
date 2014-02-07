@@ -45,33 +45,33 @@
                 </table>
             </div>
             <div class="col-md-9">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
+                <form class="form-horizontal" role="form" name="storyForm" novalidate="novalidate">
+                    <div class="form-group" ng-class="getCssClass(storyForm.storyNameInput)">
                         <div class="col-sm-12">
-                            <input id="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name">
+                            <input id="storyNameInput" name="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name" required>
                         </div>
                     </div>
                     <h3 id="storyNarrativeHeader">Narrative:</h3>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeInOrderToInput)">
                         <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeInOrderToInput" class="form-control input-sm" type="text" ng-model="story.narrative.inOrderTo">
+                            <input id="storyNarrativeInOrderToInput" name="storyNarrativeInOrderToInput" class="form-control input-sm" type="text" ng-model="story.narrative.inOrderTo">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeAsAInput)">
                         <label id="storyNarrativeAsA" for="storyNarrativeAsAInput" class="control-label col-sm-2">As a</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeAsAInput" class="form-control input-sm" type="text" ng-model="story.narrative.asA">
+                            <input id="storyNarrativeAsAInput" name="storyNarrativeAsAInput" class="form-control input-sm" type="text" ng-model="story.narrative.asA">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeIWantToInput)">
                         <label id="storyNarrativeIWantTo" for="storyNarrativeIWantToInput" class="control-label col-sm-2">I want to</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeIWantToInput" class="form-control input-sm" type="text" ng-model="story.narrative.iWantTo">
+                            <input id="storyNarrativeIWantToInput" name="storyNarrativeIWantToInput" class="form-control input-sm" type="text" ng-model="story.narrative.iWantTo">
                         </div>
                     </div>
                     <div>TODO {{storyContent}}</div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-lg" ng-class="getButtonCssClass()" ng-disabled="!getButtonEnabled()">Save</button>
                 </form>
             </div>
         </div>

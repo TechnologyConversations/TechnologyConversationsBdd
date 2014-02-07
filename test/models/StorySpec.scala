@@ -24,17 +24,6 @@ class StorySpec extends Specification with JsonMatchers {
 
   }
 
-  "Story#jBehaveStory" should {
-
-    "return instance of the org.jbehave.core.model.Story" in {
-      val story = new Story("myStory.story") {
-        override def content = "MOCK"
-      }
-      story.jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
-    }
-
-  }
-
   "Story#json" should {
 
     val storyAsString = """Narrative:
@@ -70,15 +59,21 @@ Examples:
       override def name = "myStory"
     }
 
+    val jsonString = story.json.toString
+
     "have name" in {
-      story.json.toString must /("name" -> "myStory")
+      jsonString must /("name" -> "myStory")
     }
 
     "have narrative" in {
-      val json = story.json.toString
-      json must /("narrative") */("inOrderTo" -> "communicate effectively to the business some functionality")
-      json must /("narrative") */("asA" -> "development team")
-      json must /("narrative") */("iWantTo" -> "use Behaviour-Driven Development")
+      jsonString must /("narrative") /("inOrderTo" -> "communicate effectively to the business some functionality")
+      jsonString must /("narrative") /("asA" -> "development team")
+      jsonString must /("narrative") /("iWantTo" -> "use Behaviour-Driven Development")
+    }
+
+    "have lifecycle" in {
+      jsonString must /("lifecycle") /("before" -> "Given a step that is executed before each scenario")
+      jsonString must /("lifecycle") /("after" -> "Given a step that is executed after each scenario")
     }
 
   }
