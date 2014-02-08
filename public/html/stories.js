@@ -14,7 +14,7 @@ angular.module('storiesModule', [])
         };
         $scope.getCssClass = function(ngModelController) {
             return {
-                'has-error': ngModelController.$invalid && ngModelController.$dirty,
+                'has-error': ngModelController.$invalid,
                 'has-success': ngModelController.$valid && ngModelController.$dirty
             };
         };
@@ -26,5 +26,11 @@ angular.module('storiesModule', [])
         };
         $scope.getButtonEnabled = function() {
             return $scope.storyForm.$dirty && $scope.storyForm.$valid
+        };
+        $scope.removeMetaElement = function(index) {
+            $scope.story.meta.splice(index, 1);
+        };
+        $scope.addMetaElement = function() {
+            $scope.story.meta.push({element: ''});
         }
     })

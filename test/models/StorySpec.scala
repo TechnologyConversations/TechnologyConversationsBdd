@@ -101,17 +101,12 @@ Examples:
       jsonString must /("givenStories" -> givenStoriesJson)
     }
 
-    "have meta tags" in {
-      val metaJson = JSONArray(List("integration", "product dashboard"))
-      jsonString must /("meta" -> metaJson)
-    }
-
     "have scenario title" in {
       jsonString must /("scenarios") */("title" -> "A scenario is a collection of executable steps of different type")
       jsonString must /("scenarios") */("title" -> "Another scenario exploring different combination of events")
     }
 
-//    TODO Figure out how to test scenario metas, steps and examples
+//    TODO Figure out how to test metas and scenario
 //    "have scenario metas" in {
 //      val metaJson = JSONArray(List("product shopping cart", "live"))
 //      jsonString must /("scenarios") */("meta" -> metaJson)

@@ -51,23 +51,47 @@
                             <input id="storyNameInput" name="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name" required>
                         </div>
                     </div>
+                    <div class="form-group" ng-class="getCssClass(storyForm.storyDescriptionInput)">
+                        <label id="storyDescription" for="storyDescriptionInput" class="control-label col-sm-2">Description</label>
+                        <div class="col-sm-10">
+                            <textarea id="storyDescriptionInput" name="storyDescriptionInput" class="form-control" ng-model="story.description" placeholder="story description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="storyMeta" for="storyMetaInput" class="control-label col-sm-2">Meta</label>
+                        <div class="col-sm-10">
+                            <div ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="getCssClass(storyMetaForm.storyMetaInput)">
+                                <div class="col-sm-11">
+                                    <input id="storyMetaInput" name="storyMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-warning" ng-click="removeMetaElement($index)">X</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-warning" ng-click="addMetaElement()">&gt;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h3 id="storyNarrativeHeader">Narrative:</h3>
                     <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeInOrderToInput)">
                         <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeInOrderToInput" name="storyNarrativeInOrderToInput" class="form-control input-sm" type="text" ng-model="story.narrative.inOrderTo">
+                            <input id="storyNarrativeInOrderToInput" name="storyNarrativeInOrderToInput" class="form-control" type="text" ng-model="story.narrative.inOrderTo">
                         </div>
                     </div>
                     <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeAsAInput)">
                         <label id="storyNarrativeAsA" for="storyNarrativeAsAInput" class="control-label col-sm-2">As a</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeAsAInput" name="storyNarrativeAsAInput" class="form-control input-sm" type="text" ng-model="story.narrative.asA">
+                            <input id="storyNarrativeAsAInput" name="storyNarrativeAsAInput" class="form-control" type="text" ng-model="story.narrative.asA">
                         </div>
                     </div>
                     <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeIWantToInput)">
                         <label id="storyNarrativeIWantTo" for="storyNarrativeIWantToInput" class="control-label col-sm-2">I want to</label>
                         <div class="col-sm-10">
-                            <input id="storyNarrativeIWantToInput" name="storyNarrativeIWantToInput" class="form-control input-sm" type="text" ng-model="story.narrative.iWantTo">
+                            <input id="storyNarrativeIWantToInput" name="storyNarrativeIWantToInput" class="form-control" type="text" ng-model="story.narrative.iWantTo">
                         </div>
                     </div>
                     <div>TODO {{storyContent}}</div>

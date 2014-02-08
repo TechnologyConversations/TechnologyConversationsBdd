@@ -31,9 +31,7 @@ trait JBehaveStory {
         "examplesTable" -> Json.toJson(scenario.getExamplesTable.asString)
       )
     )
-//    TODO
-//    Rewrite examples table to lists
-//    !--
+
     Json.toJson(Map(
       "name" -> Json.toJson(name),
       "description" -> Json.toJson(jBehaveStory.getDescription.asString),
@@ -46,7 +44,7 @@ trait JBehaveStory {
   }
 
   def metaJson(meta: Meta) = {
-    meta.getPropertyNames.map(name => (name + " " + meta.getProperty(name)).trim).toList
+    meta.getPropertyNames.map(name => Map("element" -> (name + " " + meta.getProperty(name)).trim))
   }
 
 }
