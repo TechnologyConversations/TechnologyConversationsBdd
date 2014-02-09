@@ -5,10 +5,10 @@ notifications:
   email:
   - viktor@farcic.com
   - alexgarcer@gmail.com
-#deploy:
-#  provider: heroku
-#  api_key:
-#    secure: SRT/QPYeRmfKCJjM6OVxWhId4xVG9ZnavYWeumkEPNGn1Ftd51JnrlGC2G7mUfr6ivQrj5bwK8aZJ3g00DvZce/m674to37kvEG9N85VjqoQIEef0OZEs/XIlbqdNHeDO3sz5JZHIcEe4qrHjlbVPtHYaiSaGeBPR1Px85sGiuE=
-#  app: tcbdd
-#  on:
-#    repo: vfarcic/TechnologyConversationsBdd
+deploy:
+  provider: heroku
+  api_key:
+    secure: SRT/QPYeRmfKCJjM6OVxWhId4xVG9ZnavYWeumkEPNGn1Ftd51JnrlGC2G7mUfr6ivQrj5bwK8aZJ3g00DvZce/m674to37kvEG9N85VjqoQIEef0OZEs/XIlbqdNHeDO3sz5JZHIcEe4qrHjlbVPtHYaiSaGeBPR1Px85sGiuE=
+  app: tcbdd
+  on:
+    repo: vfarcic/TechnologyConversationsBdd

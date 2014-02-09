@@ -2,32 +2,16 @@ package models
 
 import org.specs2.mutable.Specification
 import org.specs2.matcher.JsonMatchers
+import org.jbehave.core.model._
+import java.util.Properties
+import scala.Predef._
+import scala.collection.JavaConverters._
+import scala.collection.mutable.ListBuffer
 import play.api.libs.json.Json
-import scala.util.parsing.json.JSONArray
 
 class StorySpec extends Specification with JsonMatchers {
 
-  "Story#name" should {
-
-    "return story name without extension" in {
-      val story = new Story("myStory.story")
-      story.name must be equalTo "myStory"
-    }
-
-  }
-
-  "Story#content" should {
-
-    "return content of the story" in {
-      val story = new Story("test/stories/story1.story")
-      story.content must be equalTo "storyContent"
-    }
-
-  }
-
-  "Story#json" should {
-
-    val storyAsString = """
+  val storyAsString = """
 This is description of this story
 
 Meta:
@@ -47,70 +31,251 @@ Given a step that is executed before each scenario
 After:
 Given a step that is executed after each scenario
 
-Scenario: A scenario is a collection of executable steps of different type
-
-Meta:
-@live
-@product shopping cart
-
-Given step represents a precondition to an event
-When step represents the occurrence of the event
-Then step represents the outcome of the event
-
 Scenario: Another scenario exploring different combination of events
 
-Given a [precondition]
+Given a precondition
 When a negative event occurs
-Then a the outcome should [be-captured]
+Then a the outcome should be-captured
+"""
 
-Examples:
-                          |precondition|be-captured|
-                          |abc|be captured    |
-                          |xyz|not be captured|"""
+  val mockStory = new Story("MOCK") {
+    override def content = storyAsString
+    override def name = "myStory"
+  }
 
-    val story = new Story("MOCK") {
-      override def content = storyAsString
-      override def name = "myStory"
+  "Story#stepCollection" should {
+
+    val story = new Story("myStory.story")
+    val steps = List("Given condition", "When action", "Then validation")
+
+    "return list of all steps" in {
+      story.stepsCollection(steps) must have size 3
     }
 
-    val jsonString = story.json.toString
+    "have step -> value pairs" in {
+      val expected = Seq(
+        Map("step" -> "Given condition"),
+        Map("step" -> "When action"),
+        Map("step" -> "Then validation")
+      )
+      story.stepsCollection(steps) must containTheSameElementsAs(expected)
+    }
+
+  }
+
+  "Story#name" should {
+
+    "return story name without extension" in {
+      val story = new Story("myStory.story")
+      story.name must be equalTo "myStory"
+    }
+
+  }
+
+  "Story#content" should {
+
+    "return content of the story" in {
+      val story = new Story("test/stories/story1.story")
+      story.content must be equalTo "storyContent"
+    }
+
+  }
+
+  "Story#metaCollection" should {
+
+    val story = new Story("test/stories/story1.story")
+    val properties = new Properties();
+    properties.put("key1", "value1")
+    properties.put("key2", "")
+    val meta = new Meta(properties)
+
+    "have correct size" in {
+      story.metaCollection(meta) must have size 2
+    }
+
+    "have map sequence (element -> value)" in {
+      val elements = Seq(Map("element" -> "key1 value1"), Map("element" -> "key2"))
+      story.metaCollection(meta) must containTheSameElementsAs(elements)
+    }
+
+  }
+
+  "Story#givenStoriesCollection" should {
+
+    val story = new Story("test/stories/story1.story")
+    val givenStories = List("story1.story", "story2.story", "story3.story")
+
+    "have correct size" in {
+      story.givenStoriesCollection(givenStories) must have size 3
+    }
+
+    "have map sequence (story -> value)" in {
+      val elements = Seq(
+        Map("story" -> "story1.story"),
+        Map("story" -> "story2.story"),
+        Map("story" -> "story3.story"))
+      story.givenStoriesCollection(givenStories) must containTheSameElementsAs(elements)
+    }
+
+  }
+
+  "Story#narrativeCollection" should {
+
+    val story = new Story("test/stories/story1.story")
+    val narrative = new Narrative("accomplish something", "someone", "do something")
+
+    "have size 3" in {
+      story.narrativeCollection(narrative) must have size 3
+    }
+
+    "have inOrderTo key" in {
+      story.narrativeCollection(narrative) must havePair("inOrderTo" -> "accomplish something" )
+    }
+
+    "have asA key" in {
+      story.narrativeCollection(narrative) must havePair("asA" -> "someone" )
+    }
+
+    "have iWantTo key" in {
+      story.narrativeCollection(narrative) must havePair("iWantTo" -> "do something" )
+    }
+
+  }
+
+  "Story#lifecycleCollection" should {
+
+    val story = new Story("test/stories/story1.story")
+    val lifecycle = new Lifecycle(
+      ListBuffer("When before step1", "Then before outcome1").asJava,
+      ListBuffer("When after step1").asJava
+    )
+
+    "have size 2" in {
+      story.lifecycleCollection(lifecycle) must have size 2
+    }
+
+    "have before key" in {
+      story.lifecycleCollection(lifecycle) must haveKey("before")
+    }
+
+    "have before steps" in {
+      val before = story.lifecycleCollection(lifecycle)("before")
+      before must have size 2
+      val steps = story.stepsCollection(List("When before step1", "Then before outcome1"))
+      before must containTheSameElementsAs(steps)
+    }
+
+    "have after key" in {
+      story.lifecycleCollection(lifecycle) must haveKey("after")
+    }
+
+    "have after steps" in {
+      val after = story.lifecycleCollection(lifecycle)("after")
+      after must have size 1
+      val steps = story.stepsCollection(List("When after step1"))
+      after must containTheSameElementsAs(steps)
+    }
+
+  }
+
+  "Story#scenariosCollection" should {
+
+    val story = new Story("test/stories/story1.story")
+    val properties = new Properties();
+    properties.put("key1", "value1")
+    properties.put("key2", "")
+    val meta = new Meta(properties)
+    val steps = List("Given condition", "When action", "Then validation")
+    val examplesTable = "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|\n"
+    val scenario = new Scenario(
+      "myTitle",
+      meta,
+      new GivenStories(""),
+      new ExamplesTable(examplesTable),
+      steps.asJava
+    )
+    val actualScenario =  story.scenariosCollection(List(scenario))(0)
+
+    "have all scenarios" in {
+      story.scenariosCollection(List(scenario, scenario, scenario)) must have size 3
+    }
+
+    "have title" in {
+      actualScenario must havePair("title" -> Json.toJson("myTitle"))
+    }
+
+    "have meta" in {
+      actualScenario must havePair("meta" -> Json.toJson(story.metaCollection(meta)))
+    }
+
+    "have all steps" in {
+      actualScenario must havePair("steps" -> Json.toJson(story.stepsCollection(steps)))
+    }
+
+    "have examples table" in {
+      actualScenario must havePair("examplesTable" -> Json.toJson(examplesTable))
+    }
+
+  }
+
+  "Story#rootCollection" should {
 
     "have name" in {
-      jsonString must /("name" -> "myStory")
+      mockStory.rootCollection must havePair("name" -> Json.toJson("myStory"))
     }
 
     "have description" in {
-      jsonString must /("description" -> "This is description of this story")
+      mockStory.rootCollection must havePair("description" -> Json.toJson("This is description of this story"))
     }
 
-    "have narrative" in {
-      jsonString must /("narrative") /("inOrderTo" -> "communicate effectively to the business some functionality")
-      jsonString must /("narrative") /("asA" -> "development team")
-      jsonString must /("narrative") /("iWantTo" -> "use Behaviour-Driven Development")
-    }
-
-    "have lifecycle" in {
-      val beforeJson = JSONArray(List("Given a step that is executed before each scenario"))
-      val afterJson = JSONArray(List("Given a step that is executed after each scenario"))
-      jsonString must /("lifecycle") /("before" -> beforeJson)
-      jsonString must /("lifecycle") /("after" -> afterJson)
+    "have meta" in {
+      val properties = new Properties();
+      properties.put("integration", "")
+      properties.put("product", "dashboard")
+      val meta = new Meta(properties)
+      mockStory.rootCollection must havePair("meta" -> Json.toJson(mockStory.metaCollection(meta)))
     }
 
     "have givenStories" in {
-      val givenStoriesJson = JSONArray(List("story1.story", "story2.story", "story3.story"))
-      jsonString must /("givenStories" -> givenStoriesJson)
+      val givenStories = List("story1.story", "story2.story", "story3.story")
+      mockStory.rootCollection must havePair("givenStories" -> Json.toJson(mockStory.givenStoriesCollection(givenStories)))
     }
 
-    "have scenario title" in {
-      jsonString must /("scenarios") */("title" -> "A scenario is a collection of executable steps of different type")
-      jsonString must /("scenarios") */("title" -> "Another scenario exploring different combination of events")
+    "have narrative" in {
+      val narrative = new Narrative(
+        "communicate effectively to the business some functionality",
+        "development team",
+        "use Behaviour-Driven Development"
+      )
+      mockStory.rootCollection must havePair("narrative" -> Json.toJson(mockStory.narrativeCollection(narrative)))
     }
 
-//    TODO Figure out how to test metas and scenario
-//    "have scenario metas" in {
-//      val metaJson = JSONArray(List("product shopping cart", "live"))
-//      jsonString must /("scenarios") */("meta" -> metaJson)
-//    }
+    "have lifecycle" in {
+      val lifecycle = new Lifecycle(
+        ListBuffer("Given a step that is executed before each scenario").asJava,
+        ListBuffer("Given a step that is executed after each scenario").asJava
+      )
+      mockStory.rootCollection must havePair("lifecycle" -> Json.toJson(mockStory.lifecycleCollection(lifecycle)))
+    }
+
+    "have scenarios" in {
+      val title = "Another scenario exploring different combination of events"
+      val steps = ListBuffer(
+        "Given a precondition",
+        "When a negative event occurs",
+        "Then a the outcome should be-captured"
+      ).asJava
+      val scenarios = List(new Scenario(title, steps))
+      mockStory.rootCollection must havePair("scenarios" -> Json.toJson(mockStory.scenariosCollection(scenarios)))
+    }
+
+  }
+  
+  "Story#json" should {
+
+    "return json representation of rootCollection" in {
+      mockStory.json must be equalTo(Json.toJson(mockStory.rootCollection))
+    }
 
   }
 

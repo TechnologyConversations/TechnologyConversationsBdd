@@ -10,7 +10,7 @@ As a development team
 I want to use Behaviour-Driven Development
 
 GivenStories: story1.story, story2.story, story3.story
- 
+
 Lifecycle: 
 Before:
 Given a step that is executed before each scenario

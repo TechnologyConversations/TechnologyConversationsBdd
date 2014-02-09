@@ -27,10 +27,10 @@ angular.module('storiesModule', [])
         $scope.getButtonEnabled = function() {
             return $scope.storyForm.$dirty && $scope.storyForm.$valid
         };
-        $scope.removeMetaElement = function(index) {
-            $scope.story.meta.splice(index, 1);
-        };
-        $scope.addMetaElement = function() {
-            $scope.story.meta.push({element: ''});
+        $scope.removeElement = function(collection, index) {
+            collection.splice(index, 1)
+        }
+        $scope.addElement = function(collection, key) {
+            collection.push({key: ''});
         }
     })

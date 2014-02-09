@@ -1,10 +1,9 @@
 package models
 
 import org.jbehave.core.parsers.RegexStoryParser
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import scala.collection.JavaConversions._
-import org.jbehave.core.model.{ExamplesTable, Meta}
-import scala.util.parsing.json.JSONArray
+import org.jbehave.core.model._
 
 trait JBehaveStory {
 
@@ -12,39 +11,59 @@ trait JBehaveStory {
 
   def content: String
 
-  private def jBehaveStory =   new RegexStoryParser().parseStory(content)
+  def jBehaveStory = new RegexStoryParser().parseStory(content)
 
-  def json: play.api.libs.json.JsValue = {
-    val narrative = Map(
-      "inOrderTo" -> jBehaveStory.getNarrative.inOrderTo,
-      "asA" -> jBehaveStory.getNarrative.asA(),
-      "iWantTo" -> jBehaveStory.getNarrative.iWantTo())
-    val lifecycle = Map(
-      "before" -> jBehaveStory.getLifecycle.getBeforeSteps.toList,
-      "after" -> jBehaveStory.getLifecycle.getAfterSteps.toList
+//  TODO Test
+  def json: JsValue = Json.toJson(rootCollection)
+
+  def rootCollection = {
+    Map(
+      "name" -> Json.toJson(name),
+      "description" -> Json.toJson(jBehaveStory.getDescription.asString),
+      "meta" -> Json.toJson(metaCollection(jBehaveStory.getMeta)),
+      "givenStories" -> Json.toJson(givenStoriesCollection(jBehaveStory.getGivenStories.getPaths.toList)),
+      "narrative" -> Json.toJson(narrativeCollection(jBehaveStory.getNarrative)),
+      "lifecycle" -> Json.toJson(lifecycleCollection(jBehaveStory.getLifecycle)),
+      "scenarios" -> Json.toJson(scenariosCollection(jBehaveStory.getScenarios.toList))
     )
-    val scenarios = jBehaveStory.getScenarios.map(scenario =>
+  }
+
+  def metaCollection(meta: Meta) = {
+    meta.getPropertyNames.map(name => Map("element" -> (name + " " + meta.getProperty(name)).trim))
+  }
+
+  def givenStoriesCollection(givenStories: List[String]) = {
+    givenStories.map(story => Map("story" -> story))
+  }
+
+  def narrativeCollection(narrative: Narrative) = {
+    Map(
+      "inOrderTo" -> narrative.inOrderTo,
+      "asA" -> narrative.asA,
+      "iWantTo" -> narrative.iWantTo
+    )
+  }
+
+  def lifecycleCollection(lifecycle: Lifecycle) = {
+    Map(
+      "before" -> stepsCollection(lifecycle.getBeforeSteps.toList),
+      "after" -> stepsCollection(lifecycle.getAfterSteps.toList)
+    )
+  }
+
+  def scenariosCollection(scenarios: List[Scenario]) = {
+    scenarios.map(scenario =>
       Map(
         "title" -> Json.toJson(scenario.getTitle),
-        "meta" -> Json.toJson(metaJson(scenario.getMeta)),
-        "steps" -> Json.toJson(scenario.getSteps.toList),
+        "meta" -> Json.toJson(metaCollection(scenario.getMeta)),
+        "steps" -> Json.toJson(stepsCollection(scenario.getSteps.toList)),
         "examplesTable" -> Json.toJson(scenario.getExamplesTable.asString)
       )
     )
-
-    Json.toJson(Map(
-      "name" -> Json.toJson(name),
-      "description" -> Json.toJson(jBehaveStory.getDescription.asString),
-      "meta" -> Json.toJson(metaJson(jBehaveStory.getMeta)),
-      "givenStories" -> Json.toJson(jBehaveStory.getGivenStories.getPaths.toList),
-      "narrative" -> Json.toJson(narrative),
-      "lifecycle" -> Json.toJson(lifecycle),
-      "scenarios" -> Json.toJson(scenarios)
-    ))
   }
 
-  def metaJson(meta: Meta) = {
-    meta.getPropertyNames.map(name => Map("element" -> (name + " " + meta.getProperty(name)).trim))
+  def stepsCollection(steps: List[String]) = {
+    steps.map(step => Map("step" -> step))
   }
 
 }

@@ -57,25 +57,24 @@
                             <textarea id="storyDescriptionInput" name="storyDescriptionInput" class="form-control" ng-model="story.description" placeholder="story description"></textarea>
                         </div>
                     </div>
+                    <h2 id="storyMetaHeader">Meta:</h2>
                     <div class="form-group">
-                        <label id="storyMeta" for="storyMetaInput" class="control-label col-sm-2">Meta</label>
-                        <div class="col-sm-10">
-                            <div ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="getCssClass(storyMetaForm.storyMetaInput)">
-                                <div class="col-sm-11">
-                                    <input id="storyMetaInput" name="storyMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button class="btn btn-warning" ng-click="removeMetaElement($index)">X</button>
-                                </div>
+                        <div ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="getCssClass(storyMetaForm.storyMetaInput)">
+                            <div class="col-sm-11">
+                                <input id="storyMetaInput{{$index}}" name="storyMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
                             </div>
-                            <div>
-                                <div class="col-sm-1">
-                                    <button class="btn btn-warning" ng-click="addMetaElement()">&gt;</button>
-                                </div>
+                            <div class="col-sm-1">
+                                <button id="storyMetaRemove{{$index}}" class="btn btn-warning" ng-click="removeElement(story.meta, $index)">X</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-sm-11">&nbsp;</div>
+                            <div class="col-sm-1">
+                                <button id="storyMetaAdd" class="btn btn-warning" ng-click="addElement(story.meta, element)">&gt;</button>
                             </div>
                         </div>
                     </div>
-                    <h3 id="storyNarrativeHeader">Narrative:</h3>
+                    <h2 id="storyNarrativeHeader">Narrative:</h2>
                     <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeInOrderToInput)">
                         <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
                         <div class="col-sm-10">
@@ -92,6 +91,58 @@
                         <label id="storyNarrativeIWantTo" for="storyNarrativeIWantToInput" class="control-label col-sm-2">I want to</label>
                         <div class="col-sm-10">
                             <input id="storyNarrativeIWantToInput" name="storyNarrativeIWantToInput" class="form-control" type="text" ng-model="story.narrative.iWantTo">
+                        </div>
+                    </div>
+                    <h2 id="storyGivenStoriesHeader">Given Stories:</h2>
+                    <div class="form-group">
+                        <div ng-repeat="givenStory in story.givenStories" ng-form="storyGivenStoryForm" ng-class="getCssClass(storyGivenStoryForm.storyGivenStoryInput)">
+                            <div class="col-sm-11">
+                                <input id="storyGivenStoryInput{{$index}}" name="storyGivenStoryInput" class="form-control" type="text" ng-model="givenStory.story" required="true">
+                            </div>
+                            <div class="col-sm-1">
+                                <button id="storyGivenStoryAdd{{$index}}" class="btn btn-warning" ng-click="removeElement(story.givenStories, $index)">X</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-sm-11">&nbsp;</div>
+                            <div class="col-sm-1">
+                                <button id="storyGivenStoryRemove" class="btn btn-warning" ng-click="addElement(story.givenStories, story)">&gt;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 id="storyLifecycleHeader">Lifecycle:</h2>
+                    <h3 id="storyLifecycleBeforeHeader">Before:</h3>
+                    <div class="form-group">
+                        <div ng-repeat="stepElement in story.lifecycle.before" ng-form="storyLifecycleBeforeForm" ng-class="getCssClass(storyLifecycleBeforeForm.storyStepInput)">
+                            <div class="col-sm-11">
+                                <input id="storyLifecycleBeforeStepInput{{$index}}" name="storyStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true">
+                            </div>
+                            <div class="col-sm-1">
+                                <button id="storyLifecycleBeforeStepRemove{{$index}}" class="btn btn-warning" ng-click="removeElement(story.lifecycle.before, $index)">X</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-sm-11">&nbsp;</div>
+                            <div class="col-sm-1">
+                                <button id="storyLifecycleBeforeStepAdd" class="btn btn-warning" ng-click="addElement(story.lifecycle.before, step)">&gt;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id="storyLifecycleAfterHeader">After:</h3>
+                    <div class="form-group">
+                        <div ng-repeat="stepElement in story.lifecycle.after" ng-form="storyLifecycleAfterForm" ng-class="getCssClass(storyLifecycleAfterForm.storyStepInput)">
+                            <div class="col-sm-11">
+                                <input id="storyLifecycleAfterStepInput{{$index}}" name="storyStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true">
+                            </div>
+                            <div class="col-sm-1">
+                                <button id="storyLifecycleAfterStepRemove{{$index}}" class="btn btn-warning" ng-click="removeElement(story.lifecycle.after, $index)">X</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-sm-11">&nbsp;</div>
+                            <div class="col-sm-1">
+                                <button id="storyLifecycleAfterStepAdd" class="btn btn-warning" ng-click="addElement(story.lifecycle.after, step)">&gt;</button>
+                            </div>
                         </div>
                     </div>
                     <div>TODO {{storyContent}}</div>
