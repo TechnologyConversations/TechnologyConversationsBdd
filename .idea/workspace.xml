@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="Finished JBehave">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="Finished GET JBehave story JSON&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/JBehaveStory.scala" afterPath="$PROJECT_DIR$/app/models/JBehaveStory.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/models/StorySpec.scala" afterPath="$PROJECT_DIR$/test/models/StorySpec.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/html/stories.html" afterPath="$PROJECT_DIR$/public/html/stories.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/html/stories.js" afterPath="$PROJECT_DIR$/public/html/stories.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stories/story1.story" afterPath="$PROJECT_DIR$/stories/story1.story" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tcbdd.iws" />
@@ -79,10 +76,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="StorySpec.scala" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="StorySpec.scala" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="276" column="0" selection-start="8017" selection-end="8017" vertical-scroll-proportion="0.7660312" vertical-offset="4250" max-vertical-offset="5015">
+                <state line="273" column="4" selection-start="7940" selection-end="7940" vertical-scroll-proportion="0.0" vertical-offset="4432" max-vertical-offset="5015">
                   <folding>
                     <element signature="e#16#55#0" expanded="true" />
                   </folding>
@@ -90,10 +87,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="JBehaveStory.scala" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="JBehaveStory.scala" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/models/JBehaveStory.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="16" column="49" selection-start="348" selection-end="375" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1275">
+                <state line="58" column="22" selection-start="1901" selection-end="1901" vertical-scroll-proportion="0.52859616" vertical-offset="681" max-vertical-offset="1258">
                   <folding>
                     <element signature="e#16#64#0" expanded="true" />
                   </folding>
@@ -104,7 +101,7 @@
           <file leaf-file-name="story1.story" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/stories/story1.story">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="13" column="0" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
+                <state line="19" column="12" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="765">
                   <folding />
                 </state>
               </provider>
@@ -169,8 +166,8 @@
         <option value="$PROJECT_DIR$/project/plugins.sbt" />
         <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/stories/story1.story" />
-        <option value="$PROJECT_DIR$/app/models/JBehaveStory.scala" />
         <option value="$PROJECT_DIR$/test/models/StorySpec.scala" />
+        <option value="$PROJECT_DIR$/app/models/JBehaveStory.scala" />
       </list>
     </option>
   </component>
@@ -698,7 +695,11 @@
       <created>1391900737018</created>
       <updated>1391900737018</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Finished GET JBehave story JSON">
+      <created>1391962655844</created>
+      <updated>1391962655844</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -813,7 +814,8 @@
     <MESSAGE value="Added story form validations" />
     <MESSAGE value="Finished whole JBehave story json" />
     <MESSAGE value="Added metas to the story form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added metas to the story form" />
+    <MESSAGE value="Finished GET JBehave story JSON" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished GET JBehave story JSON" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1060,13 +1062,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stories/story1.story">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.ivy2/cache/org.jbehave/jbehave-core/jars/jbehave-core-3.9.jar!/org/jbehave/core/model/Story.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="49" selection-start="2778" selection-end="2786" vertical-scroll-proportion="0.64492756" vertical-offset="409" max-vertical-offset="986">
@@ -1116,27 +1111,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="273" column="4" selection-start="7940" selection-end="7940" vertical-scroll-proportion="0.0" vertical-offset="4432" max-vertical-offset="5015">
+          <folding>
+            <element signature="e#16#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stories/story1.story">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="12" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$USER_HOME$/.ivy2/cache/org.jbehave/jbehave-core/jars/jbehave-core-3.9.jar!/org/jbehave/core/model/Scenario.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="20" selection-start="722" selection-end="722" vertical-scroll-proportion="-10.4" vertical-offset="46" max-vertical-offset="697">
+        <state line="27" column="64" selection-start="1258" selection-end="1274" vertical-scroll-proportion="0.5833333" vertical-offset="120" max-vertical-offset="697">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/JBehaveStory.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="49" selection-start="348" selection-end="375" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1275">
+        <state line="58" column="22" selection-start="1901" selection-end="1901" vertical-scroll-proportion="0.52859616" vertical-offset="681" max-vertical-offset="1258">
           <folding>
             <element signature="e#16#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/models/StorySpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="276" column="0" selection-start="8017" selection-end="8017" vertical-scroll-proportion="0.7660312" vertical-offset="4250" max-vertical-offset="5015">
-          <folding>
-            <element signature="e#16#55#0" expanded="true" />
           </folding>
         </state>
       </provider>

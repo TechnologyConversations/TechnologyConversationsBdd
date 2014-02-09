@@ -46,6 +46,7 @@
             </div>
             <div class="col-md-9">
                 <form class="form-horizontal" role="form" name="storyForm" novalidate="novalidate">
+                    <!--Story name-->
                     <div class="form-group" ng-class="getCssClass(storyForm.storyNameInput)">
                         <div class="col-sm-12">
                             <input id="storyNameInput" name="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name" required>
@@ -57,6 +58,7 @@
                             <textarea id="storyDescriptionInput" name="storyDescriptionInput" class="form-control" ng-model="story.description" placeholder="story description"></textarea>
                         </div>
                     </div>
+                    <!--Story meta-->
                     <h2 id="storyMetaHeader">Meta:</h2>
                     <div class="form-group">
                         <div ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="getCssClass(storyMetaForm.storyMetaInput)">
@@ -74,6 +76,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--Narrative-->
                     <h2 id="storyNarrativeHeader">Narrative:</h2>
                     <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeInOrderToInput)">
                         <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
@@ -93,6 +96,7 @@
                             <input id="storyNarrativeIWantToInput" name="storyNarrativeIWantToInput" class="form-control" type="text" ng-model="story.narrative.iWantTo">
                         </div>
                     </div>
+                    <!--Given stories-->
                     <h2 id="storyGivenStoriesHeader">Given Stories:</h2>
                     <div class="form-group">
                         <div ng-repeat="givenStory in story.givenStories" ng-form="storyGivenStoryForm" ng-class="getCssClass(storyGivenStoryForm.storyGivenStoryInput)">
@@ -110,6 +114,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--Lifecycle-->
                     <h2 id="storyLifecycleHeader">Lifecycle:</h2>
                     <h3 id="storyLifecycleBeforeHeader">Before:</h3>
                     <div class="form-group">
@@ -145,7 +150,63 @@
                             </div>
                         </div>
                     </div>
-                    <div>TODO {{storyContent}}</div>
+                    <!--Scenarios-->
+                    <h2 id="storyScenariosHeader">Scenarios:</h2>
+                    <div class="form-group">
+                        <div ng-repeat="scenario in story.scenarios" ng-form="storyScenarioForm">
+                            <h3 id="storyScenarioScenarioHeader{{$index}}" class="col-sm-12">Scenario:</h3>
+                            <!--Scenario title-->
+                            <div class="col-sm-11">
+                                <input id="storyScenarioTitleInput{{$index}}" name="storyScenarioTitleInput" class="form-control" type="text" ng-model="scenario.title" required="true">
+                            </div>
+                            <div class="col-sm-1">
+                                <button id="storyScenarioRemove{{$index}}" class="btn btn-warning" ng-click="removeElement(story.scenarios, $index)">X</button>
+                            </div>
+                            <!--Scenario meta-->
+                            <h4 id="storyScenarioMetaHeader{{$index}}" class="col-sm-12">Meta:</h4>
+                            <div ng-repeat="meta in scenario.meta" ng-form="storyScenarioMetaForm" ng-class="getCssClass(storyScenarioMetaForm.storyScenarioMetaInput)">
+                                <div class="col-sm-11">
+                                    <input name="storyScenarioMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
+                                </div>
+                                <div class="col-sm-1">
+                                    <button id="storyScenarioMetaRemove{{$index}}" class="btn btn-warning" ng-click="removeElement(scenario.meta, $index)">X</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-sm-11">&nbsp;</div>
+                                <div class="col-sm-1">
+                                    <button id="storyScenarioMetaAdd" class="btn btn-warning" ng-click="addElement(scenario.meta, element)">&gt;</button>
+                                </div>
+                            </div>
+                            <!--Scenario steps-->
+                            <h4 id="storyScenarioStepsHeader{{$index}}" class="col-sm-12">Steps:</h4>
+                            <div ng-repeat="stepElement in scenario.steps" ng-form="storyScenarioStepForm" ng-class="getCssClass(storyScenarioStepForm.storyScenarioStepInput)">
+                                <div class="col-sm-11">
+                                    <input name="storyScenarioStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true">
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-warning" ng-click="removeElement(scenario.steps, $index)">X</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-sm-11">&nbsp;</div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-warning" ng-click="addElement(scenario.steps, step)">&gt;</button>
+                                </div>
+                            </div>
+                            <!--Scenario examples-->
+                            <h4 id="storyScenarioExamplesHeader{{$index}}" class="col-sm-12">Examples:</h4>
+                            <div class="col-sm-12">
+                                <textarea name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-sm-11">&nbsp;</div>
+                            <div class="col-sm-1">
+                                <button id="storyScenarioAdd" class="btn btn-warning" ng-click="addScenarioElement(story.scenarios)">&gt;</button>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-lg" ng-class="getButtonCssClass()" ng-disabled="!getButtonEnabled()">Save</button>
                 </form>
             </div>

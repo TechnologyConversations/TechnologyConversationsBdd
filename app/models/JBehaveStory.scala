@@ -13,7 +13,6 @@ trait JBehaveStory {
 
   def jBehaveStory = new RegexStoryParser().parseStory(content)
 
-//  TODO Test
   def json: JsValue = Json.toJson(rootCollection)
 
   def rootCollection = {

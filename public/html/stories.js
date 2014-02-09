@@ -29,8 +29,11 @@ angular.module('storiesModule', [])
         };
         $scope.removeElement = function(collection, index) {
             collection.splice(index, 1)
-        }
+        };
         $scope.addElement = function(collection, key) {
             collection.push({key: ''});
-        }
+        };
+        $scope.addScenarioElement = function(collection) {
+            collection.push({title: '', meta: '', steps: '', examplesTable: ''});
+        };
     })
