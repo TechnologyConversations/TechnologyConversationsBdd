@@ -12,7 +12,7 @@ class StoryControllerSpec extends Specification {
     "respond to / route" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/"))
-        status(result) must equalTo(SEE_OTHER)
+        status(result) must equalTo(OK)
       }
     }
 
