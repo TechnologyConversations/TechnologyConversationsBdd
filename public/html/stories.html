@@ -207,7 +207,8 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-lg" ng-class="getButtonCssClass()" ng-disabled="!getButtonEnabled()">Save</button>
+                    <button class="btn btn-lg" ng-class="getButtonCssClass()" ng-disabled="!canSaveStory()">Save</button>
+                    <button class="btn btn-lg btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()">Revert Changes</button>
                 </form>
             </div>
         </div>
