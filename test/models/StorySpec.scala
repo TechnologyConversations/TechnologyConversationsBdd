@@ -269,6 +269,37 @@ Then a the outcome should be-captured
       mockStory.rootCollection must havePair("scenarios" -> Json.toJson(mockStory.scenariosCollection(scenarios)))
     }
 
+    "have empty name when path is an empty string" in {
+      new Story("").rootCollection must havePair("name" -> Json.toJson(""))
+    }
+
+    "have empty description when path is an empty string" in {
+      new Story("").rootCollection must havePair("description" -> Json.toJson(""))
+    }
+
+    "have empty meta when path is an empty string" in {
+      new Story("").rootCollection must havePair("meta" -> Json.arr())
+    }
+
+    "have empty givenStories when path is an empty string" in {
+      new Story("").rootCollection must havePair("givenStories" -> Json.arr())
+    }
+
+    "have narrative with empty inOrderTo, asA and iWantTo when path is an empty string" in {
+      val story = new Story("")
+      val narrative = new Narrative("", "", "")
+      story.rootCollection must havePair("narrative" -> Json.toJson(story.narrativeCollection(narrative)))
+    }
+
+    "have lifecycle with empty before and after when path is an empty string" in {
+      val story = new Story("")
+      story.rootCollection must havePair("lifecycle" -> Json.toJson(story.lifecycleCollection(new Lifecycle())))
+    }
+
+    "have empty scenarios when path is an empty string" in {
+      new Story("").rootCollection must havePair("scenarios" -> Json.arr())
+    }
+
   }
   
   "Story#json" should {

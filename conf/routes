@@ -3,12 +3,12 @@
 # ~~~~
 
 # Stories
-GET     /stories/json               controllers.StoryController.allJson
-GET     /stories/json/:storyPath    controllers.StoryController.storyJson(storyPath: String)
+GET     /stories/list.json                      controllers.StoryController.allJson
+GET     /stories/story.json                     controllers.StoryController.storyJson(path: String ?= "")
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                           controllers.Assets.at(path="/public", file)
 
 # Misc
 # TODO Redirect stories other pages here
-GET     /pageNotFound               controllers.Application.pageNotFound
+GET     /pageNotFound                           controllers.Application.pageNotFound
