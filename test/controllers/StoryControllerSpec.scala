@@ -9,6 +9,13 @@ class StoryControllerSpec extends Specification {
 
   "StoryController" should {
 
+    "respond to / route" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(GET, "/"))
+        status(result) must equalTo(SEE_OTHER)
+      }
+    }
+
     "respond to /stories/list.json route" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
