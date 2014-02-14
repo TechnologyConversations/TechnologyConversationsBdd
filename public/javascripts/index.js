@@ -1,8 +1,25 @@
-var storiesModule = angular.module('storiesModule', ['ngRoute'])
-    .config(function($routeProvider) {
+angular.module('storiesModule', ['ngRoute'])
+    .config(function($routeProvider, $locationProvider) {
+        $locationProvider.html5Mode(true)
         $routeProvider
-            .when('/page/stories/new', {templateUrl: '/assets/html/story.html', controller: 'storyCtrl'})
-            .when('/page/stories/:path', {templateUrl: '/assets/html/story.html', controller: 'storyCtrl'})
+            .when('/page/stories/new', {
+                templateUrl: '/assets/html/story.html',
+                controller: 'storyCtrl',
+                resolve: {
+                    story: function($route, $http) {
+                        return getJson($http, '/stories/story.json');
+                    }
+                }
+            })
+            .when('/page/stories/:path', {
+                templateUrl: '/assets/html/story.html',
+                controller: 'storyCtrl',
+                resolve: {
+                    story: function($route, $http) {
+                        return getJson($http, '/stories/story.json?path=' + $route.current.params.path + '.story');
+                    }
+                }
+            })
             .otherwise({redirectTo: '/page/stories/new'});
     })
     .controller('storiesCtrl', function($scope, $http) {
@@ -12,32 +29,10 @@ var storiesModule = angular.module('storiesModule', ['ngRoute'])
             // TODO Log
             console.log("FAILURE!!!!");
         });
-        $scope.detailsClick = function(storyName) {
-        };
     })
-    .controller('storyCtrl', function($scope, $routeParams, $http) {
-        // New Story
-        var newStory;
-        var originalStory;
-        $http.get('/stories/story.json').then(function(response) {
-            newStory = response.data;
-            originalStory = angular.copy(newStory);
-            $scope.story = angular.copy(newStory);
-        }, function(response) {
-            // TODO Log
-            console.log("FAILURE!!!!");
-        });
-        // Existing story
-        if ($routeParams.path != undefined) {
-            $http.get('/stories/story.json?path=' + $routeParams.path + '.story').then(function(response) {
-                originalStory = response.data;
-                $scope.story = angular.copy(originalStory);
-            }, function(response) {
-                // TODO Log
-                console.log("FAILURE!!!!");
-            });
-        }
-
+    .controller('storyCtrl', function($scope, story) {
+        var originalStory = angular.copy(story);
+        $scope.story = story
         $scope.getCssClass = function(ngModelController) {
             return {
                 'has-error': ngModelController.$invalid,
@@ -70,3 +65,12 @@ var storiesModule = angular.module('storiesModule', ['ngRoute'])
             return !angular.equals($scope.story, originalStory);
         };
     })
+
+function getJson($http, url) {
+    return $http.get(url).then(function(response) {
+        return response.data;
+    }, function(response) {
+        // TODO Log
+        console.log("FAILURE!!!!");
+    });
+}

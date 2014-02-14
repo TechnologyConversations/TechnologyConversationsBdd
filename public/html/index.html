@@ -34,8 +34,7 @@
                             <td>STORY</td>
                             <td>{{storyItem.name}}</td>
                             <td>
-                                <a href="#/page/stories/{{storyItem.name}}">Details</a>
-                                <button ng-click="detailsClick(storyItem.name)" class="btn btn-info btn-xs">Details</button>
+                                <a href="/page/stories/{{storyItem.name}}">Details</a>
                             </td>
                         </tr>
                     </tbody>
@@ -43,7 +42,7 @@
                         <tr>
                             <td>TOTAL</td>
                             <td>{{filteredStories.length}} stories</td>
-                            <td>&nbsp;</td>
+                            <td><a href="/page/stories/new">New</a></td>
                         </tr>
                     </tbody>
                 </table>

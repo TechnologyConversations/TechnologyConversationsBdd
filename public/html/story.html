@@ -106,7 +106,7 @@
     <!--Scenarios-->
     <h2 id="storyScenariosHeader">Scenarios:</h2>
     <div class="form-group">
-        <div ng-repeat="scenario in story.scenarios" ng-form="storyScenarioForm">
+        <div ng-repeat="scenario in story.scenarios" ng-form="storyScenarioForm" ng-class="getCssClass(storyScenarioForm.storyScenarioTitleInput)">
             <h3 id="storyScenarioScenarioHeader{{$index}}" class="col-sm-12">Scenario:</h3>
             <!--Scenario title-->
             <div class="col-sm-11">

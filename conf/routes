@@ -3,7 +3,9 @@
 # ~~~~
 
 # Stories
-GET     /                                       controllers.StoryController.index
+GET     /                                       controllers.StoryController.index(path: String ?= "")
+GET     /page/stories/*path                     controllers.StoryController.index(path: String)
+
 GET     /stories/list.json                      controllers.StoryController.allJson
 GET     /stories/story.json                     controllers.StoryController.storyJson(path: String ?= "")
 

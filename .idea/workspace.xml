@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="Switched to Play routing&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular-route.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/html/story.html" />
-      <change type="MOVED" beforePath="C:\programming\workspace\TechnologyConversationsBdd\public\html\stories.html" afterPath="$PROJECT_DIR$/public/html/index.html" />
-      <change type="MOVED" beforePath="C:\programming\workspace\TechnologyConversationsBdd\public\javascripts\stories.js" afterPath="$PROJECT_DIR$/public/javascripts/index.js" />
+    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/StoryController.scala" afterPath="$PROJECT_DIR$/app/controllers/StoryController.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/html/index.html" afterPath="$PROJECT_DIR$/public/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/index.js" afterPath="$PROJECT_DIR$/public/javascripts/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/html/story.html" afterPath="$PROJECT_DIR$/public/html/story.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tcbdd.iws" />
@@ -76,37 +76,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/html/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="56" selection-start="1650" selection-end="1650" vertical-scroll-proportion="-10.076923" vertical-offset="350" max-vertical-offset="1054">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="story.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/html/story.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="99" selection-end="99" vertical-scroll-proportion="0.046703298" vertical-offset="0" max-vertical-offset="2890">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/javascripts/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="26" selection-start="1653" selection-end="1653" vertical-scroll-proportion="0.0" vertical-offset="413" max-vertical-offset="1309">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="routes" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/routes">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+            <state line="5" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/html/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1037">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="story.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/html/story.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="2890">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/javascripts/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="75" column="1" selection-start="2840" selection-end="2840" vertical-scroll-proportion="0.942953" vertical-offset="713" max-vertical-offset="1377">
               <folding />
             </state>
           </provider>
@@ -160,13 +160,10 @@
         <option value="$PROJECT_DIR$/app/views/index.scala.html" />
         <option value="$PROJECT_DIR$/app/controllers/Application.scala" />
         <option value="$PROJECT_DIR$/public/html/stories.html" />
-        <option value="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
-        <option value="$PROJECT_DIR$/public/javascripts/stories.js" />
         <option value="$PROJECT_DIR$/app/controllers/StoryController.scala" />
         <option value="$PROJECT_DIR$/conf/routes" />
-        <option value="$PROJECT_DIR$/public/html/index.html" />
+        <option value="$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala" />
         <option value="$PROJECT_DIR$/public/javascripts/index.js" />
-        <option value="$PROJECT_DIR$/public/html/story.html" />
       </list>
     </option>
   </component>
@@ -205,6 +202,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -283,20 +281,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TechnologyConversationsBdd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TechnologyConversationsBdd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -321,7 +305,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -333,7 +316,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -434,42 +417,6 @@
       <setting name="showProgressMessages" value="true" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
-    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="name" value="Dart" />
-      <option name="saveOutputToFile" value="false" />
-      <option name="showConsoleOnStdErr" value="false" />
-      <option name="showConsoleOnStdOut" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
-      <setting name="configLocationType" value="CONFIG_FILE" />
-      <setting name="settingsFile" value="" />
-      <setting name="serverType" value="INTERNAL" />
-      <setting name="preferredDebugBrowser" value="CHROME" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
-      <browser start="false" url="" with-js-debugger="false" />
       <method />
     </configuration>
     <list size="0" />
@@ -642,7 +589,11 @@
       <created>1392069583697</created>
       <updated>1392069583697</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Switched to Play routing&#10;">
+      <created>1392070484547</created>
+      <updated>1392070484547</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -672,7 +623,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30844155" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" x="38" y="139" width="1324" height="526" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32440946" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32467532" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35944363" sideWeight="0.70279145" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -757,7 +708,8 @@
     <MESSAGE value="Added story form validations" />
     <MESSAGE value="Added new Story JSON" />
     <MESSAGE value="Switched to Play routing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Switched to Play routing" />
+    <MESSAGE value="Switched to Play routing&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Switched to Play routing&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -769,14 +721,21 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="544">
+        <state line="8" column="24" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="544">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="38" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="867">
+        <state line="17" column="0" selection-start="425" selection-end="425" vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="867">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/routes">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="306">
           <folding />
         </state>
       </provider>
@@ -804,21 +763,6 @@
     <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="7" selection-start="983" selection-end="983" vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="986" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/html/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="7" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="238" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/html/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="149" selection-end="149" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="391" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/html/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="149" selection-end="149" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391" />
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/com.typesafe.play/play-json_2.10/2.2.1/jars/play-json_2.10.jar!/play/api/libs/json/Json.class">
@@ -990,51 +934,44 @@
         <state line="10" column="0" selection-start="179" selection-end="179" vertical-scroll-proportion="0.17288135" vertical-offset="0" max-vertical-offset="590" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="38" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="867">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/StoryController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="50" selection-start="211" selection-end="216" vertical-scroll-proportion="0.3325062" vertical-offset="19" max-vertical-offset="544">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/angular-route.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+        <state line="8" column="24" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="55" max-vertical-offset="510">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/conf/routes">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+        <state line="5" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/html/index.html">
+    <entry file="file://$PROJECT_DIR$/test/controllers/StoryControllerSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="56" selection-start="1650" selection-end="1650" vertical-scroll-proportion="-10.076923" vertical-offset="350" max-vertical-offset="1054">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="26" selection-start="1653" selection-end="1653" vertical-scroll-proportion="0.0" vertical-offset="413" max-vertical-offset="1309">
+        <state line="17" column="0" selection-start="425" selection-end="425" vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="867">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/html/story.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="99" selection-end="99" vertical-scroll-proportion="0.046703298" vertical-offset="0" max-vertical-offset="2890">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2890">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1037">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="1" selection-start="2840" selection-end="2840" vertical-scroll-proportion="0.942953" vertical-offset="713" max-vertical-offset="1377">
           <folding />
         </state>
       </provider>

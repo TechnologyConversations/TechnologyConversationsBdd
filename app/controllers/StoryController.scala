@@ -6,7 +6,7 @@ import play.api.Play
 
 object StoryController extends Controller {
 
-  def index = Action {
+  def index(path: String) = Action {
     Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
