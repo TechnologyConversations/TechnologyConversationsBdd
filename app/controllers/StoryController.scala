@@ -7,7 +7,7 @@ import play.api.Play
 object StoryController extends Controller {
 
   def index = Action {
-    Ok(scala.io.Source.fromFile("public/html/stories.html").mkString).as("text/html")
+    Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
   def allJson = Action {

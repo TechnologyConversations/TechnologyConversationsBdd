@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular tryouts</title>
+    <script src="/assets/javascripts/angular.min.js"></script>
+    <script src="/assets/javascripts/angular-resource.min.js"></script>
+    <script src="/assets/javascripts/angular-route.min.js"></script>
+    <script src="/assets/javascripts/index.js"></script>
+    <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/stylesheets/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body ng-app="storiesModule">
+    <div class="container-fluid">
+        <div class="row" ng-controller="storiesCtrl">
+            <div class="col-md-3">
+                <div class="well">
+                    <label>Search for: <input type="text" ng-model="criteria"></label>
+                </div>
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <th>&nbsp;</th>
+                        <th>Story</th>
+                        <th>&nbsp;</th>
+                    </thead>
+                    <tbody ng-repeat="dir in files.dirs | filter:criteria">
+                        <tr>
+                            <td>DIR</td>
+                            <td>{{dir.name}}</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
+                        <tr>
+                            <td>STORY</td>
+                            <td>{{storyItem.name}}</td>
+                            <td>
+                                <a href="#/page/stories/{{storyItem.name}}">Details</a>
+                                <button ng-click="detailsClick(storyItem.name)" class="btn btn-info btn-xs">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>TOTAL</td>
+                            <td>{{filteredStories.length}} stories</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-9" ng-view>
+                <!--Story form goes here-->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
