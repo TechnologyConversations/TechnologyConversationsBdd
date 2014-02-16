@@ -1,6 +1,6 @@
 package models
 
-import java.io.File
+import java.io.{PrintWriter, File}
 import scala.io.Source
 
 trait FileStory {
@@ -13,5 +13,12 @@ trait FileStory {
     if (path.isEmpty) ""
     else Source.fromFile(path).mkString
   }
+
+  def put(content: String) = {
+    val writer = new PrintWriter(new File(path))
+    writer.write(content)
+    writer.close()
+  }
+
 
 }

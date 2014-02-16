@@ -30,7 +30,7 @@ angular.module('storiesModule', ['ngRoute'])
             console.log("FAILURE!!!!");
         });
     })
-    .controller('storyCtrl', function($scope, story) {
+    .controller('storyCtrl', function($scope, $http, story) {
         var originalStory = angular.copy(story);
         $scope.story = story
         $scope.getCssClass = function(ngModelController) {
@@ -47,6 +47,17 @@ angular.module('storiesModule', ['ngRoute'])
         };
         $scope.canSaveStory = function() {
             return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory)
+        };
+        $scope.saveStory = function() {
+            if ($scope.canSaveStory()) {
+                $http.put('/stories/story.json', $scope.story).then(function(response) {
+                    console.log("SUCCESS");
+                    console.log(response.data);
+                }, function(response) {
+                    console.log("FAILURE!!!!");
+                    console.log(response.data);
+                });
+            }
         };
         $scope.removeElement = function(collection, index) {
             collection.splice(index, 1)

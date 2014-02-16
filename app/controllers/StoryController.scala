@@ -3,6 +3,7 @@ package controllers
 import play.api.mvc._
 import models.{Story, StoryList}
 import play.api.Play
+import play.api.libs.json.Json
 
 object StoryController extends Controller {
 
@@ -22,6 +23,10 @@ object StoryController extends Controller {
       val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
       Ok(Story(dir + "/" + storyPath).json)
     }
+  }
+
+  def putStoryJson = Action { implicit request =>
+    Ok(Json.toJson("{OK}"))
   }
 
 }
