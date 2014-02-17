@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="">
+    <list default="true" id="5f6ef1b4-8ed0-4b66-9208-486bf1209eed" name="Default" comment="Added JBehaveStory.fromJson&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/JBehaveStory.scala" afterPath="$PROJECT_DIR$/app/models/JBehaveStory.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/models/JBehaveStorySpec.scala" afterPath="$PROJECT_DIR$/test/models/JBehaveStorySpec.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/StoryController.scala" afterPath="$PROJECT_DIR$/app/controllers/StoryController.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/html/story.html" afterPath="$PROJECT_DIR$/public/html/story.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tcbdd.iws" />
@@ -80,7 +78,7 @@
           <file leaf-file-name="JBehaveStorySpec.scala" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/models/JBehaveStorySpec.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="327" column="9" selection-start="10505" selection-end="10505" vertical-scroll-proportion="0.0" vertical-offset="2205" max-vertical-offset="3145">
+                <state line="347" column="0" selection-start="11106" selection-end="11270" vertical-scroll-proportion="0.0" vertical-offset="2381" max-vertical-offset="3468">
                   <folding>
                     <element signature="e#16#43#0" expanded="true" />
                     <element signature="e#863#977#0" expanded="false" />
@@ -99,7 +97,7 @@
           <file leaf-file-name="JBehaveStory.scala" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/models/JBehaveStory.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="33" column="47" selection-start="1224" selection-end="1224" vertical-scroll-proportion="0.6187175" vertical-offset="204" max-vertical-offset="1632">
+                <state line="29" column="32" selection-start="886" selection-end="886" vertical-scroll-proportion="0.44020796" vertical-offset="239" max-vertical-offset="1819">
                   <folding>
                     <element signature="e#16#64#0" expanded="true" />
                   </folding>
@@ -768,7 +766,11 @@
       <created>1392542572860</created>
       <updated>1392542572860</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Added JBehaveStory.fromJson">
+      <created>1392669880857</created>
+      <updated>1392669880857</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -860,7 +862,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Tryouts" />
     <MESSAGE value="Added .travis.yml" />
     <MESSAGE value="Added Travis to README.md&#10;" />
     <MESSAGE value="Added first set of tests" />
@@ -885,7 +886,8 @@
     <MESSAGE value="Switched to Play routing" />
     <MESSAGE value="Switched to Play routing&#10;" />
     <MESSAGE value="Tests refactoring to use traits instead of Story class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tests refactoring to use traits instead of Story class" />
+    <MESSAGE value="Added JBehaveStory.fromJson" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added JBehaveStory.fromJson" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1008,11 +1010,6 @@
     <entry file="jar://$USER_HOME$/.ivy2/cache/com.typesafe.play/play-test_2.10/jars/play-test_2.10-2.2.1.jar!/play/api/test/FakeRequest.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="7" selection-start="2949" selection-end="2949" vertical-scroll-proportion="0.68465906" vertical-offset="133" max-vertical-offset="510" />
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.jbehave/jbehave-core/jars/jbehave-core-3.9.jar!/org/jbehave/core/model/Lifecycle.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="11" selection-start="416" selection-end="416" vertical-scroll-proportion="0.38418078" vertical-offset="0" max-vertical-offset="531" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/conf/application.conf">
@@ -1178,16 +1175,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.jbehave/jbehave-core/jars/jbehave-core-3.9.jar!/org/jbehave/core/model/GivenStories.class">
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.jbehave/jbehave-core/jars/jbehave-core-3.9.jar!/org/jbehave/core/model/Lifecycle.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="44" selection-start="862" selection-end="862" vertical-scroll-proportion="0.5833333" vertical-offset="1" max-vertical-offset="578">
+        <state line="13" column="0" selection-start="405" selection-end="405" vertical-scroll-proportion="0.36956522" vertical-offset="0" max-vertical-offset="552">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/models/JBehaveStorySpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="327" column="9" selection-start="10505" selection-end="10505" vertical-scroll-proportion="0.0" vertical-offset="2205" max-vertical-offset="3145">
+        <state line="347" column="0" selection-start="11106" selection-end="11270" vertical-scroll-proportion="0.0" vertical-offset="2381" max-vertical-offset="3468">
           <folding>
             <element signature="e#16#43#0" expanded="true" />
             <element signature="e#863#977#0" expanded="false" />
@@ -1202,9 +1199,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.jbehave/jbehave-core/jars/jbehave-core-3.9.jar!/org/jbehave/core/model/GivenStories.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="41" selection-start="492" selection-end="492" vertical-scroll-proportion="0.33876812" vertical-offset="0" max-vertical-offset="578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/JBehaveStory.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="47" selection-start="1224" selection-end="1224" vertical-scroll-proportion="0.6187175" vertical-offset="204" max-vertical-offset="1632">
+        <state line="29" column="32" selection-start="886" selection-end="886" vertical-scroll-proportion="0.44020796" vertical-offset="239" max-vertical-offset="1819">
           <folding>
             <element signature="e#16#64#0" expanded="true" />
           </folding>

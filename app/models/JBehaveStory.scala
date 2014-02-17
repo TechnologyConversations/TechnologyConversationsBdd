@@ -22,16 +22,27 @@ trait JBehaveStory {
       out.put(keyValue.head, keyValue.tail.mkString(" "))
       out
     })
-    val givenStories = (json \ "givenStories" \\ "story").foldLeft(List[String]()) ((out, in) => {
-      out :+ in.as[String]
-    })
+    val narrative = new Narrative(
+      (json \ "narrative" \ "inOrderTo").as[String],
+      (json \ "narrative" \ "asA").as[String],
+      (json \ "narrative" \ "iWantTo").as[String]
+    )
+    val givenStories = new GivenStories(
+      (json \ "givenStories" \\ "story").foldLeft(List[String]()) ((out, in) => {
+        out :+ in.as[String]
+      }).mkString(",")
+    )
+    val lifecycle = new Lifecycle(
+      (json \ "lifecycle" \ "before" \\ "step").map(_.as[String]),
+      (json \ "lifecycle" \ "after" \\ "step").map(_.as[String])
+    )
     val story = new org.jbehave.core.model.Story(
       (json \ "name").as[String] + ".story",
       new Description((json \ "description").as[String]),
       new Meta(meta),
-      new Narrative((json \ "narrative" \ "inOrderTo").as[String], (json \ "narrative" \ "asA").as[String], (json \ "narrative" \ "iWantTo").as[String]),
-      new GivenStories(givenStories.mkString(",")),
-      null, // org.jbehave.core.model.Lifecycle
+      narrative,
+      givenStories,
+      lifecycle,
       null // java.util.List<org.jbehave.core.model.Scenario>
     )
     story

@@ -327,6 +327,25 @@ class JBehaveStorySpec extends Specification {
       paths must containTheSameElementsAs(Seq("story1.story","story2.story", "story3.story"))
     }
 
+    "return org.jbehave.core.model.Story object with lifecycle" in {
+      val beforeSteps = jBehaveStory.getLifecycle.getBeforeSteps.toList
+      val afterSteps = jBehaveStory.getLifecycle.getAfterSteps.toList
+      beforeSteps must have size 2
+      afterSteps must have size 1
+      beforeSteps must containTheSameElementsAs(Seq(
+        "Given a step that is executed before each scenario",
+        "Given another step that is executed before each scenario"
+      ))
+      afterSteps must containTheSameElementsAs(Seq(
+        "Given a step that is executed after each scenario"
+      ))
+    }
+
+//    "return org.jbehave.core.model.Story object with scenarios" in {
+//      val scenarios = jBehaveStory.getScenarios
+//      scenarios must have size 2
+//    }
+
   }
 
 }
