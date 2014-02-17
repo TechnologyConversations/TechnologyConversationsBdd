@@ -18,10 +18,10 @@ object StoryController extends Controller {
 
   def storyJson(storyPath: String) = Action {
     if (storyPath.isEmpty) {
-      Ok(Story().json)
+      Ok(Story().toJson)
     } else {
       val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-      Ok(Story(dir + "/" + storyPath).json)
+      Ok(Story(dir + "/" + storyPath).toJson)
     }
   }
 

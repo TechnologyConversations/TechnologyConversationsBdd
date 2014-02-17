@@ -6,6 +6,7 @@ import play.api.libs.json.Json
 import org.specs2.mutable.Specification
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
+import scala.collection.JavaConversions._
 
 class JBehaveStorySpec extends Specification {
 
@@ -221,10 +222,109 @@ class JBehaveStorySpec extends Specification {
 
   }
 
-  "JBehaveStory#json" should {
+  "JBehaveStory#toJson" should {
 
     "return json representation of rootCollection" in {
-      JBehaveStoryMock.json must be equalTo Json.toJson(JBehaveStoryMock.rootCollection)
+      JBehaveStoryMock.toJson must be equalTo Json.toJson(JBehaveStoryMock.rootCollection)
+    }
+
+  }
+
+  "JBehaveStory#fromJson" should {
+
+    val jsonString =
+      """
+{
+  "name": "story1",
+  "description": "This is description of this story",
+  "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],
+  "narrative":
+  {
+    "inOrderTo": "communicate effectively to the business some functionality",
+    "asA": "development team",
+    "iWantTo": "use Behaviour-Driven Development"
+  },
+  "givenStories":
+  [
+    { "story": "story1.story" },
+    { "story": "story2.story" },
+    { "story": "story3.story" }
+  ],
+  "lifecycle":
+  {
+    "before":
+    [
+      { "step": "Given a step that is executed before each scenario" },
+      { "step": "Given another step that is executed before each scenario" }
+    ],
+    "after":
+    [
+      { "step": "Given a step that is executed after each scenario" }
+    ]
+  },
+  "scenarios":
+  [
+    {
+      "title": "A scenario is a collection of executable steps of different type",
+      "meta": [ { "element": "live" }, { "element": "product shopping cart" } ],
+      "steps":
+      [
+        { "step": "Given step represents a precondition to an event" },
+        { "step": "When step represents the occurrence of the event" },
+        { "step": "Then step represents the outcome of the event" }
+      ],
+      "examplesTable": ""
+    },
+    {
+      "title": "Another scenario exploring different combination of events",
+      "meta": [],
+      "steps":
+      [
+        { "step": "Given a [precondition]" },
+        { "step": "When a negative event occurs" },
+        { "step": "Then a the outcome should [be-captured]" }
+      ],
+      "examplesTable": "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|\n"
+    }
+  ]
+}""".stripMargin
+    val json = Json.parse(jsonString)
+    val metaProperties = new Properties
+    metaProperties.put("integration", "")
+    metaProperties.put("product", "dashboard")
+    val meta = new Meta(metaProperties)
+    val jBehaveStory = JBehaveStoryMock.fromJson(json)
+
+    "return org.jbehave.core.model.Story object" in {
+      jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
+    }
+
+    "return org.jbehave.core.model.Story object with path" in {
+      jBehaveStory.getPath must be equalTo "story1.story"
+    }
+
+    "return org.jbehave.core.model.Story object with description" in {
+      jBehaveStory.getDescription.asString must be equalTo "This is description of this story"
+    }
+
+    "return org.jbehave.core.model.Story object with meta" in {
+      val meta = jBehaveStory.getMeta
+      meta.getPropertyNames must have size 2
+      meta.getProperty("integration") must be equalTo ""
+      meta.getProperty("product") must be equalTo "dashboard"
+    }
+
+    "return org.jbehave.core.model.Story object with narrative" in {
+      val narrative = jBehaveStory.getNarrative
+      narrative.inOrderTo must be equalTo "communicate effectively to the business some functionality"
+      narrative.asA must be equalTo "development team"
+      narrative.iWantTo must be equalTo "use Behaviour-Driven Development"
+    }
+
+    "return org.jbehave.core.model.Story object with given stories" in {
+      val paths = jBehaveStory.getGivenStories.getPaths.toList
+      paths must have size 3
+      paths must containTheSameElementsAs(Seq("story1.story","story2.story", "story3.story"))
     }
 
   }

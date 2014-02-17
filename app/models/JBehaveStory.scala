@@ -4,6 +4,7 @@ import org.jbehave.core.parsers.RegexStoryParser
 import play.api.libs.json.{JsValue, Json}
 import scala.collection.JavaConversions._
 import org.jbehave.core.model._
+import java.util.Properties
 
 trait JBehaveStory {
 
@@ -13,15 +14,36 @@ trait JBehaveStory {
 
   def jBehaveStory = new RegexStoryParser().parseStory(content)
 
-  def json: JsValue = Json.toJson(rootCollection)
+  def toJson: JsValue = Json.toJson(rootCollection)
+
+  def fromJson(json: JsValue): org.jbehave.core.model.Story = {
+    val meta = (json \ "meta" \\ "element").foldLeft(new Properties) ((out, in) => {
+      val keyValue = in.as[String].split(" ")
+      out.put(keyValue.head, keyValue.tail.mkString(" "))
+      out
+    })
+    val givenStories = (json \ "givenStories" \\ "story").foldLeft(List[String]()) ((out, in) => {
+      out :+ in.as[String]
+    })
+    val story = new org.jbehave.core.model.Story(
+      (json \ "name").as[String] + ".story",
+      new Description((json \ "description").as[String]),
+      new Meta(meta),
+      new Narrative((json \ "narrative" \ "inOrderTo").as[String], (json \ "narrative" \ "asA").as[String], (json \ "narrative" \ "iWantTo").as[String]),
+      new GivenStories(givenStories.mkString(",")),
+      null, // org.jbehave.core.model.Lifecycle
+      null // java.util.List<org.jbehave.core.model.Scenario>
+    )
+    story
+  }
 
   def rootCollection = {
     Map(
       "name" -> Json.toJson(name),
       "description" -> Json.toJson(jBehaveStory.getDescription.asString),
       "meta" -> Json.toJson(metaCollection(jBehaveStory.getMeta)),
-      "givenStories" -> Json.toJson(givenStoriesCollection(jBehaveStory.getGivenStories.getPaths.toList)),
       "narrative" -> Json.toJson(narrativeCollection(jBehaveStory.getNarrative)),
+      "givenStories" -> Json.toJson(givenStoriesCollection(jBehaveStory.getGivenStories.getPaths.toList)),
       "lifecycle" -> Json.toJson(lifecycleCollection(jBehaveStory.getLifecycle)),
       "scenarios" -> Json.toJson(scenariosCollection(jBehaveStory.getScenarios.toList))
     )

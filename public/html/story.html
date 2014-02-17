@@ -162,4 +162,5 @@
     </div>
     <button class="btn btn-lg" ng-class="getButtonCssClass()" ng-disabled="!canSaveStory()" ng-click="saveStory()">Save</button>
     <button class="btn btn-lg btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()">Revert Changes</button>
+    {{ story | json }}
 </form>
