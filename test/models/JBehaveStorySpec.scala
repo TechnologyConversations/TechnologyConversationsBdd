@@ -278,6 +278,15 @@ class JBehaveStorySpec extends Specification {
 
   }
 
+  "JBehaveStory#fromJsonScenarios" should {
+
+    "return story scenarios" in {
+      val scenarios = JBehaveStoryMock.fromJsonScenarios(mockJson)
+      scenarios must have size 2
+    }
+
+  }
+
   "JBehaveStory#fromJsonLifecycle" should {
 
     "return story narrative" in {
