@@ -230,10 +230,114 @@ class JBehaveStorySpec extends Specification {
 
   }
 
+  "JBehaveStory#fromJsonPath" should {
+
+    "return story path" in {
+      JBehaveStoryMock.fromJsonPath(mockJson) must be equalTo "story1.story"
+    }
+
+  }
+
+  "JBehaveStory#fromJsonDescription" should {
+
+    "return story description" in {
+      JBehaveStoryMock.fromJsonDescription(mockJson).asString must be equalTo "This is description of this story"
+    }
+
+  }
+
+  "JBehaveStory#fromJsonMeta" should {
+
+    "return story meta" in {
+      val meta = JBehaveStoryMock.fromJsonMeta(mockJson)
+      meta.getPropertyNames must have size 2
+      meta.getProperty("integration") must be equalTo ""
+      meta.getProperty("product") must be equalTo "dashboard"
+    }
+
+  }
+
+  "JBehaveStory#fromJsonNarrative" should {
+
+    "return story narrative" in {
+      val narrative = JBehaveStoryMock.fromJsonNarrative(mockJson)
+      narrative.inOrderTo must be equalTo "communicate effectively to the business some functionality"
+      narrative.asA must be equalTo "development team"
+      narrative.iWantTo must be equalTo "use Behaviour-Driven Development"
+    }
+
+  }
+
+  "JBehaveStory#fromJsonGivenStories" should {
+
+    "return story narrative" in {
+      val paths = JBehaveStoryMock.fromJsonGivenStories(mockJson).getPaths.toList
+      paths must have size 3
+      paths must containTheSameElementsAs(Seq("story1.story","story2.story", "story3.story"))
+    }
+
+  }
+
+  "JBehaveStory#fromJsonLifecycle" should {
+
+    "return story narrative" in {
+      val lifecycle = JBehaveStoryMock.fromJsonLifecycle(mockJson)
+      val beforeSteps = lifecycle.getBeforeSteps.toList
+      val afterSteps = lifecycle.getAfterSteps.toList
+      beforeSteps must have size 2
+      afterSteps must have size 1
+      beforeSteps must containTheSameElementsAs(Seq(
+        "Given a step that is executed before each scenario",
+        "Given another step that is executed before each scenario"
+      ))
+      afterSteps must containTheSameElementsAs(Seq(
+        "Given a step that is executed after each scenario"
+      ))
+    }
+
+  }
+
   "JBehaveStory#fromJson" should {
 
-    val jsonString =
-      """
+    val jBehaveStory = JBehaveStoryMock.fromJson(mockJson)
+
+    "return org.jbehave.core.model.Story object" in {
+      jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
+    }
+
+    "return org.jbehave.core.model.Story object with path" in {
+      jBehaveStory.getPath must be equalTo JBehaveStoryMock.fromJsonPath(mockJson)
+    }
+
+    "return org.jbehave.core.model.Story object with description" in {
+      jBehaveStory.getDescription must beAnInstanceOf[org.jbehave.core.model.Description]
+    }
+
+    "return org.jbehave.core.model.Story object with meta" in {
+      jBehaveStory.getMeta must beAnInstanceOf[org.jbehave.core.model.Meta]
+    }
+
+    "return org.jbehave.core.model.Story object with narrative" in {
+      jBehaveStory.getNarrative must beAnInstanceOf[org.jbehave.core.model.Narrative]
+    }
+
+    "return org.jbehave.core.model.Story object with given stories" in {
+      jBehaveStory.getGivenStories must beAnInstanceOf[org.jbehave.core.model.GivenStories]
+    }
+
+    "return org.jbehave.core.model.Story object with lifecycle" in {
+      jBehaveStory.getLifecycle must beAnInstanceOf[org.jbehave.core.model.Lifecycle]
+    }
+
+//    "return org.jbehave.core.model.Story object with scenarios" in {
+//      val scenarios = jBehaveStory.getScenarios
+//      scenarios must have size 2
+//    }
+
+  }
+
+  val mockJsonString =
+    """
 {
   "name": "story1",
   "description": "This is description of this story",
@@ -288,65 +392,7 @@ class JBehaveStorySpec extends Specification {
     }
   ]
 }""".stripMargin
-    val json = Json.parse(jsonString)
-    val metaProperties = new Properties
-    metaProperties.put("integration", "")
-    metaProperties.put("product", "dashboard")
-    val meta = new Meta(metaProperties)
-    val jBehaveStory = JBehaveStoryMock.fromJson(json)
-
-    "return org.jbehave.core.model.Story object" in {
-      jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
-    }
-
-    "return org.jbehave.core.model.Story object with path" in {
-      jBehaveStory.getPath must be equalTo "story1.story"
-    }
-
-    "return org.jbehave.core.model.Story object with description" in {
-      jBehaveStory.getDescription.asString must be equalTo "This is description of this story"
-    }
-
-    "return org.jbehave.core.model.Story object with meta" in {
-      val meta = jBehaveStory.getMeta
-      meta.getPropertyNames must have size 2
-      meta.getProperty("integration") must be equalTo ""
-      meta.getProperty("product") must be equalTo "dashboard"
-    }
-
-    "return org.jbehave.core.model.Story object with narrative" in {
-      val narrative = jBehaveStory.getNarrative
-      narrative.inOrderTo must be equalTo "communicate effectively to the business some functionality"
-      narrative.asA must be equalTo "development team"
-      narrative.iWantTo must be equalTo "use Behaviour-Driven Development"
-    }
-
-    "return org.jbehave.core.model.Story object with given stories" in {
-      val paths = jBehaveStory.getGivenStories.getPaths.toList
-      paths must have size 3
-      paths must containTheSameElementsAs(Seq("story1.story","story2.story", "story3.story"))
-    }
-
-    "return org.jbehave.core.model.Story object with lifecycle" in {
-      val beforeSteps = jBehaveStory.getLifecycle.getBeforeSteps.toList
-      val afterSteps = jBehaveStory.getLifecycle.getAfterSteps.toList
-      beforeSteps must have size 2
-      afterSteps must have size 1
-      beforeSteps must containTheSameElementsAs(Seq(
-        "Given a step that is executed before each scenario",
-        "Given another step that is executed before each scenario"
-      ))
-      afterSteps must containTheSameElementsAs(Seq(
-        "Given a step that is executed after each scenario"
-      ))
-    }
-
-//    "return org.jbehave.core.model.Story object with scenarios" in {
-//      val scenarios = jBehaveStory.getScenarios
-//      scenarios must have size 2
-//    }
-
-  }
+  val mockJson = Json.parse(mockJsonString)
 
 }
 
@@ -377,7 +423,7 @@ Scenario: Another scenario exploring different combination of events
 Given a precondition
 When a negative event occurs
 Then a the outcome should be-captured
-                         """
+"""
 
   override def name = "myStory"
 

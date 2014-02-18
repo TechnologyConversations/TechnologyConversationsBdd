@@ -17,36 +17,54 @@ trait JBehaveStory {
   def toJson: JsValue = Json.toJson(rootCollection)
 
   def fromJson(json: JsValue): org.jbehave.core.model.Story = {
+    new org.jbehave.core.model.Story(
+      fromJsonPath(json),
+      fromJsonDescription(json),
+      fromJsonMeta(json),
+      fromJsonNarrative(json),
+      fromJsonGivenStories(json),
+      fromJsonLifecycle(json),
+      null // java.util.List<org.jbehave.core.model.Scenario>
+    )
+  }
+
+  def fromJsonPath(json: JsValue) = (json \ "name").as[String] + ".story"
+
+  def fromJsonDescription(json: JsValue) = new Description((json \ "description").as[String])
+
+  def fromJsonMeta(json: JsValue) = {
     val meta = (json \ "meta" \\ "element").foldLeft(new Properties) ((out, in) => {
       val keyValue = in.as[String].split(" ")
       out.put(keyValue.head, keyValue.tail.mkString(" "))
       out
     })
-    val narrative = new Narrative(
+    new Meta(meta)
+  }
+
+  def fromJsonNarrative(json: JsValue) = {
+    new Narrative(
       (json \ "narrative" \ "inOrderTo").as[String],
       (json \ "narrative" \ "asA").as[String],
       (json \ "narrative" \ "iWantTo").as[String]
     )
-    val givenStories = new GivenStories(
+  }
+
+  def fromJsonGivenStories(json: JsValue) = {
+    new GivenStories(
       (json \ "givenStories" \\ "story").foldLeft(List[String]()) ((out, in) => {
         out :+ in.as[String]
       }).mkString(",")
     )
-    val lifecycle = new Lifecycle(
+  }
+
+  def fromJsonLifecycle(json: JsValue) = {
+    new Lifecycle(
       (json \ "lifecycle" \ "before" \\ "step").map(_.as[String]),
       (json \ "lifecycle" \ "after" \\ "step").map(_.as[String])
     )
-    val story = new org.jbehave.core.model.Story(
-      (json \ "name").as[String] + ".story",
-      new Description((json \ "description").as[String]),
-      new Meta(meta),
-      narrative,
-      givenStories,
-      lifecycle,
-      null // java.util.List<org.jbehave.core.model.Scenario>
-    )
-    story
   }
+
+  //  def scenariosFromJson(json: JsValue)
 
   def rootCollection = {
     Map(
