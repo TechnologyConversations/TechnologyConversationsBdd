@@ -1,11 +1,14 @@
 language: scala
 
 scala:
-- 2.10.0
+  - 2.10.0
 
 before_script:
   - npm install -g bower
   - bower install
+
+script:
+  - grunt jshint
 
 notifications:
   email:
