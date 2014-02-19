@@ -9,6 +9,7 @@ before_script:
 
 script:
   - grunt jshint
+  - sbt ++2.10.0 test
 
 notifications:
   email:
