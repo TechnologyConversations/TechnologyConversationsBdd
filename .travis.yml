@@ -4,8 +4,8 @@ scala:
   - 2.10.0
 
 before_script:
-  - npm install -g bower
-  - bower install
+  - npm install -g grunt-cli
+  - npm install
 
 script:
   - grunt jshint

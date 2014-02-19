@@ -120,7 +120,7 @@
       <file leaf-file-name=".travis.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="54" selection-start="285" selection-end="285" vertical-scroll-proportion="0.7439825" vertical-offset="0" max-vertical-offset="510">
+            <state line="7" column="7" selection-start="87" selection-end="87" vertical-scroll-proportion="0.2603939" vertical-offset="0" max-vertical-offset="510">
               <folding />
             </state>
           </provider>
@@ -689,7 +689,11 @@
       <created>1392816271669</created>
       <updated>1392816271669</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Added jshint&#10;">
+      <created>1392816501016</created>
+      <updated>1392816501016</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -781,7 +785,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Added Travis to README.md&#10;" />
     <MESSAGE value="Added first set of tests" />
     <MESSAGE value="Added browser tests" />
     <MESSAGE value="Added browser tests&#10;" />
@@ -806,7 +809,8 @@
     <MESSAGE value="Modified routing&#10;" />
     <MESSAGE value="JBehaveStory refactoring&#10;" />
     <MESSAGE value="Added Bower" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Bower" />
+    <MESSAGE value="Added jshint&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added jshint&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1064,7 +1068,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="54" selection-start="285" selection-end="285" vertical-scroll-proportion="0.7439825" vertical-offset="0" max-vertical-offset="510">
+        <state line="7" column="7" selection-start="87" selection-end="87" vertical-scroll-proportion="0.2603939" vertical-offset="0" max-vertical-offset="510">
           <folding />
         </state>
       </provider>
