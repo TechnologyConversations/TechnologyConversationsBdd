@@ -278,15 +278,6 @@ class JBehaveStorySpec extends Specification {
 
   }
 
-  "JBehaveStory#fromJsonScenarios" should {
-
-    "return story scenarios" in {
-      val scenarios = JBehaveStoryMock.fromJsonScenarios(mockJson)
-      scenarios must have size 2
-    }
-
-  }
-
   "JBehaveStory#fromJsonLifecycle" should {
 
     "return story narrative" in {
@@ -302,6 +293,44 @@ class JBehaveStorySpec extends Specification {
       afterSteps must containTheSameElementsAs(Seq(
         "Given a step that is executed after each scenario"
       ))
+    }
+
+  }
+
+  "JBehaveStory#fromJsonScenarios" should {
+
+    val scenarios = JBehaveStoryMock.fromJsonScenarios(mockJson)
+    val scenario = scenarios(0)
+
+    "return story scenarios" in {
+      val scenarios = JBehaveStoryMock.fromJsonScenarios(mockJson)
+      scenarios must have size 2
+    }
+
+    "return story scenarios with title" in {
+      scenario.getTitle must be equalTo "A scenario is a collection of executable steps of different type"
+    }
+
+    "return story scenarios with meta" in {
+      val meta = scenario.getMeta
+      meta.getPropertyNames must have size 2
+      meta.getProperty("live") must be equalTo ""
+      meta.getProperty("product") must be equalTo "shopping cart"
+    }
+
+    "return story scenarios with examples table" in {
+      scenario.getExamplesTable.asString.trim must be equalTo "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|"
+    }
+
+    "return story steps" in {
+      val expected = List(
+        "Given step represents a precondition to an event",
+        "When step represents the occurrence of the event",
+        "Then step represents the outcome of the event"
+      )
+      val steps = scenario.getSteps.toList
+      steps must have size 3
+      steps must containTheSameElementsAs(expected)
     }
 
   }
@@ -338,10 +367,11 @@ class JBehaveStorySpec extends Specification {
       jBehaveStory.getLifecycle must beAnInstanceOf[org.jbehave.core.model.Lifecycle]
     }
 
-//    "return org.jbehave.core.model.Story object with scenarios" in {
-//      val scenarios = jBehaveStory.getScenarios
-//      scenarios must have size 2
-//    }
+    "return org.jbehave.core.model.Story object with scenarios" in {
+      val scenarios = jBehaveStory.getScenarios
+      scenarios must have size 2
+      scenarios(0) must beAnInstanceOf[org.jbehave.core.model.Scenario]
+    }
 
   }
 
@@ -386,7 +416,7 @@ class JBehaveStorySpec extends Specification {
         { "step": "When step represents the occurrence of the event" },
         { "step": "Then step represents the outcome of the event" }
       ],
-      "examplesTable": ""
+      "examplesTable": "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|"
     },
     {
       "title": "Another scenario exploring different combination of events",
@@ -397,7 +427,7 @@ class JBehaveStorySpec extends Specification {
         { "step": "When a negative event occurs" },
         { "step": "Then a the outcome should [be-captured]" }
       ],
-      "examplesTable": "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|\n"
+      "examplesTable": ""
     }
   ]
 }""".stripMargin

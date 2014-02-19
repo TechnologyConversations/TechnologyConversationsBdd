@@ -24,7 +24,7 @@ trait JBehaveStory {
       fromJsonNarrative(json),
       fromJsonGivenStories(json),
       fromJsonLifecycle(json),
-      null // java.util.List<org.jbehave.core.model.Scenario>
+      fromJsonScenarios(json)
     )
   }
 
@@ -68,21 +68,15 @@ trait JBehaveStory {
     val scenarios = (json \ "scenarios").as[List[JsObject]]
     // scala> (json \ "root").as[List[JsObject]].map({ i => (i \ "val").as[Long] * (i \ "weight").as[Double] }).sum
     scenarios.map(scenarioJson =>
-      new Scenario()
+      new Scenario(
+        (scenarioJson \ "title").as[String],
+        fromJsonMeta(scenarioJson),
+        null, // GivenStories,
+        new ExamplesTable((scenarioJson \ "examplesTable").as[String]),
+        (scenarioJson \ "steps" \\ "step").map(_.as[String])
+      )
     )
-//    "scenarios":
-//    [
-//    {
-//      "title": "A scenario is a collection of executable steps of different type",
-//      "meta": [ { "element": "live" }, { "element": "product shopping cart" } ],
-//      "steps":
-//      [
-//      { "step": "Given step represents a precondition to an event" },
-//      { "step": "When step represents the occurrence of the event" },
-//      { "step": "Then step represents the outcome of the event" }
-//      ],
-//      "examplesTable": ""
-//    },
+
   }
 
   def rootCollection = {
