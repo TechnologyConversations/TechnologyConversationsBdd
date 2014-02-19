@@ -10,6 +10,8 @@ libraryDependencies ++= Seq(
 
 play.Project.playScalaSettings
 
+org.scalastyle.sbt.ScalastylePlugin.Settings
+
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
