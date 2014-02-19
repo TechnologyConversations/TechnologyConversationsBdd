@@ -1,6 +1,6 @@
 angular.module('storiesModule', ['ngRoute'])
     .config(function($routeProvider, $locationProvider) {
-        $locationProvider.html5Mode(true)
+        $locationProvider.html5Mode(true);
         $routeProvider
             .when('/page/stories/new', {
                 templateUrl: '/assets/html/story.html',
@@ -32,7 +32,7 @@ angular.module('storiesModule', ['ngRoute'])
     })
     .controller('storyCtrl', function($scope, $http, story) {
         var originalStory = angular.copy(story);
-        $scope.story = story
+        $scope.story = story;
         $scope.getCssClass = function(ngModelController) {
             return {
                 'has-error': ngModelController.$invalid,
@@ -46,7 +46,7 @@ angular.module('storiesModule', ['ngRoute'])
             };
         };
         $scope.canSaveStory = function() {
-            return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory)
+            return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory);
         };
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
@@ -60,7 +60,7 @@ angular.module('storiesModule', ['ngRoute'])
             }
         };
         $scope.removeElement = function(collection, index) {
-            collection.splice(index, 1)
+            collection.splice(index, 1);
         };
         $scope.addElement = function(collection, key) {
             collection.push({key: ''});
@@ -75,7 +75,7 @@ angular.module('storiesModule', ['ngRoute'])
         $scope.canRevertStory = function() {
             return !angular.equals($scope.story, originalStory);
         };
-    })
+    });
 
 function getJson($http, url) {
     return $http.get(url).then(function(response) {
