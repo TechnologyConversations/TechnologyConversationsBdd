@@ -25,8 +25,13 @@ object StoryController extends Controller {
     }
   }
 
-  def putStoryJson = Action { implicit request =>
+  def postStoryJson = Action { implicit request =>
+//    val json = request.body.asJson.getOrElse(Json.toJson("{ERROR}"))
+//    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+//    val name = (json \ "name").as[String]
+//    Story(s"$dir/$name.story").put(Story().toText(json))
     Ok(Json.toJson("{OK}"))
   }
+
 
 }

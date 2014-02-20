@@ -335,9 +335,9 @@ class JBehaveStorySpec extends Specification {
 
   }
 
-  "JBehaveStory#fromJson" should {
+  "JBehaveStory#toJBehaveStory" should {
 
-    val jBehaveStory = JBehaveStoryMock.fromJson(mockJson)
+    val jBehaveStory = JBehaveStoryMock.toJBehaveStory(mockJson)
 
     "return org.jbehave.core.model.Story object" in {
       jBehaveStory must beAnInstanceOf[org.jbehave.core.model.Story]
@@ -371,6 +371,75 @@ class JBehaveStorySpec extends Specification {
       val scenarios = jBehaveStory.getScenarios
       scenarios must have size 2
       scenarios(0) must beAnInstanceOf[org.jbehave.core.model.Scenario]
+    }
+
+  }
+
+  "JBehaveStory#toText" should {
+
+    val text = JBehaveStoryMock.toText(mockJson)
+
+    "contain description" in {
+      text must contain("This is description of this story")
+    }
+
+    "contain meta" in {
+      text must contain("Meta:")
+      text must contain("@integration")
+      text must contain("@product dashboard")
+    }
+
+    "contain narrative" in {
+      val expected = """Narrative:
+                       |In order to communicate effectively to the business some functionality
+                       |As a development team
+                       |I want to use Behaviour-Driven Development""".stripMargin
+      text must contain(expected)
+    }
+
+    "contain given stories" in {
+      text must contain("GivenStories: story1.story, story2.story, story3.story")
+    }
+
+    "contain lifecycle" in {
+      text must contain("Lifecycle:")
+      text must contain("Before:")
+      text must contain("Given a step that is executed before each scenario")
+      text must contain("After:")
+      text must contain("Given a step that is executed after each scenario")
+    }
+
+    "contain scenarios" in {
+      text must contain("Scenario: A scenario is a collection of executable steps of different type")
+      text must contain("Meta:")
+      text must contain("@live")
+      text must contain("@product shopping cart")
+      text must contain("Given step represents a precondition to an event")
+      text must contain("When step represents the occurrence of the event")
+      text must contain("Then step represents the outcome of the event")
+      text must contain("Examples:")
+      text must contain("|precondition|be-captured|")
+      text must contain("|abc|be captured|")
+      text must contain("|xyz|not be captured|")
+    }
+
+    "must be valid" in {
+      val story = JBehaveStoryMock.parseStory(text)
+      story.getDescription.asString must be equalTo "This is description of this story"
+      story.getMeta.getPropertyNames must have size 2
+      story.getNarrative.asA must be equalTo "development team"
+      story.getGivenStories.getPaths must have size 3
+      story.getLifecycle.getBeforeSteps must have size 2
+      story.getLifecycle.getAfterSteps must have size 1
+      story.getScenarios must have size 2
+      val scenario = story.getScenarios.toList(0)
+      scenario.getTitle must be equalTo "A scenario is a collection of executable steps of different type"
+      scenario.getMeta.getPropertyNames must have size 2
+      scenario.getSteps must have size 3
+      scenario.getExamplesTable.asString must beEqualTo("|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|").trimmed
+      val scenarioReduced = story.getScenarios.toList(1)
+      scenarioReduced.getMeta.getPropertyNames must have size 0
+      scenarioReduced.getExamplesTable.asString must be equalTo ""
     }
 
   }
