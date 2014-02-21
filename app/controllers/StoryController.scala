@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc._
 import models.{Story, StoryList}
 import play.api.Play
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 
 object StoryController extends Controller {
 
@@ -26,11 +26,23 @@ object StoryController extends Controller {
   }
 
   def postStoryJson = Action { implicit request =>
-//    val json = request.body.asJson.getOrElse(Json.toJson("{ERROR}"))
-//    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-//    val name = (json \ "name").as[String]
-//    Story(s"$dir/$name.story").put(Story().toText(json))
-    Ok(Json.toJson("{OK}"))
+    val jsonOption = request.body.asJson
+    lazy val json = jsonOption.get
+    lazy val nameOption = (json \ "name").asOpt[String]
+    if (jsonOption.isEmpty) {
+      BadRequest(Json.parse("""{"status": "ERROR", "message": "JSON was not found in the request body"}"""))
+    } else if (nameOption.isEmpty) {
+      BadRequest(Json.parse("""{"status": "ERROR", "message": "name was not found"}"""))
+    } else {
+      val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+      val name = nameOption.get
+      val success = Story(s"$dir/$name.story").post(Story().toText(json))
+      if (success) {
+        Ok(Json.toJson("{status: 'OK'}"))
+      } else {
+        BadRequest(Json.parse("""{"status": "ERROR", "message": "Story already exists. Use PUT to update."}"""))
+      }
+    }
   }
 
 

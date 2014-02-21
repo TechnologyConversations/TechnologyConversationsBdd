@@ -14,10 +14,13 @@ trait FileStory {
     else Source.fromFile(path).mkString
   }
 
-  def put(content: String) = {
-    val writer = new PrintWriter(new File(path))
+  def post(content: String): Boolean = {
+    val file = new File(path)
+    if (file.exists) return false
+    val writer = new PrintWriter(file)
     writer.write(content)
     writer.close()
+    true
   }
 
 
