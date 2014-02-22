@@ -7,16 +7,16 @@ import play.api.libs.json.{JsValue, Json}
 
 object StoryController extends Controller {
 
-  def index(path: String) = Action {
+  def index(path: String): Action[AnyContent] = Action {
     Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
-  def allJson = Action {
+  def allJson: Action[AnyContent] = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
     Ok(StoryList(dir).json)
   }
 
-  def storyJson(storyPath: String) = Action {
+  def storyJson(storyPath: String): Action[AnyContent] = Action {
     if (storyPath.isEmpty) {
       Ok(Story().toJson)
     } else {
@@ -25,7 +25,7 @@ object StoryController extends Controller {
     }
   }
 
-  def postStoryJson = Action { implicit request =>
+  def postStoryJson: Action[AnyContent] = Action { implicit request =>
     val jsonOption = request.body.asJson
     lazy val json = jsonOption.get
     lazy val nameOption = (json \ "name").asOpt[String]
@@ -44,6 +44,5 @@ object StoryController extends Controller {
       }
     }
   }
-
 
 }

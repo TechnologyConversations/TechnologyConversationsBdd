@@ -1,7 +1,7 @@
 package models
 
 import java.io.File
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 class StoryList(path: String) {
 
@@ -19,7 +19,7 @@ class StoryList(path: String) {
     dir
   }
 
-  def json = {
+  def json: JsValue = {
     val storiesData = stories.map(name => Json.toJson(Map("name" -> name)))
     val dirsData = dirs.map(name => Json.toJson(Map("name" -> name)))
     Json.toJson(Map("stories" -> storiesData, "dirs" -> dirsData))
@@ -29,6 +29,6 @@ class StoryList(path: String) {
 
 object StoryList {
 
-  def apply(path: String) = new StoryList(path)
+  def apply(path: String): StoryList = new StoryList(path)
 
 }

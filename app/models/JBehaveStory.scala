@@ -23,7 +23,9 @@ $scenarios
 """.toString
   }
 
-  private def toTextBeforeScenarios(story: org.jbehave.core.model.Story) = {
+  def toJson: JsValue = Json.toJson(rootCollection)
+
+  private[models] def toTextBeforeScenarios(story: org.jbehave.core.model.Story) = {
     val description = story.getDescription.asString
     val meta = toTextMeta(story.getMeta)
     val narrativeInOrderTo = story.getNarrative.inOrderTo
@@ -52,13 +54,13 @@ $scenarios
        |""".stripMargin
   }
 
-  private def toTextMeta(meta: Meta) = {
+  private[models] def toTextMeta(meta: Meta) = {
     meta.getPropertyNames.map(
       name => ("@" + name + " " + meta.getProperty(name)).trim
     ).mkString("\n")
   }
 
-  private def toTextScenarios(story: org.jbehave.core.model.Story) = {
+  private[models] def toTextScenarios(story: org.jbehave.core.model.Story) = {
     story.getScenarios.map(scenario => {
       val title = scenario.getTitle
       val meta = toTextMeta(scenario.getMeta)
@@ -78,9 +80,7 @@ $examples
     }).mkString("\n\n")
   }
 
-  def toJson: JsValue = Json.toJson(rootCollection)
-
-  def toJBehaveStory(json: JsValue): org.jbehave.core.model.Story = {
+  private[models] def toJBehaveStory(json: JsValue): org.jbehave.core.model.Story = {
     new org.jbehave.core.model.Story(
       fromJsonPath(json),
       fromJsonDescription(json),
@@ -92,11 +92,11 @@ $examples
     )
   }
 
-  def fromJsonPath(json: JsValue) = (json \ "name").as[String] + ".story"
+  private[models] def fromJsonPath(json: JsValue) = (json \ "name").as[String] + ".story"
 
-  def fromJsonDescription(json: JsValue) = new Description((json \ "description").as[String])
+  private[models] def fromJsonDescription(json: JsValue) = new Description((json \ "description").as[String])
 
-  def fromJsonMeta(json: JsValue) = {
+  private[models] def fromJsonMeta(json: JsValue) = {
     val meta = (json \ "meta" \\ "element").foldLeft(new Properties) ((out, in) => {
       val keyValue = in.as[String].split(" ")
       out.put(keyValue.head, keyValue.tail.mkString(" "))
@@ -105,7 +105,7 @@ $examples
     new Meta(meta)
   }
 
-  def fromJsonNarrative(json: JsValue) = {
+  private[models] def fromJsonNarrative(json: JsValue) = {
     new Narrative(
       (json \ "narrative" \ "inOrderTo").as[String],
       (json \ "narrative" \ "asA").as[String],
@@ -113,7 +113,7 @@ $examples
     )
   }
 
-  def fromJsonGivenStories(json: JsValue) = {
+  private[models] def fromJsonGivenStories(json: JsValue) = {
     new GivenStories(
       (json \ "givenStories" \\ "story").foldLeft(List[String]()) ((out, in) => {
         out :+ in.as[String]
@@ -121,14 +121,14 @@ $examples
     )
   }
 
-  def fromJsonLifecycle(json: JsValue) = {
+  private[models] def fromJsonLifecycle(json: JsValue) = {
     new Lifecycle(
       (json \ "lifecycle" \ "before" \\ "step").map(_.as[String]),
       (json \ "lifecycle" \ "after" \\ "step").map(_.as[String])
     )
   }
 
-  def fromJsonScenarios(json: JsValue) = {
+  private[models] def fromJsonScenarios(json: JsValue) = {
     val scenarios = (json \ "scenarios").as[List[JsObject]]
     // scala> (json \ "root").as[List[JsObject]].map({ i => (i \ "val").as[Long] * (i \ "weight").as[Double] }).sum
     scenarios.map(scenarioJson =>
@@ -143,9 +143,9 @@ $examples
 
   }
 
-  def parseStory(content: String) = new RegexStoryParser().parseStory(content)
+  private[models] def parseStory(content: String) = new RegexStoryParser().parseStory(content)
 
-  def rootCollection = {
+  private[models] def rootCollection = {
     val story = parseStory(content)
     Map(
       "name" -> Json.toJson(name),
@@ -158,15 +158,15 @@ $examples
     )
   }
 
-  def metaCollection(meta: Meta) = {
+  private[models] def metaCollection(meta: Meta) = {
     meta.getPropertyNames.map(name => Map("element" -> (name + " " + meta.getProperty(name)).trim))
   }
 
-  def givenStoriesCollection(givenStories: List[String]) = {
+  private[models] def givenStoriesCollection(givenStories: List[String]) = {
     givenStories.map(story => Map("story" -> story))
   }
 
-  def narrativeCollection(narrative: Narrative) = {
+  private[models] def narrativeCollection(narrative: Narrative) = {
     Map(
       "inOrderTo" -> narrative.inOrderTo,
       "asA" -> narrative.asA,
@@ -174,14 +174,14 @@ $examples
     )
   }
 
-  def lifecycleCollection(lifecycle: Lifecycle) = {
+  private[models] def lifecycleCollection(lifecycle: Lifecycle) = {
     Map(
       "before" -> stepsCollection(lifecycle.getBeforeSteps.toList),
       "after" -> stepsCollection(lifecycle.getAfterSteps.toList)
     )
   }
 
-  def scenariosCollection(scenarios: List[Scenario]) = {
+  private[models] def scenariosCollection(scenarios: List[Scenario]) = {
     scenarios.map(scenario =>
       Map(
         "title" -> Json.toJson(scenario.getTitle),
@@ -192,7 +192,7 @@ $examples
     )
   }
 
-  def stepsCollection(steps: List[String]) = {
+  private[models] def stepsCollection(steps: List[String]) = {
     steps.map(step => Map("step" -> step))
   }
 
