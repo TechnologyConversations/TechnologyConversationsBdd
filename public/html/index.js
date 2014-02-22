@@ -28,7 +28,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
         }, function(response) {
             // TODO Log
             console.log("FAILURE!!!!");
-            console.log(response.data)
+            console.log(response.data);
         });
     })
     .controller('storyCtrl', function($scope, $http, story) {
@@ -84,5 +84,6 @@ function getJson($http, url) {
     }, function(response) {
         // TODO Log
         console.log("FAILURE!!!!");
+        console.log(response.data);
     });
 }
