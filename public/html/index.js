@@ -1,4 +1,4 @@
-angular.module('storiesModule', ['ngRoute'])
+angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
@@ -28,6 +28,7 @@ angular.module('storiesModule', ['ngRoute'])
         }, function(response) {
             // TODO Log
             console.log("FAILURE!!!!");
+            console.log(response.data)
         });
     })
     .controller('storyCtrl', function($scope, $http, story) {
@@ -50,7 +51,7 @@ angular.module('storiesModule', ['ngRoute'])
         };
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
-                $http.put('/stories/story.json', $scope.story).then(function(response) {
+                $http.post('/stories/story.json', $scope.story).then(function(response) {
                     console.log("SUCCESS");
                     console.log(response.data);
                 }, function(response) {

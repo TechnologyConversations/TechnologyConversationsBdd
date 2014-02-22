@@ -3,6 +3,6 @@ package models
 class Story(val path: String) extends JBehaveStory with FileStory { }
 
 object Story {
-  def apply()  = new Story("")
-  def apply(path: String) = new Story(path)
+  def apply(): Story = new Story("")
+  def apply(path: String): Story = new Story(path)
 }
