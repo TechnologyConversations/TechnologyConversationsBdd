@@ -47,8 +47,10 @@ $scenarios
        |GivenStories: $givenStories
        |
        |Lifecycle:
+       |
        |Before:
        |$lifecycleBefore
+       |
        |After:
        |$lifecycleAfter
        |""".stripMargin
