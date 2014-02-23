@@ -40,7 +40,7 @@ object StoryController extends Controller {
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {
-        BadRequest(Json.parse("""{"status": "ERROR", "message": "Story already exists. Use PUT to update."}"""))
+        BadRequest(Json.parse("""{"status": "ERROR", "message": "Story with the same name already exists. Please use a different name of the story."}"""))
       }
     }
   }
