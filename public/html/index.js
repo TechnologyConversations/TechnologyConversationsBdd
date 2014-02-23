@@ -32,14 +32,14 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
         $http.get('/stories/list.json').then(function(response) {
             $scope.files = response.data;
         }, function(response) {
-            openModal($modal, response.data)
+            openModal($modal, response.data);
         });
     })
     .controller('storyCtrl', function($scope, $http, $modal, story) {
 
         var originalStory = angular.copy(story);
         $scope.story = story;
-        $scope.action = $scope.story.name == '' ? 'POST' : 'PUT'
+        $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
 
         $scope.getCssClass = function(ngModelController) {
             return {
@@ -62,13 +62,13 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
                 if ($scope.action == 'POST') {
-                    $http.post('/stories/story.json', $scope.story).then(function(response) {
-                        $scope.action = 'PUT'
+                    $http.post('/stories/story.json', $scope.story).then(function() {
+                        $scope.action = 'PUT';
                     }, function(response) {
-                        openModal($modal, response.data)
+                        openModal($modal, response.data);
                     });
                 } else {
-                    openModal($modal, {status: 'Warning', message: 'Update is still not supported.'})
+                    openModal($modal, {status: 'Warning', message: 'Update is still not supported.'});
                 }
             }
         };
@@ -100,7 +100,7 @@ function getJson($http, $modal, url) {
     return $http.get(url).then(function(response) {
         return response.data;
     }, function(response) {
-        openModal($modal, response.data)
+        openModal($modal, response.data);
     });
 }
 
