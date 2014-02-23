@@ -64,6 +64,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
                 if ($scope.action == 'POST') {
                     $http.post('/stories/story.json', $scope.story).then(function() {
                         $scope.action = 'PUT';
+                        originalStory = angular.copy($scope.story);
                     }, function(response) {
                         openModal($modal, response.data);
                     });

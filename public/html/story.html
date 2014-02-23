@@ -17,17 +17,20 @@
         <accordion-group heading="Meta">
             <div class="form-group">
                 <div ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="getCssClass(storyMetaForm.storyMetaInput)">
-                    <div class="col-sm-11">
+                    <div class="input-group">
                         <input id="storyMetaInput{{$index}}" name="storyMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
-                    </div>
-                    <div class="col-sm-1">
-                        <button id="storyMetaRemove{{$index}}" class="btn btn-warning" ng-click="removeElement(story.meta, $index)">X</button>
+                        <span class="input-group-btn">
+                            <button id="storyMetaRemove{{$index}}" class="btn" ng-click="removeElement(story.meta, $index)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
                     </div>
                 </div>
                 <div>
-                    <div class="col-sm-11">&nbsp;</div>
-                    <div class="col-sm-1">
-                        <button id="storyMetaAdd" class="btn btn-warning" ng-click="addElement(story.meta, element)">&gt;</button>
+                    <div class="pull-right">
+                        <button id="storyMetaAdd" class="btn" ng-click="addElement(story.meta, element)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
                     </div>
                 </div>
             </div>
