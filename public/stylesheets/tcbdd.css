@@ -1,1 +1,2 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.sortable { cursor: move; }

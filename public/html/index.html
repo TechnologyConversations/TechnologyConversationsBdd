@@ -2,17 +2,19 @@
 <html>
 <head>
     <title>BDD Assistant: Technology Conversations</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="/assets/javascripts/angular.min.js"></script>
     <script src="/assets/javascripts/angular-resource.min.js"></script>
     <script src="/assets/javascripts/angular-route.min.js"></script>
     <script src="/assets/javascripts/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="/assets/javascripts/sortable.js"></script>
     <script src="/assets/html/index.js"></script>
     <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/stylesheets/bootstrap-theme.min.css" rel="stylesheet">
     <link href="/assets/stylesheets/tcbdd.css" rel="stylesheet">
 </head>
 <body ng-app="storiesModule">
-<accordion close-others="false">
     <div class="container-fluid">
         <div class="row" ng-controller="storiesCtrl">
             <div class="col-md-3">

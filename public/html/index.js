@@ -1,4 +1,4 @@
-angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
+angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
