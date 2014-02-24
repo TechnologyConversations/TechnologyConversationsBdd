@@ -20,10 +20,10 @@ class FileStorySpec extends Specification with PathMatchers {
 
   }
 
-  "FileStory#post" should {
+  "FileStory#save" should {
 
     "save content of the story to the new file" in new FileStoryMock {
-      post(expected) must beTrue
+      save(expected, overwrite = false) must beTrue
       path must beAnExistingPath
       path must beAFilePath
       Source.fromFile(path).mkString must be equalTo expected
@@ -31,8 +31,8 @@ class FileStorySpec extends Specification with PathMatchers {
     }
 
     "NOT overwrite old content of the file" in new FileStoryMock {
-      post(expected) must beTrue
-      post("something else") must beFalse
+      save(expected, overwrite = false) must beTrue
+      save("something else", overwrite = false) must beFalse
       Source.fromFile(path).mkString must be equalTo expected
     }
 

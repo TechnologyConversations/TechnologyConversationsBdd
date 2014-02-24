@@ -43,10 +43,49 @@ class StoryControllerSpec extends Specification with PathMatchers {
     }
 
   }
+  
+  "StoryController PUT /stories/story.json route" should {
+    
+    "return BAD_REQUEST if body is NOT JSON" in new PostPutStory {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(PUT, url))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+    "return BAD_REQUEST if JSON does not contain name" in new PostPutStory {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(PUT, url, headers, Json.parse("""{"name_does_not_exist": "true"}""")))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+    "return BAD_REQUEST if story does NOT already exist" in new PostPutStory {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(PUT, url, headers, mockJson))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+    "return OK if story already exists" in new PostPutStory {
+      running(FakeApplication()) {
+        val Some(firstResult) = route(FakeRequest(POST, url, headers, mockJson)) // Create the story
+        status(firstResult) must equalTo(OK)
+        val Some(result) = route(FakeRequest(PUT, url, headers, mockJson)) // Update the existing story
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+
+  }
 
   "StoryController POST /stories/story.json route" should {
 
-    "return BAD_REQUEST if body is NOT JSON" in new PostStory {
+    "return BAD_REQUEST if body is NOT JSON" in new PostPutStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url))
         status(result) must equalTo(BAD_REQUEST)
@@ -54,7 +93,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return BAD_REQUEST if JSON does not contain name" in new PostStory {
+    "return BAD_REQUEST if JSON does not contain name" in new PostPutStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url, headers, Json.parse("""{"name_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
@@ -62,7 +101,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return BAD_REQUEST if story already exists" in new PostStory {
+    "return BAD_REQUEST if story already exists" in new PostPutStory {
       running(FakeApplication()) {
         val Some(firstResult) = route(FakeRequest(POST, url, headers, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
@@ -72,7 +111,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return OK if JSON contains name" in new PostStory {
+    "return OK if JSON contains name" in new PostPutStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url, headers, mockJson))
         status(result) must equalTo(OK)
@@ -80,7 +119,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "save story as a file" in new PostStory {
+    "save story as a file" in new PostPutStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url, headers, mockJson))
         status(result) must equalTo(OK)
@@ -93,7 +132,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
 }
 
-class PostStory extends After {
+class PostPutStory extends After {
 
   val url = "/stories/story.json"
   val storyPath = "stories/my_test_story.story"

@@ -26,7 +26,16 @@ object StoryController extends Controller {
   }
 
   def postStoryJson: Action[AnyContent] = Action { implicit request =>
-    val jsonOption = request.body.asJson
+    val overwrite = false
+    saveStoryJson(request.body.asJson, overwrite)
+  }
+
+  def putStoryJson: Action[AnyContent] = Action { implicit request =>
+    val overwrite = true
+    saveStoryJson(request.body.asJson, overwrite)
+  }
+
+  private def saveStoryJson(jsonOption: Option[JsValue], put: Boolean): Result = {
     lazy val json = jsonOption.get
     lazy val nameOption = (json \ "name").asOpt[String]
     if (jsonOption.isEmpty) {
@@ -36,7 +45,7 @@ object StoryController extends Controller {
     } else {
       val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
       val name = nameOption.get
-      val success = Story(s"$dir/$name.story").post(Story().toText(json))
+      val success = Story(s"$dir/$name.story").save(Story().toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {
