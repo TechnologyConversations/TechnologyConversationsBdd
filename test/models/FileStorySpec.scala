@@ -27,12 +27,17 @@ class FileStorySpec extends Specification with PathMatchers {
       path must beAnExistingPath
       path must beAFilePath
       Source.fromFile(path).mkString must be equalTo expected
-
     }
 
     "NOT overwrite old content of the file" in new FileStoryMock {
       save(expected, overwrite = false) must beTrue
       save("something else", overwrite = false) must beFalse
+      Source.fromFile(path).mkString must be equalTo expected
+    }
+
+    "overwrite old content of the file" in new FileStoryMock {
+      save("something else", overwrite = false) must beTrue
+      save(expected, overwrite = true) must beTrue
       Source.fromFile(path).mkString must be equalTo expected
     }
 

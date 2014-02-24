@@ -69,7 +69,14 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap'])
                         openModal($modal, response.data);
                     });
                 } else {
-                    openModal($modal, {status: 'Warning', message: 'Update is still not supported.'});
+                    if ($scope.story.name != originalStory.name) {
+                        $scope.story.originalName = originalStory.name;
+                    }
+                    $http.put('/stories/story.json', $scope.story).then(function() {
+                        originalStory = angular.copy($scope.story);
+                    }, function(response) {
+                        openModal($modal, response.data);
+                    });
                 }
             }
         };

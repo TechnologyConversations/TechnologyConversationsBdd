@@ -14,6 +14,10 @@ trait FileStory {
     else Source.fromFile(path).mkString
   }
 
+  def rename(originalPath: String): Boolean = {
+    new File(originalPath).renameTo(new File(path))
+  }
+
   def save(content: String, overwrite: Boolean): Boolean = {
     val file = new File(path)
     if (file.exists != overwrite) {

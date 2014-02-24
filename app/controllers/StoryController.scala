@@ -32,7 +32,28 @@ object StoryController extends Controller {
 
   def putStoryJson: Action[AnyContent] = Action { implicit request =>
     val overwrite = true
-    saveStoryJson(request.body.asJson, overwrite)
+    val jsonOption = request.body.asJson
+    if (renameStoryJson(jsonOption)) {
+      saveStoryJson(jsonOption, overwrite)
+    } else {
+      BadRequest(Json.parse("""{"status": "ERROR", "message": "Story could not be renamed"}"""))
+    }
+  }
+
+  private def renameStoryJson(jsonOption: Option[JsValue]) = {
+    if (jsonOption.isEmpty) {
+      false
+    } else {
+      val json = jsonOption.get
+      val name = (json \ "name").asOpt[String].getOrElse("")
+      val originalName = (json \ "originalName").asOpt[String].getOrElse("")
+      if (originalName != "" && originalName != name) {
+        val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+        Story(s"$dir/$name.story").rename(s"$dir/$originalName.story")
+      } else {
+        true
+      }
+    }
   }
 
   private def saveStoryJson(jsonOption: Option[JsValue], put: Boolean): Result = {
@@ -49,7 +70,7 @@ object StoryController extends Controller {
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {
-        BadRequest(Json.parse("""{"status": "ERROR", "message": "Story with the same name already exists. Please use a different name for the story."}"""))
+        BadRequest(Json.parse("""{"status": "ERROR", "message": "Story could not be saved."}"""))
       }
     }
   }

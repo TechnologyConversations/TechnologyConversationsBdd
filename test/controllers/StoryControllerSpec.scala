@@ -80,6 +80,58 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
+    "rename story if name changed" in new PostPutStory {
+      override lazy val mockJsonString =
+        """
+{
+  "name": "my_renamed_test_story",
+  "originalName": "my_test_story",
+  "description": "This is description of this story",
+  "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],
+  "narrative":
+  {
+    "inOrderTo": "communicate effectively to the business some functionality",
+    "asA": "development team",
+    "iWantTo": "use Behaviour-Driven Development"
+  },
+  "givenStories": [ { "story": "story.story" } ],
+  "lifecycle":
+  {
+    "before": [ { "step": "Given a step that is executed before each scenario" } ],
+    "after": [ { "step": "Given a step that is executed after each scenario" } ]
+  },
+  "scenarios":
+  [
+    {
+      "title": "A scenario is a collection of executable steps of different type",
+      "meta": [ { "element": "live" }, { "element": "product shopping cart" } ],
+      "steps": [ { "step": "Given step represents a precondition to an event" } ],
+      "examplesTable": "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|"
+    }
+  ]
+}""".stripMargin
+      override lazy val storyPath = "stories/my_renamed_test_story.story"
+      lazy val originalStoryPath = "stories/my_test_story.story"
+      override def after = {
+        val file = new File(storyPath)
+        if (file.exists) {
+          file.delete
+        }
+        val originalFile = new File(originalStoryPath)
+        if (originalFile.exists) {
+          originalFile.delete
+        }
+      }
+
+      running(FakeApplication()) {
+        new File(originalStoryPath).createNewFile()
+        val Some(result) = route(FakeRequest(PUT, url, headers, mockJson))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("application/json")
+        storyPath must beAnExistingPath
+        storyPath must beAFilePath
+      }
+    }
 
   }
 
@@ -135,9 +187,9 @@ class StoryControllerSpec extends Specification with PathMatchers {
 class PostPutStory extends After {
 
   val url = "/stories/story.json"
-  val storyPath = "stories/my_test_story.story"
+  lazy val storyPath = "stories/my_test_story.story"
   val headers = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
-  val mockJsonString =
+  lazy val mockJsonString =
     """
 {
   "name": "my_test_story",
