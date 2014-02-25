@@ -1,2 +1,3 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 .sortable { cursor: move; }
+body { padding-top: 70px; }
