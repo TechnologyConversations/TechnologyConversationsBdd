@@ -1,0 +1,33 @@
+<div class="modal-header"><h3>Open Story</h3></div>
+<div class="modal-body">
+    <div class="well">
+        <label>Search for: <input type="text" ng-model="criteria"></label>
+    </div>
+    <table class="table table-condensed table-striped">
+        <thead>
+        <th>&nbsp;</th>
+        <th>Story</th>
+        </thead>
+        <tbody ng-repeat="dir in files.dirs | filter:criteria">
+        <tr>
+            <td>DIR</td>
+            <td>{{dir.name}}</td>
+        </tr>
+        </tbody>
+        <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
+        <tr>
+            <td>STORY</td>
+            <td><a href="/page/stories/{{storyItem.name}}" ng-click="ok()">{{storyItem.name}}</a></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+            <td>&nbsp;</td>
+            <td><a href="/page/stories/new" ng-click="ok()">New</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>
