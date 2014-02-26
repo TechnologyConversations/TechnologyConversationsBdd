@@ -94,7 +94,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         };
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
-                if ($scope.action == 'POST') {
+                if ($scope.action === 'POST') {
                     $http.post('/stories/story.json', $scope.story).then(function() {
                         $scope.action = 'PUT';
                         originalStory = angular.copy($scope.story);
@@ -102,7 +102,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                         openModal($modal, response.data);
                     });
                 } else {
-                    if ($scope.story.name != originalStory.name) {
+                    if ($scope.story.name !== originalStory.name) {
                         $scope.story.originalName = originalStory.name;
                     }
                     $http.put('/stories/story.json', $scope.story).then(function() {
