@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="SBT: org.scala-lang:scala-library:2.10.2">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/framework/sbt/boot/scala-2.10.2/lib/scala-library.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

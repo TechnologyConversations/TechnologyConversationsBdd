@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="SBT: junit:junit:4.11:test">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../tools/play-2.2.1/repository/local/junit/junit/4.11/jars/junit.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
