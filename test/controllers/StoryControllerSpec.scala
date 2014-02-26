@@ -18,14 +18,6 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "respond to GET /stories/list.json route" in {
-      running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
-        status(result) must equalTo(OK)
-        contentType(result) must beSome("application/json")
-      }
-    }
-
     "respond to GET /stories/story.json?path=[STORY] route" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/stories/story.json?path=story1.story"))
@@ -43,6 +35,43 @@ class StoryControllerSpec extends Specification with PathMatchers {
     }
 
   }
+
+  "StoryController GET /stories/list.json" should {
+
+    "return JSON" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+    "return all story files and directories" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
+        val files = new File("stories").list.map(_.replace(".story", ""))
+        val json = contentAsJson(result)
+        val stories = (json \ "stories" \\ "name").map(_.as[String])
+        val dirs = (json \ "dirs" \\ "name").map(_.as[String])
+        (stories ++ dirs) must haveSize(files.length)
+        (stories ++ dirs) must containTheSameElementsAs(files)
+      }
+    }
+
+    "return all story files and directories inside specified directory" in {
+      running(FakeApplication()) {
+        val storiesSubDir = new File("stories").listFiles().filter(_.isDirectory)(0)
+        val Some(result) = route(FakeRequest(GET, "/stories/list.json?path=" + storiesSubDir.getName))
+        val files = storiesSubDir.list.map(_.replace(".story", ""))
+        val json = contentAsJson(result)
+        val stories = (json \ "stories" \\ "name").map(_.as[String])
+        val dirs = (json \ "dirs" \\ "name").map(_.as[String])
+        (stories ++ dirs) must haveSize(files.length)
+        (stories ++ dirs) must containTheSameElementsAs(files)
+      }
+    }
+
+  }
   
   "StoryController PUT /stories/story.json route" should {
     
@@ -56,7 +85,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return BAD_REQUEST if JSON does not contain name" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(PUT, url, headers, Json.parse("""{"name_does_not_exist": "true"}""")))
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, Json.parse("""{"name_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
       }
@@ -64,7 +93,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return BAD_REQUEST if story does NOT already exist" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(PUT, url, headers, mockJson))
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
       }
@@ -72,9 +101,9 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return OK if story already exists" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(firstResult) = route(FakeRequest(POST, url, headers, mockJson)) // Create the story
+        val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
-        val Some(result) = route(FakeRequest(PUT, url, headers, mockJson)) // Update the existing story
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson)) // Update the existing story
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
       }
@@ -125,7 +154,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
       running(FakeApplication()) {
         new File(originalStoryPath).createNewFile()
-        val Some(result) = route(FakeRequest(PUT, url, headers, mockJson))
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
         storyPath must beAnExistingPath
@@ -147,7 +176,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return BAD_REQUEST if JSON does not contain name" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(POST, url, headers, Json.parse("""{"name_does_not_exist": "true"}""")))
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, Json.parse("""{"name_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
       }
@@ -155,9 +184,9 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return BAD_REQUEST if story already exists" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(firstResult) = route(FakeRequest(POST, url, headers, mockJson)) // Create the story
+        val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
-        val Some(result) = route(FakeRequest(POST, url, headers, mockJson)) // Try to overwrite existing story
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Try to overwrite existing story
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
       }
@@ -165,7 +194,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return OK if JSON contains name" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(POST, url, headers, mockJson))
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
       }
@@ -173,7 +202,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "save story as a file" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(POST, url, headers, mockJson))
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
         storyPath must beAFilePath
@@ -188,7 +217,7 @@ class PostPutStory extends After {
 
   val url = "/stories/story.json"
   lazy val storyPath = "stories/my_test_story.story"
-  val headers = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+  val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
   lazy val mockJsonString =
     """
 {

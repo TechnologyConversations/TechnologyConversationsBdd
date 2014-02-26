@@ -137,7 +137,7 @@ $examples
       new Scenario(
         (scenarioJson \ "title").as[String],
         fromJsonMeta(scenarioJson),
-        null, // GivenStories,
+        GivenStories.EMPTY,
         new ExamplesTable((scenarioJson \ "examplesTable").as[String]),
         (scenarioJson \ "steps" \\ "step").map(_.as[String])
       )

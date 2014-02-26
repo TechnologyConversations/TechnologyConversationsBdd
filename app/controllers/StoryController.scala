@@ -11,9 +11,9 @@ object StoryController extends Controller {
     Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
-  def allJson: Action[AnyContent] = Action {
+  def allJson(path: String): Action[AnyContent] = Action {
     val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-    Ok(StoryList(dir).json)
+    Ok(StoryList(s"$dir/$path").json)
   }
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {

@@ -6,7 +6,7 @@
 GET     /                                       controllers.StoryController.index(path: String ?= "")
 GET     /page/stories/*path                     controllers.StoryController.index(path: String)
 
-GET     /stories/list.json                      controllers.StoryController.allJson
+GET     /stories/list.json                      controllers.StoryController.allJson(path: String ?= "")
 GET     /stories/story.json                     controllers.StoryController.storyJson(path: String ?= "")
 POST    /stories/story.json                     controllers.StoryController.postStoryJson
 PUT     /stories/story.json                     controllers.StoryController.putStoryJson
