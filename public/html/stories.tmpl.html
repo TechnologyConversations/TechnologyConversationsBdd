@@ -1,30 +1,45 @@
-<div class="modal-header"><h3>Open Story</h3></div>
+<div class="modal-header"><h3>Browse Stories</h3></div>
 <div class="modal-body">
-    <div class="well">
-        <label>Search for: <input type="text" ng-model="criteria"></label>
+    <div>{{rootPath}}</div>
+    <div class="input-group">
+        <span class="input-group-addon">Search for</span>
+        <input type="text" id="searchStoriesInput" ng-model="criteria" class="form-control">
     </div>
     <table class="table table-condensed table-striped">
-        <thead>
-        <th>&nbsp;</th>
-        <th>Story</th>
-        </thead>
-        <tbody ng-repeat="dir in files.dirs | filter:criteria">
-        <tr>
-            <td>DIR</td>
-            <td>{{dir.name}}</td>
-        </tr>
-        </tbody>
-        <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
-        <tr>
-            <td>STORY</td>
-            <td><a href="/page/stories/{{storyItem.name}}" ng-click="ok()">{{storyItem.name}}</a></td>
-        </tr>
+        <tbody>
+            <tr>
+                <td><a href="/page/stories/new" ng-click="ok()">Create New Story</a></td>
+            </tr>
         </tbody>
         <tbody>
-        <tr>
-            <td>&nbsp;</td>
-            <td><a href="/page/stories/new" ng-click="ok()">New</a></td>
-        </tr>
+            <tr ng-hide="!allowToPrevDir()">
+                <td>
+                    <a href="#" ng-click="openDir('..')">
+                        <span class="glyphicon glyphicon-book"></span>
+                        ..
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-repeat="dir in files.dirs | filter:criteria">
+            <tr>
+                <td>
+                    <a href="#" ng-click="openDir(dir.name)">
+                        <span class="glyphicon glyphicon-book"></span>
+                        {{dir.name}}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
+            <tr>
+                <td>
+                    <a href="/page/stories/{{rootPath}}{{storyItem.name}}" ng-click="ok()">
+                        <span class="glyphicon glyphicon-file"></span>
+                        {{storyItem.name}}
+                    </a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

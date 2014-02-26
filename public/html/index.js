@@ -3,7 +3,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $locationProvider.html5Mode(true);
         $routeProvider
             .when('/page/stories/new', {
-                templateUrl: '/assets/html/story.html',
+                templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
                     story: function($route, $http, $modal) {
@@ -11,8 +11,8 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     }
                 }
             })
-            .when('/page/stories/:path', {
-                templateUrl: '/assets/html/story.html',
+            .when('/page/stories/:path*', {
+                templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
                     story: function($route, $http, $modal) {
@@ -42,14 +42,36 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         };
     })
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance) {
-        $http.get('/stories/list.json').then(function(response) {
-            $scope.files = response.data;
-        }, function(response) {
-            openModal($modal, response.data);
-        });
-        $scope.ok = function () {
+        $scope.rootPath = "";
+        updateData("");
+        $scope.ok = function() {
             $modalInstance.close();
         };
+        $scope.openDir = function(path) {
+            if (path == '..') {
+                var dirs = $scope.rootPath.split('/');
+                $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
+                if ($scope.rootPath != '') {
+                    $scope.rootPath += '/';
+                }
+                updateData('');
+            } else {
+                updateData(path);
+            }
+        };
+        $scope.allowToPrevDir = function() {
+            return $scope.rootPath != "";
+        };
+        function updateData(path) {
+            $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
+                $scope.files = response.data;
+                if (path != '') {
+                    $scope.rootPath += path + '/';
+                }
+            }, function(response) {
+                openModal($modal, response.data);
+            });
+        }
     })
     .controller('storyCtrl', function($scope, $http, $modal, story) {
         var originalStory = angular.copy(story);
