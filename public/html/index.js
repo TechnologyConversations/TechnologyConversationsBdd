@@ -48,10 +48,10 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             $modalInstance.close();
         };
         $scope.openDir = function(path) {
-            if (path == '..') {
+            if (path === '..') {
                 var dirs = $scope.rootPath.split('/');
                 $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
-                if ($scope.rootPath != '') {
+                if ($scope.rootPath !== '') {
                     $scope.rootPath += '/';
                 }
                 updateData('');
@@ -60,12 +60,12 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             }
         };
         $scope.allowToPrevDir = function() {
-            return $scope.rootPath != "";
+            return $scope.rootPath !== "";
         };
         function updateData(path) {
             $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
                 $scope.files = response.data;
-                if (path != '') {
+                if (path !== '') {
                     $scope.rootPath += path + '/';
                 }
             }, function(response) {
