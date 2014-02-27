@@ -8,6 +8,8 @@ import java.util.Properties
 
 trait JBehaveStory {
 
+  val path: String
+
   def name: String
 
   def content: String
@@ -151,6 +153,7 @@ $examples
     val story = parseStory(content)
     Map(
       "name" -> Json.toJson(name),
+      "path" -> Json.toJson(path),
       "description" -> Json.toJson(story.getDescription.asString),
       "meta" -> Json.toJson(metaCollection(story.getMeta)),
       "narrative" -> Json.toJson(narrativeCollection(story.getNarrative)),

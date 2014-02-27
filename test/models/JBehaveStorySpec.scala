@@ -171,12 +171,18 @@ class JBehaveStorySpec extends Specification {
 
   "JBehaveStory#rootCollection" should {
 
+    val rootCollection = JBehaveStoryMock.rootCollection
+
     "have name" in {
-      JBehaveStoryMock.rootCollection must havePair("name" -> Json.toJson("myStory"))
+      rootCollection must havePair("name" -> Json.toJson("myStory"))
+    }
+
+    "have path" in {
+      rootCollection must havePair("path" -> Json.toJson(JBehaveStoryMock.path))
     }
 
     "have description" in {
-      JBehaveStoryMock.rootCollection must havePair("description" -> Json.toJson("This is description of this story"))
+      rootCollection must havePair("description" -> Json.toJson("This is description of this story"))
     }
 
     "have meta" in {
@@ -184,12 +190,12 @@ class JBehaveStorySpec extends Specification {
       properties.put("integration", "")
       properties.put("product", "dashboard")
       val meta = new Meta(properties)
-      JBehaveStoryMock.rootCollection must havePair("meta" -> Json.toJson(JBehaveStoryMock.metaCollection(meta)))
+      rootCollection must havePair("meta" -> Json.toJson(JBehaveStoryMock.metaCollection(meta)))
     }
 
     "have givenStories" in {
       val givenStories = List("story1.story", "story2.story", "story3.story")
-      JBehaveStoryMock.rootCollection must havePair("givenStories" -> Json.toJson(JBehaveStoryMock.givenStoriesCollection(givenStories)))
+      rootCollection must havePair("givenStories" -> Json.toJson(JBehaveStoryMock.givenStoriesCollection(givenStories)))
     }
 
     "have narrative" in {
@@ -198,7 +204,7 @@ class JBehaveStorySpec extends Specification {
         "development team",
         "use Behaviour-Driven Development"
       )
-      JBehaveStoryMock.rootCollection must havePair("narrative" -> Json.toJson(JBehaveStoryMock.narrativeCollection(narrative)))
+      rootCollection must havePair("narrative" -> Json.toJson(JBehaveStoryMock.narrativeCollection(narrative)))
     }
 
     "have lifecycle" in {
@@ -206,7 +212,7 @@ class JBehaveStorySpec extends Specification {
         ListBuffer("Given a step that is executed before each scenario").asJava,
         ListBuffer("Given a step that is executed after each scenario").asJava
       )
-      JBehaveStoryMock.rootCollection must havePair("lifecycle" -> Json.toJson(JBehaveStoryMock.lifecycleCollection(lifecycle)))
+      rootCollection must havePair("lifecycle" -> Json.toJson(JBehaveStoryMock.lifecycleCollection(lifecycle)))
     }
 
     "have scenarios" in {
@@ -217,7 +223,7 @@ class JBehaveStorySpec extends Specification {
         "Then a the outcome should be-captured"
       ).asJava
       val scenarios = List(new Scenario(title, steps))
-      JBehaveStoryMock.rootCollection must havePair("scenarios" -> Json.toJson(JBehaveStoryMock.scenariosCollection(scenarios)))
+      rootCollection must havePair("scenarios" -> Json.toJson(JBehaveStoryMock.scenariosCollection(scenarios)))
     }
 
   }
@@ -506,6 +512,7 @@ class JBehaveStorySpec extends Specification {
 
 object JBehaveStoryMock extends JBehaveStory {
 
+  override val path = "myDir/myStory.story"
   override def content = """
 This is description of this story
 

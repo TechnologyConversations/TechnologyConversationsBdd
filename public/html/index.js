@@ -76,6 +76,8 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .controller('storyCtrl', function($scope, $http, $modal, story) {
         var originalStory = angular.copy(story);
         $scope.story = story;
+        var pathArray = $scope.story.path.split('/');
+        $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/') + '/';
         $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
         $scope.getCssClass = function(ngModelController) {
             return {
