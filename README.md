@@ -8,3 +8,8 @@ IDEA project
 ----------------------------
 
 Use the gen-idea sbt task to create Idea project files.
+
+Testing
+-------
+
+play ~test-quick

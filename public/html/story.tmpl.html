@@ -9,7 +9,14 @@
                 <div class="form-group input-group" ng-class="getCssClass(storyForm.storyNameInput)">
                     <span class="input-group-addon">{{dirPath}}</span>
                     <input id="storyNameInput" name="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name" required="true">
-                    <span class="input-group-addon">.story</span>
+                    <span class="input-group-addon">
+                        .story
+                    </span>
+                    <span class="input-group-btn">
+                        <button class="btn-lg" ng-click="deleteStory()" ng-hide="!canDeleteStory()">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </span>
                 </div>
                 <accordion close-others="false">
                     <accordion-group heading="Description">

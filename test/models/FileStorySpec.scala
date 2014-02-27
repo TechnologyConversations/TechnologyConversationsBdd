@@ -64,6 +64,18 @@ class FileStorySpec extends Specification with PathMatchers {
 
   }
 
+  "FileStory#delete" should {
+
+    "delete the file" in new FileStoryMock {
+      new File(path).createNewFile()
+      path must beAnExistingPath
+      path must beAFilePath
+      delete
+      new File(path).exists must beFalse
+    }
+
+  }
+
   trait FileStoryMock extends FileStory with After {
 
     storyCounter += 1
@@ -74,13 +86,6 @@ class FileStorySpec extends Specification with PathMatchers {
 
     override def after = {
       delete
-    }
-
-    def delete = {
-      val file = new File(path)
-      if (file.exists) {
-        file.delete
-      }
     }
 
   }

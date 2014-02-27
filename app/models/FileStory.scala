@@ -31,5 +31,11 @@ trait FileStory {
     }
   }
 
+  def delete {
+    val file = new File(path)
+    if (file.exists) {
+      file.delete
+    }
+  }
 
 }

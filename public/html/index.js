@@ -34,7 +34,10 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .controller('modalCtrl', function ($scope, $modalInstance, data) {
         $scope.data = data;
         $scope.ok = function () {
-            $modalInstance.close();
+            $modalInstance.close('ok');
+        };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
     })
     .controller('topMenuController', function($scope, $modal) {
@@ -81,7 +84,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     $scope.rootPath += path + '/';
                 }
             }, function(response) {
-                openModal($modal, response.data);
+                openErrorModal($modal, response.data);
             });
         }
     })
@@ -124,7 +127,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     $http.post('/stories/story.json', $scope.story).then(function() {
                         $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
                     }, function(response) {
-                        openModal($modal, response.data);
+                        openErrorModal($modal, response.data);
                     });
                 } else {
                     if ($scope.story.name !== originalStory.name) {
@@ -133,7 +136,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     $http.put('/stories/story.json', $scope.story).then(function() {
                         originalStory = angular.copy($scope.story);
                     }, function(response) {
-                        openModal($modal, response.data);
+                        openErrorModal($modal, response.data);
                     });
                 }
             }
@@ -154,19 +157,43 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.canRevertStory = function() {
             return !angular.equals($scope.story, originalStory);
         };
+        $scope.canDeleteStory = function() {
+            return $scope.action === 'PUT';
+        };
+        $scope.deleteStory = function() {
+            var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
+            var okModal = openConfirmationModal($modal, message);
+            okModal.result.then(function() {
+                console.log($scope.dirPath + $scope.story.name);
+            }, function() {
+                // Do nothing
+            });
+        };
     });
 
 function getJson($http, $modal, url) {
     return $http.get(url).then(function(response) {
         return response.data;
     }, function(response) {
-        openModal($modal, response.data);
+        openErrorModal($modal, response.data);
     });
 }
 
-function openModal($modal, data) {
+function openErrorModal($modal, data) {
     $modal.open({
         templateUrl: '/assets/html/errorModal.tmpl.html',
+        controller: 'modalCtrl',
+        resolve: {
+            data: function() {
+                return data;
+            }
+        }
+    });
+}
+
+function openConfirmationModal($modal, data) {
+    return $modal.open({
+        templateUrl: '/assets/html/confirmationModal.tmpl.html',
         controller: 'modalCtrl',
         resolve: {
             data: function() {
