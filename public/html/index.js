@@ -70,7 +70,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         };
         $scope.viewStoryUrl = function(name) {
             return getViewStoryUrl() + $scope.rootPath + name;
-        }
+        };
         $scope.allowToPrevDir = function() {
             return $scope.rootPath !== "";
         };
@@ -117,7 +117,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 console.log($scope.story.path);
                 if ($scope.action === 'POST') {
                     $http.post('/stories/story.json', $scope.story).then(function() {
-                        $location.path(getViewStoryUrl() + $scope.dirPath + $scope.story.name)
+                        $location.path(getViewStoryUrl() + $scope.dirPath + $scope.story.name);
                     }, function(response) {
                         openModal($modal, response.data);
                     });
