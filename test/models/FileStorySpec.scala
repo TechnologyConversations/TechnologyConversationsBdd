@@ -18,6 +18,27 @@ class FileStorySpec extends Specification with PathMatchers {
       content must be equalTo "This is mock content"
     }
 
+    "return empty content if path is empty" in {
+      val fileStory = new FileStory {
+        override val path: String = ""
+      }
+      fileStory.content must be equalTo ""
+    }
+
+    "return empty content if path points to a file that does not exist" in {
+      val fileStory = new FileStory {
+        override val path: String = "this_story_does_not_exist.story"
+      }
+      fileStory.content must be equalTo ""
+    }
+
+    "return empty content if path points to a directory" in {
+      val fileStory = new FileStory {
+        override val path: String = "stories"
+      }
+      fileStory.content must be equalTo ""
+    }
+
   }
 
   "FileStory#save" should {

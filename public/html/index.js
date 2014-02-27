@@ -2,7 +2,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
-            .when('/page/stories/new', {
+            .when('/page/stories/new/', {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
@@ -11,7 +11,16 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     }
                 }
             })
-            .when('/page/stories/:path*', {
+            .when('/page/stories/new/:path*', {
+                templateUrl: '/assets/html/story.tmpl.html',
+                controller: 'storyCtrl',
+                resolve: {
+                    story: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story');
+                    }
+                }
+            })
+            .when(getViewStoryUrl() + ':path*', {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
@@ -59,6 +68,9 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 updateData(path);
             }
         };
+        $scope.viewStoryUrl = function(name) {
+            return getViewStoryUrl() + $scope.rootPath + name;
+        }
         $scope.allowToPrevDir = function() {
             return $scope.rootPath !== "";
         };
@@ -73,11 +85,16 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             });
         }
     })
-    .controller('storyCtrl', function($scope, $http, $modal, story) {
+    .controller('storyCtrl', function($scope, $http, $modal, $location, story) {
         var originalStory = angular.copy(story);
         $scope.story = story;
-        var pathArray = $scope.story.path.split('/');
-        $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/') + '/';
+        var storyExtension = ".story";
+        if ($scope.story.path.indexOf(storyExtension) == $scope.story.path.length - storyExtension.length) {
+            var pathArray = $scope.story.path.split('/');
+            $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/') + '/';
+        } else {
+            $scope.dirPath = $scope.story.path + '/';
+        }
         $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
         $scope.getCssClass = function(ngModelController) {
             return {
@@ -96,10 +113,11 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         };
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
+                $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
+                console.log($scope.story.path);
                 if ($scope.action === 'POST') {
                     $http.post('/stories/story.json', $scope.story).then(function() {
-                        $scope.action = 'PUT';
-                        originalStory = angular.copy($scope.story);
+                        $location.path(getViewStoryUrl() + $scope.dirPath + $scope.story.name)
                     }, function(response) {
                         openModal($modal, response.data);
                     });
@@ -151,4 +169,8 @@ function openModal($modal, data) {
             }
         }
     });
+}
+
+function getViewStoryUrl() {
+    return '/page/stories/view/';
 }

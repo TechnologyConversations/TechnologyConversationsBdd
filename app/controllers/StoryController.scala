@@ -17,10 +17,10 @@ object StoryController extends Controller {
   }
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {
+    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
     if (storyPath.isEmpty) {
-      Ok(Story().toJson)
+      Ok(Story(dir).toJson)
     } else {
-      val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
       Ok(Story(dir + "/" + storyPath).toJson)
     }
   }
@@ -58,15 +58,15 @@ object StoryController extends Controller {
 
   private def saveStoryJson(jsonOption: Option[JsValue], put: Boolean): Result = {
     lazy val json = jsonOption.get
-    lazy val nameOption = (json \ "name").asOpt[String]
+    lazy val pathOption = (json \ "path").asOpt[String]
     if (jsonOption.isEmpty) {
       BadRequest(Json.parse("""{"status": "ERROR", "message": "JSON was not found in the request body"}"""))
-    } else if (nameOption.isEmpty) {
-      BadRequest(Json.parse("""{"status": "ERROR", "message": "name was not found"}"""))
+    } else if (pathOption.isEmpty) {
+      BadRequest(Json.parse("""{"status": "ERROR", "message": "path was not found"}"""))
     } else {
       val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-      val name = nameOption.get
-      val success = Story(s"$dir/$name.story").save(Story().toText(json), put)
+      val story = Story(pathOption.get)
+      val success = story.save(story.toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {

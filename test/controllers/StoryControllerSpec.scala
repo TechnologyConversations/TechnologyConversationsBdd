@@ -83,9 +83,9 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return BAD_REQUEST if JSON does not contain name" in new PostPutStory {
+    "return BAD_REQUEST if JSON does not contain path" in new PostPutStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, Json.parse("""{"name_does_not_exist": "true"}""")))
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
       }
@@ -113,6 +113,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       override lazy val mockJsonString =
         """
 {
+  "path": "stories/my_renamed_test_story.story",
   "name": "my_renamed_test_story",
   "originalName": "my_test_story",
   "description": "This is description of this story",
@@ -213,6 +214,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
 }
 
+
 class PostPutStory extends After {
 
   val url = "/stories/story.json"
@@ -221,6 +223,7 @@ class PostPutStory extends After {
   lazy val mockJsonString =
     """
 {
+  "path": "stories/my_test_story.story",
   "name": "my_test_story",
   "description": "This is description of this story",
   "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],

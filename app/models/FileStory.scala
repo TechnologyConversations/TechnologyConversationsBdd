@@ -10,7 +10,8 @@ trait FileStory {
   def name: String = new File(path).getName.split('.').init.mkString(".")
 
   def content: String = {
-    if (path.isEmpty) { "" }
+    val file = new File(path)
+    if (path.isEmpty || !file.exists ||file.isDirectory) { "" }
     else { Source.fromFile(path).mkString }
   }
 

@@ -8,7 +8,7 @@
     <table class="table table-condensed table-striped">
         <tbody>
             <tr>
-                <td><a href="/page/stories/new" ng-click="ok()">Create New Story</a></td>
+                <td><a href="/page/stories/new/{{rootPath}}" ng-click="ok()">Create New Story</a></td>
             </tr>
         </tbody>
         <tbody>
@@ -34,7 +34,7 @@
         <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
             <tr>
                 <td>
-                    <a href="/page/stories/{{rootPath}}{{storyItem.name}}" ng-click="ok()">
+                    <a href="{{viewStoryUrl(storyItem.name)}}" ng-click="ok()">
                         <span class="glyphicon glyphicon-file"></span>
                         {{storyItem.name}}
                     </a>
