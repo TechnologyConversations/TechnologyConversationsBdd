@@ -114,10 +114,15 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
                 $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
-                console.log($scope.story.path);
                 if ($scope.action === 'POST') {
+                    console.log($scope.dirPath);
+                    var strippedPathArray = $scope.dirPath.split('/');
+                    var strippedPath = strippedPathArray.slice(1, strippedPathArray.length - 1).join('/');
+                    if (strippedPath !== '') {
+                        strippedPath += '/';
+                    }
                     $http.post('/stories/story.json', $scope.story).then(function() {
-                        $location.path(getViewStoryUrl() + $scope.dirPath + $scope.story.name);
+                        $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
                     }, function(response) {
                         openModal($modal, response.data);
                     });
