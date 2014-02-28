@@ -10,6 +10,7 @@ GET     /stories/list.json                      controllers.StoryController.allJ
 GET     /stories/story.json                     controllers.StoryController.storyJson(path: String ?= "")
 POST    /stories/story.json                     controllers.StoryController.postStoryJson
 PUT     /stories/story.json                     controllers.StoryController.putStoryJson
+DELETE  /stories/story/*path                    controllers.StoryController.deleteStoryJson(path: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)

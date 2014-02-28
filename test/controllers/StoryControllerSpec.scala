@@ -75,7 +75,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
   
   "StoryController PUT /stories/story.json route" should {
     
-    "return BAD_REQUEST if body is NOT JSON" in new PostPutStory {
+    "return BAD_REQUEST if body is NOT JSON" in new MockStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(PUT, url))
         status(result) must equalTo(BAD_REQUEST)
@@ -83,7 +83,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return BAD_REQUEST if JSON does not contain path" in new PostPutStory {
+    "return BAD_REQUEST if JSON does not contain path" in new MockStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
@@ -91,7 +91,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return BAD_REQUEST if story does NOT already exist" in new PostPutStory {
+    "return BAD_REQUEST if story does NOT already exist" in new MockStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(BAD_REQUEST)
@@ -99,7 +99,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return OK if story already exists" in new PostPutStory {
+    "return OK if story already exists" in new MockStory {
       running(FakeApplication()) {
         val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
@@ -109,11 +109,11 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "rename story if name changed" in new PostPutStory {
+    "rename story if name changed" in new MockStory {
       override lazy val mockJsonString =
         """
 {
-  "path": "stories/my_renamed_test_story.story",
+  "path": "my_renamed_test_story.story",
   "name": "my_renamed_test_story",
   "originalName": "my_test_story",
   "description": "This is description of this story",
@@ -167,7 +167,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   "StoryController POST /stories/story.json route" should {
 
-    "return BAD_REQUEST if body is NOT JSON" in new PostPutStory {
+    "return BAD_REQUEST if body is NOT JSON" in new MockStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url))
         status(result) must equalTo(BAD_REQUEST)
@@ -175,15 +175,15 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return BAD_REQUEST if JSON does not contain name" in new PostPutStory {
+    "return BAD_REQUEST if JSON does not contain path" in new MockStory {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, Json.parse("""{"name_does_not_exist": "true"}""")))
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
       }
     }
 
-    "return BAD_REQUEST if story already exists" in new PostPutStory {
+    "return BAD_REQUEST if story already exists" in new MockStory {
       running(FakeApplication()) {
         val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
@@ -193,7 +193,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "return OK if JSON contains name" in new PostPutStory {
+    "return OK if JSON contains name" in new MockStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
@@ -201,7 +201,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "save story as a file" in new PostPutStory {
+    "save story as a file" in new MockStory {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
@@ -212,18 +212,30 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
 
-}
+  "StoryController DELETE /stories/story.json route" should {
 
+    "delete story from the specified path" in new MockStory {
+      running(FakeApplication()) {
+        new File(storyPath).createNewFile
+        val Some(result) = route(FakeRequest(DELETE, s"/stories/story/$story"))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("application/json")
+        new File(storyPath).exists must beFalse
+      }
+    }
 
-class PostPutStory extends After {
+  }
 
-  val url = "/stories/story.json"
-  lazy val storyPath = "stories/my_test_story.story"
-  val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
-  lazy val mockJsonString =
-    """
+  class MockStory extends After {
+
+    val url = "/stories/story.json"
+    lazy val story = "my_test_story.story"
+    lazy val storyPath = s"stories/$story"
+    val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+    lazy val mockJsonString =
+      """
 {
-  "path": "stories/my_test_story.story",
+  "path": "my_test_story.story",
   "name": "my_test_story",
   "description": "This is description of this story",
   "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],
@@ -249,13 +261,15 @@ class PostPutStory extends After {
     }
   ]
 }""".stripMargin
-  val mockJson = Json.parse(mockJsonString)
+    val mockJson = Json.parse(mockJsonString)
 
-  override def after = {
-    val file = new File(storyPath)
-    if (file.exists) {
-      file.delete
+    override def after = {
+      val file = new File(storyPath)
+      if (file.exists) {
+        file.delete
+      }
     }
+
   }
 
 }

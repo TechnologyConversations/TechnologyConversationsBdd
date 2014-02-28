@@ -31,11 +31,12 @@ trait FileStory {
     }
   }
 
-  def delete {
+  def delete: Boolean = {
     val file = new File(path)
     if (file.exists) {
       file.delete
     }
+    true
   }
 
 }

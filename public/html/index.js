@@ -2,7 +2,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
-            .when('/page/stories/new/', {
+            .when(getNewStoryUrl(), {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
@@ -11,7 +11,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     }
                 }
             })
-            .when('/page/stories/new/:path*', {
+            .when(getNewStoryUrl() + ':path*', {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
@@ -53,7 +53,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             });
         };
     })
-    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance) {
+    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location) {
         $scope.rootPath = "";
         updateData("");
         $scope.ok = function() {
@@ -77,6 +77,14 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.allowToPrevDir = function() {
             return $scope.rootPath !== "";
         };
+        $scope.deleteStory = function(name) {
+            var path = $scope.rootPath + name + '.story';
+            deleteStory($modal, $http, $location, path);
+            $scope.ok();
+        };
+        $scope.getNewStoryUrl = function() {
+            return getNewStoryUrl();
+        }
         function updateData(path) {
             $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
                 $scope.files = response.data;
@@ -92,11 +100,11 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         var originalStory = angular.copy(story);
         $scope.story = story;
         var storyExtension = ".story";
-        if ($scope.story.path.indexOf(storyExtension) == $scope.story.path.length - storyExtension.length) {
-            var pathArray = $scope.story.path.split('/');
-            $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/') + '/';
+        var pathArray = $scope.story.path.split('/');
+        if ($scope.story.path.indexOf(storyExtension) === $scope.story.path.length - storyExtension.length) {
+            $scope.dirPath = pathArray.slice(1, pathArray.length - 1).join('/') + '/';
         } else {
-            $scope.dirPath = $scope.story.path + '/';
+            $scope.dirPath = pathArray.slice(1, pathArray.length - 1).join('/') + '/';
         }
         $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
         $scope.getCssClass = function(ngModelController) {
@@ -118,9 +126,8 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             if ($scope.canSaveStory()) {
                 $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
                 if ($scope.action === 'POST') {
-                    console.log($scope.dirPath);
                     var strippedPathArray = $scope.dirPath.split('/');
-                    var strippedPath = strippedPathArray.slice(1, strippedPathArray.length - 1).join('/');
+                    var strippedPath = strippedPathArray.slice(0, strippedPathArray.length - 1).join('/');
                     if (strippedPath !== '') {
                         strippedPath += '/';
                     }
@@ -161,13 +168,8 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             return $scope.action === 'PUT';
         };
         $scope.deleteStory = function() {
-            var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
-            var okModal = openConfirmationModal($modal, message);
-            okModal.result.then(function() {
-                console.log($scope.dirPath + $scope.story.name);
-            }, function() {
-                // Do nothing
-            });
+            var path = $scope.dirPath + $scope.story.name + '.story';
+            deleteStory($modal, $http, $location, path);
         };
     });
 
@@ -205,4 +207,22 @@ function openConfirmationModal($modal, data) {
 
 function getViewStoryUrl() {
     return '/page/stories/view/';
+}
+
+function getNewStoryUrl() {
+    return '/page/stories/new/';
+}
+
+function deleteStory($modal, $http, $location, path) {
+    var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
+    var okModal = openConfirmationModal($modal, message);
+    okModal.result.then(function() {
+        $http.delete('/stories/story/' + path).then(function() {
+            $location.path(getNewStoryUrl());
+        }, function(response) {
+            openErrorModal($modal, response.data);
+        });
+    }, function() {
+        // Do nothing
+    });
 }

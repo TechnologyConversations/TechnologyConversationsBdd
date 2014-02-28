@@ -7,21 +7,21 @@ import play.api.libs.json.{JsValue, Json}
 
 object StoryController extends Controller {
 
+  val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+
   def index(path: String): Action[AnyContent] = Action {
     Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
   def allJson(path: String): Action[AnyContent] = Action {
-    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
     Ok(StoryList(s"$dir/$path").json)
   }
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {
-    val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
     if (storyPath.isEmpty) {
       Ok(Story(dir).toJson)
     } else {
-      Ok(Story(dir + "/" + storyPath).toJson)
+      Ok(Story(s"$dir/$storyPath").toJson)
     }
   }
 
@@ -40,6 +40,11 @@ object StoryController extends Controller {
     }
   }
 
+  def deleteStoryJson(path: String): Action[AnyContent] = Action { implicit request =>
+    Story(s"$dir/$path").delete
+    Ok(Json.toJson("{status: 'OK'}"))
+  }
+
   private def renameStoryJson(jsonOption: Option[JsValue]) = {
     if (jsonOption.isEmpty) {
       false
@@ -48,7 +53,6 @@ object StoryController extends Controller {
       val name = (json \ "name").asOpt[String].getOrElse("")
       val originalName = (json \ "originalName").asOpt[String].getOrElse("")
       if (originalName != "" && originalName != name) {
-        val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
         Story(s"$dir/$name.story").rename(s"$dir/$originalName.story")
       } else {
         true
@@ -60,12 +64,12 @@ object StoryController extends Controller {
     lazy val json = jsonOption.get
     lazy val pathOption = (json \ "path").asOpt[String]
     if (jsonOption.isEmpty) {
-      BadRequest(Json.parse("""{"status": "ERROR", "message": "JSON was not found in the request body"}"""))
+      noJsonResult
     } else if (pathOption.isEmpty) {
-      BadRequest(Json.parse("""{"status": "ERROR", "message": "path was not found"}"""))
+      noPathResult
     } else {
-      val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
-      val story = Story(pathOption.get)
+      val path = pathOption.get
+      val story = Story(s"$dir/$path")
       val success = story.save(story.toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
@@ -73,6 +77,14 @@ object StoryController extends Controller {
         BadRequest(Json.parse("""{"status": "ERROR", "message": "Story could not be saved."}"""))
       }
     }
+  }
+
+  private def noJsonResult: Result = {
+    BadRequest(Json.parse("""{"status": "ERROR", "message": "JSON was not found in the request body"}"""))
+  }
+
+  private def noPathResult: Result = {
+    BadRequest(Json.parse("""{"status": "ERROR", "message": "path was not found"}"""))
   }
 
 }
