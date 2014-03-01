@@ -39,7 +39,7 @@ trait FileStory {
         file.delete
       } else {
 //        val filePath = Path.fromString(path.replace("/", File.separator))
-        val filePath = Path(path, '/')
+        val filePath = Path.fromString(file.getPath)
         val (deleted, remaining) = filePath.deleteRecursively()
         remaining == 0
       }
