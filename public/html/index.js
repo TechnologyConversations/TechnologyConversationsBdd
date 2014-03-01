@@ -82,9 +82,17 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             deleteStory($modal, $http, $location, path);
             $scope.ok();
         };
+        $scope.createDirectory = function(path) {
+            var json = '{"path": "' + $scope.rootPath + path + '"}';
+            $http.post('/stories/dir.json', json).then(function() {
+                $scope.files.dirs.push({name: path});
+            }, function(response) {
+                openErrorModal($modal, response.data);
+            });
+        };
         $scope.getNewStoryUrl = function() {
             return getNewStoryUrl();
-        }
+        };
         function updateData(path) {
             $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
                 $scope.files = response.data;

@@ -2,6 +2,7 @@ package models
 
 import java.io.{PrintWriter, File}
 import scala.io.Source
+import scalax.file.Path
 
 trait FileStory {
 
@@ -34,9 +35,23 @@ trait FileStory {
   def delete: Boolean = {
     val file = new File(path)
     if (file.exists) {
-      file.delete
+      if (file.isFile) {
+        file.delete
+      } else {
+        val filePath = Path(path)
+        val (deleted, remaining) = filePath.deleteRecursively()
+        remaining == 0
+      }
+    } else {
+      true
     }
-    true
+  }
+
+  def createDirectory() {
+    val filePath = Path(path)
+    if (!filePath.exists) {
+      filePath.createDirectory()
+    }
   }
 
 }

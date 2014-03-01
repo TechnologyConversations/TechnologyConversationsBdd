@@ -9,6 +9,8 @@ import java.io.File
 
 class StoryControllerSpec extends Specification with PathMatchers {
 
+  val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+
   "StoryController" should {
 
     "respond to GET / route" in {
@@ -212,6 +214,41 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
 
+  "StoryController POST /stories/dir.json route" should {
+
+    val path = "testDir"
+    val url = s"/stories/dir.json"
+    val fullPath = s"stories/$path"
+
+    "return BAD_REQUEST if body is NOT JSON" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(POST, url))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+    "return BAD_REQUEST if JSON does not contain path" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+      }
+    }
+
+    "create directory" in new AfterStoryControllerSpec(fullPath) {
+      running(FakeApplication()) {
+        val json = Json.parse(s"""{"path": "$path"}""")
+        val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, json))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("application/json")
+        fullPath must beAnExistingPath
+        fullPath must beADirectoryPath
+      }
+    }
+
+  }
+
   "StoryController DELETE /stories/story.json route" should {
 
     "delete story from the specified path" in new MockStory {
@@ -231,7 +268,6 @@ class StoryControllerSpec extends Specification with PathMatchers {
     val url = "/stories/story.json"
     lazy val story = "my_test_story.story"
     lazy val storyPath = s"stories/$story"
-    val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
     lazy val mockJsonString =
       """
 {
@@ -265,6 +301,17 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     override def after = {
       val file = new File(storyPath)
+      if (file.exists) {
+        file.delete
+      }
+    }
+
+  }
+
+  class AfterStoryControllerSpec(path: String) extends After {
+
+    override def after = {
+      val file = new File(path)
       if (file.exists) {
         file.delete
       }

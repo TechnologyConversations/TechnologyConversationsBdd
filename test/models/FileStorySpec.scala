@@ -64,6 +64,26 @@ class FileStorySpec extends Specification with PathMatchers {
 
   }
 
+  "FileStory#createDirectory" should {
+
+    "create new directory" in new FileStoryDirMock {
+      new File(path).exists must beFalse
+      createDirectory
+      path must beAnExistingPath
+      path must beADirectoryPath
+    }
+
+    "do nothing if directory already exists" in new FileStoryDirMock {
+      new File(path).exists must beFalse
+      for(i <- 1 to 3) {
+        createDirectory
+        path must beAnExistingPath
+        path must beADirectoryPath
+      }
+    }
+
+  }
+
   "FileStory#delete" should {
 
     "delete the file" in new FileStoryMock {
@@ -74,12 +94,56 @@ class FileStorySpec extends Specification with PathMatchers {
       new File(path).exists must beFalse
     }
 
+    "delete the empty directory" in {
+      val story = new FileStory {
+        storyCounter += 1
+        val path = s"test/stories/myTestDir$storyCounter"
+      }
+      val path = story.path
+      new File(path).mkdir()
+      path must beAnExistingPath
+      path must beADirectoryPath
+      story.delete
+      new File(path).exists must beFalse
+    }
+
+    "delete the directory with files and sub directories" in {
+      val story = new FileStory {
+        storyCounter += 1
+        val path = s"test/stories/myTestDir$storyCounter"
+      }
+
+      val path = story.path
+      new File(path).mkdir()
+      new File(s"$path/subDir").mkdir()
+      new File(s"$path/file1").createNewFile
+      new File(s"$path/file2").createNewFile
+      path must beAnExistingPath
+      path must beADirectoryPath
+      story.delete
+      new File(path).exists must beFalse
+    }
+
   }
 
   trait FileStoryMock extends FileStory with After {
 
     storyCounter += 1
     lazy val path = s"test/stories/temp_story$storyCounter.story"
+    val expected = "Some invented content"
+
+    delete
+
+    override def after = {
+      delete
+    }
+
+  }
+
+  trait FileStoryDirMock extends FileStory with After {
+
+    storyCounter += 1
+    lazy val path = s"test/stories/temp_dir$storyCounter"
     val expected = "Some invented content"
 
     delete

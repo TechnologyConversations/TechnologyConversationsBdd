@@ -2,8 +2,12 @@
 <div class="modal-body">
     <div>{{rootPath}}</div>
     <div class="input-group">
-        <span class="input-group-addon">Search for</span>
         <input type="text" id="searchStoriesInput" ng-model="criteria" class="form-control">
+        <span class="input-group-btn">
+            <button class="btn" ng-click="createDirectory(criteria)">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </span>
     </div>
     <table class="table table-condensed table-striped">
         <tbody>

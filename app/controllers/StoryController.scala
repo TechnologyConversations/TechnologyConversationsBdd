@@ -25,6 +25,21 @@ object StoryController extends Controller {
     }
   }
 
+  def createDirectoryJson: Action[AnyContent] = Action { implicit request =>
+    val jsonOption = request.body.asJson
+    lazy val json = jsonOption.get
+    lazy val pathOption = (json \ "path").asOpt[String]
+    if (jsonOption.isEmpty) {
+      noJsonResult
+    } else if (pathOption.isEmpty) {
+      noPathResult
+    } else {
+      val path = pathOption.get
+      Story(s"$dir/$path").createDirectory
+      Ok(Json.toJson("""{"status": "OK"}"""))
+    }
+  }
+
   def postStoryJson: Action[AnyContent] = Action { implicit request =>
     val overwrite = false
     saveStoryJson(request.body.asJson, overwrite)
