@@ -38,7 +38,7 @@ trait FileStory {
       if (file.isFile) {
         file.delete
       } else {
-        val filePath = Path(path)
+        val filePath = Path.fromString(path)
         val (deleted, remaining) = filePath.deleteRecursively()
         remaining == 0
       }
