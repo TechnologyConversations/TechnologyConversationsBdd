@@ -39,8 +39,7 @@ trait FileStory {
         file.delete
       } else {
 //        val filePath = Path.fromString(path.replace("/", File.separator))
-        val filePath = Path.fromString(file.getPath)
-        val (deleted, remaining) = filePath.deleteRecursively()
+        val (deleted, remaining) = Path.fromString(file.getPath).deleteRecursively()
         remaining == 0
       }
     } else {
@@ -49,9 +48,9 @@ trait FileStory {
   }
 
   def createDirectory() {
-    val filePath = Path(path)
-    if (!filePath.exists) {
-      filePath.createDirectory()
+    val file = new File(path)
+    if (!file.exists) {
+      file.mkdir
     }
   }
 
