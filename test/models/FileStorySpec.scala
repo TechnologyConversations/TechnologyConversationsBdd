@@ -12,7 +12,7 @@ class FileStorySpec extends Specification with PathMatchers {
   "FileStory#content" should {
 
     "return content of the story" in new FileStoryMock() {
-      val writer = new PrintWriter(new File(path))
+      val writer = new PrintWriter(new File(fullPath))
       writer.write("This is mock content")
       writer.close()
       content must be equalTo "This is mock content"
@@ -20,6 +20,7 @@ class FileStorySpec extends Specification with PathMatchers {
 
     "return empty content if path is empty" in {
       val fileStory = new FileStory {
+        override val dir: String = ""
         override val path: String = ""
       }
       fileStory.content must be equalTo ""
@@ -27,6 +28,7 @@ class FileStorySpec extends Specification with PathMatchers {
 
     "return empty content if path points to a file that does not exist" in {
       val fileStory = new FileStory {
+        override val dir: String = "test"
         override val path: String = "this_story_does_not_exist.story"
       }
       fileStory.content must be equalTo ""
@@ -34,6 +36,7 @@ class FileStorySpec extends Specification with PathMatchers {
 
     "return empty content if path points to a directory" in {
       val fileStory = new FileStory {
+        override val dir: String = "test"
         override val path: String = "stories"
       }
       fileStory.content must be equalTo ""
@@ -45,21 +48,21 @@ class FileStorySpec extends Specification with PathMatchers {
 
     "save content of the story to the new file" in new FileStoryMock {
       save(expected, overwrite = false) must beTrue
-      path must beAnExistingPath
-      path must beAFilePath
-      Source.fromFile(path).mkString must be equalTo expected
+      fullPath must beAnExistingPath
+      fullPath must beAFilePath
+      Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
     "NOT overwrite old content of the file" in new FileStoryMock {
       save(expected, overwrite = false) must beTrue
       save("something else", overwrite = false) must beFalse
-      Source.fromFile(path).mkString must be equalTo expected
+      Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
     "overwrite old content of the file" in new FileStoryMock {
       save("something else", overwrite = false) must beTrue
       save(expected, overwrite = true) must beTrue
-      Source.fromFile(path).mkString must be equalTo expected
+      Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
   }
@@ -67,18 +70,18 @@ class FileStorySpec extends Specification with PathMatchers {
   "FileStory#createDirectory" should {
 
     "create new directory" in new FileStoryDirMock {
-      new File(path).exists must beFalse
-      createDirectory
-      path must beAnExistingPath
-      path must beADirectoryPath
+      new File(fullPath).exists must beFalse
+      createDirectory()
+      fullPath must beAnExistingPath
+      fullPath must beADirectoryPath
     }
 
     "do nothing if directory already exists" in new FileStoryDirMock {
-      new File(path).exists must beFalse
+      new File(fullPath).exists must beFalse
       for(i <- 1 to 3) {
-        createDirectory
-        path must beAnExistingPath
-        path must beADirectoryPath
+        createDirectory()
+        fullPath must beAnExistingPath
+        fullPath must beADirectoryPath
       }
     }
 
@@ -87,20 +90,22 @@ class FileStorySpec extends Specification with PathMatchers {
   "FileStory#delete" should {
 
     "delete the file" in new FileStoryMock {
-      new File(path).createNewFile()
-      path must beAnExistingPath
-      path must beAFilePath
+      new File(fullPath).createNewFile()
+      fullPath must beAnExistingPath
+      fullPath must beAFilePath
       delete
-      new File(path).exists must beFalse
+      new File(fullPath).exists must beFalse
     }
 
     "delete the empty directory" in {
       val story = new FileStory {
         storyCounter += 1
-        val path = s"test/stories/myTestDir$storyCounter"
+        override val dir = "test"
+        val path = s"stories/myTestDir$storyCounter"
       }
-      val path = story.path
+      val path = story.dir + "/" + story.path
       new File(path).mkdir()
+
       path must beAnExistingPath
       path must beADirectoryPath
       story.delete
@@ -110,10 +115,10 @@ class FileStorySpec extends Specification with PathMatchers {
     "delete the directory with files and sub directories" in {
       val story = new FileStory {
         storyCounter += 1
-        val path = s"test/stories/myTestDir$storyCounter"
+        val dir = "test"
+        val path = s"stories/myTestDir$storyCounter"
       }
-
-      val path = story.path
+      val path = story.dir + "/" + story.path
       new File(path).mkdir()
       new File(s"$path/subDir").mkdir()
       new File(s"$path/file1").createNewFile
@@ -129,7 +134,8 @@ class FileStorySpec extends Specification with PathMatchers {
   trait FileStoryMock extends FileStory with After {
 
     storyCounter += 1
-    lazy val path = s"test/stories/temp_story$storyCounter.story"
+    val dir = "test"
+    lazy val path = s"stories/temp_story$storyCounter.story"
     val expected = "Some invented content"
 
     delete
@@ -143,7 +149,8 @@ class FileStorySpec extends Specification with PathMatchers {
   trait FileStoryDirMock extends FileStory with After {
 
     storyCounter += 1
-    lazy val path = s"test/stories/temp_dir$storyCounter"
+    val dir: String = "test"
+    lazy val path = s"stories/temp_dir$storyCounter"
     val expected = "Some invented content"
 
     delete

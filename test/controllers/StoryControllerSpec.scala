@@ -111,13 +111,13 @@ class StoryControllerSpec extends Specification with PathMatchers {
       }
     }
 
-    "rename story if name changed" in new MockStory {
+    "rename story if path changed" in new MockStory {
       override lazy val mockJsonString =
         """
 {
   "path": "my_renamed_test_story.story",
+  "originalPath": "my_test_story.story",
   "name": "my_renamed_test_story",
-  "originalName": "my_test_story",
   "description": "This is description of this story",
   "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],
   "narrative":

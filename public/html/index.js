@@ -109,10 +109,9 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.story = story;
         var storyExtension = ".story";
         var pathArray = $scope.story.path.split('/');
-        if ($scope.story.path.indexOf(storyExtension) === $scope.story.path.length - storyExtension.length) {
-            $scope.dirPath = pathArray.slice(1, pathArray.length - 1).join('/') + '/';
-        } else {
-            $scope.dirPath = pathArray.slice(1, pathArray.length - 1).join('/') + '/';
+        $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
+        if ($scope.dirPath !== '') {
+            $scope.dirPath += '/';
         }
         $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
         $scope.getCssClass = function(ngModelController) {
@@ -146,8 +145,9 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     });
                 } else {
                     if ($scope.story.name !== originalStory.name) {
-                        $scope.story.originalName = originalStory.name;
+                        $scope.story.originalPath = originalStory.path;
                     }
+                    console.dir($scope.story);
                     $http.put('/stories/story.json', $scope.story).then(function() {
                         originalStory = angular.copy($scope.story);
                     }, function(response) {

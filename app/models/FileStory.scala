@@ -6,22 +6,24 @@ import scalax.file.Path
 
 trait FileStory {
 
+  val dir: String
   val path: String
+  lazy val fullPath: String = s"$dir/$path"
 
-  def name: String = new File(path).getName.split('.').init.mkString(".")
+  def name: String = new File(fullPath).getName.split('.').init.mkString(".")
 
   def content: String = {
-    val file = new File(path)
-    if (path.isEmpty || !file.exists ||file.isDirectory) { "" }
-    else { Source.fromFile(path).mkString }
+    val file = new File(fullPath)
+    if (fullPath.isEmpty || !file.exists ||file.isDirectory) { "" }
+    else { Source.fromFile(fullPath).mkString }
   }
 
-  def rename(originalPath: String): Boolean = {
-    new File(originalPath).renameTo(new File(path))
+  def renameFrom(originalPath: String): Boolean = {
+    new File(s"$dir/$originalPath").renameTo(new File(fullPath))
   }
 
   def save(content: String, overwrite: Boolean): Boolean = {
-    val file = new File(path)
+    val file = new File(fullPath)
     if (file.exists != overwrite) {
       false
     } else {
@@ -33,12 +35,11 @@ trait FileStory {
   }
 
   def delete: Boolean = {
-    val file = new File(path)
+    val file = new File(fullPath)
     if (file.exists) {
       if (file.isFile) {
         file.delete
       } else {
-//        val filePath = Path.fromString(path.replace("/", File.separator))
         val (deleted, remaining) = Path.fromString(file.getPath).deleteRecursively()
         remaining == 0
       }
@@ -48,7 +49,7 @@ trait FileStory {
   }
 
   def createDirectory() {
-    val file = new File(path)
+    val file = new File(fullPath)
     if (!file.exists) {
       file.mkdir
     }

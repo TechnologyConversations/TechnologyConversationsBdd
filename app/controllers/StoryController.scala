@@ -19,9 +19,9 @@ object StoryController extends Controller {
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {
     if (storyPath.isEmpty) {
-      Ok(Story(dir).toJson)
+      Ok(Story(dir, "").toJson)
     } else {
-      Ok(Story(s"$dir/$storyPath").toJson)
+      Ok(Story(dir, storyPath).toJson)
     }
   }
 
@@ -35,7 +35,7 @@ object StoryController extends Controller {
       noPathResult
     } else {
       val path = pathOption.get
-      Story(s"$dir/$path").createDirectory
+      Story(dir, path).createDirectory()
       Ok(Json.toJson("""{"status": "OK"}"""))
     }
   }
@@ -56,7 +56,7 @@ object StoryController extends Controller {
   }
 
   def deleteStoryJson(path: String): Action[AnyContent] = Action { implicit request =>
-    Story(s"$dir/$path").delete
+    Story(dir, path).delete
     Ok(Json.toJson("{status: 'OK'}"))
   }
 
@@ -65,10 +65,10 @@ object StoryController extends Controller {
       false
     } else {
       val json = jsonOption.get
-      val name = (json \ "name").asOpt[String].getOrElse("")
-      val originalName = (json \ "originalName").asOpt[String].getOrElse("")
-      if (originalName != "" && originalName != name) {
-        Story(s"$dir/$name.story").rename(s"$dir/$originalName.story")
+      val path = (json \ "path").asOpt[String].getOrElse("")
+      val originalPath = (json \ "originalPath").asOpt[String].getOrElse("")
+      if (originalPath != "" && originalPath != path) {
+        Story(dir, path).renameFrom(originalPath)
       } else {
         true
       }
@@ -84,7 +84,7 @@ object StoryController extends Controller {
       noPathResult
     } else {
       val path = pathOption.get
-      val story = Story(s"$dir/$path")
+      val story = Story(dir, path)
       val success = story.save(story.toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
