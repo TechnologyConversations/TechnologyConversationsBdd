@@ -3,7 +3,7 @@ package models
 import org.specs2.mutable.Specification
 import java.io.File
 import org.clapper.classutil.ClassInfo
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.JsValue
 import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.specs2.matcher.JsonMatchers
 

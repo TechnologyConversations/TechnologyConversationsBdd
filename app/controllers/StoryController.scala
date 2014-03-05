@@ -13,7 +13,7 @@ object StoryController extends Controller {
     Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
-  def allJson(path: String): Action[AnyContent] = Action {
+  def listJson(path: String): Action[AnyContent] = Action {
     Ok(StoryList(s"$dir/$path").json)
   }
 

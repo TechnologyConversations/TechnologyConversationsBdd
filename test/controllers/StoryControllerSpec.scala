@@ -38,7 +38,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
 
-  "StoryController GET /stories/list.json" should {
+  "GET /stories/list.json" should {
 
     "return JSON" in {
       running(FakeApplication()) {
@@ -75,7 +75,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
   
-  "StoryController PUT /stories/story.json route" should {
+  "PUT /stories/story.json route" should {
     
     "return BAD_REQUEST if body is NOT JSON" in new MockStory {
       running(FakeApplication()) {
@@ -167,7 +167,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
 
-  "StoryController POST /stories/story.json route" should {
+  "POST /stories/story.json route" should {
 
     "return BAD_REQUEST if body is NOT JSON" in new MockStory {
       running(FakeApplication()) {
@@ -214,7 +214,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
 
-  "StoryController POST /stories/dir.json route" should {
+  "POST /stories/dir.json route" should {
 
     val path = "testDir"
     val url = s"/stories/dir.json"
@@ -249,7 +249,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
   }
 
-  "StoryController DELETE /stories/story.json route" should {
+  "DELETE /stories/story.json route" should {
 
     "delete story from the specified path" in new MockStory {
       running(FakeApplication()) {
