@@ -1,8 +1,19 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            STEPS
-            {{story}}
+            <div class="input-group">
+                <span class="input-group-addon">Steps:</span>
+                <input type="text" id="searchStepsInput" ng-model="stepsCriteria" class="form-control">
+            </div>
+            <table class="table table-condensed table-striped steps" ui-sortable="sortableStepsOptions" ng-model="steps.steps">
+                <tbody ng-repeat="step in steps.steps | filter:stepsCriteria">
+                    <tr>
+                        <td>
+                            <span class="sortable">{{step.step}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="col-md-9">
             <form class="form-horizontal" role="form" id="storyForm" name="storyForm" novalidate="novalidate">
@@ -96,7 +107,7 @@
                     <!--Lifecycle-->
                     <accordion-group heading="Lifecycle">
                         <h3 id="storyLifecycleBeforeHeader">Before:</h3>
-                        <div class="form-group" ui-sortable ng-model="story.lifecycle.before">
+                        <div class="form-group steps" ui-sortable ng-model="story.lifecycle.before">
                             <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.before" ng-form="storyLifecycleBeforeForm" ng-class="getCssClass(storyLifecycleBeforeForm.storyStepInput)">
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-move"></span>
@@ -117,7 +128,7 @@
                             </div>
                         </div>
                         <h3 id="storyLifecycleAfterHeader">After:</h3>
-                        <div class="form-group" ui-sortable ng-model="story.lifecycle.after">
+                        <div class="form-group steps" ui-sortable ng-model="story.lifecycle.after">
                             <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.after" ng-form="storyLifecycleAfterForm" ng-class="getCssClass(storyLifecycleAfterForm.storyStepInput)">
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-move"></span>
@@ -181,7 +192,7 @@
                                     </div>
                                     <!--Scenario steps-->
                                     <h4 id="storyScenarioStepsHeader{{$index}}">Steps:</h4>
-                                    <div class="form-group" ui-sortable ng-model="scenario.steps">
+                                    <div class="form-group steps" ng-model="scenario.steps" ui-sortable>
                                         <div class="sortable input-group" ng-repeat="stepElement in scenario.steps" ng-form="storyScenarioStepForm" ng-class="getCssClass(storyScenarioStepForm.storyScenarioStepInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>

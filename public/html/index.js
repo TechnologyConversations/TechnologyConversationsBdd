@@ -8,6 +8,9 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 resolve: {
                     story: function($route, $http, $modal) {
                         return getJson($http, $modal, '/stories/story.json');
+                    },
+                    steps: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/list.json');
                     }
                 }
             })
@@ -17,6 +20,9 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 resolve: {
                     story: function($route, $http, $modal) {
                         return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story');
+                    },
+                    steps: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/list.json');
                     }
                 }
             })
@@ -26,8 +32,12 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 resolve: {
                     story: function($route, $http, $modal) {
                         return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story');
+                    },
+                    steps: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/list.json');
                     }
-                }
+                },
+                reloadOnSearch: false
             })
             .otherwise({redirectTo: '/page/stories/new'});
     })
@@ -104,9 +114,11 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             });
         }
     })
-    .controller('storyCtrl', function($scope, $http, $modal, $location, story) {
-        var originalStory = angular.copy(story);
+    .controller('storyCtrl', function($scope, $http, $modal, $location, story, steps) {
         $scope.story = story;
+        $scope.steps = steps;
+        var originalStory = angular.copy(story);
+        var originalSteps = angular.copy(steps);
         var storyExtension = ".story";
         var pathArray = $scope.story.path.split('/');
         $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
@@ -179,6 +191,13 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             var path = $scope.dirPath + $scope.story.name + '.story';
             deleteStory($modal, $http, $location, path);
         };
+        $scope.sortableStepsOptions = {
+            connectWith: ".steps",
+            helper: "clone",
+            update: function(e, ui) {
+                $scope.steps = angular.copy(originalSteps);
+            }
+        }
     });
 
 function getJson($http, $modal, url) {
