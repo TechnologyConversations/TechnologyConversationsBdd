@@ -10,7 +10,14 @@ import scala.collection.JavaConversions._
 class JBehaveSteps(dir: String = "steps") {
 
   def toJson: JsValue = {
-    val steps = stepsCandidates.map(step => Map("step" -> step.toString))
+    val steps = stepsCandidates.map { step =>
+      val stepString = step.toString
+      val stepType = stepString.split(" ")(0)
+      Map(
+        "type" -> stepType,
+        "step" -> stepString.replaceFirst("GIVEN", "Given").replaceFirst("WHEN", "When").replaceFirst("THEN", "Then")
+      )
+    }
     Json.toJson(Map("steps" -> Json.toJson(steps)))
   }
 
@@ -37,7 +44,7 @@ class JBehaveSteps(dir: String = "steps") {
         stepsCandidates(steps.tail, candidates ::: steps.head.listCandidates().toList)
       }
     }
-    stepsCandidates(steps, List())
+    stepsCandidates(steps, List()).sortWith(_.toString < _.toString)
   }
 
 }

@@ -134,7 +134,6 @@ $examples
 
   private[models] def fromJsonScenarios(json: JsValue) = {
     val scenarios = (json \ "scenarios").as[List[JsObject]]
-    // scala> (json \ "root").as[List[JsObject]].map({ i => (i \ "val").as[Long] * (i \ "weight").as[Double] }).sum
     scenarios.map(scenarioJson =>
       new Scenario(
         (scenarioJson \ "title").as[String],

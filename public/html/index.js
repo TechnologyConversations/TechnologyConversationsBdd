@@ -117,9 +117,8 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .controller('storyCtrl', function($scope, $http, $modal, $location, story, steps) {
         $scope.story = story;
         $scope.steps = steps;
+        $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
         var originalStory = angular.copy(story);
-        var originalSteps = angular.copy(steps);
-        var storyExtension = ".story";
         var pathArray = $scope.story.path.split('/');
         $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
         if ($scope.dirPath !== '') {
@@ -191,13 +190,11 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             var path = $scope.dirPath + $scope.story.name + '.story';
             deleteStory($modal, $http, $location, path);
         };
-        $scope.sortableStepsOptions = {
-            connectWith: ".steps",
-            helper: "clone",
-            update: function(e, ui) {
-                $scope.steps = angular.copy(originalSteps);
+        $scope.stepEnterKey = function(event, collection) {
+            if (event.which == 13) {
+                $scope.addElement(collection, 'step');
             }
-        }
+        };
     });
 
 function getJson($http, $modal, url) {

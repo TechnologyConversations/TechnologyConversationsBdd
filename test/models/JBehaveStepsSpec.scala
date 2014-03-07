@@ -64,9 +64,12 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
     }
 
     "return JSON with the correct format" in {
-      jsonString must /("steps") */("step" -> "GIVEN .*".r)
-      jsonString must /("steps") */("step" -> "WHEN .*".r)
-      jsonString must /("steps") */("step" -> "THEN .*".r)
+      jsonString must /("steps") */("type" -> "GIVEN")
+      jsonString must /("steps") */("type" -> "WHEN")
+      jsonString must /("steps") */("type" -> "THEN")
+      jsonString must /("steps") */("step" -> "Given .*".r)
+      jsonString must /("steps") */("step" -> "When .*".r)
+      jsonString must /("steps") */("step" -> "Then .*".r)
     }
 
   }
