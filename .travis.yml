@@ -3,14 +3,6 @@ language: scala
 scala:
   - 2.10.0
 
-before_script:
-  - npm install -g grunt-cli
-  - npm install
-
-script:
-  - grunt jshint
-  - sbt ++2.10.0 scalastyle test
-
 notifications:
   email:
   - viktor@farcic.com
@@ -19,7 +11,6 @@ notifications:
 
 deploy:
   provider: heroku
-  buildpack: scala
   api_key:
     secure: SRT/QPYeRmfKCJjM6OVxWhId4xVG9ZnavYWeumkEPNGn1Ftd51JnrlGC2G7mUfr6ivQrj5bwK8aZJ3g00DvZce/m674to37kvEG9N85VjqoQIEef0OZEs/XIlbqdNHeDO3sz5JZHIcEe4qrHjlbVPtHYaiSaGeBPR1Px85sGiuE=
   app: tcbdd
