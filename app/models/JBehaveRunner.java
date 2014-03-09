@@ -21,7 +21,7 @@ public class JBehaveRunner extends JUnitStories {
 
     private List<Object> stepsInstances;
     public void setStepsInstancesFromNames(List<String> value) throws Exception {
-        stepsInstances = new ArrayList<Object>();
+        stepsInstances = new ArrayList<>();
         for (String className : value) {
             stepsInstances.add(Class.forName(className).newInstance());
         }
