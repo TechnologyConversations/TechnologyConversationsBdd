@@ -1,34 +1,48 @@
 package models;
 
-import com.technologyconversations.bdd.steps.WebSteps;
-//import org.jbehave.core.configuration.Configuration;
-//import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
-//import org.jbehave.core.reporters.Format;
-//import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JBehaveRunner extends JUnitStories {
 
-//    @Override
-//    public Configuration configuration() {
-//        return new MostUsefulConfiguration()
-//                .useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.ANSI_CONSOLE));
-//    }
+    private String storyPath;
+    public void setStoryPath(String value) {
+        storyPath = value;
+    }
+    public String getStoryPath() {
+        return storyPath;
+    }
+
+    private List<Object> stepsInstances;
+    public void setStepsInstancesFromNames(List<String> value) throws Exception {
+        stepsInstances = new ArrayList<Object>();
+        for (String className : value) {
+            stepsInstances.add(Class.forName(className).newInstance());
+        }
+    }
+    public List<Object> getStepsInstances() {
+        return stepsInstances;
+    }
+
+    public JBehaveRunner(String storyPathValue, List<String> stepsInstancesNames) throws Exception {
+        setStoryPath(storyPathValue);
+        setStepsInstancesFromNames(stepsInstancesNames);
+    }
 
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder()
-                .findPaths(CodeLocations.codeLocationFromPath(""), "stories/**/*.story", "");
+                .findPaths(CodeLocations.codeLocationFromPath(""), getStoryPath(), "");
     }
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new WebSteps());
+        return new InstanceStepsFactory(configuration(), stepsInstances);
     }
 }
