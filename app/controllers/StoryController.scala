@@ -33,7 +33,7 @@ object StoryController extends Controller {
     if (jsonOption.isEmpty) {
       noJsonResult
     } else if (pathOption.isEmpty) {
-      noPathResult
+      noResult("path")
     } else {
       val path = pathOption.get
       Story(dir, path).createDirectory()
@@ -82,7 +82,7 @@ object StoryController extends Controller {
     if (jsonOption.isEmpty) {
       noJsonResult
     } else if (pathOption.isEmpty) {
-      noPathResult
+      noResult("path")
     } else {
       val path = pathOption.get
       val story = Story(dir, path)
@@ -93,14 +93,6 @@ object StoryController extends Controller {
         BadRequest(Json.parse("""{"status": "ERROR", "message": "Story could not be saved."}"""))
       }
     }
-  }
-
-  private def noJsonResult: Result = {
-    BadRequest(Json.parse("""{"status": "ERROR", "message": "JSON was not found in the request body"}"""))
-  }
-
-  private def noPathResult: Result = {
-    BadRequest(Json.parse("""{"status": "ERROR", "message": "path was not found"}"""))
   }
 
 }
