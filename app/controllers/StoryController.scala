@@ -10,8 +10,8 @@ object StoryController extends Controller {
   val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
   def index(path: String): Action[AnyContent] = Action {
-    //Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
-    Ok(views.html.index())
+    Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
+    //Ok(views.html.index())
   }
 
   def listJson(path: String): Action[AnyContent] = Action {

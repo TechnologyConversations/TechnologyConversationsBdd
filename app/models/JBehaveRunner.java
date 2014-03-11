@@ -55,8 +55,6 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        System.out.println("111: " + CodeLocations.codeLocationFromPath("").getFile());
-        System.out.println("222: " + getStoryPath());
         return new StoryFinder()
                 .findPaths(CodeLocations.codeLocationFromPath("").getFile(), getStoryPath(), "");
     }

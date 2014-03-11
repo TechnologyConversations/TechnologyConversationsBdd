@@ -16,7 +16,7 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
   "POST /runners/run.json" should {
 
     val url = "/runner/run.json"
-    val storyPath = "stories/story1.story"
+    val storyPath = "non_existent_story.story"
     val json = Json.parse(s"""{"storyPath": "$storyPath", "stepsClasses": ["com.technologyconversations.bdd.steps.WebSteps"]}""")
 
     "return BAD_REQUEST if JSON is not provided" in {

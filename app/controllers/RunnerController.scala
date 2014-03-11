@@ -9,7 +9,8 @@ import play.api.Play
 
 object RunnerController extends Controller {
 
-  val dir = Play.current.configuration.getString("reports.root.dir").getOrElse("jbehave")
+  val reportsDir = Play.current.configuration.getString("reports.root.dir").getOrElse("jbehave")
+  val storiesDir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
   def run: Action[AnyContent] = Action { implicit request =>
     val jsonOption = request.body.asJson
@@ -23,9 +24,10 @@ object RunnerController extends Controller {
     } else if (stepsClasses.isEmpty || stepsClasses.get.size == 0) {
       noResult("stepsClasses")
     } else {
-      val path = dir + "/" + DateTime.now.getMillis
-      new JBehaveRunner(storyPath.get, stepsClasses.get, s"../$path").run()
-      Ok(Json.toJson(s"""{"status": "OK", "reportsPath": "$path"}"""))
+      val reportsPath = reportsDir + "/" + DateTime.now.getMillis
+      val storiesPath = storiesDir + "/" + storyPath.get
+      new JBehaveRunner(storiesPath, stepsClasses.get, s"../$reportsPath").run()
+      Ok(Json.toJson(s"""{"status": "OK", "reportsPath": "$reportsPath"}"""))
     }
   }
 
