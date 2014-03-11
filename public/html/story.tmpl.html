@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="{{storyFormClass}}">
             <form class="form-horizontal" role="form" id="storyForm" name="storyForm" novalidate="novalidate">
                 <!--Story name-->
                 <div class="form-group input-group" ng-class="getCssClass(storyForm.storyNameInput)">
@@ -219,6 +219,13 @@
                     </div>
                 </nav>
             </form>
+        </div>
+        <div class="{{storyRunnerClass}}" ng-hide="!storyRunnerVisible">
+            <div ng-class="getRunnerProgressCss()">
+                <div ng-class="getRunnerStatusCss()"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span>{{getStoryRunnerStatusText()}}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -118,6 +118,12 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.story = story;
         $scope.steps = steps;
         $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
+        $scope.storyFormClass = 'col-md-12';
+        $scope.storyRunnerClass = 'col-md-5';
+        $scope.storyRunnerVisible = false;
+        $scope.storyRunnerInProgress = false;
+        $scope.storyRunnerSuccess = true;
+
         var originalStory = angular.copy(story);
         var pathArray = $scope.story.path.split('/');
         $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
@@ -158,7 +164,6 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                     if ($scope.story.name !== originalStory.name) {
                         $scope.story.originalPath = originalStory.path;
                     }
-                    console.dir($scope.story);
                     $http.put('/stories/story.json', $scope.story).then(function() {
                         originalStory = angular.copy($scope.story);
                     }, function(response) {
@@ -168,21 +173,47 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             }
         };
         $scope.canRunStory = function() {
-            return $scope.storyForm.$valid;
+            return $scope.storyForm.$valid && !$scope.storyRunnerInProgress;
         };
         $scope.runStory = function() {
+            $scope.storyFormClass = 'col-md-7';
+            $scope.storyRunnerClass = 'col-md-5';
+            $scope.storyRunnerVisible = true;
             if ($scope.canRunStory()) {
+                $scope.storyRunnerInProgress = true;
                 // TODO Remove hard-coded steps
                 var json = {storyPath: $scope.story.path, stepsClasses: ['com.technologyconversations.bdd.steps.WebSteps']};
                 $http.post('/runner/run.json', json).then(function(response) {
-                    console.dir(response);
+                    $scope.storyRunnerSuccess = (response.data.status === 'OK');
+                    $scope.storyRunnerInProgress = false;
                 }, function(response) {
+                    $scope.storyRunnerSuccess = false;
+                    $scope.storyRunnerInProgress = false;
                     openErrorModal($modal, response.data);
                 });
             }
         };
-        $scope.openTab = function() {
-            $scope.url = 'www.google.com';
+        $scope.getRunnerProgressCss = function() {
+            return {
+                'progress progress-striped active': $scope.storyRunnerInProgress,
+                'progress': !$scope.storyRunnerInProgress
+            };
+        };
+        $scope.getRunnerStatusCss = function() {
+            return {
+                'progress-bar progress-bar-info': $scope.storyRunnerInProgress,
+                'progress-bar progress-bar-success': $scope.storyRunnerSuccess,
+                'progress-bar progress-bar-danger': !$scope.storyRunnerSuccess
+            };
+        };
+        $scope.getStoryRunnerStatusText = function() {
+            if ($scope.storyRunnerInProgress) {
+                return 'Story run is in progress';
+            } else if ($scope.storyRunnerSuccess) {
+                return 'Story run was successful';
+            } else {
+                return 'Story run failed';
+            }
         };
         $scope.removeElement = function(collection, index) {
             collection.splice(index, 1);
@@ -201,7 +232,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             return !angular.equals($scope.story, originalStory);
         };
         $scope.canDeleteStory = function() {
-            return $scope.action === 'PUT';
+            return $scope.action === 'PUT' && !$scope.storyRunnerInProgress;
         };
         $scope.deleteStory = function() {
             var path = $scope.dirPath + $scope.story.name + '.story';
