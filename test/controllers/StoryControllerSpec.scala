@@ -10,6 +10,7 @@ import java.io.File
 class StoryControllerSpec extends Specification with PathMatchers {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+  val storiesPath = "public/stories"
 
   "StoryController" should {
 
@@ -51,7 +52,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
     "return all story files and directories" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
-        val files = new File("stories").list.map(_.replace(".story", ""))
+        val files = new File(storiesPath).list.map(_.replace(".story", ""))
         val json = contentAsJson(result)
         val stories = (json \ "stories" \\ "name").map(_.as[String])
         val dirs = (json \ "dirs" \\ "name").map(_.as[String])
@@ -62,7 +63,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     "return all story files and directories inside specified directory" in {
       running(FakeApplication()) {
-        val storiesSubDir = new File("stories").listFiles().filter(_.isDirectory)(0)
+        val storiesSubDir = new File(storiesPath).listFiles().filter(_.isDirectory)(0)
         val Some(result) = route(FakeRequest(GET, "/stories/list.json?path=" + storiesSubDir.getName))
         val files = storiesSubDir.list.map(_.replace(".story", ""))
         val json = contentAsJson(result)
@@ -142,8 +143,8 @@ class StoryControllerSpec extends Specification with PathMatchers {
     }
   ]
 }""".stripMargin
-      override lazy val storyPath = "stories/my_renamed_test_story.story"
-      lazy val originalStoryPath = "stories/my_test_story.story"
+      override lazy val storyPath = s"$storiesPath/my_renamed_test_story.story"
+      lazy val originalStoryPath = s"$storiesPath/my_test_story.story"
       override def after = {
         val file = new File(storyPath)
         if (file.exists) {
@@ -218,7 +219,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     val path = "testDir"
     val url = s"/stories/dir.json"
-    val fullPath = s"stories/$path"
+    val fullPath = s"$storiesPath/$path"
 
     "return BAD_REQUEST if body is NOT JSON" in {
       running(FakeApplication()) {
@@ -267,7 +268,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
 
     val url = "/stories/story.json"
     lazy val story = "my_test_story.story"
-    lazy val storyPath = s"stories/$story"
+    lazy val storyPath = s"$storiesPath/$story"
     lazy val mockJsonString =
       """
 {
