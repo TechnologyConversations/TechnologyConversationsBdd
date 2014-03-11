@@ -11,7 +11,7 @@ import scalax.file.Path
 class RunnerControllerSpec extends Specification with JsonMatchers {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
-  val reportsPath = "jbehave"
+  val reportsPath = "public/jbehave"
 
   "POST /runners/run.json" should {
 
@@ -64,7 +64,7 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, json))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
-        val jsonString = contentAsJson(result).as[String]
+        val jsonString = contentAsJson(result).toString()
         jsonString must /("status" -> "OK")
         jsonString must /("reportsPath" -> s"$reportsPath/.*".r)
       }
@@ -82,3 +82,4 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
   }
 
 }
+

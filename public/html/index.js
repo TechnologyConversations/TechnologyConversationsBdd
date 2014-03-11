@@ -167,6 +167,23 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 }
             }
         };
+        $scope.canRunStory = function() {
+            return $scope.storyForm.$valid;
+        };
+        $scope.runStory = function() {
+            if ($scope.canRunStory()) {
+                // TODO Remove hard-coded steps
+                var json = {storyPath: $scope.story.path, stepsClasses: ['com.technologyconversations.bdd.steps.WebSteps']};
+                $http.post('/runner/run.json', json).then(function(response) {
+                    console.dir(response);
+                }, function(response) {
+                    openErrorModal($modal, response.data);
+                });
+            }
+        };
+        $scope.openTab = function() {
+            $scope.url = 'www.google.com';
+        };
         $scope.removeElement = function(collection, index) {
             collection.splice(index, 1);
         };
@@ -191,7 +208,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             deleteStory($modal, $http, $location, path);
         };
         $scope.stepEnterKey = function(event, collection) {
-            if (event.which == 13) {
+            if (event.which === 13) {
                 $scope.addElement(collection, 'step');
             }
         };

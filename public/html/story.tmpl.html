@@ -213,6 +213,7 @@
                 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
                     <div>
                         <button class="btn btn-primary" ng-class="getButtonCssClass()" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
+                        <button class="btn btn-primary" ng-class="getButtonCssClass()" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
                         <button class="btn btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()" type="button">Revert Changes</button>
                         <button class="btn btn-danger" ng-click="deleteStory()" ng-hide="!canDeleteStory()" type="button">Delete Story</button>
                     </div>
