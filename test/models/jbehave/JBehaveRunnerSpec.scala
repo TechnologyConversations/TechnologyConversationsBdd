@@ -1,4 +1,4 @@
-package models
+package models.jbehave
 
 import org.specs2.mutable.Specification
 import java.io.File

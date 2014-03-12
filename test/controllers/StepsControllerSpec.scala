@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 import play.api.test.Helpers._
 import scala.Some
 import play.api.test.{FakeRequest, FakeApplication}
-import models.JBehaveSteps
+import models.jbehave.JBehaveSteps
 
 class StepsControllerSpec extends Specification {
 

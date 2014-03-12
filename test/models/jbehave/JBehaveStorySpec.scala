@@ -1,4 +1,4 @@
-package models
+package models.jbehave
 
 import java.util.Properties
 import org.jbehave.core.model._

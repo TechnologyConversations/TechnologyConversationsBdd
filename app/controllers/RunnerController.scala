@@ -1,8 +1,8 @@
 package controllers
 
-import play.api.mvc.{Result, AnyContent, Action, Controller}
-import models.{JBehaveRunner, JBehaveSteps}
-import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{AnyContent, Action, Controller}
+import models.Runner
+import play.api.libs.json.JsValue
 import scala.collection.JavaConversions._
 import org.joda.time.DateTime
 import play.api.Play
@@ -30,18 +30,20 @@ object RunnerController extends Controller {
     } else if (stepsClasses.isEmpty || stepsClasses.get.size == 0) {
       noResultMap("stepsClasses")
     } else {
-      val reportsPath = reportsDir + "/" + DateTime.now.getMillis
+      val id = DateTime.now.getMillis
+      val reportsPath = reportsDir + "/" + id
       val storiesPath = storiesDir + "/" + storyPath.get
       var status = "OK"
       try {
-        new JBehaveRunner(storiesPath, stepsClasses.get, s"../$reportsPath").run()
+        new Runner(storiesPath, stepsClasses.get, s"../$reportsPath").run()
       } catch {
         case rsf: RunningStoriesFailed => status = "Failed"
         case e: Exception => status = "Error"
       }
       Map(
         "status" -> status,
-        "reportsPath" -> reportsPath
+        "id" -> id.toString,
+        "reportsPath" -> s"$reportsPath/view/reports.html"
       )
     }
   }

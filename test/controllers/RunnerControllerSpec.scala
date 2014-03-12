@@ -66,7 +66,8 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
         contentType(result) must beSome("application/json")
         val jsonString = contentAsJson(result).toString()
         jsonString must /("status" -> "OK")
-        jsonString must /("reportsPath" -> s"$reportsPath/.*".r)
+        jsonString must /("id" -> ".*".r)
+        jsonString must /("reportsPath" -> s"$reportsPath/.*/view/reports.html".r)
       }
     }
 
@@ -82,4 +83,3 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
   }
 
 }
-

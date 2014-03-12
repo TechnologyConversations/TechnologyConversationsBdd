@@ -1,4 +1,4 @@
-package models
+package models.jbehave
 
 import java.io.File
 import org.clapper.classutil.ClassFinder

@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc.{Controller, AnyContent, Action}
-import models.JBehaveSteps
+import models.jbehave.JBehaveSteps
 
 object StepsController extends Controller {
 

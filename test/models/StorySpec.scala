@@ -4,6 +4,7 @@ import org.specs2.mutable.Specification
 import scala.Predef._
 import play.api.libs.json.Json
 import org.jbehave.core.model.{Narrative, Lifecycle}
+import models.jbehave.JBehaveStoryMock
 
 class StorySpec extends Specification {
 

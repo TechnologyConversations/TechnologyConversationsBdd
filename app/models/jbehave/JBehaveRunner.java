@@ -1,4 +1,4 @@
-package models;
+package models.jbehave;
 
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
@@ -52,7 +52,6 @@ public class JBehaveRunner extends JUnitStories {
         setReportsPath(reportsPathValue);
     }
 
-
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder()
@@ -70,7 +69,7 @@ public class JBehaveRunner extends JUnitStories {
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withRelativeDirectory(getReportsPath())
                         .withDefaultFormats()
-                        .withFormats(Format.CONSOLE, Format.HTML, Format.XML)
+                        .withFormats(Format.CONSOLE, Format.HTML, Format.XML, Format.TXT)
                         .withCrossReference(new CrossReference()))
                 .useStepMonitor(new SilentStepMonitor());
     }

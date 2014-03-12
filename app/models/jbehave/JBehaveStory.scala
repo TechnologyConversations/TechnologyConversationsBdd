@@ -1,4 +1,4 @@
-package models
+package models.jbehave
 
 import org.jbehave.core.parsers.RegexStoryParser
 import play.api.libs.json._
