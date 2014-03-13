@@ -1,0 +1,22 @@
+{"xref": {
+  "whenMade": 1394658823075,
+  "createdBy": "JBehave",
+  "metaFilter": "",
+  "meta": [],
+  "stories": [
+    {
+      "description": "",
+      "narrative": "In order to \nAs a \nI want to \n",
+      "name": "test.story",
+      "path": "public/stories/tcbdd/test.story",
+      "html": "public.stories.tcbdd.test.html",
+      "meta": "",
+      "scenarios": "Scenario:Test scenario\nGiven Web address http://localhost:9000 is opened\nThen Web page title is xxx\n\n\n",
+      "passed": false,
+      "pending": false,
+      "started": 1394658783217,
+      "duration": 38450
+    }
+  ],
+  "stepMatches": []
+}}

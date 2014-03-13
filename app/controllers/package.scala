@@ -22,12 +22,23 @@ package object controllers {
   def noResultMap(node: String) = {
     Map(
       "status" -> "ERROR",
-      "message" -> "$node was not found"
+      "message" -> s"$node was not found"
+    )
+  }
+
+  def paramIncorrect(param: String): Result = {
+    BadRequest(Json.toJson(paramIncorrectMap(param)))
+  }
+
+  def paramIncorrectMap(param: String) = {
+    Map(
+      "status" -> "ERROR",
+      "message" -> s"$param is NOT correct"
     )
   }
 
   def result(map: Map[String, String]): SimpleResult = {
-    if (map.contains("status") && !map("status").equals("OK") && !map("status").equals("Failed")) {
+    if (map.contains("status") && !map("status").equals("OK") && !map("status").equals("FAILED")) {
       BadRequest(Json.toJson(map))
     } else {
       Ok(Json.toJson(map))

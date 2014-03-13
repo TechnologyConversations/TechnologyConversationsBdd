@@ -1,0 +1,30 @@
+<xref>
+  <whenMade>1394658823075</whenMade>
+  <createdBy>JBehave</createdBy>
+  <metaFilter></metaFilter>
+  <meta/>
+  <stories>
+    <story>
+      <description></description>
+      <narrative>In order to 
+As a 
+I want to 
+</narrative>
+      <name>test.story</name>
+      <path>public/stories/tcbdd/test.story</path>
+      <html>public.stories.tcbdd.test.html</html>
+      <meta></meta>
+      <scenarios>Scenario:Test scenario
+Given Web address http://localhost:9000 is opened
+Then Web page title is xxx
+
+
+</scenarios>
+      <passed>false</passed>
+      <pending>false</pending>
+      <started>1394658783217</started>
+      <duration>38450</duration>
+    </story>
+  </stories>
+  <stepMatches/>
+</xref>

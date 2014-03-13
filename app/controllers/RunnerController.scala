@@ -37,7 +37,7 @@ object RunnerController extends Controller {
       try {
         new Runner(storiesPath, stepsClasses.get, s"../$reportsPath").run()
       } catch {
-        case rsf: RunningStoriesFailed => status = "Failed"
+        case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
       }
       Map(
