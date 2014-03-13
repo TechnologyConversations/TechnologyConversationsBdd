@@ -119,7 +119,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.steps = steps;
         $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
         $scope.storyFormClass = 'col-md-12';
-        $scope.storyRunnerClass = 'col-md-5';
+        $scope.storyRunnerClass = 'col-md-6';
         $scope.storyRunnerVisible = false;
         $scope.storyRunnerInProgress = false;
         $scope.storyRunnerSuccess = true;
@@ -176,16 +176,22 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             return $scope.storyForm.$valid && !$scope.storyRunnerInProgress;
         };
         $scope.runStory = function() {
-            $scope.storyFormClass = 'col-md-7';
-            $scope.storyRunnerClass = 'col-md-5';
+            $scope.storyFormClass = 'col-md-6';
+            $scope.storyRunnerClass = 'col-md-6';
             $scope.storyRunnerVisible = true;
             if ($scope.canRunStory()) {
                 $scope.storyRunnerInProgress = true;
+                $scope.saveStory();
                 // TODO Remove hard-coded steps
                 var json = {storyPath: $scope.story.path, stepsClasses: ['com.technologyconversations.bdd.steps.WebSteps']};
                 $http.post('/runner/run.json', json).then(function(response) {
                     $scope.storyRunnerSuccess = (response.data.status === 'OK');
                     $scope.storyRunnerInProgress = false;
+                    $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
+                        $scope.reports = response.data.reports;
+                    }, function(response) {
+                        openErrorModal($modal, response.data);
+                    });
                 }, function(response) {
                     $scope.storyRunnerSuccess = false;
                     $scope.storyRunnerInProgress = false;

@@ -226,6 +226,9 @@
                     <span>{{getStoryRunnerStatusText()}}</span>
                 </div>
             </div>
+            <div ng-repeat="report in reports">
+                <div ng-include="report.path"></div>
+            </div>
         </div>
     </div>
 </div>

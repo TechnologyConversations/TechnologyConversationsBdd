@@ -8,7 +8,7 @@ class JBehaveReporterSpec extends Specification with JsonMatchers {
 
   val id = "1394658780515"
   val reportsPath = "test/jbehave"
-  val reports = Seq("AfterStories.html", "BeforeStories.html", "public.stories.tcbdd.test.html")
+  val reports = Seq("BeforeStories.html", "public.stories.tcbdd.test.html", "AfterStories.html")
 
   "JBehaveReported#list" should {
 
@@ -30,11 +30,17 @@ class JBehaveReporterSpec extends Specification with JsonMatchers {
       JBehaveReporter().listJson(reportsPath, "xxx").isEmpty must beTrue
     }
 
-    "return the JSON with the list of generated reports" in {
+    "return JSON with the full path" in {
       val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
-      json must /("reports") */("report" -> reports(0))
-      json must /("reports") */("report" -> reports(1))
-      json must /("reports") */("report" -> reports(2))
+      val dir = s"/$reportsPath/$id/"
+      json must /("reports") */("path" -> startWith("/test/jbehave/1394658780515/"))
+    }
+
+    "return JSON with the list of generated reports in the correct order" in {
+      val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
+      json must /("reports") /#0 /("path" -> endWith(reports(0)))
+      json must /("reports") /#1 /("path" -> endWith(reports(1)))
+      json must /("reports") /#2 /("path" -> endWith(reports(2)))
     }
 
   }
