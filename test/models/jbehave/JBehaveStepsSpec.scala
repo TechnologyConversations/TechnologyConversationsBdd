@@ -83,7 +83,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
     }
 
     "return List with Map containing key value" in {
-      list(0) must havePair("value" -> "webDriver")
+      list(0) must havePair("key" -> "webDriver")
     }
 
 
@@ -149,13 +149,11 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
     }
 
     "return JSON with fullName node" in {
-      println(jsonString)
       jsonString must /("classes") */("fullName" -> endWith("WebSteps"))
     }
 
     "return JSON with params node" in {
-      println(jsonString)
-      jsonString must /("classes") */("params") */("value" -> "webDriver")
+      jsonString must /("classes") */("params") */("key" -> "webDriver")
     }
 
   }

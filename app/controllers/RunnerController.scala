@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc.{AnyContent, Action, Controller}
-import models.Runner
+import models.{RunnerClass, Runner}
 import play.api.libs.json.JsValue
 import scala.collection.JavaConversions._
 import org.joda.time.DateTime
@@ -22,20 +22,30 @@ object RunnerController extends Controller {
   private[controllers] def run(jsonOption: Option[JsValue]): Map[String, String] = {
     lazy val json = jsonOption.get
     lazy val storyPath = (json \ "storyPath").asOpt[String]
-    lazy val stepsClasses = (json \ "stepsClasses").asOpt[List[String]]
+    lazy val classesJson = (json \ "classes").asOpt[List[JsValue]]
     if (jsonOption.isEmpty) {
       noJsonResultMap
     } else if (storyPath.isEmpty) {
       noResultMap("storyPath")
-    } else if (stepsClasses.isEmpty || stepsClasses.get.size == 0) {
-      noResultMap("stepsClasses")
+    } else if (classesJson.isEmpty || classesJson.get.size == 0) {
+      noResultMap("classes")
     } else {
       val id = DateTime.now.getMillis
       val reportsPath = reportsDir + "/" + id
       val storiesPath = storiesDir + "/" + storyPath.get
       var status = "OK"
+      val classes = classesJson.get.map { classJson =>
+        val fullName = (classJson \ "fullName").as[String]
+        val paramsJson = (classJson \ "params").asOpt[List[JsValue]]
+        val params = paramsJson.getOrElse(List()).map { paramJson =>
+          val key = (paramJson \ "key").as[String]
+          val value = (paramJson \ "value").as[String]
+          (key, value)
+        }.toMap
+        RunnerClass(fullName, Map())
+      }
       try {
-        new Runner(storiesPath, stepsClasses.get, s"../$reportsPath").run()
+        new Runner(storiesPath, classes, s"../$reportsPath").run()
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"

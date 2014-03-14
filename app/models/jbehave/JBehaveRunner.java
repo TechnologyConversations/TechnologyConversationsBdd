@@ -1,5 +1,7 @@
 package models.jbehave;
 
+import com.technologyconversations.bdd.steps.BddParamsBean;
+import models.RunnerClass;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
@@ -12,8 +14,10 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class JBehaveRunner extends JUnitStories {
 
@@ -26,10 +30,18 @@ public class JBehaveRunner extends JUnitStories {
     }
 
     private List<Object> stepsInstances;
-    public void setStepsInstancesFromNames(List<String> value) throws Exception {
+    public void setStepsInstances(List<RunnerClass> value) throws Exception {
         stepsInstances = new ArrayList<>();
-        for (String className : value) {
-            stepsInstances.add(Class.forName(className).newInstance());
+        for (RunnerClass runnerClass : value) {
+            Object stepsInstance = Class.forName(runnerClass.fullName()).newInstance();
+            for (Method method : stepsInstance.getClass().getMethods()) {
+                if (method.getAnnotation(BddParamsBean.class) != null) {
+                    Map<String, String> params = runnerClass.javaParams();
+                    method.invoke(stepsInstance, params);
+                    break;
+                }
+            }
+            stepsInstances.add(stepsInstance);
         }
     }
     public List<Object> getStepsInstances() {
@@ -45,10 +57,10 @@ public class JBehaveRunner extends JUnitStories {
     }
 
     public JBehaveRunner(String storyPathValue,
-                         List<String> stepsInstancesNames,
+                         List<RunnerClass> stepsClasses,
                          String reportsPathValue) throws Exception {
         setStoryPath(storyPathValue);
-        setStepsInstancesFromNames(stepsInstancesNames);
+        setStepsInstances(stepsClasses);
         setReportsPath(reportsPathValue);
     }
 

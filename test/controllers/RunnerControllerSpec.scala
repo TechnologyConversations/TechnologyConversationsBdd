@@ -17,7 +17,22 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
 
     val url = "/runner/run.json"
     val storyPath = "non_existent_story.story"
-    val json = Json.parse(s"""{"storyPath": "$storyPath", "stepsClasses": ["com.technologyconversations.bdd.steps.WebSteps"]}""")
+    val json = Json.parse(s"""
+    {
+      "storyPath": "$storyPath",
+      "classes":
+      [{
+        "fullName": "com.technologyconversations.bdd.steps.WebSteps",
+        "params":
+        [{
+          "key": "webDriver",
+          "value": "firefox"
+        }, {
+          "key": "webUrl",
+          "value": "http://www.technologyconversations.com"
+        }]
+      }]
+    }""")
 
     "return BAD_REQUEST if JSON is not provided" in {
       running(FakeApplication()) {
@@ -32,12 +47,12 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
           POST,
           url,
           fakeJsonHeaders,
-          Json.parse(s"""{"stepsClasses": [], "reportsPath": "/test/jbehave/"}""")))
+          Json.parse(s"""{"classes": [], "reportsPath": "/test/jbehave/"}""")))
         status(result) must equalTo(BAD_REQUEST)
       }
     }
 
-    "return BAD_REQUEST if JSON stepsClasses is not provided" in {
+    "return BAD_REQUEST if JSON classes is not provided" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(
           POST,
@@ -48,13 +63,13 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
       }
     }
 
-    "return BAD_REQUEST if JSON stepsClasses does not have at least one value" in {
+    "return BAD_REQUEST if JSON classes does not have at least one value" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(
           POST,
           url,
           fakeJsonHeaders,
-          Json.parse(s"""{"storyPath": "this_is_path", "stepsClasses": [], "reportsPath": "/test/jbehave/"}""")))
+          Json.parse(s"""{"storyPath": "this_is_path", "classes": [], "reportsPath": "/test/jbehave/"}""")))
         status(result) must equalTo(BAD_REQUEST)
       }
     }
@@ -83,3 +98,4 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
   }
 
 }
+

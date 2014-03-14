@@ -2,15 +2,19 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
+            // TODO Remove duplication in resolve
             .when(getNewStoryUrl(), {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
                 resolve: {
                     story: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/stories/story.json');
+                        return getJson($http, $modal, '/stories/story.json', false);
                     },
                     steps: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json');
+                        return getJson($http, $modal, '/steps/list.json', true);
+                    },
+                    classes: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/classes.json', true);
                     }
                 }
             })
@@ -19,10 +23,13 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 controller: 'storyCtrl',
                 resolve: {
                     story: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story');
+                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story', false);
                     },
                     steps: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json');
+                        return getJson($http, $modal, '/steps/list.json', true);
+                    },
+                    classes: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/classes.json', true);
                     }
                 }
             })
@@ -31,10 +38,13 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 controller: 'storyCtrl',
                 resolve: {
                     story: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story');
+                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story', false);
                     },
                     steps: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json');
+                        return getJson($http, $modal, '/steps/list.json', true);
+                    },
+                    classes: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/classes.json', true);
                     }
                 },
                 reloadOnSearch: false
@@ -45,6 +55,15 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         $scope.data = data;
         $scope.ok = function () {
             $modalInstance.close('ok');
+        };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    })
+    .controller('runnerCtrl', function ($scope, $modalInstance, data) {
+        $scope.data = data;
+        $scope.ok = function () {
+            $modalInstance.close($scope.data);
         };
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
@@ -114,9 +133,10 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             });
         }
     })
-    .controller('storyCtrl', function($scope, $http, $modal, $location, story, steps) {
+    .controller('storyCtrl', function($scope, $http, $modal, $location, story, steps, classes) {
         $scope.story = story;
         $scope.steps = steps;
+        $scope.classes = classes;
         $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
         $scope.storyFormClass = 'col-md-12';
         $scope.storyRunnerClass = 'col-md-6';
@@ -182,21 +202,28 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             if ($scope.canRunStory()) {
                 $scope.storyRunnerInProgress = true;
                 $scope.saveStory();
-                // TODO Remove hard-coded steps
-                var json = {storyPath: $scope.story.path, stepsClasses: ['com.technologyconversations.bdd.steps.WebSteps']};
-                $http.post('/runner/run.json', json).then(function(response) {
-                    $scope.storyRunnerSuccess = (response.data.status === 'OK');
-                    $scope.storyRunnerInProgress = false;
-                    $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
-                        $scope.reports = response.data.reports;
-                    }, function(response) {
-                        openErrorModal($modal, response.data);
-                    });
-                }, function(response) {
-                    $scope.storyRunnerSuccess = false;
-                    $scope.storyRunnerInProgress = false;
-                    openErrorModal($modal, response.data);
+                var runnerModal = openRunnerModal($modal, $scope.classes);
+                runnerModal.result.then(function(data) {
+                    var json = {
+                        storyPath: $scope.story.path,
+                        classes: data.classes};
+                    console.log(json);
+                }, function() {
+                    // Do nothing
                 });
+//                $http.post('/runner/run.json', json).then(function(response) {
+//                    $scope.storyRunnerSuccess = (response.data.status === 'OK');
+//                    $scope.storyRunnerInProgress = false;
+//                    $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
+//                        $scope.reports = response.data.reports;
+//                    }, function(response) {
+//                        openErrorModal($modal, response.data);
+//                    });
+//                }, function(response) {
+//                    $scope.storyRunnerSuccess = false;
+//                    $scope.storyRunnerInProgress = false;
+//                    openErrorModal($modal, response.data);
+//                });
             }
         };
         $scope.getRunnerProgressCss = function() {
@@ -251,8 +278,8 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
         };
     });
 
-function getJson($http, $modal, url) {
-    return $http.get(url).then(function(response) {
+function getJson($http, $modal, url, cacheType) {
+    return $http.get(url, {cache: cacheType}).then(function(response) {
         return response.data;
     }, function(response) {
         openErrorModal($modal, response.data);
@@ -263,6 +290,18 @@ function openErrorModal($modal, data) {
     $modal.open({
         templateUrl: '/assets/html/errorModal.tmpl.html',
         controller: 'modalCtrl',
+        resolve: {
+            data: function() {
+                return data;
+            }
+        }
+    });
+}
+
+function openRunnerModal($modal, data) {
+    return $modal.open({
+        templateUrl: '/assets/html/runner.tmpl.html',
+        controller: 'runnerCtrl',
         resolve: {
             data: function() {
                 return data;

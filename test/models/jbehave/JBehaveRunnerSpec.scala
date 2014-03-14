@@ -5,14 +5,16 @@ import java.io.File
 import java.util
 import org.jbehave.core.reporters.Format
 import scala.collection.JavaConversions._
+import com.technologyconversations.bdd.steps.WebSteps
+import models.RunnerClass
 
 class JBehaveRunnerSpec extends Specification {
 
   val storiesDirPath = "test/stories"
   val storiesPath = s"$storiesDirPath/**/*.story"
   val reportsPath = "/test/jbehave/"
-  val steps = new util.ArrayList[String]()
-  steps.add("com.technologyconversations.bdd.steps.WebSteps")
+  val params = Map("webDriver" -> "firefox", "webUrl" -> "http://www.technologyconversations.com")
+  val steps = List(RunnerClass("com.technologyconversations.bdd.steps.WebSteps", params))
   val runner = new JBehaveRunner(storiesPath, steps, reportsPath)
 
   "JBehaveRunner#newInstance" should {
@@ -40,16 +42,22 @@ class JBehaveRunnerSpec extends Specification {
 
   }
 
-  "JBehaveRunner#setStepsInstancesFromNames" should {
+  "JBehaveRunner#setStepsInstances" should {
 
     "return array of instances" in {
       runner.getStepsInstances must have size 1
     }
 
     "throw exception if class does NOT exist" in {
-      val testSteps = new util.ArrayList[String]()
-      testSteps.add("com.technologyconversations.bdd.steps.NonExistentSteps")
+      val testSteps = List(
+        RunnerClass("com.technologyconversations.bdd.steps.NonExistentSteps", Map())
+      )
       new JBehaveRunner(storiesPath, testSteps, reportsPath) should throwA[Exception]
+    }
+
+    "have all params set" in {
+      val webSteps = runner.getStepsInstances.toList(0).asInstanceOf[WebSteps]
+      webSteps.getParams.toMap must havePair("webDriver" -> "firefox")
     }
 
   }
@@ -69,3 +77,4 @@ class JBehaveRunnerSpec extends Specification {
   }
 
 }
+

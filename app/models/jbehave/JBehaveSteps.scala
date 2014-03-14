@@ -61,7 +61,7 @@ class JBehaveSteps(dir: String = "steps") {
   }
 
   private[jbehave] def classParamsMap(className: String): List[Map[String, String]] = {
-    classParams(className).map(className => Map("value" -> className.toString))
+    classParams(className).map(className => Map("key" -> className.toString))
   }
 
   private[jbehave] def steps = {
