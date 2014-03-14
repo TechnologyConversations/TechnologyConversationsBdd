@@ -1,12 +1,16 @@
 package controllers
 
 import play.api.mvc.{Controller, AnyContent, Action}
-import models.jbehave.JBehaveSteps
+import models.Steps
 
 object StepsController extends Controller {
 
   def listJson: Action[AnyContent] = Action {
-    Ok(JBehaveSteps().toJson)
+    Ok(Steps().stepsToJson)
+  }
+
+  def classesJson: Action[AnyContent] = Action {
+    Ok(Steps().classesToJson)
   }
 
 }

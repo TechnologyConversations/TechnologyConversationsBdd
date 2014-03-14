@@ -15,6 +15,7 @@ POST    /stories/dir.json                       controllers.StoryController.crea
 
 # Steps
 GET     /steps/list.json                        controllers.StepsController.listJson
+GET     /steps/classes.json                     controllers.StepsController.classesJson
 
 # Runners
 POST    /runner/run.json                        controllers.RunnerController.run
