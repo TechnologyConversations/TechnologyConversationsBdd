@@ -2,7 +2,6 @@ package models.jbehave
 
 import org.specs2.mutable.Specification
 import java.io.File
-import java.util
 import org.jbehave.core.reporters.Format
 import scala.collection.JavaConversions._
 import com.technologyconversations.bdd.steps.WebSteps

@@ -42,7 +42,7 @@ object RunnerController extends Controller {
           val value = (paramJson \ "value").as[String]
           (key, value)
         }.toMap
-        RunnerClass(fullName, Map())
+        RunnerClass(fullName, params)
       }
       try {
         new Runner(storiesPath, classes, s"../$reportsPath").run()

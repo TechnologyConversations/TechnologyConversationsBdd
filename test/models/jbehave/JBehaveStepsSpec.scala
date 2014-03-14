@@ -2,7 +2,6 @@ package models.jbehave
 
 import org.specs2.mutable.Specification
 import java.io.File
-import org.clapper.classutil.{ClassFinder, ClassInfo}
 import play.api.libs.json.JsValue
 import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.specs2.matcher.JsonMatchers

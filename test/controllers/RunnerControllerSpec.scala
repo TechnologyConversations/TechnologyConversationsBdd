@@ -25,11 +25,11 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
         "fullName": "com.technologyconversations.bdd.steps.WebSteps",
         "params":
         [{
-          "key": "webDriver",
-          "value": "firefox"
+          "key": "key1",
+          "value": "value1"
         }, {
-          "key": "webUrl",
-          "value": "http://www.technologyconversations.com"
+          "key": "key2",
+          "value": "value2"
         }]
       }]
     }""")
