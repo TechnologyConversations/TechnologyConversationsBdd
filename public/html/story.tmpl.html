@@ -180,7 +180,7 @@
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
                                             </span>
-                                            <input name="storyScenarioStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, scenario.steps)" autofocus>
+                                            <input name="storyScenarioStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, scenario.steps)" autofocus>
                                             <span class="input-group-btn">
                                                 <button class="btn" ng-click="removeElement(scenario.steps, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>

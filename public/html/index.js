@@ -1,4 +1,4 @@
-angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
+angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sortable'])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
@@ -60,8 +60,13 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('runnerCtrl', function ($scope, $modalInstance, data) {
+    .controller('runnerCtrl', function ($scope, $modalInstance, $cookieStore, data) {
         $scope.data = data;
+        $scope.data.classes.forEach(function(classEntry) {
+            classEntry.params.forEach(function(paramEntry) {
+                paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
+            });
+        });
         $scope.ok = function () {
             $modalInstance.close($scope.data);
         };
@@ -133,7 +138,7 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
             });
         }
     })
-    .controller('storyCtrl', function($scope, $http, $modal, $location, story, steps, classes) {
+    .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, story, steps, classes) {
         $scope.story = story;
         $scope.steps = steps;
         $scope.classes = classes;
@@ -204,26 +209,31 @@ angular.module('storiesModule', ['ngRoute', 'ui.bootstrap', 'ui.sortable'])
                 $scope.saveStory();
                 var runnerModal = openRunnerModal($modal, $scope.classes);
                 runnerModal.result.then(function(data) {
-                    var json = {
-                        storyPath: $scope.story.path,
-                        classes: data.classes};
-                    console.log(json);
+                    data.classes.forEach(function(classEntry) {
+                        classEntry.params.forEach(function(paramEntry) {
+                            $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
+                        });
+                    });
+//                    var json = {
+//                        storyPath: $scope.story.path,
+//                        classes: data.classes
+//                    };
+//                    $http.post('/runner/run.json', json).then(function(response) {
+//                        $scope.storyRunnerSuccess = (response.data.status === 'OK');
+//                        $scope.storyRunnerInProgress = false;
+//                        $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
+//                            $scope.reports = response.data.reports;
+//                        }, function(response) {
+//                            openErrorModal($modal, response.data);
+//                        });
+//                    }, function(response) {
+//                        $scope.storyRunnerSuccess = false;
+//                        $scope.storyRunnerInProgress = false;
+//                        openErrorModal($modal, response.data);
+//                    });
                 }, function() {
                     // Do nothing
                 });
-//                $http.post('/runner/run.json', json).then(function(response) {
-//                    $scope.storyRunnerSuccess = (response.data.status === 'OK');
-//                    $scope.storyRunnerInProgress = false;
-//                    $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
-//                        $scope.reports = response.data.reports;
-//                    }, function(response) {
-//                        openErrorModal($modal, response.data);
-//                    });
-//                }, function(response) {
-//                    $scope.storyRunnerSuccess = false;
-//                    $scope.storyRunnerInProgress = false;
-//                    openErrorModal($modal, response.data);
-//                });
             }
         };
         $scope.getRunnerProgressCss = function() {

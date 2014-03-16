@@ -15,6 +15,7 @@ trait JBehaveStory {
   def content: String
 
   def toText(json: JsValue): String = {
+    println(json.toString())
     val story = toJBehaveStory(json)
     val beforeScenarios = toTextBeforeScenarios(story)
     val scenarios = toTextScenarios(story)

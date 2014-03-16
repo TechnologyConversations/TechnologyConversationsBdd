@@ -7,6 +7,7 @@
     <script src="/assets/javascripts/angular.min.js"></script>
     <script src="/assets/javascripts/angular-resource.min.js"></script>
     <script src="/assets/javascripts/angular-route.min.js"></script>
+    <script src="/assets/javascripts/angular-cookies.min.js"></script>
     <script src="/assets/javascripts/bootstrap.min.js"></script>
     <script src="/assets/javascripts/ui-bootstrap-tpls-0.10.0.min.js"></script>
     <script src="/assets/javascripts/sortable.js"></script>
@@ -31,7 +32,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" ng-click="openStory()">Browse Stories</a></li>
+                    <li><a id="browseStories" href="#" ng-click="openStory()">Browse Stories</a></li>
                 </ul>
             </div>
         </div>
