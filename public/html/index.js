@@ -214,23 +214,23 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                             $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
                         });
                     });
-//                    var json = {
-//                        storyPath: $scope.story.path,
-//                        classes: data.classes
-//                    };
-//                    $http.post('/runner/run.json', json).then(function(response) {
-//                        $scope.storyRunnerSuccess = (response.data.status === 'OK');
-//                        $scope.storyRunnerInProgress = false;
-//                        $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
-//                            $scope.reports = response.data.reports;
-//                        }, function(response) {
-//                            openErrorModal($modal, response.data);
-//                        });
-//                    }, function(response) {
-//                        $scope.storyRunnerSuccess = false;
-//                        $scope.storyRunnerInProgress = false;
-//                        openErrorModal($modal, response.data);
-//                    });
+                    var json = {
+                        storyPath: $scope.story.path,
+                        classes: data.classes
+                    };
+                    $http.post('/runner/run.json', json).then(function(response) {
+                        $scope.storyRunnerSuccess = (response.data.status === 'OK');
+                        $scope.storyRunnerInProgress = false;
+                        $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
+                            $scope.reports = response.data.reports;
+                        }, function(response) {
+                            openErrorModal($modal, response.data);
+                        });
+                    }, function(response) {
+                        $scope.storyRunnerSuccess = false;
+                        $scope.storyRunnerInProgress = false;
+                        openErrorModal($modal, response.data);
+                    });
                 }, function() {
                     // Do nothing
                 });
