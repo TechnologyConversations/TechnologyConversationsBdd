@@ -6,7 +6,7 @@ import play.api.libs.json.{Json, JsValue}
 import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.jbehave.core.configuration.MostUsefulConfiguration
 import scala.collection.JavaConversions._
-import com.technologyconversations.bdd.steps.{WebSteps, BddParams}
+import com.technologyconversations.bdd.steps.{BddParam, WebSteps}
 import org.jbehave.core.annotations.{Then, When, Given}
 
 class JBehaveSteps(dir: String = "steps") {
@@ -54,14 +54,18 @@ class JBehaveSteps(dir: String = "steps") {
     false
   }
 
-  private[jbehave] def classParams(className: String): List[String] = {
-    val annotation = Class.forName(className).getAnnotation(classOf[BddParams])
-    if (annotation == null) List()
-    else annotation.value().toList
+  private[jbehave] def classParams(className: String): List[BddParam] = {
+    Class.forName(className).getMethods
+      .filter(_.getAnnotation(classOf[BddParam]) != null)
+      .map(_.getAnnotation(classOf[BddParam]))
+      .toList
   }
 
   private[jbehave] def classParamsMap(className: String): List[Map[String, String]] = {
-    classParams(className).map(className => Map("key" -> className.toString))
+    classParams(className).map(param => Map(
+      "key" -> param.value(),
+      "description" -> param.description()
+    ))
   }
 
   private[jbehave] def steps = {

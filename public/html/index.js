@@ -201,14 +201,14 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             return $scope.storyForm.$valid && !$scope.storyRunnerInProgress;
         };
         $scope.runStory = function() {
-            $scope.storyFormClass = 'col-md-6';
-            $scope.storyRunnerClass = 'col-md-6';
-            $scope.storyRunnerVisible = true;
             if ($scope.canRunStory()) {
-                $scope.storyRunnerInProgress = true;
                 $scope.saveStory();
                 var runnerModal = openRunnerModal($modal, $scope.classes);
                 runnerModal.result.then(function(data) {
+                    $scope.storyFormClass = 'col-md-6';
+                    $scope.storyRunnerClass = 'col-md-6';
+                    $scope.storyRunnerVisible = true;
+                    $scope.storyRunnerInProgress = true;
                     data.classes.forEach(function(classEntry) {
                         classEntry.params.forEach(function(paramEntry) {
                             $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);

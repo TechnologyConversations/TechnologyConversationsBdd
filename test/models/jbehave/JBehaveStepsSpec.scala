@@ -55,6 +55,8 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
   }
   
   "JBehaveSteps#classParams" should {
+
+    val params = JBehaveSteps().classParams(className)
     
     "return List[String]" in {
       JBehaveSteps().classParams(className) must beAnInstanceOf[List[String]]
@@ -64,12 +66,17 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       JBehaveSteps().classParams(noBddClassName) must have size 0
     }
 
-    "return list of parameters if class has BddParams annotation" in {
-      val list = JBehaveSteps().classParams(className)
+    "return list of parameters with value" in {
+      val list = params.map(_.value())
       list must not be empty
-      list must contain("webDriver")
+      list must contain("url")
     }
-    
+
+    "return list of parameters with description" in {
+      val list = params.map(_.description())
+      list must not be empty
+      list must contain("Web address used with the 'Given Web home page is opened' step.")
+    }
   }
 
   "JBehaveSteps#classParamsMap" should {
@@ -81,10 +88,13 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       list(0) must beAnInstanceOf[Map[String, String]]
     }
 
-    "return List with Map containing key value" in {
-      list(0) must havePair("key" -> "webDriver")
+    "return List with Map containing key" in {
+      list(0) must haveKey("key")
     }
 
+    "return List with Map containing key" in {
+      list(0) must haveKey("description")
+    }
 
   }
 
@@ -152,7 +162,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
     }
 
     "return JSON with params node" in {
-      jsonString must /("classes") */("params") */("key" -> "webDriver")
+      jsonString must /("classes") */("params") */("key" -> "browser")
     }
 
   }

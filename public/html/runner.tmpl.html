@@ -3,12 +3,12 @@
     <form class="form-horizontal" role="form" id="runnerForm" name="runnerForm">
         <div ng-repeat="class in data.classes">
             <h3>{{class.name}}</h3>
-                <div class="form-group input-group" ng-repeat="param in class.params">
-                    <span class="input-group-addon">
-                        {{param.key}}
-                    </span>
-                    <input id="paramValueInput{{$index}}" name="paramValueInput" class="form-control" type="text" ng-model="param.value">
-                </div>
+            <div class="form-group input-group" ng-repeat="param in class.params">
+                <span class="input-group-addon">
+                    {{param.key}}
+                </span>
+                <input id="paramValueInput{{$index}}" name="paramValueInput" class="form-control" type="text" ng-model="param.value" popover="{{param.description}}" popover-trigger="focus">
+            </div>
         </div>
     </form>
 </div>
