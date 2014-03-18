@@ -1,0 +1,18 @@
+@(compositePackage: String, compositeClass: String, composites: List[models.jbehave.JBehaveComposite])
+
+package @compositePackage
+
+import org.jbehave.core.annotations.Composite;
+import org.jbehave.core.annotations.Named;
+
+@Html(s"public class $compositeClass {")
+    @for((composite, index) <- composites.zipWithIndex) {
+        @@Given("@Html(composite.strippedFormattedStepText)")
+        @Html(composite.formattedCompositeSteps.mkString("""@Composite(steps = {"""", """", """", """"})"""))
+        @Html(composite.params.map(param => s"""@Named("$param") String $param""").mkString(
+            s"public void compositeStep$index(",
+            ", ",
+            ") { }"
+        ))
+    }
+@Html("}")

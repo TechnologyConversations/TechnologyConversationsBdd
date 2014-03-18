@@ -20,7 +20,7 @@ After:
 
 
 
-Scenario: Browse stories
+Scenario: Can open dialog
 
 Meta:
 
@@ -28,5 +28,16 @@ Meta:
 Given Web home page is opened
 When Web user clicks the element browseStories
 Then Web element modalHeader should have text Browse Stories
+
+Examples:
+
+Scenario: Can navigate through directories
+
+Meta:
+
+
+Given Web user is in the Browse Stories dialog
+When Web user clicks the element tcbdd
+Then Web element dirPath should have text tcbdd/
 
 Examples:
