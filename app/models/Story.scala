@@ -1,6 +1,7 @@
 package models
 
 import models.jbehave.JBehaveStory
+import models.file.FileStory
 
 class Story(val dir: String, val path: String) extends JBehaveStory with FileStory { }
 

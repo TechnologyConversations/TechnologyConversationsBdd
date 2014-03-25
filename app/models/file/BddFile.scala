@@ -1,20 +1,18 @@
-package models
+package models.file
 
 import java.io.{PrintWriter, File}
 import scala.io.Source
 import scalax.file.Path
 
-trait FileStory {
+trait BddFile {
 
   val dir: String
   val path: String
   lazy val fullPath: String = s"$dir/$path"
 
-  def name: String = new File(fullPath).getName.split('.').init.mkString(".")
-
   def content: String = {
     val file = new File(fullPath)
-    if (fullPath.isEmpty || !file.exists ||file.isDirectory) { "" }
+    if (fullPath.isEmpty || !file.exists || file.isDirectory) { "" }
     else { Source.fromFile(fullPath).mkString }
   }
 

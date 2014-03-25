@@ -7,8 +7,8 @@ class JBehaveCompositesSpec extends Specification {
 
   "CompositesJBehave#render" should {
 
-    val compositePackage = "com.wordpress.test"
-    val compositeClass = "MyComposite"
+    val compositePackage = "com.technologyconversations.test"
+    val compositeClass = "MyComposites"
     val steps = List("Given something", "When else", "Then OK")
     val composite = JBehaveComposite("Given this is my composite", steps)
     val stepsWithParams = List("""Given "my" <param1>""", "When <param2>", "Then <param3>")
@@ -18,15 +18,13 @@ class JBehaveCompositesSpec extends Specification {
       compositeClass,
       List(composite, compositeWithParams)
     ).toString().trim
-    println(out)
 
     "output package statement" in {
       out must contain(s"package $compositePackage")
     }
 
     "output import statements" in {
-      out must contain("import org.jbehave.core.annotations.Composite")
-      out must contain("import org.jbehave.core.annotations.Named")
+      out must contain("import org.jbehave.core.annotations.*")
     }
 
     "output class statement" in {

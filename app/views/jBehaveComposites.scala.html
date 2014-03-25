@@ -2,8 +2,7 @@
 
 package @compositePackage
 
-import org.jbehave.core.annotations.Composite;
-import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.*;
 
 @Html(s"public class $compositeClass {")
     @for((composite, index) <- composites.zipWithIndex) {
