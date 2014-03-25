@@ -16,7 +16,7 @@ class JBehaveCompositesSpec extends Specification {
         "stepText" -> Json.toJson(composite.stepText),
         "compositeSteps" -> Json.toJson(composite.compositeSteps.map { step =>
           Map(
-            "step" -> Json.toJson(step)
+            "step" -> step
           )
         })
       )
