@@ -1,5 +1,4 @@
 angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sortable'])
-    // TODO Test
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
@@ -7,6 +6,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             .when(getNewStoryUrl(), {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
+                // TODO Test
                 resolve: {
                     story: function($route, $http, $modal) {
                         return getJson($http, $modal, '/stories/story.json', false);
@@ -19,6 +19,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                     }
                 }
             })
+            // TODO Test
             .when(getNewStoryUrl() + ':path*', {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
@@ -34,6 +35,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                     }
                 }
             })
+            // TODO Test
             .when(getViewStoryUrl() + ':path*', {
                 templateUrl: '/assets/html/story.tmpl.html',
                 controller: 'storyCtrl',
@@ -50,7 +52,14 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 },
                 reloadOnSearch: false
             })
-            .otherwise({redirectTo: '/page/stories/new'});
+            .when('/page/composites', {
+                templateUrl: '/assets/html/composites.tmpl.html',
+                controller: 'compositesCtrl'
+            })
+            // TODO Test
+            .otherwise({
+                redirectTo: '/page/stories/new'
+            });
     })
     .controller('modalCtrl', function ($scope, $modalInstance, data) {
         $scope.data = data;
@@ -294,6 +303,9 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 $scope.addElement(collection, 'step');
             }
         };
+    })
+    .controller('compositesCtrl', function($scope) {
+        console.log('compositesCtrl');
     });
 
 // TODO Test

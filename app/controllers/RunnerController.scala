@@ -39,7 +39,7 @@ object RunnerController extends Controller {
         val paramsJson = (classJson \ "params").asOpt[List[JsValue]]
         val params = paramsJson.getOrElse(List()).map { paramJson =>
           val key = (paramJson \ "key").as[String]
-          val value = (paramJson \ "value").as[String]
+          val value = (paramJson \ "value").asOpt[String].getOrElse("")
           (key, value)
         }.toMap
         RunnerClass(fullName, params)
