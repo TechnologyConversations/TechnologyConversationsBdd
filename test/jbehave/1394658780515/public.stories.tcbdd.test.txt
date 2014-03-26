@@ -1,0 +1,14 @@
+
+(public/stories/tcbdd/test.story)
+Narrative:
+As a 
+I want to 
+So that 
+Lifecycle:
+
+Scenario: Test scenario
+Given Web address http://localhost:9000 is opened
+Then Web page title is xxx (FAILED)
+(org.junit.ComparisonFailure: expected:<[xxx]> but was:<[BDD Assistant: Technology Conversations]>)
+
+
