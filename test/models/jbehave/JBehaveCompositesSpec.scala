@@ -32,14 +32,32 @@ class JBehaveCompositesSpec extends Specification {
     compositeClass,
     composites
   ).toString().trim
+  val jBehaveComposites = new JBehaveComposites {
+    override def content = s"""package $compositePackage
+                             |
+                             |import org.jbehave.core.annotations.*;
+                             |
+                             |public class $compositeClass {
+                             |
+                             |        @Given("this is my composite")
+                             |        @Composite(steps = {"Given something", "When else", "Then OK"})
+                             |        public void compositeStep0() { }
+                             |
+                             |}""".stripMargin
+  }
 
   "JBehaveComposites#toText" should {
 
     "return jBehaveComposites view" in {
-      val actual = new JBehaveComposites
-      actual.toText(json) must beEqualTo(text)
+      jBehaveComposites.toText(json) must beEqualTo(text)
     }
 
   }
+
+//  "JBehaveComposites#toJson" should {
+//
+//    "return "
+//
+//  }
 
 }

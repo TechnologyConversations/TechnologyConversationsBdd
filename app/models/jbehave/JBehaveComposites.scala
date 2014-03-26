@@ -1,8 +1,10 @@
 package models.jbehave
 
-import play.api.libs.json.JsValue
+import play.api.libs.json.{Json, JsValue}
 
-class JBehaveComposites {
+trait JBehaveComposites {
+
+  def content: String
 
   def toText(json: JsValue): String = {
     val compositePackage = (json \ "package").as[String]
@@ -23,5 +25,8 @@ class JBehaveComposites {
   }
 
   // TODO toJson
+//  def toJson: JsValue = {
+//    Json.toJson(content)
+//  }
 
 }
