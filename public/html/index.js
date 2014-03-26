@@ -1,4 +1,5 @@
 angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sortable'])
+    // TODO Test
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
@@ -53,9 +54,11 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
     })
     .controller('modalCtrl', function ($scope, $modalInstance, data) {
         $scope.data = data;
+        // TODO Test
         $scope.ok = function () {
             $modalInstance.close('ok');
         };
+        // TODO Test
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -67,13 +70,16 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
             });
         });
+        // TODO Test
         $scope.ok = function () {
             $modalInstance.close($scope.data);
         };
+        // TODO Test
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
     })
+    // TODO Test
     .controller('topMenuController', function($scope, $modal) {
         $scope.openStory = function() {
             $modal.open({
@@ -87,6 +93,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             });
         };
     })
+    // TODO Test
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location) {
         $scope.rootPath = "";
         updateData("");
@@ -138,6 +145,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             });
         }
     })
+    // TODO Test
     .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, story, steps, classes) {
         $scope.story = story;
         $scope.steps = steps;
@@ -288,6 +296,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
         };
     });
 
+// TODO Test
 function getJson($http, $modal, url, cacheType) {
     return $http.get(url, {cache: cacheType}).then(function(response) {
         return response.data;
@@ -296,6 +305,7 @@ function getJson($http, $modal, url, cacheType) {
     });
 }
 
+// TODO Test
 function openErrorModal($modal, data) {
     $modal.open({
         templateUrl: '/assets/html/errorModal.tmpl.html',
@@ -308,6 +318,7 @@ function openErrorModal($modal, data) {
     });
 }
 
+// TODO Test
 function openRunnerModal($modal, data) {
     return $modal.open({
         templateUrl: '/assets/html/runner.tmpl.html',
@@ -320,6 +331,7 @@ function openRunnerModal($modal, data) {
     });
 }
 
+// TODO Test
 function openConfirmationModal($modal, data) {
     return $modal.open({
         templateUrl: '/assets/html/confirmationModal.tmpl.html',
@@ -332,14 +344,17 @@ function openConfirmationModal($modal, data) {
     });
 }
 
+// TODO Test
 function getViewStoryUrl() {
     return '/page/stories/view/';
 }
 
+// TODO Test
 function getNewStoryUrl() {
     return '/page/stories/new/';
 }
 
+// TODO Test
 function deleteStory($modal, $http, $location, path) {
     var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
     var okModal = openConfirmationModal($modal, message);
