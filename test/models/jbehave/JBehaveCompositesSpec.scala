@@ -1,14 +1,16 @@
 package models.jbehave
 
 import org.specs2.mutable.Specification
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
+import org.specs2.matcher.JsonMatchers
 
-class JBehaveCompositesSpec extends Specification {
+class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
-  val compositePackage = "com.technologyconversations.test"
-  val compositeClass = "MyComposites"
+  val compositePackage = "composites.com.technologyconversations.bdd.steps"
+  val compositeClass = "WebStepsComposites"
   val steps = List("Given something", "When else", "Then OK")
-  val composite = JBehaveComposite("Given this is my composite", steps)
+  val stepText = "Given this is my composite"
+  val composite = JBehaveComposite(stepText, steps)
   val composites = List(composite)
   val compositesJson = composites.map { composite =>
     Map(
@@ -27,6 +29,7 @@ class JBehaveCompositesSpec extends Specification {
     "class" -> Json.toJson(compositeClass),
     "composites" -> Json.toJson(compositesJson)
   ))
+//  println("xxxxxxxxx" + json)
   val text = views.html.jBehaveComposites.render(
     compositePackage,
     compositeClass,
@@ -54,10 +57,27 @@ class JBehaveCompositesSpec extends Specification {
 
   }
 
-//  "JBehaveComposites#toJson" should {
-//
-//    "return "
-//
-//  }
+  "JBehaveComposites#toJson" should {
+
+    val json = jBehaveComposites.toJson(s"$compositePackage.$compositeClass")
+    val jsonString = json.toString()
+
+    "must have package" in {
+      jsonString must /("package" -> compositePackage)
+    }
+
+    "must have class" in {
+      jsonString must /("class" -> compositeClass)
+    }
+
+    "must have composites > composite > stepText" in {
+      jsonString must /("composites") */"composite" */("stepText" -> "(Given|When|Then).*".r)
+    }
+
+    "must have composites > composite > compositeSteps > step" in {
+      jsonString must /("composites") */"composite" */"compositeSteps" */("step" -> "(Given|When|Then).*".r)
+    }
+
+  }
 
 }

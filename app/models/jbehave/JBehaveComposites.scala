@@ -1,6 +1,9 @@
 package models.jbehave
 
 import play.api.libs.json.{Json, JsValue}
+import java.lang.reflect.Method
+import org.jbehave.core.annotations.{Then, When, Given, Composite}
+import java.lang.annotation.Annotation
 
 trait JBehaveComposites {
 
@@ -24,9 +27,53 @@ trait JBehaveComposites {
     ).toString().trim
   }
 
-  // TODO toJson
-//  def toJson: JsValue = {
-//    Json.toJson(content)
-//  }
+  def toJson(className: String): JsValue = {
+    Json.toJson(collection(className))
+  }
+
+  private def collection(className: String) = {
+    val compositeClass = Class.forName(className)
+    Map(
+      "package" -> Json.toJson(compositeClass.getPackage.getName),
+      "class" -> Json.toJson(compositeClass.getSimpleName),
+      "composites" -> Json.toJson(methodCollection(compositeClass.getMethods.toList))
+    )
+  }
+
+  private def methodCollection(methods: List[Method], composites: List[Map[String, JsValue]] = List()): List[Map[String, JsValue]] = {
+    if (methods == Nil) composites
+    else {
+      val method = methods.head
+      val stepAnnotations = method.getAnnotations.filter { annotation =>
+        annotation.isInstanceOf[Given] || annotation.isInstanceOf[When] || annotation.isInstanceOf[Then]
+      }
+      val compositeAnnotation = method.getAnnotation(classOf[Composite])
+      if (stepAnnotations.size > 0 && compositeAnnotation != null) {
+        val list = Map(
+          "composite" -> Json.toJson(Map(
+            "stepText" -> Json.toJson(stepAnnotationValue(stepAnnotations(0))),
+            "compositeSteps" -> Json.toJson(compositeAnnotationValue(compositeAnnotation))
+          ))
+        )
+        methodCollection(methods.tail, composites :+ list)
+      } else {
+        methodCollection(methods.tail, composites)
+      }
+    }
+  }
+
+  private def stepAnnotationValue(annotation: Annotation) = {
+    annotation match {
+      case givenAnnotation: Given => "Given " + givenAnnotation.value()
+      case whenAnnotation: When => "When " + whenAnnotation.value()
+      case thenAnnotation: Then => "Then " + thenAnnotation.value()
+      case _ => ""
+    }
+  }
+
+  private def compositeAnnotationValue(annotation: Annotation) = {
+    annotation.asInstanceOf[Composite].steps().map(step => Map("step" -> step)).toList
+  }
+
 
 }
