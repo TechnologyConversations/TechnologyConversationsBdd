@@ -131,6 +131,25 @@ class BddFileSpec extends Specification with PathMatchers {
 
   }
 
+  "BddFile#list" should {
+
+    val bddFile = new BddFile {
+      override val path: String = "jbehave/1394658780515"
+      override val dir: String = "test"
+    }
+
+    "return List instance" in {
+      bddFile.list() must beAnInstanceOf[List[String]]
+    }
+
+    "list all files recursively" in {
+      val path = bddFile.dir + "/" + bddFile.path
+      val expected = new File(path).listFiles.filter(_.isFile).length + new File(s"$path/view").listFiles.length
+      bddFile.list() must have size expected
+    }
+
+  }
+
   trait BddFileMock extends BddFile with After {
 
     storyCounter += 1

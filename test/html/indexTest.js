@@ -83,4 +83,39 @@ describe('storiesModule controllers', function() {
         }));
     });
 
+    describe('compositesCtrl controller', function() {
+
+        var composites = [
+            {
+                package: 'composites.com.technologyconversations.bdd.steps',
+                class: 'WebStepsComposites'
+            }
+        ];
+//        var composite = {
+//            package: 'composites.com.technologyconversations.bdd.steps',
+//            class: 'WebStepsComposites',
+//            composites:[{
+//                composite: {
+//                    stepText: 'Given this is my composite',
+//                    compositeSteps:[
+//                        {step: 'Given something'},
+//                        {step: 'When else'},
+//                        {step: 'Then OK'}
+//                    ]
+//                }
+//            }]
+//        };
+
+        it('should put composites data to the scope', inject(function($rootScope, $controller) {
+            $controller("compositesCtrl", {$scope: scope, composites: composites});
+            expect(scope.composites).toBe(composites);
+        }));
+//
+//        it('should put data to the scope', inject(function($rootScope, $controller) {
+//            $controller("compositesCtrl", {$scope: scope, composites: composites});
+//            expect(scope.composites).toBe(composites);
+//        }));
+
+    });
+
 });

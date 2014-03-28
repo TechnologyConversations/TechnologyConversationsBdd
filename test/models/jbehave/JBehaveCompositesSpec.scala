@@ -3,6 +3,7 @@ package models.jbehave
 import org.specs2.mutable.Specification
 import play.api.libs.json.{JsValue, Json}
 import org.specs2.matcher.JsonMatchers
+import java.io.File
 
 class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
@@ -29,7 +30,6 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
     "class" -> Json.toJson(compositeClass),
     "composites" -> Json.toJson(compositesJson)
   ))
-//  println("xxxxxxxxx" + json)
   val text = views.html.jBehaveComposites.render(
     compositePackage,
     compositeClass,
@@ -49,32 +49,56 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
                              |}""".stripMargin
   }
 
-  "JBehaveComposites#toText" should {
+  "JBehaveComposites#classesToJson" should {
 
-    "return jBehaveComposites view" in {
-      jBehaveComposites.toText(json) must beEqualTo(text)
+    val classPackage = "package1"
+    val className = "Class1"
+    val json = jBehaveComposites.classesToJson(List(
+      classPackage + File.separator + className + ".java",
+      "package2" + File.separator + "Class2.java"
+    ))
+    val jsonString = json.toString()
+
+    "return JsValue" in {
+      json must beAnInstanceOf[JsValue]
+    }
+
+    "have package" in {
+      jsonString must */("package" -> classPackage)
+    }
+
+    "have class" in {
+      jsonString must */("class" -> className)
     }
 
   }
 
-  "JBehaveComposites#toJson" should {
+  "JBehaveComposites#classToText" should {
 
-    val json = jBehaveComposites.toJson(s"$compositePackage.$compositeClass")
+    "return jBehaveComposites view" in {
+      jBehaveComposites.classToText(json) must beEqualTo(text)
+    }
+
+  }
+
+  "JBehaveComposites#classToJson" should {
+
+    val json = jBehaveComposites.classToJson(s"$compositePackage.$compositeClass")
     val jsonString = json.toString()
 
-    "must have package" in {
+    "have package" in {
       jsonString must /("package" -> compositePackage)
     }
 
-    "must have class" in {
+    "have class" in {
       jsonString must /("class" -> compositeClass)
     }
 
-    "must have composites > composite > stepText" in {
+    "have composites > composite > stepText" in {
       jsonString must /("composites") */"composite" */("stepText" -> "(Given|When|Then).*".r)
     }
 
-    "must have composites > composite > compositeSteps > step" in {
+    "have composites > composite > compositeSteps > step" in {
       jsonString must /("composites") */"composite" */"compositeSteps" */("step" -> "(Given|When|Then).*".r)
     }
 

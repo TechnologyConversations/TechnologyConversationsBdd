@@ -4,12 +4,13 @@ import play.api.libs.json.{Json, JsValue}
 import java.lang.reflect.Method
 import org.jbehave.core.annotations.{Then, When, Given, Composite}
 import java.lang.annotation.Annotation
+import java.io.File
 
 trait JBehaveComposites {
 
   def content: String
 
-  def toText(json: JsValue): String = {
+  def classToText(json: JsValue): String = {
     val compositePackage = (json \ "package").as[String]
     val compositeClass = (json \ "class").as[String]
     val composites = (json \ "composites" \\ "composite").map{ composite =>
@@ -27,11 +28,26 @@ trait JBehaveComposites {
     ).toString().trim
   }
 
-  def toJson(className: String): JsValue = {
-    Json.toJson(collection(className))
+  def classesToJson(files: List[String]): JsValue = {
+    Json.toJson(classesList(files))
   }
 
-  private def collection(className: String) = {
+  def classToJson(className: String): JsValue = {
+    Json.toJson(classMap(className))
+  }
+
+  private def classesList(files: List[String]) = {
+    files.map { file =>
+      val separator = File.separator(0)
+      val parts = file.stripPrefix(s"app$separator").split(separator)
+      Map(
+        "package" -> parts.init.mkString("."),
+        "class" -> parts.last.stripSuffix(".java")
+      )
+    }
+  }
+
+  private def classMap(className: String) = {
     val compositeClass = Class.forName(className)
     Map(
       "package" -> Json.toJson(compositeClass.getPackage.getName),

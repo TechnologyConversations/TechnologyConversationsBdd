@@ -21,7 +21,11 @@ GET     /steps/classes.json                     controllers.StepsController.clas
 POST    /runner/run.json                        controllers.RunnerController.run
 
 # Reporters
-GET     /reporters/list/*id.json                  controllers.ReporterController.list(id: String)
+GET     /reporters/list/*id.json                controllers.ReporterController.list(id: String)
+
+# Routes
+GET     /composites                             controllers.CompositesController.classesToJson
+GET     /composites/*className                  controllers.CompositesController.classToJson(className: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)

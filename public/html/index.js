@@ -54,7 +54,13 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             })
             .when('/page/composites', {
                 templateUrl: '/assets/html/composites.tmpl.html',
-                controller: 'compositesCtrl'
+                controller: 'compositesCtrl',
+                // TODO Test
+                resolve: {
+                    composites: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/composites', true);
+                    }
+                }
             })
             // TODO Test
             .otherwise({
@@ -304,8 +310,8 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             }
         };
     })
-    .controller('compositesCtrl', function($scope) {
-        console.log('compositesCtrl');
+    .controller('compositesCtrl', function($scope, composites) {
+        $scope.composites = composites;
     });
 
 // TODO Test

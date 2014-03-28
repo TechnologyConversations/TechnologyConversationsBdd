@@ -53,4 +53,20 @@ trait BddFile {
     }
   }
 
+  def list(): List[String] = {
+    list(fullPath)
+  }
+
+  private[file] def list(path: String): List[String] = {
+    val file = new File(path)
+    if (file.exists()) {
+      val files = file.listFiles()
+      val filesInCurrentDir = files.filter(_.isFile).map(_.getPath).toList
+      val filesInSubDirs = files.filter(_.isDirectory).flatMap(file => list(file.getPath))
+      filesInCurrentDir ++ filesInSubDirs
+    } else {
+      List()
+    }
+  }
+
 }
