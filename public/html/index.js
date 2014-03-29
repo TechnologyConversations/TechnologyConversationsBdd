@@ -52,13 +52,13 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 },
                 reloadOnSearch: false
             })
-            .when('/page/composites', {
+            .when('/page/composites/:className*', {
                 templateUrl: '/assets/html/composites.tmpl.html',
                 controller: 'compositesCtrl',
                 // TODO Test
                 resolve: {
                     composites: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/composites', true);
+                        return getJson($http, $modal, '/composites/' + $route.current.params.className, true);
                     }
                 }
             })
@@ -107,12 +107,23 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 }
             });
         };
+        $scope.openCompositeClass = function() {
+            $modal.open({
+                templateUrl: '/assets/html/compositesClasses.tmpl.html',
+                controller: 'compositeClassesCtrl',
+                resolve: {
+                    compositeClasses: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/composites', true);
+                    }
+                }
+            });
+        };
     })
     // TODO Test
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location) {
         $scope.rootPath = "";
         updateData("");
-        $scope.ok = function() {
+        $scope.close = function() {
             $modalInstance.close();
         };
         $scope.openDir = function(path) {
@@ -179,22 +190,17 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             $scope.dirPath += '/';
         }
         $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
-        $scope.getCssClass = function(ngModelController) {
-            return {
-                'has-error': ngModelController.$invalid,
-                'has-success': ngModelController.$valid && ngModelController.$dirty
-            };
-        };
-        $scope.getButtonCssClass = function() {
+        $scope.getCssClass = getCssClass;
+        $scope.getButtonCssClass = function () {
             return {
                 'btn-success': $scope.storyForm.$valid,
                 'btn-danger': $scope.storyForm.$invalid
             };
         };
-        $scope.canSaveStory = function() {
+        $scope.canSaveStory = function () {
             return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory);
         };
-        $scope.saveStory = function() {
+        $scope.saveStory = function () {
             if ($scope.canSaveStory()) {
                 $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
                 if ($scope.action === 'POST') {
@@ -203,37 +209,37 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                     if (strippedPath !== '') {
                         strippedPath += '/';
                     }
-                    $http.post('/stories/story.json', $scope.story).then(function() {
+                    $http.post('/stories/story.json', $scope.story).then(function () {
                         $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
-                    }, function(response) {
+                    }, function (response) {
                         openErrorModal($modal, response.data);
                     });
                 } else {
                     if ($scope.story.name !== originalStory.name) {
                         $scope.story.originalPath = originalStory.path;
                     }
-                    $http.put('/stories/story.json', $scope.story).then(function() {
+                    $http.put('/stories/story.json', $scope.story).then(function () {
                         originalStory = angular.copy($scope.story);
-                    }, function(response) {
+                    }, function (response) {
                         openErrorModal($modal, response.data);
                     });
                 }
             }
         };
-        $scope.canRunStory = function() {
+        $scope.canRunStory = function () {
             return $scope.storyForm.$valid && !$scope.storyRunnerInProgress;
         };
-        $scope.runStory = function() {
+        $scope.runStory = function () {
             if ($scope.canRunStory()) {
                 $scope.saveStory();
                 var runnerModal = openRunnerModal($modal, $scope.classes);
-                runnerModal.result.then(function(data) {
+                runnerModal.result.then(function (data) {
                     $scope.storyFormClass = 'col-md-6';
                     $scope.storyRunnerClass = 'col-md-6';
                     $scope.storyRunnerVisible = true;
                     $scope.storyRunnerInProgress = true;
-                    data.classes.forEach(function(classEntry) {
-                        classEntry.params.forEach(function(paramEntry) {
+                    data.classes.forEach(function (classEntry) {
+                        classEntry.params.forEach(function (paramEntry) {
                             $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
                         });
                     });
@@ -241,38 +247,38 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                         storyPath: $scope.story.path,
                         classes: data.classes
                     };
-                    $http.post('/runner/run.json', json).then(function(response) {
+                    $http.post('/runner/run.json', json).then(function (response) {
                         $scope.storyRunnerSuccess = (response.data.status === 'OK');
                         $scope.storyRunnerInProgress = false;
-                        $http.get('/reporters/list/' + response.data.id + '.json').then(function(response) {
+                        $http.get('/reporters/list/' + response.data.id + '.json').then(function (response) {
                             $scope.reports = response.data.reports;
-                        }, function(response) {
+                        }, function (response) {
                             openErrorModal($modal, response.data);
                         });
-                    }, function(response) {
+                    }, function (response) {
                         $scope.storyRunnerSuccess = false;
                         $scope.storyRunnerInProgress = false;
                         openErrorModal($modal, response.data);
                     });
-                }, function() {
+                }, function () {
                     // Do nothing
                 });
             }
         };
-        $scope.getRunnerProgressCss = function() {
+        $scope.getRunnerProgressCss = function () {
             return {
                 'progress progress-striped active': $scope.storyRunnerInProgress,
                 'progress': !$scope.storyRunnerInProgress
             };
         };
-        $scope.getRunnerStatusCss = function() {
+        $scope.getRunnerStatusCss = function () {
             return {
                 'progress-bar progress-bar-info': $scope.storyRunnerInProgress,
                 'progress-bar progress-bar-success': $scope.storyRunnerSuccess,
                 'progress-bar progress-bar-danger': !$scope.storyRunnerSuccess
             };
         };
-        $scope.getStoryRunnerStatusText = function() {
+        $scope.getStoryRunnerStatusText = function () {
             if ($scope.storyRunnerInProgress) {
                 return 'Story run is in progress';
             } else if ($scope.storyRunnerSuccess) {
@@ -281,37 +287,63 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 return 'Story run failed';
             }
         };
-        $scope.removeElement = function(collection, index) {
+        $scope.removeElement = function (collection, index) {
             collection.splice(index, 1);
         };
-        $scope.addElement = function(collection, key) {
+        $scope.addElement = function (collection, key) {
             collection.push({key: ''});
         };
-        $scope.addScenarioElement = function(collection) {
+        $scope.addScenarioElement = function (collection) {
             collection.push({title: '', meta: [], steps: [], examplesTable: ''});
         };
-        $scope.revertStory = function() {
+        $scope.revertStory = function () {
             $scope.story = angular.copy(originalStory);
             $scope.storyForm.$setPristine();
         };
-        $scope.canRevertStory = function() {
+        $scope.canRevertStory = function () {
             return !angular.equals($scope.story, originalStory);
         };
-        $scope.canDeleteStory = function() {
+        $scope.canDeleteStory = function () {
             return $scope.action === 'PUT' && !$scope.storyRunnerInProgress;
         };
-        $scope.deleteStory = function() {
+        $scope.deleteStory = function () {
             var path = $scope.dirPath + $scope.story.name + '.story';
             deleteStory($modal, $http, $location, path);
         };
-        $scope.stepEnterKey = function(event, collection) {
+        $scope.stepEnterKey = function (event, collection) {
             if (event.which === 13) {
                 $scope.addElement(collection, 'step');
             }
         };
     })
-    .controller('compositesCtrl', function($scope, composites) {
+    .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, compositeClasses) {
+        $scope.compositeClasses = compositeClasses;
+        // TODO Test
+        $scope.close = function() {
+            $modalInstance.close();
+        };
+        $scope.compositeClassUrl = function(packageName, className) {
+            return '/page/composites/' + packageName + "." + className;
+        };
+//        $scope.createCompositesClass = function(className) {
+//            // com.technologyconversations.bdd.steps
+//            $scope.close();
+//        };
+        $scope.classNamePattern = function() {
+            return (/^[a-zA-Z]+$/);
+        };
+        // TODO Test
+        $scope.getCssClass = getCssClass;
+    })
+    .controller('compositesCtrl', function($scope, $http, composites) {
         $scope.composites = composites;
+//        $scope.openCompositeClass = function(package, className) {
+//            $http.get('/composites/' + package + "." + className).then(function() {
+//                console.log('111');
+//            }, function(response) {
+//                openErrorModal($modal, response.data);
+//            });
+//        };
     });
 
 // TODO Test
@@ -385,4 +417,11 @@ function deleteStory($modal, $http, $location, path) {
     }, function() {
         // Do nothing
     });
+}
+
+function getCssClass(ngModelController) {
+    return {
+        'has-error': ngModelController.$invalid,
+        'has-success': ngModelController.$valid && ngModelController.$dirty
+    };
 }

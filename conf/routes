@@ -23,7 +23,7 @@ POST    /runner/run.json                        controllers.RunnerController.run
 # Reporters
 GET     /reporters/list/*id.json                controllers.ReporterController.list(id: String)
 
-# Routes
+# Composites
 GET     /composites                             controllers.CompositesController.classesToJson
 GET     /composites/*className                  controllers.CompositesController.classToJson(className: String)
 

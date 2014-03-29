@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="storiesModule">
 <head>
     <title>BDD Assistant: Technology Conversations</title>
     <script src="/assets/javascripts/jquery-2.1.0.min.js"></script>
@@ -15,7 +15,7 @@
     <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/stylesheets/tcbdd.css" rel="stylesheet">
 </head>
-<body ng-app="storiesModule">
+<body>
     <!--Top menu-->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="topMenuController">
         <div class="container-fluid">
@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a id="browseStories" href="#" ng-click="openStory()">Browse Stories</a></li>
-                    <li><a id="browseComposites" href="/page/composites">Browse Composites</a></li>
+                    <li><a id="browseComposites" href="#" ng-click="openCompositeClass()">Browse Composites</a></li>
                 </ul>
             </div>
         </div>

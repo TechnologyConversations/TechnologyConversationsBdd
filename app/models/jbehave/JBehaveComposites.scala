@@ -66,10 +66,8 @@ trait JBehaveComposites {
       val compositeAnnotation = method.getAnnotation(classOf[Composite])
       if (stepAnnotations.size > 0 && compositeAnnotation != null) {
         val list = Map(
-          "composite" -> Json.toJson(Map(
-            "stepText" -> Json.toJson(stepAnnotationValue(stepAnnotations(0))),
-            "compositeSteps" -> Json.toJson(compositeAnnotationValue(compositeAnnotation))
-          ))
+          "stepText" -> Json.toJson(stepAnnotationValue(stepAnnotations(0))),
+          "compositeSteps" -> Json.toJson(compositeAnnotationValue(compositeAnnotation))
         )
         methodCollection(methods.tail, composites :+ list)
       } else {

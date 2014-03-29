@@ -12,7 +12,7 @@
     <table class="table table-condensed table-striped">
         <tbody>
             <tr>
-                <td><a href="{{getNewStoryUrl() + rootPath}}" ng-click="ok()">Create New Story</a></td>
+                <td><a href="{{getNewStoryUrl() + rootPath}}" ng-click="close()">Create New Story</a></td>
                 <td>&nbsp;</td>
             </tr>
         </tbody>
@@ -41,7 +41,7 @@
         <tbody ng-repeat="storyItem in filteredStories  = (files.stories | filter:criteria)">
             <tr>
                 <td>
-                    <a href="{{viewStoryUrl(storyItem.name)}}" ng-click="ok()">
+                    <a href="{{viewStoryUrl(storyItem.name)}}" ng-click="close()">
                         <span class="glyphicon glyphicon-file"></span>
                         {{storyItem.name}}
                     </a>
@@ -56,5 +56,5 @@
     </table>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-primary" ng-click="close()">Close</button>
 </div>

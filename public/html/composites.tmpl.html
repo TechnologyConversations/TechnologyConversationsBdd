@@ -1,12 +1,18 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <div ng-repeat="composite in composites">
-                <div><a href="#" tooltip="{{composite.package}}">{{composite.class}}</a></div>
+        <div class="col-md-4">
+            <form class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm" novalidate="novalidate">
+                <div class="form-group input-group">
+                    <span class="input-group-addon">Class</span>
+                    <input id="classNameInput" name="classNameInput" class="form-control input-lg" type="text" ng-model="composites.class" required="true">
+                </div>
+            </form>
+            <div ng-repeat="composite in composites.composites">
+                <div>{{composite.stepText}}</div>
             </div>
         </div>
-        <div class="col-md-9">
-            COMPOSITE
+        <div class="col-md-8">
+            {{composites}}
         </div>
     </div>
 </div>

@@ -1,0 +1,31 @@
+<div class="modal-header"><h3 id="modalHeader">Browse Composites</h3></div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm">
+        <div ng-class="getCssClass(compositeClassForm.className)">
+            <div class="input-group">
+                <span class="input-group-addon">Class</span>
+                <input type="text" id="className" name="className" ng-model="criteria" class="form-control" ng-pattern="classNamePattern()">
+                <span class="input-group-btn">
+                    <button class="btn" ng-click="createCompositesClass(criteria)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+            <div class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">Invalid:
+                <span ng-show="compositeClassForm.className.$error.pattern">Class name can contain only letters</span>
+            </div>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped">
+        <tbody ng-repeat="class in compositeClasses | filter:criteria">
+            <tr>
+                <td>
+                    <a href="{{compositeClassUrl(class.package, class.class)}}" ng-click="close()">{{class.class}}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="close()">Close</button>
+</div>

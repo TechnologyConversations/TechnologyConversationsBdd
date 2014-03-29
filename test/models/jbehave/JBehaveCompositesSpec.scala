@@ -95,11 +95,11 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
     }
 
     "have composites > composite > stepText" in {
-      jsonString must /("composites") */"composite" */("stepText" -> "(Given|When|Then).*".r)
+      jsonString must /("composites") */("stepText" -> "(Given|When|Then).*".r)
     }
 
     "have composites > composite > compositeSteps > step" in {
-      jsonString must /("composites") */"composite" */"compositeSteps" */("step" -> "(Given|When|Then).*".r)
+      jsonString must /("composites") */"compositeSteps" */("step" -> "(Given|When|Then).*".r)
     }
 
   }

@@ -18,7 +18,6 @@ class JBehaveCompositesSpec extends Specification {
       compositeClass,
       List(composite, compositeWithParams)
     ).toString().trim
-    println(out)
 
     "output package statement" in {
       out must contain(s"package $compositePackage;")

@@ -1,6 +1,7 @@
 package models
 
 import org.specs2.mutable.Specification
+
 import models.jbehave.JBehaveComposites
 import models.file.FileComposites
 
