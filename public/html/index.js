@@ -338,13 +338,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             $scope.compositeClassUrl = function(packageName, className) {
                 return '/page/composites/' + packageName + "." + className;
             };
-//            $scope.createCompositesClass = function(className) {
-//                // com.technologyconversations.bdd.steps
-//                $scope.close();
-//            };
-            $scope.classNamePattern = function() {
-                return (/^[a-zA-Z]+$/);
-            };
+            $scope.classNamePattern = classNamePattern;
             // TODO Test
             $scope.getCssClass = getCssClass;
         }
@@ -352,6 +346,9 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
     .controller('compositesCtrl', ['$scope', '$http', 'composites',
         function($scope, $http, composites) {
             $scope.composites = composites;
+            $scope.classNamePattern = classNamePattern;
+            // TODO Test
+            $scope.getCssClass = getCssClass;
 //            $scope.openCompositeClass = function(package, className) {
 //                $http.get('/composites/' + package + "." + className).then(function() {
 //                    console.log('111');
@@ -435,9 +432,14 @@ function deleteStory($modal, $http, $location, path) {
     });
 }
 
+// TODO Test
 function getCssClass(ngModelController) {
     return {
         'has-error': ngModelController.$invalid,
         'has-success': ngModelController.$valid && ngModelController.$dirty
     };
+}
+
+function classNamePattern() {
+    return (/^[a-zA-Z_$][a-zA-Z\d_$]*$/);
 }

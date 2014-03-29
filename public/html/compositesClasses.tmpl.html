@@ -11,8 +11,11 @@
                     </button>
                 </span>
             </div>
-            <div class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">Invalid:
-                <span ng-show="compositeClassForm.className.$error.pattern">Class name can contain only letters</span>
+            <div class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
+                Invalid:
+                <span ng-show="compositeClassForm.className.$error.pattern">
+                    Class name cannot start with a number, but after the initial character it may use any combination of letters and digits, underscores or dollar signs.
+                </span>
             </div>
         </div>
     </form>

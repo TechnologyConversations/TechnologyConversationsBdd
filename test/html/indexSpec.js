@@ -89,11 +89,13 @@ describe('storiesModule controllers', function() {
                 class: className
             }
         ];
+
         beforeEach(
             inject(function($controller) {
                 $controller("compositeClassesCtrl", {$scope: scope, $http: http, $modalInstance: modalInstance, compositeClasses: compositeClasses});
             })
         );
+
         it('should put compositeClasses data to the scope', function() {
             expect(scope.compositeClasses).toBe(compositeClasses);
         });
@@ -103,12 +105,9 @@ describe('storiesModule controllers', function() {
             expect(url).toEqual('/page/composites/' + packageName + "." + className);
         });
 
-        it('classNamePattern should allow only letters', function() {
-            expect('Abc').toMatch(scope.classNamePattern());
-            expect('A bc').not.toMatch(scope.classNamePattern());
-            expect('A$c').not.toMatch(scope.classNamePattern());
+        it('classNamePattern should return common function', function() {
+            expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
         });
-
 
     });
 
@@ -146,5 +145,30 @@ describe('storiesModule controllers', function() {
 ////        }));
 //
 //    });
+
+});
+
+describe("common functions", function() {
+
+    describe('classNamePattern validates that values is a valid Java class name', function() {
+
+        it('cannot start with a number', function() {
+            expect('1abc').not.toMatch(classNamePattern());
+        });
+
+        it('can use any combination of letters, digits, underscores and dollar signs', function() {
+            expect('aBc').toMatch(classNamePattern());
+            expect('a123').toMatch(classNamePattern());
+            expect('_a').toMatch(classNamePattern());
+            expect('$a').toMatch(classNamePattern());
+            expect('aBc_D$23').toMatch(classNamePattern());
+        });
+
+        it('cannot use any character other than letters, digits, underscores and dollar signs', function() {
+            expect('abc%').not.toMatch(classNamePattern());
+            expect('ab c').not.toMatch(classNamePattern());
+        });
+
+    });
 
 });

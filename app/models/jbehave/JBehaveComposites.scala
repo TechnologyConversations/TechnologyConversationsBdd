@@ -10,6 +10,10 @@ trait JBehaveComposites {
 
   def content: String
 
+  def classesToJson(files: List[String]): JsValue = {
+    Json.toJson(classesList(files))
+  }
+
   def classToText(json: JsValue): String = {
     val compositePackage = (json \ "package").as[String]
     val compositeClass = (json \ "class").as[String]
@@ -26,10 +30,6 @@ trait JBehaveComposites {
       compositeClass,
       composites
     ).toString().trim
-  }
-
-  def classesToJson(files: List[String]): JsValue = {
-    Json.toJson(classesList(files))
   }
 
   def classToJson(className: String): JsValue = {
