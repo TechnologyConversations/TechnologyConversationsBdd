@@ -1,13 +1,14 @@
 package controllers
 
-import org.specs2.mutable.Specification
+import org.specs2.mutable.{After, Specification}
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest, FakeApplication}
 import models.Composites
 import play.api.libs.json.Json
-import org.specs2.matcher.JsonMatchers
+import org.specs2.matcher.{PathMatchers, JsonMatchers}
+import java.io.File
 
-class CompositesControllerSpec extends Specification with JsonMatchers {
+class CompositesControllerSpec extends Specification with JsonMatchers with PathMatchers {
 
   "GET /composites" should {
 
@@ -63,8 +64,14 @@ class CompositesControllerSpec extends Specification with JsonMatchers {
 
     val url = "/composites"
     val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+    val packageName = "composites.com.technologyconversations.bdd.steps"
+    val className = "TestComposites"
+    val dirPath = "app" + File.separator + packageName.replace(".", File.separator)
+    val fullPath = dirPath + File.separator + className + ".java"
     val jsonMap = Map(
-      "package" -> "composites.com.technologyconversations.bdd.steps"
+      "package" -> Json.toJson(packageName),
+      "class" -> Json.toJson(className),
+      "composites" -> Json.toJson(List[String]())
     )
 
     "return BAD_REQUEST if body is NOT JSON" in {
@@ -83,6 +90,26 @@ class CompositesControllerSpec extends Specification with JsonMatchers {
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
         contentAsString(result) must /("message" -> noResultMessage("package"))
+      }
+    }
+
+    "save file" in new AfterStoryControllerSpec(fullPath) {
+      running(FakeApplication()) {
+        val json = Json.toJson(jsonMap)
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, json))
+        fullPath must beAnExistingPath
+        fullPath must beAFilePath
+      }
+    }
+
+  }
+
+  class AfterStoryControllerSpec(path: String) extends After {
+
+    override def after = {
+      val file = new File(path)
+      if (file.exists) {
+        file.delete
       }
     }
 

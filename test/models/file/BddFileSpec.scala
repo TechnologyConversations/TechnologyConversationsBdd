@@ -47,21 +47,21 @@ class BddFileSpec extends Specification with PathMatchers {
   "BddFile#save" should {
 
     "save content of the story to the new file" in new BddFileMock {
-      save(expected, overwrite = false) must beTrue
+      save(fullPath, expected, overwrite = false) must beTrue
       fullPath must beAnExistingPath
       fullPath must beAFilePath
       Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
     "NOT overwrite old content of the file" in new BddFileMock {
-      save(expected, overwrite = false) must beTrue
-      save("something else", overwrite = false) must beFalse
+      save(fullPath, expected, overwrite = false) must beTrue
+      save(fullPath, "something else", overwrite = false) must beFalse
       Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
     "overwrite old content of the file" in new BddFileMock {
-      save("something else", overwrite = false) must beTrue
-      save(expected, overwrite = true) must beTrue
+      save(fullPath, "something else", overwrite = false) must beTrue
+      save(fullPath, expected, overwrite = true) must beTrue
       Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
@@ -168,7 +168,7 @@ class BddFileSpec extends Specification with PathMatchers {
   trait BddFileDirMock extends BddFile with After {
 
     storyCounter += 1
-    val dir: String = "test"
+    val dir = "test"
     lazy val path = s"stories/temp_dir$storyCounter"
     val expected = "Some invented content"
 

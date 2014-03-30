@@ -6,8 +6,11 @@ import scalax.file.Path
 
 trait BddFile {
 
+  // TODO Change for method params
   val dir: String
+  // TODO Change for method params
   val path: String
+  // TODO Change for method params
   lazy val fullPath: String = s"$dir/$path"
 
   def content: String = {
@@ -20,11 +23,12 @@ trait BddFile {
     new File(s"$dir/$originalPath").renameTo(new File(fullPath))
   }
 
-  def save(content: String, overwrite: Boolean): Boolean = {
-    val file = new File(fullPath)
-    if (file.exists != overwrite) {
+  def save(filePath: String, content: String, overwrite: Boolean): Boolean = {
+    val file = new File(filePath)
+    if (file.exists && !overwrite) {
       false
     } else {
+      file.getParentFile.mkdirs()
       val writer = new PrintWriter(file)
       writer.write(content)
       writer.close()

@@ -4,6 +4,7 @@ import play.api.mvc.{AnyContent, Action, Controller}
 import models.Composites
 import play.api.Play
 import play.api.libs.json.Json
+import java.io.File
 
 object CompositesController extends Controller {
 
@@ -29,8 +30,13 @@ object CompositesController extends Controller {
     } else {
       try {
         val composites = Composites(dir)
-        val classText = composites.classToText(jsonOption.get)
-//        composites.save(classText, overwrite = true)
+        val json = jsonOption.get
+        val classText = composites.classToText(json)
+        val packageName = (json \ "package").as[String]
+        val className = (json \ "class").as[String]
+        val dirPath = "app" + File.separator + packageName.replace(".", File.separator)
+        val filePath = dirPath + File.separator + className + ".java"
+        val saved = composites.save(filePath, classText, overwrite = true)
         okJson("Class was saved successfully")
       } catch {
         case e: Exception => errorJson(e.getMessage)
