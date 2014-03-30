@@ -28,7 +28,10 @@ trait BddFile {
     if (file.exists && !overwrite) {
       false
     } else {
-      file.getParentFile.mkdirs()
+      val parentDir = file.getParentFile
+      if (parentDir != null) {
+        parentDir.mkdirs()
+      }
       val writer = new PrintWriter(file)
       writer.write(content)
       writer.close()
