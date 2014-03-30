@@ -1,11 +1,12 @@
 describe('storiesModule controllers', function() {
-    var scope, http, modalInstance;
+    var scope, http, modal, modalInstance, location;
 
     beforeEach(module('storiesModule'));
 
     beforeEach(
         inject(function($injector) {
             http = $injector.get('$http');
+            location = $injector.get('$location');
             scope = {};
         })
     );
@@ -79,72 +80,44 @@ describe('storiesModule controllers', function() {
         });
     });
 
-    describe('compositeClassesCtrl controller', function() {
+    describe('storiesCtrl controller', function() {
 
-        var packageName = 'composites.com.technologyconversations.bdd.steps';
-        var className = 'WebStepsComposites';
-        var compositeClasses = [
-            {
-                package: packageName,
-                class: className
-            }
-        ];
+        var httpBackend;
+        var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
+        var filesWithPath = {status: 'OK', files: 'filesWithPath'};
 
         beforeEach(
-            inject(function($controller) {
-                $controller("compositeClassesCtrl", {$scope: scope, $http: http, $modalInstance: modalInstance, compositeClasses: compositeClasses});
+            inject(function($controller, $httpBackend) {
+                $controller('storiesCtrl', {
+                    $scope: scope,
+                    $http: http,
+                    $modal: modal,
+                    $modalInstance: modalInstance,
+                    $location: location
+                });
+                httpBackend = $httpBackend;
+                httpBackend.expectGET('/stories/list.json?path=').respond(filesWithoutPath);
             })
         );
 
-        it('should put compositeClasses data to the scope', function() {
-            expect(scope.compositeClasses).toBe(compositeClasses);
-        });
+        describe('update data', function() {
 
-        it('should have compositeClassUrl method', function() {
-            var url = scope.compositeClassUrl(packageName, className);
-            expect(url).toEqual('/page/composites/' + packageName + "." + className);
-        });
+            it('should update files with data returned from the server', function() {
+                httpBackend.expectGET('/stories/list.json?path=my_path').respond(filesWithPath);
+                scope.updateData('my_path');
+                httpBackend.flush();
+                expect(scope.files).toEqual(filesWithPath);
+            });
 
-        it('classNamePattern should return common function', function() {
-            expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+            it('should be called by the controller with the empty path', function() {
+                expect(scope.files).toBeUndefined();
+                httpBackend.flush();
+                expect(scope.files).toEqual(filesWithoutPath);
+            });
+
         });
 
     });
-
-//    describe('compositesCtrl controller', function() {
-//
-//        var composites = [
-//            {
-//                package: 'composites.com.technologyconversations.bdd.steps',
-//                class: 'WebStepsComposites'
-//            }
-//        ];
-////        var composite = {
-////            package: 'composites.com.technologyconversations.bdd.steps',
-////            class: 'WebStepsComposites',
-////            composites:[{
-////                composite: {
-////                    stepText: 'Given this is my composite',
-////                    compositeSteps:[
-////                        {step: 'Given something'},
-////                        {step: 'When else'},
-////                        {step: 'Then OK'}
-////                    ]
-////                }
-////            }]
-////        };
-//
-//        it('should put composites data to the scope', inject(function($controller) {
-//            $controller("compositesCtrl", {$scope: scope, $http: http, composites: composites});
-//            expect(scope.composites).toBe(composites);
-//        }));
-////
-////        it('should put data to the scope', inject(function($controller) {
-////            $controller("compositesCtrl", {$scope: scope, composites: composites});
-////            expect(scope.composites).toBe(composites);
-////        }));
-//
-//    });
 
 });
 

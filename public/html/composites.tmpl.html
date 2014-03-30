@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4">
             <form class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm" novalidate="novalidate">
-                <div ng-class="getCssClass(compositeClassForm.className)">
+                <div ng-class="cssClass(compositeClassForm.className)">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <input id="className" name="className" class="form-control input-lg" type="text" ng-model="composites.class" required="true" ng-pattern="classNamePattern()">
@@ -22,7 +22,7 @@
                 </div>
             </form>
             <table class="table table-condensed table-striped">
-                <tbody ng-repeat="composite in composites.composites | filter:stepText">
+                <tbody ng-repeat="composite in composites.composites | filter:stepText | orderBy:'stepText'">
                     <tr>
                         <td>
                             <a href="#">{{composite.stepText}}</a>

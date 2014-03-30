@@ -1,4 +1,11 @@
-angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sortable'])
+angular.module('storiesModule', [
+    'ngRoute',
+    'ngCookies',
+    'ui.bootstrap',
+    'ui.sortable',
+    'compositeClassesModule',
+    'compositesModule'
+])
     .config(['$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
             $locationProvider.html5Mode(true);
@@ -116,7 +123,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             };
             $scope.openCompositeClass = function() {
                 $modal.open({
-                    templateUrl: '/assets/html/compositesClasses.tmpl.html',
+                    templateUrl: '/assets/html/compositeClasses/template.html',
                     controller: 'compositeClassesCtrl',
                     resolve: {
                         compositeClasses: function($route, $http, $modal) {
@@ -127,49 +134,11 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
             };
         }
     ])
-    // TODO Test
     .controller('storiesCtrl', ['$scope', '$http', '$modal', '$modalInstance', '$location',
         function($scope, $http, $modal, $modalInstance, $location) {
-            $scope.rootPath = "";
-            updateData("");
-            $scope.close = function() {
-                $modalInstance.close();
-            };
-            $scope.openDir = function(path) {
-                if (path === '..') {
-                    var dirs = $scope.rootPath.split('/');
-                    $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
-                    if ($scope.rootPath !== '') {
-                        $scope.rootPath += '/';
-                    }
-                    updateData('');
-                } else {
-                    updateData(path);
-                }
-            };
-            $scope.viewStoryUrl = function(name) {
-                return getViewStoryUrl() + $scope.rootPath + name;
-            };
-            $scope.allowToPrevDir = function() {
-                return $scope.rootPath !== "";
-            };
-            $scope.deleteStory = function(name) {
-                var path = $scope.rootPath + name + '.story';
-                deleteStory($modal, $http, $location, path);
-                $scope.ok();
-            };
-            $scope.createDirectory = function(path) {
-                var json = '{"path": "' + $scope.rootPath + path + '"}';
-                $http.post('/stories/dir.json', json).then(function() {
-                    $scope.files.dirs.push({name: path});
-                }, function(response) {
-                    openErrorModal($modal, response.data);
-                });
-            };
-            $scope.getNewStoryUrl = function() {
-                return getNewStoryUrl();
-            };
-            function updateData(path) {
+            // TODO Test
+            $scope.rootPath = '';
+            $scope.updateData = function(path) {
                 $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
                     $scope.files = response.data;
                     if (path !== '') {
@@ -178,7 +147,52 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 }, function(response) {
                     openErrorModal($modal, response.data);
                 });
-            }
+            };
+            $scope.updateData('');
+            // TODO Test
+            $scope.close = function() {
+                $modalInstance.close();
+            };
+            // TODO Test
+            $scope.openDir = function(path) {
+                if (path === '..') {
+                    var dirs = $scope.rootPath.split('/');
+                    $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
+                    if ($scope.rootPath !== '') {
+                        $scope.rootPath += '/';
+                    }
+                    $scope.updateData('');
+                } else {
+                    $scope.updateData(path);
+                }
+            };
+            // TODO Test
+            $scope.viewStoryUrl = function(name) {
+                return getViewStoryUrl() + $scope.rootPath + name;
+            };
+            // TODO Test
+            $scope.allowToPrevDir = function() {
+                return $scope.rootPath !== "";
+            };
+            // TODO Test
+            $scope.deleteStory = function(name) {
+                var path = $scope.rootPath + name + '.story';
+                deleteStory($modal, $http, $location, path);
+                $scope.ok();
+            };
+            // TODO Test
+            $scope.createDirectory = function(path) {
+                var json = '{"path": "' + $scope.rootPath + path + '"}';
+                $http.post('/stories/dir.json', json).then(function() {
+                    $scope.files.dirs.push({name: path});
+                }, function(response) {
+                    openErrorModal($modal, response.data);
+                });
+            };
+            // TODO Test
+            $scope.getNewStoryUrl = function() {
+                return getNewStoryUrl();
+            };
         }
     ])
     // TODO Test
@@ -201,7 +215,7 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 $scope.dirPath += '/';
             }
             $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
-            $scope.getCssClass = getCssClass;
+            $scope.getCssClass = cssClass;
             $scope.getButtonCssClass = function () {
                 return {
                     'btn-success': $scope.storyForm.$valid,
@@ -327,36 +341,6 @@ angular.module('storiesModule', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.sor
                 }
             };
         }
-    ])
-    .controller('compositeClassesCtrl', ['$scope', '$http', '$modalInstance', 'compositeClasses',
-        function($scope, $http, $modalInstance, compositeClasses) {
-            $scope.compositeClasses = compositeClasses;
-            // TODO Test
-            $scope.close = function() {
-                $modalInstance.close();
-            };
-            $scope.compositeClassUrl = function(packageName, className) {
-                return '/page/composites/' + packageName + "." + className;
-            };
-            $scope.classNamePattern = classNamePattern;
-            // TODO Test
-            $scope.getCssClass = getCssClass;
-        }
-    ])
-    .controller('compositesCtrl', ['$scope', '$http', 'composites',
-        function($scope, $http, composites) {
-            $scope.composites = composites;
-            $scope.classNamePattern = classNamePattern;
-            // TODO Test
-            $scope.getCssClass = getCssClass;
-//            $scope.openCompositeClass = function(package, className) {
-//                $http.get('/composites/' + package + "." + className).then(function() {
-//                    console.log('111');
-//                }, function(response) {
-//                    openErrorModal($modal, response.data);
-//                });
-//            };
-        }
     ]);
 
 // TODO Test
@@ -433,7 +417,7 @@ function deleteStory($modal, $http, $location, path) {
 }
 
 // TODO Test
-function getCssClass(ngModelController) {
+function cssClass(ngModelController) {
     return {
         'has-error': ngModelController.$invalid,
         'has-success': ngModelController.$valid && ngModelController.$dirty
