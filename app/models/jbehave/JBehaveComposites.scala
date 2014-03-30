@@ -5,6 +5,8 @@ import java.lang.reflect.Method
 import org.jbehave.core.annotations.{Then, When, Given, Composite}
 import java.lang.annotation.Annotation
 import java.io.File
+import models.noNodeMessage
+import models.nodeIsIncorrectMessage
 
 trait JBehaveComposites {
 
@@ -15,8 +17,9 @@ trait JBehaveComposites {
   }
 
   def classToText(json: JsValue): String = {
-    val compositePackage = (json \ "package").as[String]
-    val compositeClass = (json \ "class").as[String]
+    val packageOption = (json \ "package").asOpt[String]
+    val classOption = (json \ "class").asOpt[String]
+    validateJson(packageOption, classOption)
     val composites = (json \ "composites" \\ "composite").map{ composite =>
       JBehaveComposite(
         (composite \ "stepText").as[String],
@@ -26,8 +29,8 @@ trait JBehaveComposites {
       )
     }.toList
     views.html.jBehaveComposites.render(
-      compositePackage,
-      compositeClass,
+      packageOption.get,
+      classOption.get,
       composites
     ).toString().trim
   }
@@ -87,6 +90,16 @@ trait JBehaveComposites {
 
   private def compositeAnnotationValue(annotation: Annotation) = {
     annotation.asInstanceOf[Composite].steps().map(step => Map("step" -> step)).toList
+  }
+
+  private def validateJson(packageOption: Option[String], classOption: Option[String]) {
+    if (packageOption.isEmpty) {
+      throw new Exception(noNodeMessage("package"))
+    } else if (classOption.isEmpty) {
+      throw new Exception(noNodeMessage("class"))
+    } else if (!classOption.get.matches("""[a-zA-Z_$][a-zA-Z\d_$]*""")) {
+      throw new Exception(nodeIsIncorrectMessage("class"))
+    }
   }
 
 

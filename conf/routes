@@ -26,6 +26,7 @@ GET     /reporters/list/*id.json                controllers.ReporterController.l
 # Composites
 GET     /composites                             controllers.CompositesController.classesToJson
 GET     /composites/*className                  controllers.CompositesController.classToJson(className: String)
+PUT     /composites                             controllers.CompositesController.putClass
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)

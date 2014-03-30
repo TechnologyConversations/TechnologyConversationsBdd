@@ -4,6 +4,8 @@ import org.specs2.mutable.Specification
 import play.api.libs.json.{JsValue, Json}
 import org.specs2.matcher.JsonMatchers
 import java.io.File
+import models.noNodeMessage
+import models.nodeIsIncorrectMessage
 
 class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
@@ -25,11 +27,12 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
       )
     )
   }.toList
-  val json = Json.toJson(Map(
+  val jsonMap = Map(
     "package" -> Json.toJson(compositePackage),
     "class" -> Json.toJson(compositeClass),
     "composites" -> Json.toJson(compositesJson)
-  ))
+  )
+  val json = Json.toJson(jsonMap)
   val text = views.html.jBehaveComposites.render(
     compositePackage,
     compositeClass,
@@ -74,6 +77,28 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
   }
 
   "JBehaveComposites#classToText" should {
+
+    "throw exception if package is not present" in {
+      val actualJson = Json.toJson(jsonMap.filterKeys(_ != "package"))
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = noNodeMessage("package"))
+    }
+
+    "throw exception if class is not present" in {
+      val actualJson = Json.toJson(jsonMap.filterKeys(_ != "class"))
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = noNodeMessage("class"))
+    }
+
+    "throw exception if class starts with a number" in {
+      val actualJson = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("1abc")))
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
+    }
+
+    "throw exception if class uses any character other than letters, digits, underscores and dollar signs" in {
+      val jsonWithPercentage = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("abc%")))
+      jBehaveComposites.classToText(jsonWithPercentage) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
+      val jsonWithSpace = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("ab c")))
+      jBehaveComposites.classToText(jsonWithSpace) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
+    }
 
     "return jBehaveComposites view" in {
       jBehaveComposites.classToText(json) must beEqualTo(text)

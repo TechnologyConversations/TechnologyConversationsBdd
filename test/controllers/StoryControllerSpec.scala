@@ -4,10 +4,10 @@ import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest, FakeApplication}
 import org.specs2.mutable.{After, Specification}
 import play.api.libs.json._
-import org.specs2.matcher.PathMatchers
+import org.specs2.matcher.{JsonMatchers, PathMatchers}
 import java.io.File
 
-class StoryControllerSpec extends Specification with PathMatchers {
+class StoryControllerSpec extends Specification with PathMatchers with JsonMatchers {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
   val storiesPath = "public/stories"
@@ -83,6 +83,7 @@ class StoryControllerSpec extends Specification with PathMatchers {
         val Some(result) = route(FakeRequest(PUT, url))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
+        contentAsString(result) must /("message" -> noJsonResultMessage)
       }
     }
 

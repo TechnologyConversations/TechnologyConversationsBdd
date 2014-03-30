@@ -2,10 +2,12 @@ package controllers
 
 import org.specs2.mutable.Specification
 import play.api.test.Helpers._
-import play.api.test.{FakeRequest, FakeApplication}
+import play.api.test.{FakeHeaders, FakeRequest, FakeApplication}
 import models.Composites
+import play.api.libs.json.Json
+import org.specs2.matcher.JsonMatchers
 
-class CompositesControllerSpec extends Specification {
+class CompositesControllerSpec extends Specification with JsonMatchers {
 
   "GET /composites" should {
 
@@ -27,7 +29,7 @@ class CompositesControllerSpec extends Specification {
 
   }
 
-    "GET /composites/*className" should {
+  "GET /composites/*className" should {
 
     "return OK if className is correct" in {
       running(FakeApplication()) {
@@ -52,6 +54,35 @@ class CompositesControllerSpec extends Specification {
         status(result) must equalTo(OK)
         val composites = Composites("app/composites")
         contentAsJson(result) must equalTo(composites.classToJson(className))
+      }
+    }
+
+  }
+
+  "PUT /composites routes" should {
+
+    val url = "/composites"
+    val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+    val jsonMap = Map(
+      "package" -> "composites.com.technologyconversations.bdd.steps"
+    )
+
+    "return BAD_REQUEST if body is NOT JSON" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(PUT, url))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+        contentAsString(result) must /("message" -> noJsonResultMessage)
+      }
+    }
+
+    "return BAD_REQUEST if package is not present" in {
+      running(FakeApplication()) {
+        val json = Json.toJson(jsonMap.filterKeys(_ != "package"))
+        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, json))
+        status(result) must equalTo(BAD_REQUEST)
+        contentType(result) must beSome("application/json")
+        contentAsString(result) must /("message" -> noResultMessage("package"))
       }
     }
 

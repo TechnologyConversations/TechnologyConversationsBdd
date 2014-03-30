@@ -18,7 +18,23 @@ object CompositesController extends Controller {
     try {
       Ok(Composites(dir).classToJson(className))
     } catch {
-      case cnfe: ClassNotFoundException => paramIncorrect("className")
+      case _: ClassNotFoundException => paramIncorrect("className")
+    }
+  }
+
+  def putClass: Action[AnyContent] = Action { implicit request =>
+    val jsonOption = request.body.asJson
+    if (jsonOption.isEmpty) {
+      noJsonResult
+    } else {
+      try {
+        val composites = Composites(dir)
+        val classText = composites.classToText(jsonOption.get)
+//        composites.save(classText, overwrite = true)
+        okJson("Class was saved successfully")
+      } catch {
+        case e: Exception => errorJson(e.getMessage)
+      }
     }
   }
 

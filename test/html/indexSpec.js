@@ -125,11 +125,11 @@ describe("common functions", function() {
 
     describe('classNamePattern validates that values is a valid Java class name', function() {
 
-        it('cannot start with a number', function() {
+        it('should NOT start with a number', function() {
             expect('1abc').not.toMatch(classNamePattern());
         });
 
-        it('can use any combination of letters, digits, underscores and dollar signs', function() {
+        it('should use any combination of letters, digits, underscores and dollar signs', function() {
             expect('aBc').toMatch(classNamePattern());
             expect('a123').toMatch(classNamePattern());
             expect('_a').toMatch(classNamePattern());
@@ -137,7 +137,7 @@ describe("common functions", function() {
             expect('aBc_D$23').toMatch(classNamePattern());
         });
 
-        it('cannot use any character other than letters, digits, underscores and dollar signs', function() {
+        it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
             expect('abc%').not.toMatch(classNamePattern());
             expect('ab c').not.toMatch(classNamePattern());
         });

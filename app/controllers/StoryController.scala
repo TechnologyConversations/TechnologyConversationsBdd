@@ -49,7 +49,9 @@ object StoryController extends Controller {
   def putStoryJson: Action[AnyContent] = Action { implicit request =>
     val overwrite = true
     val jsonOption = request.body.asJson
-    if (renameStoryJson(jsonOption)) {
+    if (jsonOption.isEmpty) {
+      noJsonResult
+    } else if (renameStoryJson(jsonOption)) {
       saveStoryJson(jsonOption, overwrite)
     } else {
       BadRequest(Json.parse("""{"status": "ERROR", "message": "Story could not be renamed"}"""))

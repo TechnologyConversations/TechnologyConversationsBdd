@@ -61,7 +61,7 @@ angular.module('storiesModule', [
                     reloadOnSearch: false
                 })
                 .when('/page/composites/:className*', {
-                    templateUrl: '/assets/html/composites.tmpl.html',
+                    templateUrl: '/assets/html/composites/template.html',
                     controller: 'compositesCtrl',
                     // TODO Test
                     resolve: {
