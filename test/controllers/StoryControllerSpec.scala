@@ -95,14 +95,6 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
       }
     }
 
-    "return BAD_REQUEST if story does NOT already exist" in new MockStory {
-      running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson))
-        status(result) must equalTo(BAD_REQUEST)
-        contentType(result) must beSome("application/json")
-      }
-    }
-
     "return OK if story already exists" in new MockStory {
       running(FakeApplication()) {
         val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
