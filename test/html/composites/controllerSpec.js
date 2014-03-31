@@ -45,7 +45,7 @@ describe('compositesModule', function() {
                 expect('Given something').toMatch(scope.stepTextPattern());
                 expect('When something').toMatch(scope.stepTextPattern());
                 expect('Then something').toMatch(scope.stepTextPattern());
-                expect('Something').not.toMatch(scope.stepTextPattern());
+                expect('Give me something').not.toMatch(scope.stepTextPattern());
             });
         });
 

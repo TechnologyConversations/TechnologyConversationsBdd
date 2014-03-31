@@ -8,7 +8,7 @@ angular.module('compositesModule', [])
             $scope.composites = composites;
             $scope.classNamePattern = classNamePattern;
             $scope.stepTextPattern = function() {
-                return (/^[Given|When|Then].*$/);
+                return (/^(Given|When|Then) .+$/);
             };
             // TODO Test
             $scope.cssClass = cssClass;

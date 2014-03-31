@@ -19,13 +19,12 @@ trait JBehaveComposites {
   def classToText(json: JsValue): String = {
     val packageOption = (json \ "package").asOpt[String]
     val classOption = (json \ "class").asOpt[String]
-    validateJson(packageOption, classOption)
-    val composites = (json \ "composites" \\ "composite").map{ composite =>
+    val compositesOption = (json \ "composites").asOpt[List[JsValue]]
+    validateJson(packageOption, classOption, compositesOption)
+    val composites = compositesOption.get.map{ composite =>
       JBehaveComposite(
         (composite \ "stepText").as[String],
-        (composite \ "compositeSteps" \\ "step").map { step =>
-          step.as[String]
-        }.toList
+        (composite \ "compositeSteps" \\ "step").map(_.as[String]).toList
       )
     }.toList
     views.html.jBehaveComposites.render(
@@ -92,13 +91,31 @@ trait JBehaveComposites {
     annotation.asInstanceOf[Composite].steps().map(step => Map("step" -> step)).toList
   }
 
-  private def validateJson(packageOption: Option[String], classOption: Option[String]) {
+  private def validateJson(packageOption: Option[String],
+                           classOption: Option[String],
+                           compositesOption: Option[List[JsValue]]) {
     if (packageOption.isEmpty) {
       throw new Exception(noNodeMessage("package"))
     } else if (classOption.isEmpty) {
       throw new Exception(noNodeMessage("class"))
     } else if (!classOption.get.matches("""[a-zA-Z_$][a-zA-Z\d_$]*""")) {
       throw new Exception(nodeIsIncorrectMessage("class"))
+    } else if (compositesOption.isEmpty) {
+      throw new Exception(noNodeMessage("composites"))
+    }
+    for(composite <- compositesOption.get) {
+      if (!(composite \ "stepText").as[String].matches("""(Given|When|Then) .+""")) {
+        throw new Exception(nodeIsIncorrectMessage("stepText"))
+      }
+      val compositeStepsOption = (composite \ "compositeSteps").asOpt[List[JsValue]]
+      if (compositeStepsOption.isEmpty) {
+        throw new Exception(noNodeMessage("compositeSteps"))
+      }
+      for(compositeStep <- compositeStepsOption.get) {
+        if (!(compositeStep \ "step").as[String].matches("""(Given|When|Then) .+""")) {
+          throw new Exception(nodeIsIncorrectMessage("step"))
+        }
+      }
     }
   }
 

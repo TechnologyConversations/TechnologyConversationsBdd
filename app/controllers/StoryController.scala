@@ -88,7 +88,7 @@ object StoryController extends Controller {
     } else {
       val path = pathOption.get
       val story = Story(dir, path)
-      val success = story.save(path, story.toText(json), put)
+      val success = story.save(s"$dir/$path", story.toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {

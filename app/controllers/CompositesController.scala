@@ -36,7 +36,7 @@ object CompositesController extends Controller {
         val className = (json \ "class").as[String]
         val dirPath = "app" + File.separator + packageName.replace(".", File.separator)
         val filePath = dirPath + File.separator + className + ".java"
-        val saved = composites.save(filePath, classText, overwrite = true)
+        composites.save(filePath, classText, overwrite = true)
         okJson("Class was saved successfully")
       } catch {
         case e: Exception => errorJson(e.getMessage)

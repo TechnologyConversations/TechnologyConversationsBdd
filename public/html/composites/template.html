@@ -15,9 +15,6 @@
                     </div>
                 </div>
                 <div>
-                    <a href="#" ng-click="newComposite()">Add New Composite</a>
-                </div>
-                <div>
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
                         <input id="stepText" name="stepText" class="form-control" type="text" ng-model="stepText">
@@ -25,6 +22,13 @@
                 </div>
             </form>
             <table class="table table-condensed table-striped">
+                <tbody>
+                    <tr>
+                        <th>
+                            <a href="#" ng-click="newComposite()">Add New Composite</a>
+                        </th>
+                    </tr>
+                </tbody>
                 <tbody ng-repeat="composite in composites.composites | filter:stepText | orderBy:'stepText'">
                     <tr>
                         <td>
@@ -38,20 +42,26 @@
             <form class="form-horizontal" role="form" id="compositeForm" name="compositeForm" novalidate="novalidate">
                 <div ng-class="cssClass(compositeForm.compositeStepText)">
                     <div class="input-group">
-                        <span class="input-group-addon">Step</span>
+                        <span class="input-group-addon">Composite</span>
                         <input id="compositeStepText" name="compositeStepText" class="form-control input-lg" type="text" ng-model="composite.stepText" required="true" ng-pattern="stepTextPattern()">
                     </div>
-                    <div class="help-block" ng-show="compositeForm.compositeStepText.$dirty && compositeForm.compositeStepText.$invalid">
-                        Invalid:
-                        <span ng-show="compositeForm.compositeStepText.$error.pattern">
-                            Step must start with Given, When or Then words.
-                        </span>
+                    <div class="help-block" ng-show="compositeForm.compositeStepText.$error.pattern">
+                        Step must start with Given, When or Then words.
+                    </div>
+                </div>
+                <h3>Composite Steps</h3>
+                <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
+                    <div class="input-group">
+                        <span class="input-group-addon">Step</span>
+                        <input id="compositeStep" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-pattern="stepTextPattern()">
+                    </div>
+                    <div class="help-block" ng-show="compositeStepForm.compositeStep.$error.pattern">
+                        Step must start with Given, When or Then words.
                     </div>
                 </div>
             </form>
             {{composites}}
-            <br />
-            <br />
+            <hr />
             {{composite}}
         </div>
     </div>

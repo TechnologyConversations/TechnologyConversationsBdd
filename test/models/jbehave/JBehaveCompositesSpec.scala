@@ -15,22 +15,22 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
   val stepText = "Given this is my composite"
   val composite = JBehaveComposite(stepText, steps)
   val composites = List(composite)
-  val compositesJson = composites.map { composite =>
-    Map(
-      "composite" -> Map(
-        "stepText" -> Json.toJson(composite.stepText),
-        "compositeSteps" -> Json.toJson(composite.compositeSteps.map { step =>
-          Map(
-            "step" -> step
-          )
-        })
+  def compositesJson(composites: List[JBehaveComposite] = composites) = {
+    composites.map { composite =>
+      Map(
+          "stepText" -> Json.toJson(composite.stepText),
+          "compositeSteps" -> Json.toJson(composite.compositeSteps.map { step =>
+            Map(
+              "step" -> step
+            )
+          })
       )
-    )
-  }.toList
+    }.toList
+  }
   val jsonMap = Map(
     "package" -> Json.toJson(compositePackage),
     "class" -> Json.toJson(compositeClass),
-    "composites" -> Json.toJson(compositesJson)
+    "composites" -> Json.toJson(compositesJson())
   )
   val json = Json.toJson(jsonMap)
   val text = views.html.jBehaveComposites.render(
@@ -99,6 +99,31 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
       val jsonWithSpace = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("ab c")))
       jBehaveComposites.classToText(jsonWithSpace) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
     }
+
+    "throw exception if composites > stepText does not start with Given, When or Then" in {
+      val composite = JBehaveComposite("Give me something not starting with Given, When or Then", steps)
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nodeIsIncorrectMessage("stepText"))
+    }
+
+    "throw exception if composites > compositeSteps > step does not start with Given, When or Then" in {
+      val composite = JBehaveComposite(stepText, steps :+ "Give me something")
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nodeIsIncorrectMessage("step"))
+    }
+
 
     "return jBehaveComposites view" in {
       jBehaveComposites.classToText(json) must beEqualTo(text)
