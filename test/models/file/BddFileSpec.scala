@@ -93,7 +93,7 @@ class BddFileSpec extends Specification with PathMatchers {
       new File(fullPath).createNewFile()
       fullPath must beAnExistingPath
       fullPath must beAFilePath
-      delete
+      delete(fullPath)
       new File(fullPath).exists must beFalse
     }
 
@@ -108,7 +108,7 @@ class BddFileSpec extends Specification with PathMatchers {
 
       path must beAnExistingPath
       path must beADirectoryPath
-      story.delete
+      story.delete(story.fullPath)
       new File(path).exists must beFalse
     }
 
@@ -125,7 +125,7 @@ class BddFileSpec extends Specification with PathMatchers {
       new File(s"$path/file2").createNewFile
       path must beAnExistingPath
       path must beADirectoryPath
-      story.delete
+      story.delete(story.fullPath)
       new File(path).exists must beFalse
     }
 
@@ -157,10 +157,10 @@ class BddFileSpec extends Specification with PathMatchers {
     lazy val path = s"stories/temp_story$storyCounter.story"
     val expected = "Some invented content"
 
-    delete
+    delete(fullPath)
 
     override def after = {
-      delete
+      delete(fullPath)
     }
 
   }
@@ -172,10 +172,10 @@ class BddFileSpec extends Specification with PathMatchers {
     lazy val path = s"stories/temp_dir$storyCounter"
     val expected = "Some invented content"
 
-    delete
+    delete(fullPath)
 
     override def after = {
-      delete
+      delete(fullPath)
     }
 
   }

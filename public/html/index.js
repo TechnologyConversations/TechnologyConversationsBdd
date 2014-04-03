@@ -65,8 +65,11 @@ angular.module('storiesModule', [
                     controller: 'compositesCtrl',
                     // TODO Test
                     resolve: {
-                        composites: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/composites/' + $route.current.params.className, true);
+                        compositesClass: function($route, $http) {
+                            return getCompositesJson($http, $route.current.params.className);
+                        },
+                        steps: function($route, $http, $modal) {
+                            return getJson($http, $modal, '/steps/list.json', false);
                         }
                     }
                 })
@@ -127,7 +130,7 @@ angular.module('storiesModule', [
                     controller: 'compositeClassesCtrl',
                     resolve: {
                         compositeClasses: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                            return getJson($http, $modal, '/composites', false);
                         }
                     }
                 });
@@ -216,12 +219,7 @@ angular.module('storiesModule', [
             }
             $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
             $scope.getCssClass = cssClass;
-            $scope.getButtonCssClass = function () {
-                return {
-                    'btn-success': $scope.storyForm.$valid,
-                    'btn-danger': $scope.storyForm.$invalid
-                };
-            };
+            $scope.buttonCssClass = buttonCssClass;
             $scope.canSaveStory = function () {
                 return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory);
             };
@@ -236,6 +234,7 @@ angular.module('storiesModule', [
                         }
                         $http.post('/stories/story.json', $scope.story).then(function () {
                             $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
+                            originalStory = angular.copy($scope.story);
                         }, function (response) {
                             openErrorModal($modal, response.data);
                         });
@@ -312,9 +311,7 @@ angular.module('storiesModule', [
                     return 'Story run failed';
                 }
             };
-            $scope.removeElement = function (collection, index) {
-                collection.splice(index, 1);
-            };
+            $scope.removeCollectionElement = removeCollectionElement;
             $scope.addElement = function (collection, key) {
                 collection.push({key: ''});
             };
@@ -335,11 +332,7 @@ angular.module('storiesModule', [
                 var path = $scope.dirPath + $scope.story.name + '.story';
                 deleteStory($modal, $http, $location, path);
             };
-            $scope.stepEnterKey = function (event, collection) {
-                if (event.which === 13) {
-                    $scope.addElement(collection, 'step');
-                }
-            };
+            $scope.stepEnterKey = newCollectionItem;
         }
     ]);
 
@@ -370,19 +363,6 @@ function openRunnerModal($modal, data) {
     return $modal.open({
         templateUrl: '/assets/html/runner.tmpl.html',
         controller: 'runnerCtrl',
-        resolve: {
-            data: function() {
-                return data;
-            }
-        }
-    });
-}
-
-// TODO Test
-function openConfirmationModal($modal, data) {
-    return $modal.open({
-        templateUrl: '/assets/html/confirmationModal.tmpl.html',
-        controller: 'modalCtrl',
         resolve: {
             data: function() {
                 return data;
@@ -426,4 +406,21 @@ function cssClass(ngModelController) {
 
 function classNamePattern() {
     return (/^[a-zA-Z_$][a-zA-Z\d_$]*$/);
+}
+
+function getCompositesJson(http, fullClassName) {
+    var url = '/composites/' + fullClassName;
+    return http.get(url, {cache: false}).then(function(response) {
+        return response.data;
+    }, function() {
+        var lastDotIndex = fullClassName.lastIndexOf('.');
+        var className = fullClassName.substring(lastDotIndex + 1);
+        var packageName = fullClassName.substring(0, lastDotIndex);
+        return {
+            package: packageName,
+            class: className,
+            composites:[],
+            isNew: true
+        };
+    });
 }

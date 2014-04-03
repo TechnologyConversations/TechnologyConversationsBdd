@@ -12,5 +12,6 @@ angular.module('compositeClassesModule', [])
             $scope.classNamePattern = classNamePattern;
             // TODO Test
             $scope.cssClass = cssClass;
+            $scope.data = {class: ''};
         }
     ]);

@@ -39,8 +39,8 @@ trait BddFile {
     }
   }
 
-  def delete: Boolean = {
-    val file = new File(fullPath)
+  def delete(path: String): Boolean = {
+    val file = new File(path)
     if (file.exists) {
       if (file.isFile) {
         file.delete

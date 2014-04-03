@@ -4,8 +4,8 @@ describe('compositeClassesModule', function() {
 
     describe('compositeClassesCtrl controller', function() {
 
-        var scope, modalInstance;
-        var packageName = 'composites.com.technologyconversations.bdd.steps';
+        var scope, modalInstance, form;
+        var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
         var compositeClasses = [
             {
@@ -15,13 +15,14 @@ describe('compositeClassesModule', function() {
         ];
 
         beforeEach(
-            inject(function($injector, $controller) {
-                scope = {};
+            inject(function($rootScope, $compile, $injector, $controller) {
+                scope = $rootScope.$new();
                 $controller("compositeClassesCtrl", {
                     $scope: scope,
                     $http: $injector.get('$http'),
                     $modalInstance: modalInstance,
                     compositeClasses: compositeClasses});
+                form = $compile('<form>')(scope);
             })
         );
 

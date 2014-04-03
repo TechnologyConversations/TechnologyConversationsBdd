@@ -4,11 +4,11 @@
         <div ng-class="cssClass(compositeClassForm.className)">
             <div class="input-group">
                 <span class="input-group-addon">Class</span>
-                <input type="text" id="className" name="className" ng-model="criteria" class="form-control" ng-pattern="classNamePattern()">
+                <input type="text" id="className" name="className" ng-model="data.class" class="form-control" ng-pattern="classNamePattern()">
                 <span class="input-group-btn">
-                    <button class="btn" ng-click="createCompositesClass(criteria)">
+                    <a class="btn" href="{{compositeClassUrl('composites.com.technologyconversations.bdd.steps', data.class)}}" ng-click="close()">
                         <span class="glyphicon glyphicon-plus"></span>
-                    </button>
+                    </a>
                 </span>
             </div>
             <div class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
@@ -20,7 +20,7 @@
         </div>
     </form>
     <table class="table table-condensed table-striped">
-        <tbody ng-repeat="class in compositeClasses | filter:criteria">
+        <tbody ng-repeat="class in compositeClasses | filter:data.class">
             <tr>
                 <td>
                     <a href="{{compositeClassUrl(class.package, class.class)}}" ng-click="close()">{{class.class}}</a>

@@ -8,18 +8,18 @@ import java.io.File
 
 object CompositesController extends Controller {
 
-  val dir = Play.current.configuration.getString("composites.root.dir").getOrElse("stories")
+  val dir = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
 
   def classesToJson: Action[AnyContent] = Action {
     val composites = Composites(dir)
     Ok(composites.classesToJson(composites.list()))
   }
 
-  def classToJson(className: String): Action[AnyContent] = Action {
+  def classToJson(fullClassName: String): Action[AnyContent] = Action {
     try {
-      Ok(Composites(dir).classToJson(className))
+      Ok(Composites(dir).classToJson(fullClassName))
     } catch {
-      case _: ClassNotFoundException => paramIncorrect("className")
+      case _: ClassNotFoundException => paramIncorrect("fullClassName")
     }
   }
 
@@ -34,14 +34,22 @@ object CompositesController extends Controller {
         val classText = composites.classToText(json)
         val packageName = (json \ "package").as[String]
         val className = (json \ "class").as[String]
-        val dirPath = "app" + File.separator + packageName.replace(".", File.separator)
-        val filePath = dirPath + File.separator + className + ".java"
-        composites.save(filePath, classText, overwrite = true)
+        val path = fullClassPath(s"$packageName.$className")
+        composites.save(path, classText, overwrite = true)
         okJson("Class was saved successfully")
       } catch {
         case e: Exception => errorJson(e.getMessage)
       }
     }
+  }
+
+  def deleteClass(fullClassName: String): Action[AnyContent] = Action { implicit request =>
+    Composites(dir).delete(fullClassPath(fullClassName))
+    okJson(s"Class $fullClassName has been deleted")
+  }
+
+  private def fullClassPath(fullClassName: String) = {
+    "app" + File.separator + fullClassName.replace(".", File.separator) + ".java"
   }
 
 }

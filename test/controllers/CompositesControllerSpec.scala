@@ -10,6 +10,11 @@ import java.io.File
 
 class CompositesControllerSpec extends Specification with JsonMatchers with PathMatchers {
 
+  val packageName = "composites.com.technologyconversations.bdd.steps"
+  val className = "TestComposites"
+  val dirPath = "app" + File.separator + packageName.replace(".", File.separator)
+  val fullPath = dirPath + File.separator + className + ".java"
+
   "GET /composites" should {
 
     "return OK" in {
@@ -30,9 +35,9 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
 
   }
 
-  "GET /composites/*className" should {
+  "GET /composites/*fullClassName" should {
 
-    "return OK if className is correct" in {
+    "return OK if fullClassName is correct" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/composites/composites.com.technologyconversations.bdd.steps.WebStepsComposites"))
         status(result) must equalTo(OK)
@@ -40,7 +45,7 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
       }
     }
 
-    "return BAD_REQUEST if className is incorrect" in {
+    "return BAD_REQUEST if fullClassName is incorrect" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/composites/non.existent.class.json"))
         status(result) must equalTo(BAD_REQUEST)
@@ -60,14 +65,10 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
 
   }
 
-  "PUT /composites routes" should {
+  "PUT /composites" should {
 
     val url = "/composites"
     val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
-    val packageName = "composites.com.technologyconversations.bdd.steps"
-    val className = "TestComposites"
-    val dirPath = "app" + File.separator + packageName.replace(".", File.separator)
-    val fullPath = dirPath + File.separator + className + ".java"
     val jsonMap = Map(
       "package" -> Json.toJson(packageName),
       "class" -> Json.toJson(className),
@@ -105,7 +106,21 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
 
   }
 
-  class AfterStoryControllerSpec(path: String) extends After {
+  "DELETE /composites/*fullClassName" should {
+
+    "delete composites class" in new AfterCompositesControllerSpec(fullPath) {
+      running(FakeApplication()) {
+        new File(fullPath).createNewFile
+        val Some(result) = route(FakeRequest(DELETE, s"/composites/$packageName.$className"))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("application/json")
+        new File(fullPath).exists must beFalse
+      }
+    }
+
+  }
+
+  class AfterCompositesControllerSpec(path: String) extends After {
 
     override def after = {
       val file = new File(path)

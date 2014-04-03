@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-md-4">
             <form class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm" novalidate="novalidate">
-                <div ng-class="cssClass(compositeClassForm.className)">
+                <div ng-class="cssClass(compositeClassForm.fullClassName)">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
-                        <input id="className" name="className" class="form-control input-lg" type="text" ng-model="composites.class" required="true" ng-pattern="classNamePattern()">
+                        <input id="fullClassName" name="fullClassName" class="form-control input-lg" type="text" ng-model="compositesClass.class" required="true" ng-pattern="classNamePattern()">
                     </div>
-                    <div class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
+                    <div class="help-block" ng-show="compositeClassForm.fullClassName.$dirty && compositeClassForm.fullClassName.$invalid">
                         Invalid:
-                        <span ng-show="compositeClassForm.className.$error.pattern">
+                        <span ng-show="compositeClassForm.fullClassName.$error.pattern">
                             Class name cannot start with a number, but after the initial character it may use any combination of letters and digits, underscores or dollar signs.
                         </span>
                     </div>
@@ -29,7 +29,7 @@
                         </th>
                     </tr>
                 </tbody>
-                <tbody ng-repeat="composite in composites.composites | filter:stepText | orderBy:'stepText'">
+                <tbody ng-repeat="composite in compositesClass.composites | filter:stepText | orderBy:'stepText'">
                     <tr>
                         <td>
                             <a href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
@@ -43,7 +43,7 @@
                 <div ng-class="cssClass(compositeForm.compositeStepText)">
                     <div class="input-group">
                         <span class="input-group-addon">Composite</span>
-                        <input id="compositeStepText" name="compositeStepText" class="form-control input-lg" type="text" ng-model="composite.stepText" required="true" ng-pattern="stepTextPattern()">
+                        <input id="compositeStepText" name="compositeStepText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()">
                     </div>
                     <div class="help-block" ng-show="compositeForm.compositeStepText.$error.pattern">
                         Step must start with Given, When or Then words.
@@ -53,16 +53,27 @@
                 <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
                     <div class="input-group">
                         <span class="input-group-addon">Step</span>
-                        <input id="compositeStep" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-pattern="stepTextPattern()">
-                    </div>
-                    <div class="help-block" ng-show="compositeStepForm.compositeStep.$error.pattern">
-                        Step must start with Given, When or Then words.
+                        <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
+                        <span class="input-group-btn">
+                            <button id="compositeStep{{$index}}Delete" class="btn" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
                     </div>
                 </div>
             </form>
-            {{composites}}
+            <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+                <div>
+                    <button class="btn btn-primary" ng-class="buttonCssClass(compositeForm)" ng-disabled="!canSaveCompositesClass(compositeForm)" ng-click="saveCompositesClass()" type="button">Save Composites</button>
+                    <button class="btn btn-info" ng-click="revertCompositesClass()" ng-disabled="!canRevertCompositesClass()" type="button">Revert Changes</button>
+                    <button class="btn btn-danger" ng-click="deleteCompositesClass()" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
+                </div>
+            </nav>
+            {{compositesClass}}
             <hr />
             {{composite}}
+            <hr />
+            {{steps}}
         </div>
     </div>
 </div>

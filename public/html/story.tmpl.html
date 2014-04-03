@@ -29,7 +29,7 @@
                                             </span>
                                             <input id="storyMetaInput{{$index}}" name="storyMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
                                             <span class="input-group-btn">
-                                                <button id="storyMetaRemove{{$index}}" class="btn" ng-click="removeElement(story.meta, $index)" type="button">
+                                                <button id="storyMetaRemove{{$index}}" class="btn" ng-click="removeCollectionElement(story.meta, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -73,7 +73,7 @@
                                             </span>
                                             <input id="storyGivenStoryInput{{$index}}" name="storyGivenStoryInput" class="form-control" type="text" ng-model="givenStory.story" required="true">
                                             <span class="input-group-btn">
-                                                <button id="storyGivenStoryAdd{{$index}}" class="btn" ng-click="removeElement(story.givenStories, $index)" type="button">
+                                                <button id="storyGivenStoryAdd{{$index}}" class="btn" ng-click="removeCollectionElement(story.givenStories, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -97,7 +97,7 @@
                                             </span>
                                             <input id="storyLifecycleBeforeStepInput{{$index}}" name="storyStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, story.lifecycle.before)" autofocus>
                                             <span class="input-group-btn">
-                                                <button id="storyLifecycleBeforeStepRemove{{$index}}" class="btn" ng-click="removeElement(story.lifecycle.before, $index)" type="button">
+                                                <button id="storyLifecycleBeforeStepRemove{{$index}}" class="btn" ng-click="removeCollectionElement(story.lifecycle.before, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -118,7 +118,7 @@
                                             </span>
                                             <input id="storyLifecycleAfterStepInput{{$index}}" name="storyStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, story.lifecycle.after)" autofocus>
                                             <span class="input-group-btn">
-                                                <button id="storyLifecycleAfterStepRemove{{$index}}" class="btn" ng-click="removeElement(story.lifecycle.after, $index)" type="button">
+                                                <button id="storyLifecycleAfterStepRemove{{$index}}" class="btn" ng-click="removeCollectionElement(story.lifecycle.after, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -147,7 +147,7 @@
                                         <div class="input-group">
                                             <input id="storyScenarioTitleInput{{$index}}" name="storyScenarioTitleInput" class="form-control" type="text" ng-model="scenario.title" required="true">
                                             <span class="input-group-btn">
-                                                <button id="storyScenarioRemove{{$index}}" class="btn" ng-click="removeElement(story.scenarios, $index)" type="button">
+                                                <button id="storyScenarioRemove{{$index}}" class="btn" ng-click="removeCollectionElement(story.scenarios, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -163,7 +163,7 @@
                                             </span>
                                             <input name="storyScenarioMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
                                             <span class="input-group-btn">
-                                                <button id="storyScenarioMetaRemove{{$index}}" class="btn" ng-click="removeElement(scenario.meta, $index)" type="button">
+                                                <button id="storyScenarioMetaRemove{{$index}}" class="btn" ng-click="removeCollectionElement(scenario.meta, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -183,7 +183,7 @@
                                             </span>
                                             <input name="storyScenarioStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, scenario.steps)" autofocus>
                                             <span class="input-group-btn">
-                                                <button class="btn" ng-click="removeElement(scenario.steps, $index)" type="button">
+                                                <button class="btn" ng-click="removeCollectionElement(scenario.steps, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
@@ -213,8 +213,8 @@
                 </accordion>
                 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
                     <div>
-                        <button class="btn btn-primary" ng-class="getButtonCssClass()" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
-                        <button class="btn btn-primary" ng-class="getButtonCssClass()" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
+                        <button class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
+                        <button class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
                         <button class="btn btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()" type="button">Revert Changes</button>
                         <button class="btn btn-danger" ng-click="deleteStory()" ng-hide="!canDeleteStory()" type="button">Delete Story</button>
                     </div>
