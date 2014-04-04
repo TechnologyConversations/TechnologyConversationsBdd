@@ -25,7 +25,12 @@
                 <tbody>
                     <tr>
                         <th>
-                            <a href="#" ng-click="newComposite()">Add New Composite</a>
+                            <h4>
+                                Composites
+                                <button type="button" ng-click="addNewComposite()" class="pull-right btn btn-info btn-sm">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </h4>
                         </th>
                     </tr>
                 </tbody>
@@ -43,28 +48,36 @@
                 <div ng-class="cssClass(compositeForm.compositeStepText)">
                     <div class="input-group">
                         <span class="input-group-addon">Composite</span>
-                        <input id="compositeStepText" name="compositeStepText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()">
+                        <input id="compositeStepText" name="compositeStepText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()" required="true">
                     </div>
                     <div class="help-block" ng-show="compositeForm.compositeStepText.$error.pattern">
                         Step must start with Given, When or Then words.
                     </div>
                 </div>
-                <h3>Composite Steps</h3>
+                <h3>
+                    Composite Steps
+                    <button type="button" ng-click="addNewCompositeStep()" class="pull-right btn btn-info">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </h3>
                 <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
                     <div class="input-group">
                         <span class="input-group-addon">Step</span>
                         <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
                         <span class="input-group-btn">
-                            <button id="compositeStep{{$index}}Delete" class="btn" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
+                            <button id="compositeStep{{$index}}Delete" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </span>
                     </div>
                 </div>
+                <div class="help-block" ng-show="!compositesAreValid()">
+                    At least one step must be defined.
+                </div>
             </form>
             <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
                 <div>
-                    <button class="btn btn-primary" ng-class="buttonCssClass(compositeForm)" ng-disabled="!canSaveCompositesClass(compositeForm)" ng-click="saveCompositesClass()" type="button">Save Composites</button>
+                    <button class="btn btn-primary" ng-class="buttonCssClass(compositeForm)" ng-disabled="!canSaveCompositesClass(compositeForm) || !compositesAreValid()" ng-click="saveCompositesClass()" type="button">Save Composites</button>
                     <button class="btn btn-info" ng-click="revertCompositesClass()" ng-disabled="!canRevertCompositesClass()" type="button">Revert Changes</button>
                     <button class="btn btn-danger" ng-click="deleteCompositesClass()" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
                 </div>

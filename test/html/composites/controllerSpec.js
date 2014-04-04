@@ -10,22 +10,24 @@ describe('compositesModule', function() {
         var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
         var newClassName = 'OtherStepsComposites';
-        var compositesClass = {
-            package: packageName,
-            class: className,
-            composites: [composite]
-        };
+        var compositesClass;
         var newCompositesClass = {
             package: packageName,
             class: newClassName,
             composites: [composite]
         };
         var steps = {"steps":[{"type":"GIVEN","step":"Given Web address $url is opened"}]};
+        var emptyComposite = {stepText: '', compositeSteps: [{}]};
 
         beforeEach(
             inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location) {
                 scope = $rootScope.$new();
                 location = $location;
+                compositesClass = {
+                    package: packageName,
+                    class: className,
+                    composites: [composite]
+                };
                 $controller('compositesCtrl', {
                     $scope: scope,
                     $http: $http,
@@ -40,7 +42,7 @@ describe('compositesModule', function() {
         );
 
         it('should default composite to {}', function() {
-           expect(scope.composite).toBeUndefined();
+           expect(scope.composite).toEqual(scope.compositesClass.composites[0]);
         });
 
         it('should put compositesClass to the scope variable compositesClass', function () {
@@ -78,7 +80,7 @@ describe('compositesModule', function() {
             });
         });
 
-        describe('stepTextPattern', function() {
+        describe('stepTextPattern function', function() {
             it('should start with Given, When or Then', function() {
                 expect('Given something').toMatch(scope.stepTextPattern());
                 expect('When something').toMatch(scope.stepTextPattern());
@@ -87,11 +89,30 @@ describe('compositesModule', function() {
             });
         });
 
-        describe('newComposite', function() {
-            it('to reset the composite to {}', function() {
+        describe('addNewComposite function ', function() {
+            it('should reset the composite to {}', function() {
                 scope.composite = {status: 'dirty'};
-                scope.newComposite();
-                expect(scope.composite).toEqual({});
+                scope.addNewComposite();
+                expect(scope.composite).toEqual(emptyComposite);
+            });
+            it('should add new composite to compositesClass collection', function() {
+                var expected = scope.compositesClass.composites.length + 1;
+                scope.addNewComposite();
+                var length = scope.compositesClass.composites.length;
+                expect(length).toEqual(expected);
+                var newComposite = scope.compositesClass.composites[length - 1];
+                expect(newComposite).toEqual(emptyComposite);
+            });
+        });
+
+        describe('addNewCompositeStep function', function() {
+            it('should add empty element to composite.compositeSteps', function() {
+                var expected = scope.composite.compositeSteps.length + 1;
+                scope.addNewCompositeStep();
+                var length = scope.composite.compositeSteps.length;
+                expect(length).toEqual(expected);
+                var newStep = scope.composite.compositeSteps[length - 1];
+                expect(newStep).toEqual({});
             });
         });
 
@@ -114,9 +135,9 @@ describe('compositesModule', function() {
                 expect(scope.compositesClass).toEqual(scope.originalCompositesClass);
             });
             it('should revert composite to {}', function() {
-                scope.composite = composite;
+                scope.composite = newComposite;
                 scope.revertCompositesClass();
-                expect(scope.composite).toEqual({});
+                expect(scope.composite).toEqual(scope.compositesClass.composites[0]);
             });
         });
 
@@ -141,6 +162,13 @@ describe('compositesModule', function() {
                 form.$valid = true;
                 expect(scope.canSaveCompositesClass(form)).toEqual(false);
             });
+//            it('should return false if composites has an empty element ({})', function() {
+//                form.$invalid = false;
+//                form.$valid = true;
+//                scope.compositesClass = newCompositesClass;
+//                scope.compositesClass.composites.push({});
+//                expect(scope.canSaveCompositesClass(form)).toEqual(false);
+//            });
             it('should return true if isNew is set to true (the rest of criteria is ignored)', function() {
                 form.$invalid = true;
                 form.$valid = false;
@@ -152,6 +180,20 @@ describe('compositesModule', function() {
                 form.$valid = true;
                 scope.compositesClass = newCompositesClass;
                 expect(scope.canSaveCompositesClass(form)).toEqual(true);
+            });
+        });
+        describe('compositesAreValid function', function() {
+            it('should return false when composite steps are not defined', function() {
+                scope.compositesClass.composites.push({stepText: 'Given something'});
+                expect(scope.compositesAreValid()).toEqual(false);
+            });
+            it('should return false when there are no composite steps', function() {
+                scope.compositesClass.composites.push({stepText: 'Given something', compositeSteps: []});
+                expect(scope.compositesAreValid()).toEqual(false);
+            });
+            it('should return true if all other conditions are fulfilled', function() {
+                scope.compositesClass.composites.push({stepText: 'Given something', compositeSteps: [{steps: 'When something else'}]});
+                expect(scope.compositesAreValid()).toEqual(true);
             });
         });
 

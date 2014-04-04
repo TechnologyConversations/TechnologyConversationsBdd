@@ -1,12 +1,16 @@
 angular.module('compositesModule', [])
     .controller('compositesCtrl', ['$scope', '$http', '$modal', '$location', 'compositesClass', 'steps',
         function($scope, $http, $modal, $location, compositesClass, steps) {
-            $scope.newComposite = function() {
-                $scope.composite = {};
+            $scope.addNewComposite = function() {
+                $scope.composite = {stepText: '', compositeSteps: [{}]};
+                $scope.compositesClass.composites.push($scope.composite);
             };
-//            $scope.newComposite();
+            $scope.addNewCompositeStep = function() {
+                $scope.composite.compositeSteps.push({});
+            };
             $scope.compositesClass = compositesClass;
             $scope.originalCompositesClass = angular.copy(compositesClass);
+            $scope.composite = $scope.compositesClass.composites[0];
             $scope.steps = steps;
             $scope.classNamePattern = classNamePattern;
             $scope.stepTextPattern = function() {
@@ -21,7 +25,7 @@ angular.module('compositesModule', [])
             $scope.removeCollectionElement = removeCollectionElement;
             $scope.revertCompositesClass = function() {
                 $scope.compositesClass = angular.copy($scope.originalCompositesClass);
-                $scope.newComposite();
+                $scope.composite = $scope.compositesClass.composites[0];
             };
             $scope.canRevertCompositesClass = function() {
                 return !angular.equals($scope.compositesClass, $scope.originalCompositesClass);
@@ -31,6 +35,15 @@ angular.module('compositesModule', [])
                 var isUpdated = !angular.equals($scope.compositesClass, $scope.originalCompositesClass);
                 var isNew = $scope.compositesClass.isNew;
                 return isNew || (isValid && isUpdated);
+            };
+            $scope.compositesAreValid = function() {
+                var isValid = true;
+                angular.forEach($scope.compositesClass.composites, function(element) {
+                    if (element.compositeSteps === undefined || element.compositeSteps.length === 0) {
+                        isValid = false;
+                    }
+                });
+                return isValid;
             };
             $scope.saveCompositesClass = function() {
                 $http.put('/composites', $scope.compositesClass).then(function() {

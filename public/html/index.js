@@ -312,8 +312,8 @@ angular.module('storiesModule', [
                 }
             };
             $scope.removeCollectionElement = removeCollectionElement;
-            $scope.addElement = function (collection, key) {
-                collection.push({key: ''});
+            $scope.addElement = function (collection) {
+                collection.push({});
             };
             $scope.addScenarioElement = function (collection) {
                 collection.push({title: '', meta: [], steps: [], examplesTable: ''});
@@ -419,7 +419,7 @@ function getCompositesJson(http, fullClassName) {
         return {
             package: packageName,
             class: className,
-            composites:[],
+            composites:[{stepText: '', compositeSteps: [{}]}],
             isNew: true
         };
     });

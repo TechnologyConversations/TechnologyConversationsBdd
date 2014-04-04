@@ -9,7 +9,7 @@ public class WebStepsComposites {
         public void compositeStep0(@Named("param1") String param1, @Named("param2") String param2, @Named("param3") String param3) { }
     
         @Given("this is my composite")
-        @Composite(steps = {"Given something3", "When else4", "Then OK5"})
+        @Composite(steps = {"Given something", "When else", "Then OK"})
         public void compositeStep1() { }
     
 }
