@@ -5,8 +5,7 @@ import java.lang.reflect.Method
 import org.jbehave.core.annotations.{Then, When, Given, Composite}
 import java.lang.annotation.Annotation
 import java.io.File
-import models.noNodeMessage
-import models.nodeIsIncorrectMessage
+import models._
 
 trait JBehaveComposites {
 
@@ -98,24 +97,38 @@ trait JBehaveComposites {
       throw new Exception(noNodeMessage("package"))
     } else if (classOption.isEmpty) {
       throw new Exception(noNodeMessage("class"))
-    } else if (!classOption.get.matches("""[a-zA-Z_$][a-zA-Z\d_$]*""")) {
-      throw new Exception(nodeIsIncorrectMessage("class"))
-    } else if (compositesOption.isEmpty) {
-      throw new Exception(noNodeMessage("composites"))
     }
+    verifyJavaNaming(classOption.get)
     for(composite <- compositesOption.get) {
-      if (!(composite \ "stepText").as[String].matches("""(Given|When|Then) .+""")) {
-        throw new Exception(nodeIsIncorrectMessage("stepText"))
+      val stepText = (composite \ "stepText").as[String]
+      if (!stepText.matches("""(Given|When|Then) .+""")) {
+        throw new Exception(notGivenWhenThenMessage(stepText))
       }
+      verifyStep(stepText)
       val compositeStepsOption = (composite \ "compositeSteps").asOpt[List[JsValue]]
       if (compositeStepsOption.isEmpty) {
         throw new Exception(noNodeMessage("compositeSteps"))
       }
       for(compositeStep <- compositeStepsOption.get) {
-        if (!(compositeStep \ "step").as[String].matches("""(Given|When|Then) .+""")) {
-          throw new Exception(nodeIsIncorrectMessage("step"))
+        val step = (compositeStep \ "step").as[String]
+        if (!step.matches("""(Given|When|Then) .+""")) {
+          throw new Exception(notGivenWhenThenMessage(step))
         }
+        verifyStep(step)
       }
+    }
+  }
+
+  private def verifyStep(step: String) {
+    val params = "<.+?>".r.findAllIn(step).toSet[String]
+    for (param <- params) {
+      verifyJavaNaming(param.tail.init)
+    }
+  }
+
+  private def verifyJavaNaming(name: String) {
+    if (!name.matches("""[a-zA-Z_$][a-zA-Z\d_$]*""")) {
+      throw new Exception(nameIsIncorrectMessage(name))
     }
   }
 

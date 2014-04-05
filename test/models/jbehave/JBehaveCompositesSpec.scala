@@ -4,8 +4,7 @@ import org.specs2.mutable.Specification
 import play.api.libs.json.{JsValue, Json}
 import org.specs2.matcher.JsonMatchers
 import java.io.File
-import models.noNodeMessage
-import models.nodeIsIncorrectMessage
+import models._
 
 class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
@@ -90,18 +89,19 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
     "throw exception if class starts with a number" in {
       val actualJson = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("1abc")))
-      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nameIsIncorrectMessage("1abc"))
     }
 
     "throw exception if class uses any character other than letters, digits, underscores and dollar signs" in {
       val jsonWithPercentage = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("abc%")))
-      jBehaveComposites.classToText(jsonWithPercentage) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
+      jBehaveComposites.classToText(jsonWithPercentage) must throwA[Exception](message = nameIsIncorrectMessage("abc%"))
       val jsonWithSpace = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("ab c")))
-      jBehaveComposites.classToText(jsonWithSpace) must throwA[Exception](message = nodeIsIncorrectMessage("class"))
+      jBehaveComposites.classToText(jsonWithSpace) must throwA[Exception](message = nameIsIncorrectMessage("ab c"))
     }
 
     "throw exception if composites > stepText does not start with Given, When or Then" in {
-      val composite = JBehaveComposite("Give me something not starting with Given, When or Then", steps)
+      val step = "Give me something not starting with Given, When or Then"
+      val composite = JBehaveComposite(step, steps)
       val composites = List(composite)
       val jsonMap = Map(
         "package" -> Json.toJson(compositePackage),
@@ -109,11 +109,24 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
         "composites" -> Json.toJson(compositesJson(composites))
       )
       val actualJson = Json.toJson(jsonMap)
-      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nodeIsIncorrectMessage("stepText"))
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = notGivenWhenThenMessage(step))
+    }
+
+    "throw exception if composites > stepText has parameter that starts with a number or uses any character other than letters, digits, underscores and dollar signs" in {
+      val composite = JBehaveComposite("Given param <1param>", steps)
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nameIsIncorrectMessage("1param"))
     }
 
     "throw exception if composites > compositeSteps > step does not start with Given, When or Then" in {
-      val composite = JBehaveComposite(stepText, steps :+ "Give me something")
+      val step = "Give me something"
+      val composite = JBehaveComposite(stepText, steps :+ step)
       val composites = List(composite)
       val jsonMap = Map(
         "package" -> Json.toJson(compositePackage),
@@ -121,9 +134,20 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
         "composites" -> Json.toJson(compositesJson(composites))
       )
       val actualJson = Json.toJson(jsonMap)
-      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nodeIsIncorrectMessage("step"))
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = notGivenWhenThenMessage(step))
     }
 
+    "throw exception if composites > compositeSteps > step has parameter that starts with a number or uses any character other than letters, digits, underscores and dollar signs" in {
+      val composite = JBehaveComposite(stepText, steps :+ "Given there is <param with space>")
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.classToText(actualJson) must throwA[Exception](message = nameIsIncorrectMessage("param with space"))
+    }
 
     "return jBehaveComposites view" in {
       jBehaveComposites.classToText(json) must beEqualTo(text)

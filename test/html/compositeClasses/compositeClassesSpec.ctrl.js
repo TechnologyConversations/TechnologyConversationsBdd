@@ -30,13 +30,17 @@ describe('compositeClassesModule', function() {
             expect(scope.compositeClasses).toBe(compositeClasses);
         });
 
-        it('should have compositeClassUrl method', function() {
-            var url = scope.compositeClassUrl(packageName, className);
-            expect(url).toEqual('/page/composites/' + packageName + "." + className);
+        describe('compositeClassUrl function', function() {
+            it('should return composites URL', function() {
+                var url = scope.compositeClassUrl(packageName, className);
+                expect(url).toEqual('/page/composites/' + packageName + "." + className);
+            });
         });
 
-        it('classNamePattern should return common function', function() {
-            expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+        describe('classNamePattern function', function() {
+            it('should return common function', function() {
+                expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+            });
         });
 
     });

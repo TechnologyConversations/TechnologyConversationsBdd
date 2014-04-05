@@ -10,5 +10,11 @@ package object models {
   def nodeIsIncorrectMessage(node: String) = {
     s"$node is incorrect"
   }
+  def nameIsIncorrectMessage(name: String) = {
+    s"$name is incorrect. It cannot start with a number or use any character other than letters, digits, underscores and dollar signs."
+  }
+  def notGivenWhenThenMessage(text: String) = {
+    s"$text does not start with Given, When or Then"
+  }
 
 }
