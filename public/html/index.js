@@ -61,7 +61,7 @@ angular.module('storiesModule', [
                     reloadOnSearch: false
                 })
                 .when('/page/composites/:className*', {
-                    templateUrl: '/assets/html/composites/template.html',
+                    templateUrl: '/assets/html/composites/composites.tmpl.html',
                     controller: 'compositesCtrl',
                     // TODO Test
                     resolve: {
@@ -126,7 +126,7 @@ angular.module('storiesModule', [
             };
             $scope.openCompositeClass = function() {
                 $modal.open({
-                    templateUrl: '/assets/html/compositeClasses/template.html',
+                    templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
                     controller: 'compositeClassesCtrl',
                     resolve: {
                         compositeClasses: function($route, $http, $modal) {

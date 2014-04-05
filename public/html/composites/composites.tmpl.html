@@ -14,6 +14,12 @@
                         </span>
                     </div>
                 </div>
+                <h3>
+                    Composites
+                    <button type="button" ng-click="addNewComposite()" class="pull-right btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </h3>
                 <div>
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
@@ -22,18 +28,6 @@
                 </div>
             </form>
             <table class="table table-condensed table-striped">
-                <tbody>
-                    <tr>
-                        <th>
-                            <h4>
-                                Composites
-                                <button type="button" ng-click="addNewComposite()" class="pull-right btn btn-info btn-sm">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                </button>
-                            </h4>
-                        </th>
-                    </tr>
-                </tbody>
                 <tbody ng-repeat="composite in compositesClass.composites | filter:stepText | orderBy:'stepText'">
                     <tr>
                         <td>
@@ -60,15 +54,19 @@
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </h3>
-                <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
-                    <div class="input-group">
-                        <span class="input-group-addon">Step</span>
-                        <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
-                        <span class="input-group-btn">
-                            <button id="compositeStep{{$index}}Delete" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                        </span>
+                <div ui-sortable class="steps" ng-model="composite.compositeSteps">
+                    <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
+                        <div class="input-group sortable">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-move"></span>
+                            </span>
+                            <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
+                            <span class="input-group-btn">
+                                <button id="compositeStep{{$index}}Delete" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="help-block" ng-show="!compositesAreValid()">
