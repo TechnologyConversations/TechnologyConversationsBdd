@@ -1,0 +1,25 @@
+<story path="public/stories/tcbdd/storiesList.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">open existing and create new stories</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to browse files and directories</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+</lifecycle>
+<scenario keyword="Scenario:" title="Can open dialog">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseStories</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Browse Stories</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can navigate through directories">
+<step outcome="pending" keyword="PENDING">Given Web user is in the Browse Stories dialog</step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">When Web user clicks the element <parameter>tcbdd</parameter></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Then Web element <parameter>dirPath</parameter> should have text <parameter>tcbdd/</parameter></step>
+<pendingMethod>@Given(&quot;Web user is in the Browse Stories dialog&quot;)
+@Pending
+public void givenWebUserIsInTheBrowseStoriesDialog() {
+  // PENDING
+}
+</pendingMethod>
+</scenario>
+</story>

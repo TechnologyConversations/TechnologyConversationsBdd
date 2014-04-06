@@ -3,12 +3,13 @@
 package @compositePackage;
 
 import org.jbehave.core.annotations.*;
+import com.technologyconversations.bdd.steps.util.BddVariable;
 
 @Html(s"public class $compositeClass {")
     @for((composite, index) <- composites.zipWithIndex) {
         @@Given("@Html(composite.strippedFormattedStepText)")
         @Html(composite.formattedCompositeSteps.mkString("""@Composite(steps = {"""", """", """", """"})"""))
-        @Html(composite.params.map(param => s"""@Named("$param") String $param""").mkString(
+        @Html(composite.params.map(param => s"""@Named("$param") BddVariable $param""").mkString(
             s"public void compositeStep$index(",
             ", ",
             ") { }"

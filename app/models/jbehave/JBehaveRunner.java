@@ -1,6 +1,6 @@
 package models.jbehave;
 
-import com.technologyconversations.bdd.steps.BddParamsBean;
+import com.technologyconversations.bdd.steps.util.BddParamsBean;
 import models.RunnerClass;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;

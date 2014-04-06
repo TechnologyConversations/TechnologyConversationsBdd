@@ -1,21 +1,21 @@
 {"xref": {
-  "whenMade": 1394658823075,
+  "whenMade": 1396732781360,
   "createdBy": "JBehave",
   "metaFilter": "",
   "meta": [],
   "stories": [
     {
       "description": "",
-      "narrative": "In order to \nAs a \nI want to \n",
-      "name": "test.story",
-      "path": "public/stories/tcbdd/test.story",
-      "html": "public.stories.tcbdd.test.html",
+      "narrative": "In order to open existing and create new stories\nAs a application user\nI want to be able to browse files and directories\n",
+      "name": "storiesList.story",
+      "path": "public/stories/tcbdd/storiesList.story",
+      "html": "public.stories.tcbdd.storiesList.html",
       "meta": "",
-      "scenarios": "Scenario:Test scenario\nGiven Web address http://localhost:9000 is opened\nThen Web page title is xxx\n\n\n",
-      "passed": false,
-      "pending": false,
-      "started": 1394658783217,
-      "duration": 38450
+      "scenarios": "Scenario:Can open dialog\nGiven Web home page is opened\nWhen Web user clicks the element browseStories\nThen Web element modalHeader should have text Browse Stories\n\n\nScenario:Can navigate through directories\nGiven Web user is in the Browse Stories dialog\nWhen Web user clicks the element tcbdd\nThen Web element dirPath should have text tcbdd/\n\n\n",
+      "passed": true,
+      "pending": true,
+      "started": 1396732762182,
+      "duration": 13900
     }
   ],
   "stepMatches": []

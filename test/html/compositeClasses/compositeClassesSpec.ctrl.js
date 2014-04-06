@@ -15,11 +15,11 @@ describe('compositeClassesModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $compile, $injector, $controller) {
+            inject(function($rootScope, $compile, $injector, $controller, $http) {
                 scope = $rootScope.$new();
                 $controller("compositeClassesCtrl", {
                     $scope: scope,
-                    $http: $injector.get('$http'),
+                    $http: $http,
                     $modalInstance: modalInstance,
                     compositeClasses: compositeClasses});
                 form = $compile('<form>')(scope);

@@ -23,8 +23,8 @@ describe('storiesModule controllers', function() {
                 })
             );
 
-            it('should have the template /assets/html/story.tmpl.html', function() {
-                expect(route.routes[path].templateUrl).toEqual('/assets/html/story.tmpl.html');
+            it('should have the template /assets/html/story/story.tmpl.html', function() {
+                expect(route.routes[path].templateUrl).toEqual('/assets/html/story/story.tmpl.html');
             });
 
             it('should have the controller storyCtrl', function() {
@@ -49,35 +49,6 @@ describe('storiesModule controllers', function() {
             expect(scope.data).toBe(data);
         });
 
-    });
-
-    describe('runnerCtrl controller', function() {
-
-        var modalInstance, data, cookieStore;
-        var cookieValue = 'value1';
-
-        beforeEach(
-            inject(function($injector, $controller) {
-                cookieStore = $injector.get('$cookieStore');
-                cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[0].key, cookieValue);
-                cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[1].key, 'value2');
-                $controller("runnerCtrl", {$scope: scope , $modalInstance: modalInstance, $cookieStore: cookieStore, data: data});
-            }),
-            data = {
-                classes: [{
-                    fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1'}, {key: 'key2'}]
-                }]
-            }
-        );
-
-        it('should put data to the scope', function() {
-            expect(scope.data).toBe(data);
-        });
-
-        it('should put values from cookies', function() {
-            expect(scope.data.classes[0].params[0].value).toEqual(cookieValue);
-        });
     });
 
     describe('storiesCtrl controller', function() {

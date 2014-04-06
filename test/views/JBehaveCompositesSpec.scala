@@ -24,7 +24,8 @@ class JBehaveCompositesSpec extends Specification {
     }
 
     "output import statements" in {
-      out must contain("import org.jbehave.core.annotations.*")
+      out must contain("import org.jbehave.core.annotations.*;")
+      out must contain("import com.technologyconversations.bdd.steps.util.BddVariable;")
     }
 
     "output class statement" in {
@@ -56,7 +57,7 @@ class JBehaveCompositesSpec extends Specification {
     }
 
     "output composite methods with params" in {
-      out must contain("""(@Named("param1") String param1, @Named("param2") String param2""")
+      out must contain("""(@Named("param1") BddVariable param1, @Named("param2") BddVariable param2""")
     }
 
     "output } at the end" in {

@@ -1,26 +1,38 @@
 <html>
 <head>
-<title>public.stories.tcbdd.test</title>
+<title>public.stories.tcbdd.storiesList</title>
 <style type="text/css" media="all">
 @import url( "./style/jbehave-core.css" );
 </style>
 </head>
 <body>
  
-<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-<story path="public/stories/tcbdd/test.story" title="">
-<narrative keyword="Narrative:">
-  <inOrderTo keyword="As a"></inOrderTo>
-  <asA keyword="I want to"></asA>
-  <iWantTo keyword="So that"></iWantTo>
-</narrative>
-<lifecycle keyword="Lifecycle:">
-</lifecycle>
-<scenario keyword="Scenario:" title="Test scenario">
-<step outcome="successful">Given Web address <parameter>http://localhost:9000</parameter> is opened</step>
-<step outcome="failed" keyword="FAILED">Then Web page title is <parameter>xxx</parameter><failure>org.junit.ComparisonFailure: expected:&lt;[xxx]&gt; but was:&lt;[BDD Assistant: Technology Conversations]&gt;</failure></step>
-</scenario>
-</story>
+<script type="syntaxhighlighter" class="brush: txt"><![CDATA[
+
+(public/stories/tcbdd/storiesList.story)
+Narrative:
+In order to open existing and create new stories
+As a application user
+I want to be able to browse files and directories
+Lifecycle:
+
+Scenario: Can open dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+Then Web element modalHeader should have text Browse Stories
+
+Scenario: Can navigate through directories
+Given Web user is in the Browse Stories dialog (PENDING)
+When Web user clicks the element tcbdd (NOT PERFORMED)
+Then Web element dirPath should have text tcbdd/ (NOT PERFORMED)
+@Given("Web user is in the Browse Stories dialog")
+@Pending
+public void givenWebUserIsInTheBrowseStoriesDialog() {
+  // PENDING
+}
+
+
+
 
 ]]></script>
 </body>

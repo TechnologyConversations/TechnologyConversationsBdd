@@ -6,7 +6,7 @@ import play.api.libs.json.{Json, JsValue}
 import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.jbehave.core.configuration.MostUsefulConfiguration
 import scala.collection.JavaConversions._
-import com.technologyconversations.bdd.steps.BddParam
+import com.technologyconversations.bdd.steps.util.BddParam
 import org.jbehave.core.annotations.{Then, When, Given}
 
 class JBehaveSteps(dir: String = "steps") {
