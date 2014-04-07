@@ -1,17 +1,12 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', 'story', 'steps', 'classes',
-        function($scope, $http, $modal, $location, $cookieStore, story, steps, classes) {
-            // TODO Test
+    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', 'story', 'steps', 'classes', 'composites',
+        function($scope, $http, $modal, $location, $cookieStore, story, steps, classes, composites) {
             $scope.story = story;
-            // TODO Test
             $scope.steps = steps;
-            // TODO Test
             $scope.classes = classes;
-            // TODO Test
+            $scope.composites = composites;
             $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
-            // TODO Test
             $scope.storyFormClass = 'col-md-12';
-            // TODO Test
             $scope.storyRunnerVisible = false;
             $scope.storyRunnerInProgress = false;
             $scope.storyRunnerSuccess = true;
@@ -82,7 +77,8 @@ angular.module('storyModule', [])
                         });
                         var json = {
                             storyPath: $scope.story.path,
-                            classes: data.classes
+                            classes: data.classes,
+                            composites: $scope.composites
                         };
                         $http.post('/runner/run.json', json).then(function (response) {
                             $scope.storyRunnerSuccess = (response.data.status === 'OK');

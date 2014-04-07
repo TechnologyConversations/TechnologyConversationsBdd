@@ -9,7 +9,7 @@ import models._
 class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
   val compositePackage = "composites.com.technologyconversations.bdd.steps"
-  val compositeClass = "WebStepsComposites"
+  val compositeClass = "TcBddComposites"
   val steps = List("Given something", "When else", "Then OK")
   val stepText = "Given this is my composite"
   val composite = JBehaveComposite(stepText, steps)

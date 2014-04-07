@@ -39,7 +39,7 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
 
     "return OK if fullClassName is correct" in {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(GET, "/composites/composites.com.technologyconversations.bdd.steps.WebStepsComposites"))
+        val Some(result) = route(FakeRequest(GET, "/composites/composites.com.technologyconversations.bdd.steps.TcBddComposites"))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
       }
@@ -55,7 +55,7 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
 
     "return same output as Composites#classToJson" in {
       running(FakeApplication()) {
-        val className = "composites.com.technologyconversations.bdd.steps.WebStepsComposites"
+        val className = "composites.com.technologyconversations.bdd.steps.TcBddComposites"
         val Some(result) = route(FakeRequest(GET, s"/composites/$className"))
         status(result) must equalTo(OK)
         val composites = Composites("app/composites")

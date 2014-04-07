@@ -3,12 +3,13 @@ describe('storyModule', function() {
     beforeEach(module('ngCookies', 'storyModule'));
 
     describe('storyCtrl controller', function() {
-        var scope, modal;
+        var scope, modal, form;
         var story = {
             path: 'this/is/path'
         };
-        var steps;
-        var classes;
+        var steps = {status: 'OK'};
+        var classes = {status: 'OK'};
+        var composites = {status: 'OK'};
         var pendingSteps = [
             "Given Web user is in the Browse Stories dialog",
             "Given something else"
@@ -29,7 +30,7 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $http, $location, $cookieStore) {
+            inject(function($rootScope, $controller, $http, $location, $cookieStore, $compile) {
                 scope = $rootScope.$new();
                 $controller("storyCtrl", {
                     $scope: scope,
@@ -39,12 +40,35 @@ describe('storyModule', function() {
                     $cookieStore: $cookieStore,
                     story: story,
                     steps: steps,
-                    classes: classes
+                    classes: classes,
+                    composites: composites
                 });
+                form = $compile('<form>')(scope);
             })
         );
 
-        describe('default values', function() {
+        describe('by default', function() {
+            it('should put steps to the scope', function() {
+                expect(scope.steps).toEqual(steps);
+            });
+            it('should put story to the scope', function() {
+                expect(scope.story).toEqual(story);
+            });
+            it('should put classes to the scope', function() {
+                expect(scope.classes).toEqual(classes);
+            });
+            it('should put composites to the scope', function() {
+                expect(scope.composites).toEqual(composites);
+            });
+            it('should put stepTypes to the scope', function() {
+                expect(scope.stepTypes).toEqual(['GIVEN', 'WHEN', 'THEN']);
+            });
+            it('should put storyFormClass to the scope', function() {
+                expect(scope.storyFormClass).toEqual('col-md-12');
+            });
+            it('should set storyRunnerVisible to false', function() {
+                expect(scope.storyRunnerVisible).toEqual(false);
+            });
             it('should set storyRunnerInProgress to false', function() {
                 expect(scope.storyRunnerInProgress).toEqual(false);
             });
@@ -113,7 +137,7 @@ describe('storyModule', function() {
                     'progress-bar progress-bar-danger': false
                 });
             });
-            it('should return warning if story runner is in progress', function() {
+            it('should return warning if story runner finished and has pending steps', function() {
                 scope.storyRunnerInProgress = false;
                 scope.storyRunnerSuccess = true;
                 scope.pendingSteps = pendingSteps;
@@ -124,7 +148,17 @@ describe('storyModule', function() {
                     'progress-bar progress-bar-danger': false
                 });
             });
-            it('should return warning if story runner is in progress', function() {
+            it('should return success if story runner finished', function() {
+                scope.storyRunnerInProgress = false;
+                scope.storyRunnerSuccess = true;
+                expect(scope.getRunnerStatusCss()).toEqual({
+                    'progress-bar progress-bar-info': false,
+                    'progress-bar progress-bar-warning': false,
+                    'progress-bar progress-bar-success': true,
+                    'progress-bar progress-bar-danger': false
+                });
+            });
+            it('should return danger if story runner finished and is not success', function() {
                 scope.storyRunnerInProgress = false;
                 scope.storyRunnerSuccess = false;
                 expect(scope.getRunnerStatusCss()).toEqual({
@@ -163,12 +197,13 @@ describe('storyModule', function() {
             }
         );
 
-        it('should put data to the scope', function() {
-            expect(scope.data).toBe(data);
-        });
-
-        it('should put values from cookies', function() {
-            expect(scope.data.classes[0].params[0].value).toEqual(cookieValue);
+        describe('by default', function() {
+            it('should put data to the scope', function() {
+                expect(scope.data).toBe(data);
+            });
+            it('should put values from cookies', function() {
+                expect(scope.data.classes[0].params[0].value).toEqual(cookieValue);
+            });
         });
 
         describe('hasParams function', function() {
@@ -179,6 +214,13 @@ describe('storyModule', function() {
             it('should return false if it does NOT contain parameters', function() {
                 var classEntry = {params: []};
                 expect(scope.hasParams(classEntry)).toEqual(false);
+            });
+        });
+
+        describe('runStory function', function() {
+            it('', function() {
+                form.$invalid = true;
+                form.$valid = false;
             });
         });
 

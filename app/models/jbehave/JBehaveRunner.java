@@ -59,6 +59,9 @@ public class JBehaveRunner extends JUnitStories {
     public JBehaveRunner(String storyPathValue,
                          List<RunnerClass> stepsClasses,
                          String reportsPathValue) throws Exception {
+        for(RunnerClass rc : stepsClasses) {
+            System.out.println(rc.fullName());
+        }
         setStoryPath(storyPathValue);
         setStepsInstances(stepsClasses);
         setReportsPath(reportsPathValue);

@@ -12,12 +12,8 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
   val reportsPath = "public/jbehave"
-
-  "POST /runners/run.json" should {
-
-    val url = "/runner/run.json"
-    val storyPath = "non_existent_story.story"
-    val json = Json.parse(s"""
+  val storyPath = "non_existent_story.story"
+  val json = Json.parse(s"""
     {
       "storyPath": "$storyPath",
       "classes":
@@ -31,8 +27,17 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
           "key": "key2",
           "value": "value2"
         }]
+      }],
+      "composites":
+      [{
+        "package":"composites.com.technologyconversations.bdd.steps",
+        "class":"TcBddComposites"
       }]
     }""")
+
+  "POST /runners/run.json" should {
+
+    val url = "/runner/run.json"
 
     "return BAD_REQUEST if JSON is not provided" in {
       running(FakeApplication()) {

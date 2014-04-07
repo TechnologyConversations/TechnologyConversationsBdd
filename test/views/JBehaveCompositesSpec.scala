@@ -8,7 +8,7 @@ class JBehaveCompositesSpec extends Specification {
   "CompositesJBehave#render" should {
 
     val compositePackage = "com.technologyconversations.test"
-    val compositeClass = "WebStepsComposites"
+    val compositeClass = "TcBddComposites"
     val steps = List("Given something", "When else", "Then OK")
     val composite = JBehaveComposite("Given this is my composite", steps)
     val stepsWithParams = List("""Given "my" <param1>""", "When <param2>", "Then <param3>")

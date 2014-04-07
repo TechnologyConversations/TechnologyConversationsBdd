@@ -23,6 +23,7 @@ object RunnerController extends Controller {
     lazy val json = jsonOption.get
     lazy val storyPath = (json \ "storyPath").asOpt[String]
     lazy val classesJson = (json \ "classes").asOpt[List[JsValue]]
+    lazy val compositesJsonOpt = (json \ "composites").asOpt[List[JsValue]]
     if (jsonOption.isEmpty) {
       noJsonResultMap
     } else if (storyPath.isEmpty) {
@@ -34,18 +35,12 @@ object RunnerController extends Controller {
       val reportsPath = reportsDir + "/" + id
       val storiesPath = storiesDir + "/" + storyPath.get
       var status = "OK"
-      val classes = classesJson.get.map { classJson =>
-        val fullName = (classJson \ "fullName").as[String]
-        val paramsJson = (classJson \ "params").asOpt[List[JsValue]]
-        val params = paramsJson.getOrElse(List()).map { paramJson =>
-          val key = (paramJson \ "key").as[String]
-          val value = (paramJson \ "value").asOpt[String].getOrElse("")
-          (key, value)
-        }.toMap
-        RunnerClass(fullName, params)
-      }
       try {
-        new Runner(storiesPath, classes, s"../$reportsPath").run()
+        new Runner(
+          storiesPath,
+          classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
+          s"../$reportsPath"
+        ).run()
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
@@ -55,6 +50,34 @@ object RunnerController extends Controller {
         "id" -> id.toString,
         "reportsPath" -> s"$reportsPath/view/reports.html"
       )
+    }
+  }
+
+  // TODO Move to a separate class (without Controller) for easier testing
+  private[controllers] def classesFromSteps(json: List[JsValue]) = {
+    json.map { element =>
+      val fullName = (element \ "fullName").as[String]
+      val paramsJson = (element \ "params").asOpt[List[JsValue]]
+      val params = paramsJson.getOrElse(List()).map { paramJson =>
+        val key = (paramJson \ "key").as[String]
+        val value = (paramJson \ "value").asOpt[String].getOrElse("")
+        (key, value)
+      }.toMap
+      RunnerClass(fullName, params)
+    }
+  }
+
+  // TODO Move to a separate class (without Controller) for easier testing
+  private[controllers] def classesFromComposites(jsonOption: Option[List[JsValue]]) = {
+    if (jsonOption.isEmpty) {
+      List()
+    } else {
+      jsonOption.get.map {
+        element =>
+          val packageName = (element \ "package").as[String]
+          val className = (element \ "class").as[String]
+          RunnerClass(s"$packageName.$className")
+      }
     }
   }
 
