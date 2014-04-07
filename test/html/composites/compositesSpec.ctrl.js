@@ -1,10 +1,10 @@
 describe('compositesModule', function() {
 
-    beforeEach(module('compositesModule'));
+    beforeEach(module('ngCookies', 'compositesModule'));
 
     describe('compositesCtrl controller', function() {
 
-        var scope, form, httpBackend, modal, location;
+        var scope, form, httpBackend, modal, location, cookieStore;
         var composite = {stepText: 'Given precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
         var newComposite = {stepText: 'Given some other precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
         var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
@@ -18,11 +18,13 @@ describe('compositesModule', function() {
         };
         var steps = {"steps":[{"type":"GIVEN","step":"Given Web address $url is opened"}]};
         var emptyComposite = {stepText: '', compositeSteps: [{}]};
+        var compositeStepText = 'Given this is my composites step';
 
         beforeEach(
-            inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location) {
+            inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location, $cookieStore) {
                 scope = $rootScope.$new();
                 location = $location;
+                cookieStore = $cookieStore;
                 compositesClass = {
                     package: packageName,
                     class: className,
@@ -34,6 +36,7 @@ describe('compositesModule', function() {
                     $modal: modal,
                     $location: $location,
                     compositesClass: compositesClass,
+                    compositeStepText: compositeStepText,
                     steps: steps
                 });
                 httpBackend = $httpBackend;
@@ -41,24 +44,22 @@ describe('compositesModule', function() {
             })
         );
 
-        it('should default composite to {}', function() {
-           expect(scope.composite).toEqual(scope.compositesClass.composites[0]);
-        });
-
-        it('should put compositesClass to the scope variable compositesClass', function () {
-            expect(scope.compositesClass).toEqual(compositesClass);
-        });
-
-        it('should put compositesClass to the scope variable originalCompositesClass', function () {
-            expect(scope.originalCompositesClass).toEqual(compositesClass);
-        });
-
-        it('should put steps to the scope variable steps', function () {
-            expect(scope.steps).toEqual(steps);
-        });
-
-        it('should return common function from classNamePattern', function() {
-            expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+        describe('by default', function() {
+            it('should default composite to {}', function() {
+                expect(scope.composite).toEqual(scope.compositesClass.composites[0]);
+            });
+            it('should put compositesClass to the scope variable compositesClass', function () {
+                expect(scope.compositesClass).toEqual(compositesClass);
+            });
+            it('should put compositesClass to the scope variable originalCompositesClass', function () {
+                expect(scope.originalCompositesClass).toEqual(compositesClass);
+            });
+            it('should put steps to the scope variable steps', function () {
+                expect(scope.steps).toEqual(steps);
+            });
+            it('should return common function from classNamePattern', function() {
+                expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+            });
         });
 
         describe('buttonCssClass function', function() {
@@ -234,6 +235,12 @@ describe('compositesModule', function() {
                 scope.originalCompositesClass.class = className;
                 scope.saveCompositesClass();
                 httpBackend.flush();
+            });
+            it('should save composite class name as a cookie', function() {
+                httpBackend.expectPUT('/composites').respond();
+                scope.saveCompositesClass();
+                httpBackend.flush();
+                expect(cookieStore.get("compositeClass")).toEqual(className);
             });
         });
         describe('canDeleteCompositesClass function', function() {

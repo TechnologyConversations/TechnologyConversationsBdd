@@ -229,7 +229,7 @@
             <div ng-show="hasPendingSteps()">
                 <h4>Pending Steps</h4>
                 <div ng-repeat="step in pendingSteps">
-                    <div><a href="#">{{step.text}}</a></div>
+                    <div><a href="#" ng-click="clickPendingStep(step.text)">{{step.text}}</a></div>
                 </div>
             </div>
             <div ng-repeat="report in reports">
@@ -238,6 +238,3 @@
         </div>
     </div>
 </div>
-{{classes}}
-<hr>
-{{composites}}

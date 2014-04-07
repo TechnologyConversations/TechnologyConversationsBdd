@@ -1,6 +1,6 @@
 angular.module('compositesModule', [])
-    .controller('compositesCtrl', ['$scope', '$http', '$modal', '$location', 'compositesClass', 'steps',
-        function($scope, $http, $modal, $location, compositesClass, steps) {
+    .controller('compositesCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', 'compositesClass', 'steps',
+        function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps) {
             $scope.addNewComposite = function() {
                 $scope.composite = {stepText: '', compositeSteps: [{}]};
                 $scope.compositesClass.composites.push($scope.composite);
@@ -51,6 +51,7 @@ angular.module('compositesModule', [])
                     $location.path('/page/composites/' + $scope.compositesClass.package + '.' + $scope.compositesClass.class);
                     $scope.compositesClass.isNew = false;
                     $scope.originalCompositesClass = angular.copy($scope.compositesClass);
+                    $cookieStore.put('compositeClass', $scope.compositesClass.class);
                 }, function(response) {
                     openErrorModal($modal, response.data);
                 });

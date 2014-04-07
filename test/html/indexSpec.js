@@ -11,30 +11,6 @@ describe('storiesModule controllers', function() {
         })
     );
 
-//    describe('config', function() {
-//
-//        describe('/page/stories/new/ path', function() {
-//
-//            var path = '/page/stories/new/';
-//            var route;
-//            beforeEach(
-//                inject(function($route) {
-//                    route = $route;
-//                })
-//            );
-//
-//            it('should have the template /assets/html/story/story.tmpl.html', function() {
-//                expect(route.routes[path].templateUrl).toEqual('/assets/html/story/story.tmpl.html');
-//            });
-//
-//            it('should have the controller storyCtrl', function() {
-//                expect(route.routes[path].controller).toBe('storyCtrl');
-//            });
-//
-//        });
-//
-//    });
-
     describe('modalCtrl controller', function() {
 
         var modalInstance;

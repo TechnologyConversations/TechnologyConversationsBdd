@@ -27,3 +27,37 @@ function openConfirmationModal($modal, data) {
         }
     });
 }
+
+// TODO Test
+function openCompositeClass($modal, compositeStepText) {
+    $modal.open({
+        templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
+        controller: 'compositeClassesCtrl',
+        resolve: {
+            compositeClasses: function($route, $http, $modal) {
+                return getJson($http, $modal, '/composites', false);
+            },
+            compositeStepText: function() {
+                return compositeStepText;
+            }
+        }
+    });
+}
+
+// TODO Test
+function getCompositesJson(http, fullClassName) {
+    var url = '/composites/' + fullClassName;
+    return http.get(url, {cache: false}).then(function(response) {
+        return response.data;
+    }, function() {
+        var lastDotIndex = fullClassName.lastIndexOf('.');
+        var className = fullClassName.substring(lastDotIndex + 1);
+        var packageName = fullClassName.substring(0, lastDotIndex);
+        return {
+            package: packageName,
+            class: className,
+            composites:[{stepText: '', compositeSteps: [{}]}],
+            isNew: true
+        };
+    });
+}

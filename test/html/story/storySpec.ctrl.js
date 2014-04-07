@@ -170,6 +170,12 @@ describe('storyModule', function() {
             });
         });
 
+        describe('stepEnterKey function', function() {
+            it('should use global newCollectionItem function', function() {
+                expect(scope.stepEnterKey).toBe(newCollectionItem);
+            });
+        });
+
     });
 
     describe('runnerCtrl controller', function() {
@@ -214,13 +220,6 @@ describe('storyModule', function() {
             it('should return false if it does NOT contain parameters', function() {
                 var classEntry = {params: []};
                 expect(scope.hasParams(classEntry)).toEqual(false);
-            });
-        });
-
-        describe('runStory function', function() {
-            it('', function() {
-                form.$invalid = true;
-                form.$valid = false;
             });
         });
 

@@ -168,8 +168,16 @@ angular.module('storyModule', [])
                 var path = $scope.dirPath + $scope.story.name + '.story';
                 deleteStory($modal, $http, $location, path);
             };
-            // TODO Test
             $scope.stepEnterKey = newCollectionItem;
+            // TODO Test
+            $scope.clickPendingStep = function(stepText) {
+                var compositeClass = $cookieStore.get("compositeClass");
+                if (compositeClass === undefined || compositeClass === '') {
+                    return openCompositeClass($modal, stepText);
+                } else {
+                    return $location.search('stepText', stepText).path('/page/composites/composites.com.technologyconversations.bdd.steps.' + compositeClass);
+                }
+            };
         }
     ])
     .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',

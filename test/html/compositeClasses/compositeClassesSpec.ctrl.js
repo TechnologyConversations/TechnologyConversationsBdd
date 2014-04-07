@@ -13,6 +13,7 @@ describe('compositeClassesModule', function() {
                 class: className
             }
         ];
+        var compositeStepText = 'Given this is my composite';
 
         beforeEach(
             inject(function($rootScope, $compile, $injector, $controller, $http) {
@@ -21,19 +22,30 @@ describe('compositeClassesModule', function() {
                     $scope: scope,
                     $http: $http,
                     $modalInstance: modalInstance,
-                    compositeClasses: compositeClasses});
+                    compositeClasses: compositeClasses,
+                    compositeStepText: compositeStepText});
                 form = $compile('<form>')(scope);
             })
         );
 
-        it('should put compositeClasses data to the scope', function() {
-            expect(scope.compositeClasses).toBe(compositeClasses);
+        describe('by default', function() {
+            it('should put compositeClasses data to the scope', function() {
+                expect(scope.compositeClasses).toBe(compositeClasses);
+            });
+            it('should put compositeStepText data to the scope', function() {
+                expect(scope.compositeStepText).toBe(compositeStepText);
+            });
         });
 
         describe('compositeClassUrl function', function() {
             it('should return composites URL', function() {
+                scope.compositeStepText = undefined;
                 var url = scope.compositeClassUrl(packageName, className);
                 expect(url).toEqual('/page/composites/' + packageName + "." + className);
+            });
+            it('should add compositeStepText to the URL', function() {
+                var url = scope.compositeClassUrl(packageName, className);
+                expect(url).toEqual('/page/composites/' + packageName + "." + className + '?stepText=' + compositeStepText);
             });
         });
 

@@ -62,10 +62,10 @@ angular.module('configModule', [])
                     },
                     reloadOnSearch: false
                 })
+                // TODO Test
                 .when('/page/composites/:className*', {
                     templateUrl: '/assets/html/composites/composites.tmpl.html',
                     controller: 'compositesCtrl',
-                    // TODO Test
                     resolve: {
                         compositesClass: function($route, $http) {
                             return getCompositesJson($http, $route.current.params.className);
