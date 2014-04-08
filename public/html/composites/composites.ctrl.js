@@ -5,12 +5,26 @@ angular.module('compositesModule', [])
                 $scope.composite = {stepText: '', compositeSteps: [{}]};
                 $scope.compositesClass.composites.push($scope.composite);
             };
+            $scope.addStepTextParam = function() {
+                if ($location.search().stepText !== undefined && $location.search().stepText !== '') {
+                    $scope.compositesClass.composites.push({stepText: $location.search().stepText, compositeSteps: []});
+                }
+            };
             $scope.addNewCompositeStep = function() {
                 $scope.composite.compositeSteps.push({});
             };
+            $scope.setLastComposite = function() {
+                if ($scope.compositesClass !== undefined) {
+                    var length = $scope.compositesClass.composites.length;
+                    $scope.composite = $scope.compositesClass.composites[length - 1];
+                } else {
+                    $scope.composite = {};
+                }
+            };
             $scope.compositesClass = compositesClass;
+            $scope.addStepTextParam();
             $scope.originalCompositesClass = angular.copy(compositesClass);
-            $scope.composite = $scope.compositesClass.composites[0];
+            $scope.setLastComposite();
             $scope.steps = steps;
             $scope.classNamePattern = classNamePattern;
             $scope.stepTextPattern = function() {

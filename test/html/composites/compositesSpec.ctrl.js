@@ -6,6 +6,7 @@ describe('compositesModule', function() {
 
         var scope, form, httpBackend, modal, location, cookieStore;
         var composite = {stepText: 'Given precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
+        var anotherComposite = {stepText: 'When action', compositeSteps :[{step: 'Then result'}]};
         var newComposite = {stepText: 'Given some other precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
         var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
@@ -19,6 +20,7 @@ describe('compositesModule', function() {
         var steps = {"steps":[{"type":"GIVEN","step":"Given Web address $url is opened"}]};
         var emptyComposite = {stepText: '', compositeSteps: [{}]};
         var compositeStepText = 'Given this is my composites step';
+        var stepTextParam = 'Given URL params have stepText';
 
         beforeEach(
             inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location, $cookieStore) {
@@ -28,13 +30,13 @@ describe('compositesModule', function() {
                 compositesClass = {
                     package: packageName,
                     class: className,
-                    composites: [composite]
+                    composites: [composite, anotherComposite]
                 };
                 $controller('compositesCtrl', {
                     $scope: scope,
                     $http: $http,
                     $modal: modal,
-                    $location: $location,
+                    $location: location,
                     compositesClass: compositesClass,
                     compositeStepText: compositeStepText,
                     steps: steps
@@ -45,8 +47,9 @@ describe('compositesModule', function() {
         );
 
         describe('by default', function() {
-            it('should default composite to {}', function() {
-                expect(scope.composite).toEqual(scope.compositesClass.composites[0]);
+            it('should default composite to the last element of compositesClass.composites', function() {
+                var expected = scope.compositesClass.composites[scope.compositesClass.composites.length - 1];
+                expect(scope.composite).toEqual(expected);
             });
             it('should put compositesClass to the scope variable compositesClass', function () {
                 expect(scope.compositesClass).toEqual(compositesClass);
@@ -59,6 +62,15 @@ describe('compositesModule', function() {
             });
             it('should return common function from classNamePattern', function() {
                 expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+            });
+        });
+
+        describe('setLastComposite function', function() {
+            it('should default composite to the last element of compositesClass.composites', function() {
+                var stepText = 'Given this is something different';
+                scope.compositesClass.composites.push({stepText: stepText});
+                scope.setLastComposite();
+                expect(scope.composite.stepText).toEqual(stepText);
             });
         });
 
@@ -103,6 +115,22 @@ describe('compositesModule', function() {
                 expect(length).toEqual(expected);
                 var newComposite = scope.compositesClass.composites[length - 1];
                 expect(newComposite).toEqual(emptyComposite);
+            });
+        });
+
+        describe('addStepTextParam function', function() {
+            it('should add query param stepText to compositeClass.composites', function(){
+                location.search('stepText', stepTextParam);
+                scope.addStepTextParam();
+                var actual = scope.compositesClass.composites[scope.compositesClass.composites.length - 1].stepText;
+                expect(actual).toEqual(stepTextParam);
+            });
+            it('should add query param stepText to composite', function(){
+                location.search('stepText', stepTextParam);
+                scope.addStepTextParam();
+                scope.setLastComposite();
+                var actual = scope.composite.stepText;
+                expect(actual).toEqual(stepTextParam);
             });
         });
 
