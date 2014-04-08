@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 import play.api.test.Helpers._
 import scala.Some
 import play.api.test.{FakeRequest, FakeApplication}
-import models.Steps
+import models.{Composites, Steps}
 
 class StepsControllerSpec extends Specification {
 
@@ -21,7 +21,10 @@ class StepsControllerSpec extends Specification {
     "return JSON from Steps#stepsToJson" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/steps/list.json"))
-        contentAsJson(result) must beEqualTo(Steps().stepsToJson)
+        val composites = Composites("app/composites").list().map{ file =>
+          file.drop("app/".length)
+        }
+        contentAsJson(result) must beEqualTo(Steps("steps", composites).stepsToJson)
       }
     }
 

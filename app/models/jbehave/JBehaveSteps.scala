@@ -9,7 +9,7 @@ import scala.collection.JavaConversions._
 import com.technologyconversations.bdd.steps.util.BddParam
 import org.jbehave.core.annotations.{Then, When, Given}
 
-class JBehaveSteps(dir: String = "steps") {
+class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.empty[String]) {
 
   def stepsToJson: JsValue = {
     val stepsMap = stepsCandidates.map { step =>
@@ -35,14 +35,18 @@ class JBehaveSteps(dir: String = "steps") {
   }
 
   private[jbehave] def stepsJars = {
-    new File(dir).listFiles.filter(_.getName.endsWith(".jar")).toList
+    new File(stepsDir).listFiles.filter(_.getName.endsWith(".jar")).toList
   }
 
   private[jbehave] def classes = {
-    ClassFinder(stepsJars).getClasses()
+    val jarClasses = ClassFinder(stepsJars).getClasses()
       .filter(classInfo => hasSteps(classInfo.name))
       .map(_.name)
       .toList
+    val compositeClasses = composites.map { composite =>
+      composite.replace(".java", "").replace(File.separator, ".")
+    }
+    jarClasses ::: compositeClasses
   }
 
   private[jbehave] def hasSteps(className: String): Boolean = {
@@ -91,5 +95,6 @@ class JBehaveSteps(dir: String = "steps") {
 object JBehaveSteps {
 
   def apply(): JBehaveSteps = new JBehaveSteps
+  def apply(stepsDir: String = "steps", composites: List[String] = List.empty[String]): JBehaveSteps = new JBehaveSteps(stepsDir, composites)
 
 }

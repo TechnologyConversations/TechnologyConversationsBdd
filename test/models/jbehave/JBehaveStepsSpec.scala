@@ -7,6 +7,7 @@ import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.specs2.matcher.JsonMatchers
 import com.technologyconversations.bdd.steps.WebSteps
 import com.technologyconversations.bdd.steps.Dummy
+import models.Composites
 
 class JBehaveStepsSpec extends Specification with JsonMatchers {
   
@@ -26,18 +27,23 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
 
   "JBehaveSteps#classes" should {
 
-    val list = JBehaveSteps().classes
+    val composites = List("composites/something/TcBddComposites.java")
+    val classes = JBehaveSteps("steps", composites).classes
 
     "return a list of all classes" in {
-      list.size must beGreaterThan(0)
+      classes.size must beGreaterThan(0)
     }
 
     "return classes that have at least one method annotated with Given, When or Then" in {
-      list must containPattern(".*WebSteps")
+      classes must containPattern(".*WebSteps")
     }
 
     "return NOT return classes that do not have at least one method annotated with Given, When or Then" in {
-      list must not containPattern ".*Dummy"
+      classes must not containPattern ".*Dummy"
+    }
+
+    "return composite classes" in {
+      classes must containPattern("composites.*.TcBddComposites")
     }
 
   }

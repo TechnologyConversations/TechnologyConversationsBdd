@@ -12,6 +12,7 @@ import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
 
 import java.lang.reflect.Method;
@@ -86,7 +87,8 @@ public class JBehaveRunner extends JUnitStories {
                         .withDefaultFormats()
                         .withFormats(Format.CONSOLE, Format.HTML, Format.XML, Format.TXT)
                         .withCrossReference(new CrossReference()))
-                .useStepMonitor(new SilentStepMonitor());
+                .useStepMonitor(new SilentStepMonitor())
+                .useParameterControls(new ParameterControls().useDelimiterNamedParameters(true));
     }
 
 
