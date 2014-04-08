@@ -37,7 +37,61 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the element tcbdd
-Then Web element dirPath should have text tcbdd/
+When Web user clicks the directory tcbdd
+Then Web story storiesList exists
+
+Examples:
+
+Scenario: Can display stories
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can open story
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can create new story
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can delete story
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can create directory
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can create story
+
+Meta:
+
+
+
 
 Examples:
