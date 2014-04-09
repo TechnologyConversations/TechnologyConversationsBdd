@@ -5,12 +5,20 @@ import com.technologyconversations.bdd.steps.util.BddVariable;
 
 public class TcBddComposites {
     
-        @Given("this is \"my\" <param1>, <param2> and <param3>")
-        @Composite(steps = {"Given \"my\" <param1>", "When <param2>", "Then <param3>"})
-        public void compositeStep0(@Named("param1") BddVariable param1, @Named("param2") BddVariable param2, @Named("param3") BddVariable param3) { }
+        @Given("Web user is in the Browse Stories dialog")
+        @Composite(steps = {"Given Web home page is opened", "When Web user clicks the element browseStories"})
+        public void compositeStep0() { }
     
-        @Given("this is my composite")
-        @Composite(steps = {"Given something", "When else", "Then OK"})
-        public void compositeStep1() { }
+        @When("Web user clicks the directory $directory")
+        @Composite(steps = {"When Web user clicks the element <directory>"})
+        public void compositeStep1(@Named("directory") BddVariable directory) { }
+    
+        @Then("Web story $story exists")
+        @Composite(steps = {"Then Web element <story> exists"})
+        public void compositeStep2(@Named("story") BddVariable story) { }
+    
+        @Then("Web directory $text should appear in the $selector")
+        @Composite(steps = {"Then Web element <selector> should have text <text>"})
+        public void compositeStep3(@Named("selector") BddVariable selector, @Named("text") BddVariable text) { }
     
 }

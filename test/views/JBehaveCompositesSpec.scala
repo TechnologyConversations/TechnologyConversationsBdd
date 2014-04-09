@@ -12,7 +12,7 @@ class JBehaveCompositesSpec extends Specification {
     val steps = List("Given something", "When else", "Then OK")
     val composite = JBehaveComposite("Given this is my composite", steps)
     val stepsWithParams = List("""Given "my" <param1>""", "When <param2>", "Then <param3>")
-    val compositeWithParams = JBehaveComposite("""Given this is "my" <param1>, <param2> and <param3>""", stepsWithParams)
+    val compositeWithParams = JBehaveComposite("""When this is "my" <param1>, <param2> and <param3>""", stepsWithParams)
     val out = views.html.jBehaveComposites.render(
       compositePackage,
       compositeClass,
@@ -37,7 +37,7 @@ class JBehaveCompositesSpec extends Specification {
     }
 
     "output step annotation with double quote escaped" in {
-      out must contain("""@Given("this is \"my\" <param1>, <param2> and <param3>")""")
+      out must contain("""@When("this is \"my\" <param1>, <param2> and <param3>")""")
     }
 
     "output composite annotation" in {

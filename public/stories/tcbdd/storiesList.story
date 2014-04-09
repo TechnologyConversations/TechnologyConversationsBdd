@@ -37,8 +37,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the directory tcbdd
-Then Web story storiesList exists
+When Web user clicks the directory text:tcbdd
+Then Web directory tcbdd should appear in the path
 
 Examples:
 
@@ -47,7 +47,9 @@ Scenario: Can display stories
 Meta:
 
 
-
+Given Web user is in the Browse Stories dialog
+When Web user clicks the directory text:tcbdd
+Then Web story text:storiesList exists
 
 Examples:
 

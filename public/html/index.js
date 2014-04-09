@@ -35,7 +35,9 @@ angular.module('storiesModule', [
                     }
                 });
             };
-            $scope.openCompositeClass = openCompositeClass;
+            $scope.openCompositeClass = function() {
+                openCompositeClass($modal);
+            };
         }
     ])
     .controller('storiesCtrl', ['$scope', '$http', '$modal', '$modalInstance', '$location',

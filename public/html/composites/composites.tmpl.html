@@ -32,6 +32,9 @@
                     <tr>
                         <td>
                             <a href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
+                            <button id="composite{{$index}}Delete" class="btn btn-sm btn-danger pull-right" ng-click="removeCollectionElement(compositesClass.composites, $index)" type="button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -60,7 +63,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-move"></span>
                             </span>
-                            <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
+                            <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
                             <span class="input-group-btn">
                                 <button id="compositeStep{{$index}}Delete" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
                                     <span class="glyphicon glyphicon-remove"></span>
