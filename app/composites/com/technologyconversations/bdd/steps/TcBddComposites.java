@@ -21,4 +21,8 @@ public class TcBddComposites {
         @Composite(steps = {"Then Web element <selector> should have text <text>"})
         public void compositeStep3(@Named("selector") BddVariable selector, @Named("text") BddVariable text) { }
     
+        @Then("Web modal header should have text $text")
+        @Composite(steps = {"Then Web element modalHeader should have text <text>"})
+        public void compositeStep4(@Named("text") BddVariable text) { }
+    
 }
