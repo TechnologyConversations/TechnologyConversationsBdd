@@ -37,8 +37,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the directory text:tcbdd
-Then Web directory tcbdd should appear in the path
+When Web user clicks the element text:myDirectory
+Then Web element text:myDirectory should appear in the path
 
 Examples:
 
@@ -48,8 +48,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the directory text:tcbdd
-Then Web story text:storiesList exists
+When Web user clicks the element text:myDirectory
+Then Web element text:myStory exists
 
 Examples:
 
@@ -58,7 +58,9 @@ Scenario: Can open story
 Meta:
 
 
-
+Given Web user is in the Browse Stories dialog
+When Web user clicks the element text:myStory
+Then Web story page is opened
 
 Examples:
 
@@ -67,7 +69,9 @@ Scenario: Can create new story
 Meta:
 
 
-
+Given Web user is in the Browse Stories dialog
+When Web user clicks the element createNewStory
+Then Web new story page is opened
 
 Examples:
 
@@ -76,24 +80,30 @@ Scenario: Can delete story
 Meta:
 
 
-
+Given Web user is in the Browse Stories dialog
+When Web user clicks the element text:delete myStory
+Then Web element text:myStory disappeared
 
 Examples:
 
-Scenario: Can create directory
+Scenario: Can create new directory
 
 Meta:
 
 
-
+Given Web user is in the Browse Stories dialog
+When Web user sets value myNewDirectory to the element search
+Then Web element text:myNewDirectory appears
 
 Examples:
 
-Scenario: Can create story
+Scenario: Can delete directory
 
 Meta:
 
 
-
+Given Web user is in the Browse Stories dialog
+When Web user clicks the element text:delete myDirectory
+Then Web element text:myDirectory disappeared
 
 Examples:

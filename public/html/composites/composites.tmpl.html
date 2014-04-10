@@ -28,7 +28,7 @@
                 </div>
             </form>
             <table class="table table-condensed table-striped">
-                <tbody ng-repeat="composite in compositesClass.composites | filter:stepText | orderBy:'stepText'">
+                <tbody ng-repeat="composite in compositesClass.composites | filter:stepText">
                     <tr>
                         <td>
                             <a href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>

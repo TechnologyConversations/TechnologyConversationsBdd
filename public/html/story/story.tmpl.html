@@ -3,7 +3,7 @@
         <div class="{{storyFormClass}}">
             <form class="form-horizontal" role="form" id="storyForm" name="storyForm" novalidate="novalidate">
                 <!--Story name-->
-                <div class="form-group input-group" ng-class="getCssClass(storyForm.storyNameInput)">
+                <div class="input-group" ng-class="getCssClass(storyForm.storyNameInput)">
                     <span class="input-group-addon">{{dirPath}}</span>
                     <input id="storyNameInput" name="storyNameInput" class="form-control input-lg" type="text" ng-model="story.name" placeholder="story name" required="true">
                     <span class="input-group-addon">
@@ -14,13 +14,13 @@
                     <accordion-group heading="Story">
                         <accordion close-others="false">
                                 <accordion-group heading="Description">
-                                    <div class="form-group" ng-class="getCssClass(storyForm.storyDescriptionInput)">
+                                    <div ng-class="getCssClass(storyForm.storyDescriptionInput)">
                                         <textarea id="storyDescriptionInput" name="storyDescriptionInput" class="form-control" ng-model="story.description" placeholder="story description" rows="5"></textarea>
                                     </div>
                                 </accordion-group>
                                 <!--Story meta-->
                                 <accordion-group heading="Meta">
-                                    <div class="form-group" ui-sortable ng-model="story.meta">
+                                    <div ui-sortable ng-model="story.meta">
                                         <div class="sortable input-group" ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="getCssClass(storyMetaForm.storyMetaInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
@@ -44,19 +44,19 @@
                                 </accordion-group>
                                 <!--Narrative-->
                                 <accordion-group heading="Narrative">
-                                    <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeInOrderToInput)">
+                                    <div ng-class="getCssClass(storyForm.storyNarrativeInOrderToInput)">
                                         <label id="storyNarrativeInOrderTo" for="storyNarrativeInOrderToInput" class="control-label col-sm-2">In order to</label>
                                         <div class="col-sm-10">
                                             <input id="storyNarrativeInOrderToInput" name="storyNarrativeInOrderToInput" class="form-control" type="text" ng-model="story.narrative.inOrderTo">
                                         </div>
                                     </div>
-                                    <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeAsAInput)">
+                                    <div ng-class="getCssClass(storyForm.storyNarrativeAsAInput)">
                                         <label id="storyNarrativeAsA" for="storyNarrativeAsAInput" class="control-label col-sm-2">As a</label>
                                         <div class="col-sm-10">
                                             <input id="storyNarrativeAsAInput" name="storyNarrativeAsAInput" class="form-control" type="text" ng-model="story.narrative.asA">
                                         </div>
                                     </div>
-                                    <div class="form-group" ng-class="getCssClass(storyForm.storyNarrativeIWantToInput)">
+                                    <div ng-class="getCssClass(storyForm.storyNarrativeIWantToInput)">
                                         <label id="storyNarrativeIWantTo" for="storyNarrativeIWantToInput" class="control-label col-sm-2">I want to</label>
                                         <div class="col-sm-10">
                                             <input id="storyNarrativeIWantToInput" name="storyNarrativeIWantToInput" class="form-control" type="text" ng-model="story.narrative.iWantTo">
@@ -65,7 +65,7 @@
                                 </accordion-group>
                                 <!--Given stories-->
                                 <accordion-group heading="Given Stories">
-                                    <div class="form-group" ui-sortable ng-model="story.givenStories">
+                                    <div ui-sortable ng-model="story.givenStories">
                                         <div class="sortable input-group" ng-repeat="givenStory in story.givenStories" ng-form="storyGivenStoryForm" ng-class="getCssClass(storyGivenStoryForm.storyGivenStoryInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
@@ -88,8 +88,13 @@
                                 </accordion-group>
                                 <!--Lifecycle-->
                                 <accordion-group heading="Lifecycle">
-                                    <h3 id="storyLifecycleBeforeHeader">Before:</h3>
-                                    <div class="form-group steps" ui-sortable ng-model="story.lifecycle.before">
+                                    <h3 id="storyLifecycleBeforeHeader">
+                                        Before:
+                                        <button id="storyLifecycleBeforeStepAdd" class="btn btn-info pull-right" ng-click="addElement(story.lifecycle.before, step)" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </h3>
+                                    <div class="steps" ui-sortable ng-model="story.lifecycle.before">
                                         <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.before" ng-form="storyLifecycleBeforeForm" ng-class="getCssClass(storyLifecycleBeforeForm.storyStepInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
@@ -101,16 +106,14 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <div>
-                                            <div class="pull-right">
-                                                <button id="storyLifecycleBeforeStepAdd" class="btn btn-info" ng-click="addElement(story.lifecycle.before, step)" type="button">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <h3 id="storyLifecycleAfterHeader">After:</h3>
-                                    <div class="form-group steps" ui-sortable ng-model="story.lifecycle.after">
+                                    <h3 id="storyLifecycleAfterHeader">
+                                        After:
+                                        <button id="storyLifecycleAfterStepAdd" class="btn btn-info pull-right" ng-click="addElement(story.lifecycle.after, step)" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </h3>
+                                    <div class="steps" ui-sortable ng-model="story.lifecycle.after">
                                         <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.after" ng-form="storyLifecycleAfterForm" ng-class="getCssClass(storyLifecycleAfterForm.storyStepInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
@@ -121,13 +124,6 @@
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
-                                        </div>
-                                        <div>
-                                            <div class="pull-right">
-                                                <button id="storyLifecycleAfterStepAdd" class="btn btn-info" ng-click="addElement(story.lifecycle.after, step)" type="button">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                 </accordion-group>
@@ -140,9 +136,9 @@
                                     <accordion-heading>
                                         Scenario: {{scenario.title}}
                                     </accordion-heading>
-                                    <h3 id="storyScenarioScenarioHeader{{$index}}">Scenario:</h3>
                                     <!--Scenario title-->
-                                    <div class="form-group">
+                                    <h3 id="storyScenarioScenarioHeader{{$index}}">Scenario:</h3>
+                                    <div>
                                         <div class="input-group">
                                             <input id="storyScenarioTitleInput{{$index}}" name="storyScenarioTitleInput" class="form-control" type="text" ng-model="scenario.title" required="true">
                                             <span class="input-group-btn">
@@ -153,29 +149,38 @@
                                         </div>
                                     </div>
                                     <!--Scenario meta-->
-                                    <h4 id="storyScenarioMetaHeader{{$index}}">Meta:</h4>
-                                    <div class="form-group" ui-sortable ng-model="scenario.meta">
+                                    <div>
+                                        <h3 id="storyScenarioMetaHeader{{$index}}">
+                                            Meta:
+                                            <button id="storyScenarioMetaAdd" class="btn btn-info pull-right" ng-click="addElement(scenario.meta, element)" type="button">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </h3>
+                                    </div>
+                                    <div ui-sortable ng-model="scenario.meta">
                                         <div class="sortable input-group" ng-repeat="meta in scenario.meta" ng-form="storyScenarioMetaForm" ng-class="getCssClass(storyScenarioMetaForm.storyScenarioMetaInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
                                                 @
                                             </span>
-                                            <input name="storyScenarioMetaInput" class="form-control" type="text" ng-model="meta.element" required="true">
+                                            <input name="storyScenarioMetaInput" class="form-control" type="text" ng-model="meta.element" required="true" ng-keypress="stepEnterKey($event, scenario.meta)" autofocus>
                                             <span class="input-group-btn">
                                                 <button id="storyScenarioMetaRemove{{$index}}" class="btn btn-danger" ng-click="removeCollectionElement(scenario.meta, $index)" type="button">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </span>
                                         </div>
-                                        <div class="pull-right">
-                                            <button id="storyScenarioMetaAdd" class="btn btn-info" ng-click="addElement(scenario.meta, element)" type="button">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-                                        </div>
                                     </div>
                                     <!--Scenario steps-->
-                                    <h4 id="storyScenarioStepsHeader{{$index}}">Steps:</h4>
-                                    <div class="form-group steps" ng-model="scenario.steps" ui-sortable>
+                                    <div>
+                                        <h3 id="storyScenarioStepsHeader{{$index}}">
+                                            Steps:
+                                            <button class="btn btn-info pull-right" ng-click="addElement(scenario.steps, step)" type="button">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </h3>
+                                    </div>
+                                    <div class="steps" ng-model="scenario.steps" ui-sortable>
                                         <div class="sortable input-group" ng-repeat="stepElement in scenario.steps" ng-form="storyScenarioStepForm" ng-class="getCssClass(storyScenarioStepForm.storyScenarioStepInput)">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-move"></span>
@@ -187,15 +192,10 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <div class="pull-right">
-                                            <button class="btn btn-info" ng-click="addElement(scenario.steps, step)" type="button">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-                                        </div>
                                     </div>
                                     <!--Scenario examples-->
-                                    <h4 id="storyScenarioExamplesHeader{{$index}}">Examples:</h4>
-                                    <div class="form-group">
+                                    <h3 id="storyScenarioExamplesHeader{{$index}}">Examples:</h3>
+                                    <div>
                                         <textarea rows="4" name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
                                     </div>
                                 </accordion-group>
