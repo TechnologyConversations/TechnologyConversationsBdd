@@ -14,10 +14,12 @@ GivenStories:
 Lifecycle:
 
 Before:
-
+Given File public/stories/myDirectory/myStory.story exists
+Given File public/stories/myStory.story exists
 
 After:
-
+Given Directory public/stories/myDirectory does NOT exist
+Given File public/stories/myStory.story does NOT exist
 
 
 Scenario: Can open dialog
@@ -38,7 +40,7 @@ Meta:
 
 Given Web user is in the Browse Stories dialog
 When Web user clicks the element text:myDirectory
-Then Web element text:myDirectory should appear in the path
+Then Web element path should have text myDirectory
 
 Examples:
 
@@ -60,7 +62,7 @@ Meta:
 
 Given Web user is in the Browse Stories dialog
 When Web user clicks the element text:myStory
-Then Web story page is opened
+Then Web element pageTitle should have text View Story
 
 Examples:
 
@@ -71,7 +73,7 @@ Meta:
 
 Given Web user is in the Browse Stories dialog
 When Web user clicks the element createNewStory
-Then Web new story page is opened
+Then Web element pageTitle should have text New Story
 
 Examples:
 
@@ -81,7 +83,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the element text:delete myStory
+When Web user clicks the element deletemyStory
+When Web user clicks the element ok
 Then Web element text:myStory disappeared
 
 Examples:
@@ -92,18 +95,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user sets value myNewDirectory to the element search
+When Web user sets value myNewDirectory to the element searchStories
+When Web user clicks the element createNewDirectory
 Then Web element text:myNewDirectory appears
-
-Examples:
-
-Scenario: Can delete directory
-
-Meta:
-
-
-Given Web user is in the Browse Stories dialog
-When Web user clicks the element text:delete myDirectory
-Then Web element text:myDirectory disappeared
 
 Examples:

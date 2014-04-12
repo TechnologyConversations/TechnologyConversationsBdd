@@ -1,6 +1,6 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', 'story', 'steps', 'classes', 'composites',
-        function($scope, $http, $modal, $location, $cookieStore, story, steps, classes, composites) {
+    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', 'story', 'steps', 'classes', 'composites',
+        function($scope, $http, $modal, $location, $cookieStore, $q, story, steps, classes, composites) {
             $scope.story = story;
             $scope.steps = steps;
             $scope.classes = classes;
@@ -166,7 +166,7 @@ angular.module('storyModule', [])
             // TODO Test
             $scope.deleteStory = function () {
                 var path = $scope.dirPath + $scope.story.name + '.story';
-                deleteStory($modal, $http, $location, path);
+                deleteStory($modal, $http, $location, $q, path);
             };
             $scope.stepEnterKey = newCollectionItem;
             // TODO Test

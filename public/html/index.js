@@ -4,6 +4,7 @@ angular.module('storiesModule', [
     'ui.bootstrap',
     'ui.sortable',
     'configModule',
+    'topMenuModule',
     'storyModule',
     'compositeClassesModule',
     'compositesModule'
@@ -21,27 +22,8 @@ angular.module('storiesModule', [
             };
         }
     ])
-    // TODO Test
-    .controller('topMenuController', ['$scope', '$modal',
-        function($scope, $modal) {
-            $scope.openStory = function() {
-                $modal.open({
-                    templateUrl: '/assets/html/stories.tmpl.html',
-                    controller: 'storiesCtrl',
-                    resolve: {
-                        data: function() {
-                            return {};
-                        }
-                    }
-                });
-            };
-            $scope.openCompositeClass = function() {
-                openCompositeClass($modal);
-            };
-        }
-    ])
-    .controller('storiesCtrl', ['$scope', '$http', '$modal', '$modalInstance', '$location',
-        function($scope, $http, $modal, $modalInstance, $location) {
+    .controller('storiesCtrl', ['$scope', '$http', '$modal', '$modalInstance', '$location', '$q',
+        function($scope, $http, $modal, $modalInstance, $location, $q) {
             // TODO Test
             $scope.rootPath = '';
             $scope.updateData = function(path) {
@@ -81,10 +63,11 @@ angular.module('storiesModule', [
                 return $scope.rootPath !== "";
             };
             // TODO Test
-            $scope.deleteStory = function(name) {
+            $scope.deleteStory = function(name, index) {
                 var path = $scope.rootPath + name + '.story';
-                deleteStory($modal, $http, $location, path);
-                $scope.ok();
+                deleteStory($modal, $http, $location, $q, path).then(function() {
+                    $scope.files.stories.splice(index, 1);
+                });
             };
             // TODO Test
             $scope.createDirectory = function(path) {
@@ -148,18 +131,22 @@ function getNewStoryUrl() {
 }
 
 // TODO Test
-function deleteStory($modal, $http, $location, path) {
+function deleteStory($modal, $http, $location, $q, path) {
+    var deferred = $q.defer();
     var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
     var okModal = openConfirmationModal($modal, message);
     okModal.result.then(function() {
         $http.delete('/stories/story/' + path).then(function() {
             $location.path(getNewStoryUrl());
+            deferred.resolve('OK');
         }, function(response) {
             openErrorModal($modal, response.data);
+            deferred.reject('NOK');
         });
     }, function() {
-        // Do nothing
+        deferred.reject('NOK');
     });
+    return deferred.promise;
 }
 
 // TODO Test
