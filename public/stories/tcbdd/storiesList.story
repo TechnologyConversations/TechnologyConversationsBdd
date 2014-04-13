@@ -20,6 +20,7 @@ Given File public/stories/myStory.story exists
 After:
 Given Directory public/stories/myDirectory does NOT exist
 Given File public/stories/myStory.story does NOT exist
+Given Directory public/stories/myNewDirectory does NOT exist
 
 
 Scenario: Can open dialog

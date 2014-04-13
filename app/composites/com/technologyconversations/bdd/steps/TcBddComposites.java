@@ -13,4 +13,8 @@ public class TcBddComposites {
         @Composite(steps = {"Then Web element modalHeader should have text <text>"})
         public void compositeStep1(@Named("text") BddVariable text) { }
     
+        @Given("Web user is in the View Story page")
+        @Composite(steps = {"Given Web address /page/stories/view/myStory is opened"})
+        public void compositeStep2() { }
+    
 }
