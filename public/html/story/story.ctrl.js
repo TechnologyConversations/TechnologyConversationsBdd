@@ -25,11 +25,12 @@ angular.module('storyModule', [])
             // TODO Test
             $scope.buttonCssClass = buttonCssClass;
             // TODO Test
-            $scope.canSaveStory = function () {
+            $scope.canSaveStory = function() {
                 return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory);
             };
+            $scope.stepTextPattern = stepTextPattern;
             // TODO Test
-            $scope.saveStory = function () {
+            $scope.saveStory = function() {
                 if ($scope.canSaveStory()) {
                     $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
                     if ($scope.action === 'POST') {

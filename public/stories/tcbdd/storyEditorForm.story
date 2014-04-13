@@ -7,14 +7,14 @@ Meta:
 Narrative:
 In order to create and modify stories
 As a application user
-I want to be able to put story information to the form and save it
+I want to be able to add and modify story information through the form
 
 GivenStories: 
 
 Lifecycle:
 
 Before:
-Given Web user is in the View Story page
+Given Web user is in the New Story page
 
 After:
 
@@ -134,14 +134,5 @@ Meta:
 When Web user clicks the element addScenario
 When Web user clicks the element scenario1Panel
 Then Web element scenario1Examples is visible
-
-Examples:
-
-Scenario: Has validations
-
-Meta:
-
-
-
 
 Examples:

@@ -27,9 +27,7 @@ angular.module('compositesModule', [])
             $scope.setLastComposite();
             $scope.steps = steps;
             $scope.classNamePattern = classNamePattern;
-            $scope.stepTextPattern = function() {
-                return (/^(Given|When|Then) .+$/);
-            };
+            $scope.stepTextPattern = stepTextPattern;
             $scope.cssClass = cssClass;
             $scope.buttonCssClass = buttonCssClass;
             $scope.openComposite = function(composite) {

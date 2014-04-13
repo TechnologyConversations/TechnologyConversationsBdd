@@ -219,7 +219,7 @@
                                 <!--Scenario examples-->
                                 <h3 id="storyScenarioExamplesHeader{{$index}}">Examples:</h3>
                                 <div>
-                                    <textarea id="scenario{{scenarioIndex + 1}}Examples" rows="1" style="resize: vertical" name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
+                                    <textarea id="scenario{{scenarioIndex + 1}}Examples" rows="4" style="resize: vertical" name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +234,7 @@
                     </div>
                 </div>
                 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-                    <div id="storyStatus" class="has-error" ng-show="storyForm.$dirty && storyForm.$invalid">
+                    <div id="invalidForm" class="has-error" ng-show="storyForm.$dirty && storyForm.$invalid">
                         <div class="help-block">Form is incorrect!</div>
                     </div>
                     <div>

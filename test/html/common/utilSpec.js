@@ -34,4 +34,13 @@ describe('util', function() {
         });
     });
 
+    describe('stepTextPattern function', function() {
+        it('should start with Given, When or Then', function() {
+            expect('Given something').toMatch(stepTextPattern());
+            expect('When something').toMatch(stepTextPattern());
+            expect('Then something').toMatch(stepTextPattern());
+            expect('Give me something').not.toMatch(stepTextPattern());
+        });
+    });
+
 });

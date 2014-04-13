@@ -61,7 +61,7 @@ describe('compositesModule', function() {
                 expect(scope.steps).toEqual(steps);
             });
             it('should return common function from classNamePattern', function() {
-                expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+                expect(scope.classNamePattern()).toEqual(classNamePattern());
             });
         });
 
@@ -94,11 +94,8 @@ describe('compositesModule', function() {
         });
 
         describe('stepTextPattern function', function() {
-            it('should start with Given, When or Then', function() {
-                expect('Given something').toMatch(scope.stepTextPattern());
-                expect('When something').toMatch(scope.stepTextPattern());
-                expect('Then something').toMatch(scope.stepTextPattern());
-                expect('Give me something').not.toMatch(scope.stepTextPattern());
+            it('should use util function', function() {
+                expect(scope.stepTextPattern()).toEqual(stepTextPattern());
             });
         });
 

@@ -176,6 +176,34 @@ describe('storyModule', function() {
             });
         });
 
+        describe('stepTextPattern function', function() {
+            it('should use util function', function() {
+                expect(scope.stepTextPattern()).toEqual(stepTextPattern());
+            });
+        });
+
+        describe('canSaveStory function', function() {
+            it('should return false when story is not valid', function() {
+                form.$invalid = true;
+                form.$valid = false;
+                scope.storyForm = form;
+                expect(scope.canSaveStory()).toEqual(false);
+            });
+            it('should return false when story has not been changed', function() {
+                form.$invalid = false;
+                form.$valid = true;
+                scope.storyForm = form;
+                expect(scope.canSaveStory()).toEqual(false);
+            });
+            it('should return true when story has been changed and the form is valid', function() {
+                form.$invalid = false;
+                form.$valid = true;
+                scope.story = {status: 'this is new story'};
+                scope.storyForm = form;
+                expect(scope.canSaveStory()).toEqual(true);
+            });
+        });
+
     });
 
     describe('runnerCtrl controller', function() {

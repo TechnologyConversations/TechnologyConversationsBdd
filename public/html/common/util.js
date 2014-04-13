@@ -61,3 +61,7 @@ function getCompositesJson(http, fullClassName) {
         };
     });
 }
+
+function stepTextPattern() {
+    return (/^(Given|When|Then) .+$/);
+}

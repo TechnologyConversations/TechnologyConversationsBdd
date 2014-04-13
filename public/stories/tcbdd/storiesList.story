@@ -3,7 +3,6 @@
 
 Meta:
 
-
 Narrative:
 In order to open existing and create new stories
 As a application user
