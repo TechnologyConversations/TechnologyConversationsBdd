@@ -5,6 +5,7 @@ import models.RunnerClass;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
+import org.jbehave.core.io.LoadFromRelativeFile;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.CrossReference;
@@ -60,9 +61,6 @@ public class JBehaveRunner extends JUnitStories {
     public JBehaveRunner(String storyPathValue,
                          List<RunnerClass> stepsClasses,
                          String reportsPathValue) throws Exception {
-        for(RunnerClass rc : stepsClasses) {
-            System.out.println(rc.fullName());
-        }
         setStoryPath(storyPathValue);
         setStepsInstances(stepsClasses);
         setReportsPath(reportsPathValue);
@@ -70,8 +68,11 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder()
+//        System.out.println(CodeLocations.codeLocationFromURL(""));
+        List<String> paths = new StoryFinder()
+//                .findPaths(CodeLocations.codeLocationFromURL(""), getStoryPath(), "");
                 .findPaths(CodeLocations.codeLocationFromPath("").getFile(), getStoryPath(), "");
+        return paths;
     }
 
     @Override

@@ -3,6 +3,7 @@
 
 Meta:
 
+
 Narrative:
 In order to open existing and create new stories
 As a application user
@@ -13,13 +14,11 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given File public/stories/myDirectory/myStory.story exists
-Given File public/stories/myStory.story exists
+Given File /public/stories/testDirectory exists
+When File is copied from public/stories/tcbdd/storiesList.story to public/stories/testDirectory/testStory.story
 
 After:
-Given Directory public/stories/myDirectory does NOT exist
-Given File public/stories/myStory.story does NOT exist
-Given Directory public/stories/myNewDirectory does NOT exist
+Given Directory public/stories/newTestDirectory does NOT exist
 
 
 Scenario: Can open dialog
@@ -39,8 +38,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the element text:myDirectory
-Then Web element path should have text myDirectory
+When Web user clicks the element text:testDirectory
+Then Web element path should have text testDirectory
 
 Examples:
 
@@ -50,8 +49,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the element text:myDirectory
-Then Web element text:myStory exists
+When Web user clicks the element text:testDirectory
+Then Web element text:testStory exists
 
 Examples:
 
@@ -61,7 +60,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the element text:myStory
+When Web user clicks the element text:testDirectory
+When Web user clicks the element text:testStory
 Then Web element pageTitle should have text View Story
 
 Examples:
@@ -83,9 +83,10 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user clicks the element deletemyStory
+When Web user clicks the element text:testDirectory
+When Web user clicks the element deletetestStory
 When Web user clicks the element ok
-Then Web element text:myStory disappeared
+Then Web element text:testStory disappeared
 
 Examples:
 
@@ -95,8 +96,8 @@ Meta:
 
 
 Given Web user is in the Browse Stories dialog
-When Web user sets value myNewDirectory to the element searchStories
+When Web user sets value newTestDirectory to the element searchStories
 When Web user clicks the element createNewDirectory
-Then Web element text:myNewDirectory appears
+Then Web element text:newTestDirectory appears
 
 Examples:

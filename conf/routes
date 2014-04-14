@@ -1,8 +1,6 @@
 # Routes
-# This file defines stories application routes (Higher priority routes first)
+# This file defines application routes (Higher priority routes first)
 # ~~~~
-
-GET     /                                       controllers.StoryController.index(path: String ?= "")
 
 # Stories
 GET     /page/*path                             controllers.StoryController.index(path: String)
@@ -25,9 +23,12 @@ GET     /reporters/list/*id.json                controllers.ReporterController.l
 
 # Composites
 GET     /composites                             controllers.CompositesController.classesToJson
-GET     /composites/*fullClassName                  controllers.CompositesController.classToJson(fullClassName: String)
+GET     /composites/*fullClassName              controllers.CompositesController.classToJson(fullClassName: String)
 PUT     /composites                             controllers.CompositesController.putClass
-DELETE  /composites/*fullClassName                  controllers.CompositesController.deleteClass(fullClassName: String)
+DELETE  /composites/*fullClassName              controllers.CompositesController.deleteClass(fullClassName: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)
+
+# Catch all
+GET     /                                       controllers.StoryController.index(path: String ?= "")

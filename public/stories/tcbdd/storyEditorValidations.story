@@ -14,12 +14,11 @@ GivenStories:
 Lifecycle:
 
 Before:
-When File is copied from public/stories/tcbdd/storiesList.story to public/stories/myStory.story
 Given Web user is in the View Story page
 Then Web element invalidForm is NOT visible
 
 After:
-Given File public/stories/myStory.story does NOT exist
+
 
 
 Scenario: Name value is required
@@ -66,29 +65,3 @@ Examples:
 |addElement|value|element|
 |addScenario1Meta|myMeta|scenario1Meta1|
 |addScenario1Step|Given something|scenario1Step1|
-
-Scenario: Lifecycle steps must start with Given, When or Then
-
-Meta:
-
-
-When Web user clicks the element storyPanel
-When Web user clicks the element storyLifecyclePanel
-When Web user sets value Not given, when or then to the element <element>
-Then Web element invalidForm is visible
-
-Examples:
-|element|
-|storyLifecycleBeforeStep1|
-|storyLifecycleAfterStep1|
-
-Scenario: Scenario steps must start with Given, When or Then
-
-Meta:
-
-
-When Web user clicks the element scenario1Panel
-When Web user sets value Not given, when or then to the element scenario1Step1
-Then Web element invalidForm is visible
-
-Examples:
