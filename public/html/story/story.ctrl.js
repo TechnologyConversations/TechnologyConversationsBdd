@@ -20,13 +20,12 @@ angular.module('storyModule', [])
             }
             // TODO Test
             $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
-            // TODO Test
-            $scope.getCssClass = cssClass;
-            // TODO Test
+            $scope.cssClass = cssClass;
             $scope.buttonCssClass = buttonCssClass;
-            // TODO Test
             $scope.canSaveStory = function() {
-                return $scope.storyForm.$valid && !angular.equals($scope.story, originalStory);
+                var isValid = $scope.storyForm.$valid;
+                var hasChanged = !angular.equals($scope.story, originalStory);
+                return isValid && hasChanged;
             };
             $scope.stepTextPattern = stepTextPattern;
             // TODO Test

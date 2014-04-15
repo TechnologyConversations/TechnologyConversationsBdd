@@ -182,6 +182,7 @@ class JBehaveStorySpec extends Specification {
     }
 
     "have description" in {
+
       rootCollection must havePair("description" -> Json.toJson("This is description of this story"))
     }
 

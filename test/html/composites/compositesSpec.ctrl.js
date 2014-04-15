@@ -61,7 +61,7 @@ describe('compositesModule', function() {
                 expect(scope.steps).toEqual(steps);
             });
             it('should return common function from classNamePattern', function() {
-                expect(scope.classNamePattern()).toEqual(classNamePattern());
+                expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
             });
         });
 

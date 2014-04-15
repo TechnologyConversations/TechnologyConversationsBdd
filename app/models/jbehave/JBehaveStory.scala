@@ -146,7 +146,9 @@ $examples
 
   }
 
-  private[models] def parseStory(content: String) = new RegexStoryParser().parseStory(content)
+  private[models] def parseStory(content: String) = {
+    new RegexStoryParser().parseStory(content)
+  }
 
   private[models] def rootCollection = {
     val story = parseStory(content)
@@ -188,7 +190,7 @@ $examples
   private[models] def scenariosCollection(scenarios: List[Scenario]) = {
     scenarios.map(scenario =>
       Map(
-        "title" -> Json.toJson(scenario.getTitle),
+        "title" -> Json.toJson(scenario.getTitle.trim),
         "meta" -> Json.toJson(metaCollection(scenario.getMeta)),
         "steps" -> Json.toJson(stepsCollection(scenario.getSteps.toList)),
         "examplesTable" -> Json.toJson(scenario.getExamplesTable.asString)
@@ -197,7 +199,7 @@ $examples
   }
 
   private[models] def stepsCollection(steps: List[String]) = {
-    steps.map(step => Map("step" -> step))
+    steps.map(step => Map("step" -> step.trim))
   }
 
 }
