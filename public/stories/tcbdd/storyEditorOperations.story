@@ -63,7 +63,7 @@ Meta:
 
 
 Given Web user is in the View Story page
-When Web user clicks the element delete
+When Web user clicks the element deleteStory
 When Web user clicks the element ok
 Then Web story is deleted
 
@@ -98,15 +98,6 @@ Meta:
 
 Examples:
 
-Scenario: Can run story
-
-Meta:
-
-
-
-
-Examples:
-
 Scenario: Can NOT run story if previous instance is still running
 
 Meta:
@@ -126,6 +117,15 @@ Meta:
 Examples:
 
 Scenario: Can NOT delete new story before it is saved
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can NOT rename story into an existing one
 
 Meta:
 

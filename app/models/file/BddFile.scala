@@ -15,8 +15,15 @@ trait BddFile {
 
   def content: String = {
     val file = new File(fullPath)
-    if (fullPath.isEmpty || !file.exists || file.isDirectory) { "" }
-    else { Source.fromFile(fullPath).mkString }
+    if (fullPath.isEmpty || !file.exists || file.isDirectory) {
+      ""
+    }
+    else {
+      val fileSource = Source.fromFile(fullPath)
+      val stringSource = fileSource.mkString
+      fileSource.close()
+      stringSource
+    }
   }
 
   def renameFrom(originalPath: String): Boolean = {
