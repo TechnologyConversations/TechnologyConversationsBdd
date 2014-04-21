@@ -36,19 +36,17 @@ Scenario: Story meta, given story and lifecycle step values are required
 Meta:
 
 
-When Web user clicks the element storyPanel
-When Web user clicks the element <panel>
 When Web user clicks the element <addElement>
 When Web user sets value some value to the element <element>
 When Web user clears the element <element>
 Then Web element invalidForm is visible
 
 Examples:
-|panel|addElement|element|
-|storyMetaPanel|addStoryMeta|storyMeta1|
-|storyGivenStoriesPanel|addStoryGivenStory|storyGivenStory1|
-|storyLifecyclePanel|addStoryLifecycleBeforeStep|storyLifecycleBeforeStep1|
-|storyLifecyclePanel|addStoryLifecycleAfterStep|storyLifecycleAfterStep1|
+|addElement|element|
+|addStoryMeta|storyMeta1|
+|addStoryGivenStory|storyGivenStory1|
+|addStoryLifecycleBeforeStep|storyLifecycleBeforeStep1|
+|addStoryLifecycleAfterStep|storyLifecycleAfterStep1|
 
 Scenario: Scenario meta value is required
 

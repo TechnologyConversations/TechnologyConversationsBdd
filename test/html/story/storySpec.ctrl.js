@@ -3,10 +3,7 @@ describe('storyModule', function() {
     beforeEach(module('ngCookies', 'storyModule'));
 
     describe('storyCtrl controller', function() {
-        var scope, modal, form;
-        var story = {
-            path: 'this/is/path'
-        };
+        var scope, modal, form, story;
         var steps = {status: 'OK'};
         var classes = {status: 'OK'};
         var composites = {status: 'OK'};
@@ -32,6 +29,10 @@ describe('storyModule', function() {
         beforeEach(
             inject(function($rootScope, $controller, $http, $location, $cookieStore, $compile) {
                 scope = $rootScope.$new();
+                story = {
+                    name: 'this is a story name',
+                    path: 'this/is/path'
+                };
                 $controller("storyCtrl", {
                     $scope: scope,
                     $http: $http,
@@ -219,6 +220,42 @@ describe('storyModule', function() {
         describe('cssClass function', function() {
             it('should use the global cssClass function', function() {
                 expect(scope.cssClass).toEqual(cssClass);
+            });
+        });
+
+        describe('setAction function', function() {
+            it('should set action to POST when new storyis opened', function() {
+                scope.story.name = '';
+                scope.setAction();
+                expect(scope.action).toEqual('POST');
+            });
+            it('should set action to PUT when existing story is opened', function() {
+                scope.setAction();
+                expect(scope.action).toEqual('PUT');
+            });
+        });
+
+        describe('expandPanels function', function() {
+            it('should expand all panels when run for the first time', function() {
+                scope.panelsExpanded = false;
+                scope.expandPanels();
+                expect(scope.panels.story).toEqual(true);
+                expect(scope.panels.description).toEqual(true);
+                expect(scope.panels.meta).toEqual(true);
+                expect(scope.panels.narrative).toEqual(true);
+                expect(scope.panels.givenStories).toEqual(true);
+                expect(scope.panels.lifecycle).toEqual(true);
+                expect(scope.panels.scenarios).toEqual(true);
+            });
+            it('should contract all panels when run for the second time', function() {
+                scope.panelsExpanded = true;
+                scope.expandPanels();
+                expect(scope.panels.story).toEqual(false);
+                expect(scope.panels.description).toEqual(false);
+                expect(scope.panels.meta).toEqual(false);
+                expect(scope.panels.narrative).toEqual(false);
+                expect(scope.panels.givenStories).toEqual(false);
+                expect(scope.panels.lifecycle).toEqual(false);
             });
         });
 

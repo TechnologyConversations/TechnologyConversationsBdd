@@ -1,6 +1,27 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', 'story', 'steps', 'classes', 'composites',
-        function($scope, $http, $modal, $location, $cookieStore, $q, story, steps, classes, composites) {
+    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'classes', 'composites',
+        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, classes, composites) {
+            $scope.setAction = function() {
+                $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
+            };
+            $scope.expandPanels = function() {
+                var scenariosExpanded = true;
+                if ($scope.panelsExpanded === undefined) {
+                    $scope.panelsExpanded = false;
+                } else {
+                    $scope.panelsExpanded = !$scope.panelsExpanded;
+                    scenariosExpanded = $scope.panelsExpanded;
+                }
+                $scope.panels = {
+                    story: $scope.panelsExpanded,
+                    description: $scope.panelsExpanded,
+                    meta: $scope.panelsExpanded,
+                    narrative: $scope.panelsExpanded,
+                    givenStories: $scope.panelsExpanded,
+                    lifecycle: $scope.panelsExpanded,
+                    scenarios: scenariosExpanded
+                };
+            };
             $scope.story = story;
             $scope.steps = steps;
             $scope.classes = classes;
@@ -10,16 +31,14 @@ angular.module('storyModule', [])
             $scope.storyRunnerVisible = false;
             $scope.storyRunnerInProgress = false;
             $scope.storyRunnerSuccess = true;
-
+            $scope.expandPanels();
             var originalStory = angular.copy(story);
             var pathArray = $scope.story.path.split('/');
-            // TODO Test
             $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
             if ($scope.dirPath !== '') {
                 $scope.dirPath += '/';
             }
-            // TODO Test
-            $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
+            $scope.setAction();
             $scope.cssClass = cssClass;
             $scope.buttonCssClass = buttonCssClass;
             $scope.canSaveStory = function() {

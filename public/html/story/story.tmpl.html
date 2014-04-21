@@ -6,22 +6,24 @@
                 <div class="input-group input-group-lg" ng-class="cssClass(storyForm.storyName)">
                     <span class="input-group-addon">{{dirPath}}</span>
                     <input id="storyName" name="storyName" class="form-control" type="text" ng-model="story.name" placeholder="story name" required="true">
-                    <span class="input-group-addon">
-                        .story
+                    <span class="input-group-btn">
+                        <button id="expandPanels" class="btn btn-info" type="button" ng-click="expandPanels()">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
                     </span>
                 </div>
 
                 <div class="panel panel-primary">
-                    <button id="storyPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleStory = !toggleStory">
+                    <button id="storyPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.story = !panels.story">
                         Story <span class="glyphicon glyphicon-chevron-down"></span>
                     </button>
-                    <div class="panel-body" ng-show="toggleStory">
+                    <div id="storyPanelBody" class="panel-body" ng-show="panels.story">
                         <!--Description-->
                         <div class="panel panel-info">
-                            <button id="storyDescriptionPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleStoryDescription = !toggleStoryDescription">
+                            <button id="storyDescriptionPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.description = !panels.description">
                                 Description <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
-                            <div class="panel-body" ng-show="toggleStoryDescription">
+                            <div id="storyDescriptionPanelBody" class="panel-body" ng-show="panels.description">
                                 <div ng-class="cssClass(storyForm.storyDescription)">
                                     <textarea id="storyDescription" name="storyDescription" class="form-control" ng-model="story.description" placeholder="story description" rows="5"></textarea>
                                 </div>
@@ -29,18 +31,18 @@
                         </div>
                         <!--Meta-->
                         <div class="panel panel-info">
-                            <button id="storyMetaPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleStoryMeta = !toggleStoryMeta">
+                            <button id="storyMetaPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.meta = !panels.meta">
                                 Meta <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
-                            <div ui-sortable ng-model="story.meta" class="panel-body" ng-show="toggleStoryMeta">
+                            <div id="storyMetaPanelBody" ui-sortable ng-model="story.meta" class="panel-body" ng-show="panels.meta">
                                 <div class="sortable input-group" ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="cssClass(storyMetaForm.storyMeta)">
-                                    <span class="input-group-addon">
+                                    <span id="dragStoryMeta{{$index + 1}}" class="input-group-addon">
                                         <span class="glyphicon glyphicon-move"></span>
                                         @
                                     </span>
                                     <input id="storyMeta{{$index + 1}}" name="storyMeta" class="form-control" type="text" ng-model="meta.element" required="true">
                                     <span class="input-group-btn">
-                                        <button id="storyMetaRemove{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.meta, $index)" type="button">
+                                        <button id="removeStoryMeta{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.meta, $index)" type="button">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </span>
@@ -56,10 +58,10 @@
                         </div>
                         <!--Narrative-->
                         <div class="panel panel-info">
-                            <button id="storyNarrativePanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleStoryNarrative = !toggleStoryNarrative">
+                            <button id="storyNarrativePanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.narrative = !panels.narrative">
                                 Narrative <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
-                            <div class="panel-body" ng-show="toggleStoryNarrative">
+                            <div class="panel-body" id="storyNarrativePanelBody" ng-show="panels.narrative">
                                 <div ng-class="cssClass(storyForm.storyNarrativeInOrderTo)">
                                     <label for="storyNarrativeInOrderTo" class="control-label col-sm-2">In order to</label>
                                     <div class="col-sm-10">
@@ -82,17 +84,17 @@
                         </div>
                         <!--Given stories-->
                         <div class="panel panel-info">
-                            <button id="storyGivenStoriesPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleStoryGivenStories = !toggleStoryGivenStories">
+                            <button id="storyGivenStoriesPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.givenStories = !panels.givenStories">
                                 Given Stories <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
-                            <div class="panel-body" ui-sortable ng-model="story.givenStories" ng-show="toggleStoryGivenStories">
+                            <div class="panel-body" id="storyGivenStoriesPanelBody" ui-sortable ng-model="story.givenStories" ng-show="panels.givenStories">
                                 <div class="sortable input-group" ng-repeat="givenStory in story.givenStories" ng-form="storyGivenStoryForm" ng-class="cssClass(storyGivenStoryForm.storyGivenStory)">
-                                    <span class="input-group-addon">
+                                    <span id="dragStoryGivenStory{{$index + 1}}" class="input-group-addon">
                                         <span class="glyphicon glyphicon-move"></span>
                                     </span>
                                     <input id="storyGivenStory{{$index + 1}}" name="storyGivenStory" class="form-control" type="text" ng-model="givenStory.story" required="true">
                                     <span class="input-group-btn">
-                                        <button id="removeStoryGivenStory{{$index}}" class="btn btn-danger" ng-click="removeCollectionElement(story.givenStories, $index)" type="button">
+                                        <button id="removeStoryGivenStory{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.givenStories, $index)" type="button">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </span>
@@ -107,10 +109,10 @@
                             </div>
                         </div>
                         <div class="panel panel-info">
-                            <button id="storyLifecyclePanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleStoryLifecycle = !toggleStoryLifecycle">
+                            <button id="storyLifecyclePanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.lifecycle = !panels.lifecycle">
                                 Lifecycle <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
-                            <div class="panel-body" ui-sortable ng-model="story.givenStories" ng-show="toggleStoryLifecycle">
+                            <div id="storyLifecyclePanelBody" class="panel-body" ui-sortable ng-model="story.givenStories" ng-show="panels.lifecycle">
                                 <h3 id="storyLifecycleBeforeHeader">
                                     Before:
                                     <button id="addStoryLifecycleBeforeStep" class="btn btn-info pull-right" ng-click="addElement(story.lifecycle.before, step)" type="button">
@@ -119,7 +121,7 @@
                                 </h3>
                                 <div class="steps" ui-sortable ng-model="story.lifecycle.before">
                                     <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.before" ng-form="storyLifecycleBeforeForm" ng-class="cssClass(storyLifecycleBeforeForm.storyStepInput)">
-                                        <span class="input-group-addon">
+                                        <span id="dragStoryLifecycleBeforeStep{{$index + 1}}" class="input-group-addon">
                                             <span class="glyphicon glyphicon-move"></span>
                                         </span>
                                         <input id="storyLifecycleBeforeStep{{$index + 1}}" name="storyStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, story.lifecycle.before)" autofocus>
@@ -138,15 +140,15 @@
                                 </h3>
                                 <div class="steps" ui-sortable ng-model="story.lifecycle.after">
                                     <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.after" ng-form="storyLifecycleAfterForm" ng-class="cssClass(storyLifecycleAfterForm.storyStepInput)">
-                                        <span class="input-group-addon">
+                                        <span id="dragStoryLifecycleAfterStep{{$index + 1}}" class="input-group-addon">
                                             <span class="glyphicon glyphicon-move"></span>
                                         </span>
                                         <input id="storyLifecycleAfterStep{{$index + 1}}" name="storyStepInput" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, story.lifecycle.after)" autofocus>
-                                            <span class="input-group-btn">
-                                                <button id="removeStoryLifecycleAfterStep{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.lifecycle.after, $index)" type="button">
-                                                    <span class="glyphicon glyphicon-remove"></span>
-                                                </button>
-                                            </span>
+                                        <span class="input-group-btn">
+                                            <button id="removeStoryLifecycleAfterStep{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.lifecycle.after, $index)" type="button">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -155,12 +157,12 @@
                 </div>
                 <!--Scenarios-->
                 <div class="panel panel-primary">
-                    <button id="scenariosPanel" type="button" class="panel-heading panel-title btn btn-block btn-lg btn-primary" ng-click="toggleScenarios = !toggleScenarios">
+                    <button id="scenariosPanel" type="button" class="panel-heading panel-title btn btn-block btn-lg btn-primary" ng-click="panels.scenarios = !panels.scenarios">
                         Scenarios <span class="glyphicon glyphicon-chevron-down"></span>
                     </button>
-                    <div class="panel-body" ng-show="!toggleScenarios">
+                    <div id="storyScenariosPanelBody" class="panel-body" ng-show="panels.scenarios">
                         <div class="panel panel-info" ng-repeat="(scenarioIndex, scenario) in story.scenarios" ng-form="storyScenarioForm" ng-class="cssClass(storyScenarioForm.scenarioTitle)">
-                            <button id="scenario{{scenarioIndex + 1}}Panel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleScenario = !toggleScenario">Scenario: {{scenario.title}}</button>
+                            <button id="scenario{{scenarioIndex + 1}}Panel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleScenario = !toggleScenario">Scenario: {{scenario.title}} <span class="glyphicon glyphicon-chevron-down"></span></button>
                             <div ng-show="toggleScenario" class="panel-body">
                                 <div>
                                     <div class="input-group input-group-lg">
@@ -205,7 +207,7 @@
                                 </div>
                                 <div class="steps" ng-model="scenario.steps" ui-sortable>
                                     <div class="sortable input-group" ng-repeat="stepElement in scenario.steps" ng-form="storyScenarioStepForm" ng-class="cssClass(storyScenarioStepForm.scenarioStep)">
-                                        <span class="input-group-addon">
+                                        <span id="dragScenario{{scenarioIndex + 1}}Step{{$index + 1}}" class="input-group-addon">
                                             <span class="glyphicon glyphicon-move"></span>
                                         </span>
                                         <input id="scenario{{scenarioIndex + 1}}Step{{$index + 1}}" name="scenarioStep" class="form-control" type="text" ng-model="stepElement.step" required="true" typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25" ng-keypress="stepEnterKey($event, scenario.steps)" autofocus>
