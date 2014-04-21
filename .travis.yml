@@ -6,8 +6,6 @@ scala:
 notifications:
   email:
   - viktor@farcic.com
-  - alexgarcer@gmail.com
-
 
 deploy:
   provider: heroku

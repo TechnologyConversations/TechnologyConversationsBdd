@@ -15,6 +15,7 @@ Lifecycle:
 
 Before:
 Given File public/stories/testDirectory/testStory.story does NOT exist
+Given File public/stories/testDirectory/storyNameRenamed.story does NOT exist
 
 After:
 
@@ -76,16 +77,8 @@ Meta:
 
 Given Web user is in the View Story page
 When Web user sets value storyNameRenamed to the element storyName
+When Web user clicks the element saveStory
 Then Web story is renamed
-
-Examples:
-
-Scenario: Can add, delete and move story elements
-
-Meta:
-
-
-
 
 Examples:
 
@@ -94,16 +87,8 @@ Scenario: Can NOT save story when data is intact
 Meta:
 
 
-
-
-Examples:
-
-Scenario: Can NOT run story if previous instance is still running
-
-Meta:
-
-
-
+Given Web user is in the View Story page
+Then Web element saveStory is disabled
 
 Examples:
 
@@ -112,7 +97,8 @@ Scenario: Can NOT revert changes is data is intact
 Meta:
 
 
-
+Given Web user is in the View Story page
+Then Web element revertStory is disabled
 
 Examples:
 
@@ -121,15 +107,7 @@ Scenario: Can NOT delete new story before it is saved
 Meta:
 
 
-
-
-Examples:
-
-Scenario: Can NOT rename story into an existing one
-
-Meta:
-
-
-
+Given Web user is in the New Story page
+Then Web element deleteStory is disabled
 
 Examples:

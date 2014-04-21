@@ -243,7 +243,7 @@
                         <button id="saveStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
                         <button id="runStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
                         <button id="revertStory" class="btn btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()" type="button">Revert Changes</button>
-                        <button id="deleteStory" class="btn btn-danger" ng-click="deleteStory()" ng-hide="!canDeleteStory()" type="button">Delete Story</button>
+                        <button id="deleteStory" class="btn btn-danger" ng-click="deleteStory()" ng-disabled="!canDeleteStory()" type="button">Delete Story</button>
                     </div>
                 </nav>
             </form>
