@@ -1,0 +1,35 @@
+
+
+
+Meta:
+@dummy
+
+
+Narrative:
+In order to open existing and create new stories
+As a application user
+I want to be able to browse files and directories
+
+GivenStories: 
+
+Lifecycle:
+
+Before:
+Given Given variable myBefore1Variable has value this is my before 1 value
+Given Given variable myBefore2Variable has value this is my before 2 value
+
+After:
+Given Given variable myAfterVariable has value this is my after value
+
+
+Scenario: Can open dialog
+
+Meta:
+
+
+Given Given variable myStepVariable1 has value this is my step 1 value
+Given Given variable myStepVariable2 has value this is my step 2 value
+Given Given variable myStepVariable3 has value this is my step 3 value
+
+Examples:
+
