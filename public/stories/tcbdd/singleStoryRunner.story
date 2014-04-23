@@ -76,8 +76,9 @@ Given Web user is in the Story page with all successful steps
 When Web user clicks the element runStory
 When Web user sets value phantomjs to the element webStepsBrowser
 When Web user clicks the element confirmRunStory
+Then Web element runnerStatus should have text Story run was successful
 When Web user clicks the element runStory
-Then Web element webStepsBrowser should have text phantomjs
+Then Web element webStepsBrowser should have value phantomjs
 
 Examples:
 
@@ -163,6 +164,6 @@ Given Web user is in the Story page with pending steps
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 When Web user clicks the element pendingStep1
-Then Web user is in the composites page
+Then Web user is in the composites modal page
 
 Examples:

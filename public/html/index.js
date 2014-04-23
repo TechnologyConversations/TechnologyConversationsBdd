@@ -107,27 +107,16 @@ function openErrorModal($modal, data) {
     });
 }
 
-// TODO Test
-function openRunnerModal($modal, data) {
-    return $modal.open({
-        templateUrl: '/assets/html/runner.tmpl.html',
-        controller: 'runnerCtrl',
-        resolve: {
-            data: function() {
-                return data;
-            }
-        }
-    });
-}
-
-// TODO Test
 function getViewStoryUrl() {
     return '/page/stories/view/';
 }
 
-// TODO Test
 function getNewStoryUrl() {
     return '/page/stories/new/';
+}
+
+function getCompositesUrl() {
+    return '/page/composites/';
 }
 
 // TODO Test

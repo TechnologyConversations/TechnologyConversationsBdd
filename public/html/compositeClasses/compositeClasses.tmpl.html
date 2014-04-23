@@ -6,7 +6,7 @@
                 <span class="input-group-addon">Class</span>
                 <input type="text" id="className" name="className" ng-model="data.class" class="form-control" ng-pattern="classNamePattern()">
                 <span class="input-group-btn">
-                    <a class="btn btn-info" href="{{compositeClassUrl('composites.com.technologyconversations.bdd.steps', data.class)}}" ng-click="close()">
+                    <a id="createNewClass" class="btn btn-info" href="{{compositeClassUrl('composites.com.technologyconversations.bdd.steps', data.class)}}" ng-click="close()">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>

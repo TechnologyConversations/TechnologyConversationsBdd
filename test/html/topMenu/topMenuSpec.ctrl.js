@@ -30,6 +30,11 @@ describe('topMenuModule module', function() {
                 expect(scope.getTitle()).toEqual("New Story");
             });
 
+            it('should return Composites when URL is /page/composites/COMPOSITE', function() {
+                location.path('/page/composites/COMPOSITE');
+                expect(scope.getTitle()).toEqual("Composites");
+            });
+
         });
 
     });

@@ -63,7 +63,7 @@ angular.module('configModule', [])
                     reloadOnSearch: false
                 })
                 // TODO Test
-                .when('/page/composites/:className*', {
+                .when(getCompositesUrl() + ':className*', {
                     templateUrl: '/assets/html/composites/composites.tmpl.html',
                     controller: 'compositesCtrl',
                     resolve: {

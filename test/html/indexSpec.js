@@ -71,11 +71,9 @@ describe('storiesModule controllers', function() {
 describe("common functions", function() {
 
     describe('classNamePattern validates that values is a valid Java class name', function() {
-
         it('should NOT start with a number', function() {
             expect('1abc').not.toMatch(classNamePattern());
         });
-
         it('should use any combination of letters, digits, underscores and dollar signs', function() {
             expect('aBc').toMatch(classNamePattern());
             expect('a123').toMatch(classNamePattern());
@@ -83,12 +81,28 @@ describe("common functions", function() {
             expect('$a').toMatch(classNamePattern());
             expect('aBc_D$23').toMatch(classNamePattern());
         });
-
         it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
             expect('abc%').not.toMatch(classNamePattern());
             expect('ab c').not.toMatch(classNamePattern());
         });
+    });
 
+    describe('getViewStoryUrl function', function() {
+       it('should return /page/stories/view/', function() {
+           expect(getViewStoryUrl()).toEqual('/page/stories/view/');
+       });
+    });
+
+    describe('getNewStoryUrl function', function() {
+        it('should return /page/stories/new/', function() {
+            expect(getNewStoryUrl()).toEqual('/page/stories/new/');
+        });
+    });
+
+    describe('getCompositesUrl function', function() {
+        it('should return /page/composites/', function() {
+            expect(getCompositesUrl()).toEqual('/page/composites/');
+        });
     });
 
 });

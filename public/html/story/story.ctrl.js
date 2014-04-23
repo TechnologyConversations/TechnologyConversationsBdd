@@ -75,7 +75,6 @@ angular.module('storyModule', [])
                     }
                 }
             };
-            // TODO Test
             $scope.canRunStory = function () {
                 return $scope.storyForm.$valid && !$scope.storyRunnerInProgress;
             };
@@ -83,8 +82,7 @@ angular.module('storyModule', [])
             $scope.runStory = function () {
                 if ($scope.canRunStory()) {
                     $scope.saveStory();
-                    var runnerModal = openRunnerModal($modal, $scope.classes);
-                    runnerModal.result.then(function (data) {
+                    $scope.openRunnerModal().result.then(function (data) {
                         $scope.storyFormClass = 'col-md-6';
                         $scope.storyRunnerClass = 'col-md-6';
                         $scope.storyRunnerVisible = true;
@@ -117,6 +115,18 @@ angular.module('storyModule', [])
                         // Do nothing
                     });
                 }
+            };
+            // TODO Test
+            $scope.openRunnerModal = function() {
+                return $modal.open({
+                    templateUrl: '/assets/html/runner.tmpl.html',
+                    controller: 'runnerCtrl',
+                    resolve: {
+                        data: function() {
+                            return $scope.classes;
+                        }
+                    }
+                });
             };
             // TODO Test
             $scope.getRunnerProgressCss = function () {
@@ -217,6 +227,11 @@ angular.module('storyModule', [])
             // TODO Test
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
+            };
+            $scope.paramElementId = function(className, paramKey) {
+                var formattedClassName = className.charAt(0).toLowerCase() + className.slice(1);
+                var formattedParamKey = paramKey.charAt(0).toUpperCase() + paramKey.slice(1);
+                return formattedClassName + formattedParamKey;
             };
         }
     ]);

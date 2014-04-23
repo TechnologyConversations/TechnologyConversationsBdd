@@ -45,6 +45,9 @@ describe('storyModule', function() {
                     composites: composites
                 });
                 form = $compile('<form>')(scope);
+                form.$invalid = false;
+                form.$valid = true;
+                scope.storyForm = form;
             })
         );
 
@@ -187,20 +190,13 @@ describe('storyModule', function() {
             it('should return false when story is not valid', function() {
                 form.$invalid = true;
                 form.$valid = false;
-                scope.storyForm = form;
                 expect(scope.canSaveStory()).toEqual(false);
             });
             it('should return false when story has not been changed', function() {
-                form.$invalid = false;
-                form.$valid = true;
-                scope.storyForm = form;
                 expect(scope.canSaveStory()).toEqual(false);
             });
             it('should return true when story has been changed and the form is valid', function() {
-                form.$invalid = false;
-                form.$valid = true;
                 scope.story = {status: 'this is new story'};
-                scope.storyForm = form;
                 expect(scope.canSaveStory()).toEqual(true);
             });
         });
@@ -259,6 +255,22 @@ describe('storyModule', function() {
             });
         });
 
+        describe('canRunStory function', function() {
+            it('should return false when form is invalid', function() {
+                form.$valid = false;
+                form.$invalid = true;
+                expect(scope.canRunStory()).toEqual(false);
+            });
+            it('should return false when story runner is in progress', function() {
+                scope.storyRunnerInProgress = true;
+                expect(scope.canRunStory()).toEqual(false);
+            });
+            it('should return true when form is valid and story runner is NOT in progress', function() {
+                scope.storyRunnerInProgress = false;
+                expect(scope.canRunStory()).toEqual(true);
+            });
+        });
+
     });
 
     describe('runnerCtrl controller', function() {
@@ -303,6 +315,17 @@ describe('storyModule', function() {
             it('should return false if it does NOT contain parameters', function() {
                 var classEntry = {params: []};
                 expect(scope.hasParams(classEntry)).toEqual(false);
+            });
+        });
+
+        describe('paramElementId function', function() {
+            it('should return first letter of the className as lower case', function() {
+                var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
+                expect(actual).toMatch(/thisIsClassName/);
+            });
+            it('should return first letter of the paramKey as upper case', function() {
+                var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
+                expect(actual).toMatch(/ThisIsParamKey/);
             });
         });
 

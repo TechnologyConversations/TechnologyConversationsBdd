@@ -21,6 +21,10 @@ angular.module('topMenuModule', [])
                     return 'View Story';
                 } else if (path.indexOf(getNewStoryUrl()) === 0) {
                     return 'New Story';
+                } else if (path.indexOf(getNewStoryUrl()) === 0) {
+                    return 'New Story';
+                } else if (path.indexOf(getCompositesUrl()) === 0) {
+                    return 'Composites';
                 } else {
                     return '';
                 }
