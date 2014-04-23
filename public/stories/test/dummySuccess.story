@@ -27,6 +27,6 @@ Meta:
 
 
 Given variable myStepVariable1 has value this is my step 1 value
-Then variable myStepVariable1 has value my step 1 value
+Then variable myStepVariable1 has value this is my step 1 value
 
 Examples:

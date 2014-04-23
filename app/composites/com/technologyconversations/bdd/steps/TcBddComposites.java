@@ -6,15 +6,15 @@ import com.technologyconversations.bdd.steps.util.BddVariable;
 public class TcBddComposites {
     
         @Given("Web user is in the Story page with pending steps")
-        @Composite(steps = {"When File is copied from public/stories/test/dummyPending.story to public/stories/testDirectory/testPendingStory.story", "Given Web address /page/stories/view/testDirectory/testPendingStory is opened", "Given Web page is refreshed", "When Web user clicks the element expandPanels"})
+        @Composite(steps = {"When File is copied from public/stories/test/dummyPending.story to public/stories/testDirectory/testPendingStory.story", "Given Web address /page/stories/view/testDirectory/testPendingStory is opened", "When Web user clicks the element expandPanels"})
         public void compositeStep0() { }
     
         @Given("Web user is in the Story page with failed steps")
-        @Composite(steps = {"When File is copied from public/stories/test/dummyFailed.story to public/stories/testDirectory/testFailedStory.story", "Given Web address /page/stories/view/testDirectory/testFailedStory is opened", "Given Web page is refreshed", "When Web user clicks the element expandPanels"})
+        @Composite(steps = {"When File is copied from public/stories/test/dummyFailed.story to public/stories/testDirectory/testFailedStory.story", "Given Web address /page/stories/view/testDirectory/testFailedStory is opened", "When Web user clicks the element expandPanels"})
         public void compositeStep1() { }
     
         @Given("Web user is in the Story page with all successful steps")
-        @Composite(steps = {"When File is copied from public/stories/test/dummySuccess.story to public/stories/testDirectory/testSuccessStory.story", "Given Web address /page/stories/view/testDirectory/testSuccessStory is opened", "Given Web page is refreshed", "When Web user clicks the element expandPanels"})
+        @Composite(steps = {"When File is copied from public/stories/test/dummySuccess.story to public/stories/testDirectory/testSuccessStory.story", "Given Web address /page/stories/view/testDirectory/testSuccessStory is opened", "When Web user clicks the element expandPanels"})
         public void compositeStep2() { }
     
         @Given("Web user is in the New Story page")

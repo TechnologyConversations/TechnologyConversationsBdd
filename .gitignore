@@ -14,3 +14,5 @@ dist
 /RUNNING_PID
 /.settings
 node_modules
+
+/jbehave
