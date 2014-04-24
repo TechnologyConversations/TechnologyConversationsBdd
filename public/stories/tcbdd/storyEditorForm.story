@@ -169,3 +169,17 @@ When Web user clicks the element removeScenario1Step1
 Then Web element scenario1Step1 is NOT visible
 
 Examples:
+
+Scenario: Steps have auto-complete function
+
+Meta:
+
+
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Step
+When Web user sets value Then variable to the element scenario1Step1
+When Web user presses the enter key in the element scenario1Step1
+Then Web element scenario1Step1 should have value Then variable $key has value $value
+
+Examples:
