@@ -164,6 +164,6 @@ Given Web user is in the Story page with pending steps
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 When Web user clicks the element pendingStep1
-Then Web user is in the composites modal page
+Then Web user is in the composites modal screen
 
 Examples:

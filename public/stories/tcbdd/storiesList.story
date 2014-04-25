@@ -29,7 +29,7 @@ Meta:
 
 Given Web home page is opened
 When Web user clicks the element browseStories
-Then Web modal header should have text Browse Stories
+Then Web user is in the stories modal screen
 
 Examples:
 
