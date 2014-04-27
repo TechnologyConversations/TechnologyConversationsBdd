@@ -163,10 +163,10 @@
                     <div id="storyScenariosPanelBody" class="panel-body" ng-show="panels.scenarios">
                         <div class="panel panel-info" ng-repeat="(scenarioIndex, scenario) in story.scenarios" ng-form="storyScenarioForm" ng-class="cssClass(storyScenarioForm.scenarioTitle)">
                             <div class="input-group">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon" ng-click="toggleScenario = !toggleScenario">
                                     Scenario
                                 </span>
-                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true">
+                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true" ng-focus="toggleScenario = true">
                                 <span class="input-group-btn">
                                     <button id="scenario{{scenarioIndex + 1}}Panel" class="btn btn-info" ng-click="toggleScenario = !toggleScenario" type="button">
                                         <span class="glyphicon glyphicon-chevron-down"></span>
