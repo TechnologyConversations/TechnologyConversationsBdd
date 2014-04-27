@@ -162,18 +162,21 @@
                     </button>
                     <div id="storyScenariosPanelBody" class="panel-body" ng-show="panels.scenarios">
                         <div class="panel panel-info" ng-repeat="(scenarioIndex, scenario) in story.scenarios" ng-form="storyScenarioForm" ng-class="cssClass(storyScenarioForm.scenarioTitle)">
-                            <button id="scenario{{scenarioIndex + 1}}Panel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="toggleScenario = !toggleScenario">Scenario: {{scenario.title}} <span class="glyphicon glyphicon-chevron-down"></span></button>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    Scenario
+                                </span>
+                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true">
+                                <span class="input-group-btn">
+                                    <button id="scenario{{scenarioIndex + 1}}Panel" class="btn btn-info" ng-click="toggleScenario = !toggleScenario" type="button">
+                                        <span class="glyphicon glyphicon-chevron-down"></span>
+                                    </button>
+                                    <button id="scenario{{scenarioIndex + 1}}Remove" class="btn btn-danger" ng-click="removeCollectionElement(story.scenarios, $index)" type="button">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
                             <div ng-show="toggleScenario" class="panel-body">
-                                <div>
-                                    <div class="input-group input-group-lg">
-                                        <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true">
-                                        <span class="input-group-btn">
-                                            <button id="scenario{{scenarioIndex + 1}}Remove" class="btn btn-danger" ng-click="removeCollectionElement(story.scenarios, $index)" type="button">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
                                 <!--Scenario meta-->
                                 <div>
                                     <h3 id="storyScenarioMetaHeader">
