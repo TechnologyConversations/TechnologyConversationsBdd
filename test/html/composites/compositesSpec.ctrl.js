@@ -30,7 +30,8 @@ describe('compositesModule', function() {
                 compositesClass = {
                     package: packageName,
                     class: className,
-                    composites: [composite, anotherComposite]
+                    composites: [composite, anotherComposite],
+                    isNew: false
                 };
                 $controller('compositesCtrl', {
                     $scope: scope,
@@ -268,15 +269,28 @@ describe('compositesModule', function() {
                 expect(cookieStore.get("compositeClass")).toEqual(className);
             });
         });
+
         describe('canDeleteCompositesClass function', function() {
             it('should return false when compositesClass.isNew equals true', function() {
                 scope.compositesClass.isNew = true;
                 expect(scope.canDeleteCompositesClass()).toEqual(false);
             });
         });
+
         describe('deleteCompositesClass function', function() {
             // TODO
         });
+
+        describe('saveCompositesText function', function() {
+            it('should return Create New Composites when composites class does not exist', function() {
+                scope.compositesClass.isNew = true;
+                expect(scope.saveCompositesText()).toEqual('Create New Composites');
+            });
+            it('should return Update Composites when composites class exists', function() {
+                scope.compositesClass.isNew = false;
+                expect(scope.saveCompositesText()).toEqual('Update Composites');
+            });
+        })
 
     });
 

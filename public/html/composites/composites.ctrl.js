@@ -98,5 +98,12 @@ angular.module('compositesModule', [])
                     // Do nothing
                 });
             };
+            $scope.saveCompositesText = function() {
+                if ($scope.compositesClass.isNew) {
+                    return 'Create New Composites';
+                } else {
+                    return 'Update Composites';
+                }
+            };
         }
     ]);

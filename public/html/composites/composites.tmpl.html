@@ -78,9 +78,9 @@
             </form>
             <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
                 <div>
-                    <button class="btn btn-primary" ng-class="buttonCssClass(compositeForm)" ng-disabled="!canSaveCompositesClass(compositeForm) || !compositesAreValid()" ng-click="saveCompositesClass()" type="button">Save Composites</button>
-                    <button class="btn btn-info" ng-click="revertCompositesClass()" ng-disabled="!canRevertCompositesClass()" type="button">Revert Changes</button>
-                    <button class="btn btn-danger" ng-click="deleteCompositesClass()" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
+                    <button id="saveComposites" class="btn btn-primary" ng-class="buttonCssClass(compositeForm)" ng-disabled="!canSaveCompositesClass(compositeForm) || !compositesAreValid()" ng-click="saveCompositesClass()" type="button">{{saveCompositesText()}}</button>
+                    <button id="revertComposites" class="btn btn-info" ng-click="revertCompositesClass()" ng-disabled="!canRevertCompositesClass()" type="button">Revert Changes</button>
+                    <button id="deleteComposites" class="btn btn-danger" ng-click="deleteCompositesClass()" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
                 </div>
             </nav>
         </div>

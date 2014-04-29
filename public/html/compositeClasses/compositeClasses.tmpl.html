@@ -6,12 +6,12 @@
                 <span class="input-group-addon">Class</span>
                 <input type="text" id="className" name="className" ng-model="data.class" class="form-control" ng-pattern="classNamePattern()">
                 <span class="input-group-btn">
-                    <a id="createNewClass" class="btn btn-info" href="{{compositeClassUrl('composites.com.technologyconversations.bdd.steps', data.class)}}" ng-click="close()">
+                    <a id="createNewClass" class="btn btn-info" href="{{compositeClassUrl('composites.com.technologyconversations.bdd.steps', data.class)}}" ng-click="close()" ng-disabled="!compositeClassForm.className.$dirty || compositeClassForm.className.$invalid">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
             </div>
-            <div class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
+            <div id="compositeClassError" class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
                 Invalid:
                 <span ng-show="compositeClassForm.className.$error.pattern">
                     Class name cannot start with a number, but after the initial character it may use any combination of letters and digits, underscores or dollar signs.
@@ -30,5 +30,5 @@
     </table>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="close()">Close</button>
+    <button id="closeComposites" class="btn btn-primary" ng-click="close()">Close</button>
 </div>
