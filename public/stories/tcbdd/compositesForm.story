@@ -26,7 +26,7 @@ Scenario: Can display the name of the selected composite class
 Meta:
 
 
-Then Web element className should have value TestComposites
+Then Web element className should have value @className
 
 Examples:
 
@@ -89,13 +89,12 @@ Meta:
 
 
 When Web user clicks the element addNewComposite
-When Web user clicks the element addNewCompositeStep
 Then Web element compositeStep1 exists
 When Web user sets value When I set the first composite step to the element compositeStep1
 When Web user clicks the element addNewCompositeStep
 Then Web element compositeStep2 exists
-When Web user drags the element dragCompositeStep2 to the dragCompositeStep1
 When Web user sets value When I set the second composite step to the element compositeStep2
+When Web user drags the element dragCompositeStep2 to the dragCompositeStep1
 Then Web element compositeStep1 should have value When I set the second composite step
 When Web user clicks the element removeCompositeStep2
 Then Web element compositeStep2 is NOT visible

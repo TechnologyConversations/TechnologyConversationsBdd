@@ -16,7 +16,7 @@
                 </div>
                 <h3>
                     Composites
-                    <button type="button" ng-click="addNewComposite()" class="pull-right btn btn-info btn-sm">
+                    <button id="addNewComposite" type="button" ng-click="addNewComposite()" class="pull-right btn btn-info btn-sm">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </h3>
@@ -27,12 +27,12 @@
                     </div>
                 </div>
             </form>
-            <table class="table table-condensed table-striped">
+            <table id="composites" class="table table-condensed table-striped">
                 <tbody ng-repeat="composite in compositesClass.composites | filter:stepText">
                     <tr>
                         <td>
-                            <a href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
-                            <button id="composite{{$index}}Delete" class="btn btn-xs btn-danger pull-right" ng-click="removeCollectionElement(compositesClass.composites, $index)" type="button">
+                            <a id="composite{{$index + 1}}" href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
+                            <button id="deleteComposite{{$index + 1}}" class="btn btn-xs btn-danger pull-right" ng-click="removeCollectionElement(compositesClass.composites, $index)" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
@@ -53,19 +53,19 @@
                 </div>
                 <h3>
                     Composite Steps
-                    <button type="button" ng-click="addNewCompositeStep()" class="pull-right btn btn-info">
+                    <button id="addNewCompositeStep" type="button" ng-click="addNewCompositeStep()" class="pull-right btn btn-info">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </h3>
                 <div ui-sortable class="steps" ng-model="composite.compositeSteps">
                     <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
                         <div class="input-group sortable">
-                            <span class="input-group-addon">
+                            <span id="dragCompositeStep{{$index + 1}}" class="input-group-addon">
                                 <span class="glyphicon glyphicon-move"></span>
                             </span>
-                            <input id="compositeStep{{$index}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
+                            <input id="compositeStep{{$index + 1}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
                             <span class="input-group-btn">
-                                <button id="compositeStep{{$index}}Delete" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
+                                <button id="removeCompositeStep{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </span>
