@@ -20,7 +20,7 @@ After:
 
 
 
-Scenario: Can save composites
+Scenario: Can create new composites
 
 Meta:
 
@@ -48,6 +48,15 @@ Meta:
 Examples:
 
 Scenario: Created composites use BddVariable as param type
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can update existing composites
 
 Meta:
 

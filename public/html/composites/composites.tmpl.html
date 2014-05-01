@@ -5,7 +5,7 @@
                 <div ng-class="cssClass(compositeClassForm.fullClassName)">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
-                        <input id="fullClassName" name="fullClassName" class="form-control input-lg" type="text" ng-model="compositesClass.class" required="true" ng-pattern="classNamePattern()">
+                        <input id="className" name="className" class="form-control input-lg" type="text" ng-model="compositesClass.class" required="true" ng-pattern="classNamePattern()">
                     </div>
                     <div class="help-block" ng-show="compositeClassForm.fullClassName.$dirty && compositeClassForm.fullClassName.$invalid">
                         Invalid:
@@ -23,7 +23,7 @@
                 <div>
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
-                        <input id="stepText" name="stepText" class="form-control" type="text" ng-model="stepText">
+                        <input id="compositeTextFilter" name="compositeTextFilter" class="form-control" type="text" ng-model="stepText">
                     </div>
                 </div>
             </form>
@@ -42,12 +42,12 @@
         </div>
         <div class="col-md-8">
             <form class="form-horizontal" role="form" id="compositeForm" name="compositeForm" novalidate="novalidate">
-                <div ng-class="cssClass(compositeForm.compositeStepText)">
+                <div ng-class="cssClass(compositeForm.compositeText)">
                     <div class="input-group">
                         <span class="input-group-addon">Composite</span>
-                        <input id="compositeStepText" name="compositeStepText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()" required="true">
+                        <input id="compositeText" name="compositeText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()" required="true">
                     </div>
-                    <div class="help-block" ng-show="compositeForm.compositeStepText.$error.pattern">
+                    <div class="help-block" ng-show="compositeForm.compositeText.$error.pattern">
                         Step must start with Given, When or Then words.
                     </div>
                 </div>
