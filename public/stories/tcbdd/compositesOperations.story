@@ -64,3 +64,39 @@ Meta:
 
 
 Examples:
+
+Scenario: Can NOT revert changes when composites are unchanged
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can NOT delete composites that were NOT previously saved
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can NOT save composites when there are validation errors
+
+Meta:
+
+
+
+
+Examples:
+
+Scenario: Can NOT save when composites are unchanged
+
+Meta:
+
+
+
+
+Examples:

@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-md-4">
             <form class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm" novalidate="novalidate">
-                <div ng-class="cssClass(compositeClassForm.fullClassName)">
+                <div ng-class="cssClass(compositeClassForm.className)">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
                         <input id="className" name="className" class="form-control input-lg" type="text" ng-model="compositesClass.class" required="true" ng-pattern="classNamePattern()">
                     </div>
-                    <div class="help-block" ng-show="compositeClassForm.fullClassName.$dirty && compositeClassForm.fullClassName.$invalid">
+                    <div id="classNameError" class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
                         Invalid:
-                        <span ng-show="compositeClassForm.fullClassName.$error.pattern">
+                        <span ng-show="compositeClassForm.className.$error.pattern">
                             Class name cannot start with a number, but after the initial character it may use any combination of letters and digits, underscores or dollar signs.
                         </span>
                     </div>
@@ -47,8 +47,11 @@
                         <span class="input-group-addon">Composite</span>
                         <input id="compositeText" name="compositeText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()" required="true">
                     </div>
-                    <div class="help-block" ng-show="compositeForm.compositeText.$error.pattern">
-                        Step must start with Given, When or Then words.
+                    <div id="compositeTextError" class="help-block" ng-show="compositeForm.$invalid">
+                        Invalid:
+                        <span ng-show="compositeForm.compositeText.$error.pattern">
+                            Step must start with Given, When or Then words.
+                        </span>
                     </div>
                 </div>
                 <h3>
@@ -72,8 +75,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="help-block" ng-show="!compositesAreValid()">
-                    At least one step must be defined.
+                <div id="compositeStepsError" class="help-block" ng-show="!compositesAreValid()">
+                    At least one step must be defined. All steps must start with Given, When or Then words.
                 </div>
             </form>
             <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">

@@ -14,7 +14,6 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given File app/composites/com/technologyconversations/bdd/steps/TestComposites.java does NOT exist
 Given Web user is in the New Composites screen
 
 After:
