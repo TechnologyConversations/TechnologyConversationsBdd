@@ -29,7 +29,13 @@ angular.module('compositesModule', [])
             $scope.classNamePattern = classNamePattern;
             $scope.stepTextPattern = stepTextPattern;
             $scope.cssClass = cssClass;
-            $scope.buttonCssClass = buttonCssClass;
+            $scope.buttonCssClass = function(compositeClassForm, compositeForm) {
+                if (!compositeClassForm.$valid) {
+                    return buttonCssClass(compositeClassForm);
+                } else {
+                    return buttonCssClass(compositeForm);
+                }
+            };
             $scope.openComposite = function(composite) {
                 $scope.composite = composite;
             };
@@ -46,12 +52,14 @@ angular.module('compositesModule', [])
                 var isValid = ngModelController.$valid;
                 var isUpdated = !angular.equals($scope.compositesClass, $scope.originalCompositesClass);
                 var isNew = $scope.compositesClass.isNew;
-                return isNew || (isValid && isUpdated);
+                return (isNew || isUpdated) && isValid;
             };
-            $scope.compositesAreValid = function() {
-                var isValid = true;
+            $scope.compositesAreValid = function(ngModelController) {
+                var isValid = ngModelController.$valid;
                 angular.forEach($scope.compositesClass.composites, function(element) {
-                    if (element.compositeSteps === undefined || element.compositeSteps.length === 0) {
+                    if (element.stepText === undefined || element.stepText === '') {
+                        isValid = false;
+                    } else if (element.compositeSteps === undefined || element.compositeSteps.length === 0) {
                         isValid = false;
                     }
                 });

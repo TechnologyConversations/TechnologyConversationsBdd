@@ -4,9 +4,7 @@ describe('compositesModule', function() {
 
     describe('compositesCtrl controller', function() {
 
-        var scope, form, httpBackend, modal, location, cookieStore;
-        var composite = {stepText: 'Given precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
-        var anotherComposite = {stepText: 'When action', compositeSteps :[{step: 'Then result'}]};
+        var scope, form, httpBackend, modal, location, cookieStore, composite, anotherComposite;
         var newComposite = {stepText: 'Given some other precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
         var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
@@ -27,6 +25,8 @@ describe('compositesModule', function() {
                 scope = $rootScope.$new();
                 location = $location;
                 cookieStore = $cookieStore;
+                composite = {stepText: 'Given precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
+                anotherComposite = {stepText: 'When action', compositeSteps :[{step: 'Then result'}]};
                 compositesClass = {
                     package: packageName,
                     class: className,
@@ -44,6 +44,8 @@ describe('compositesModule', function() {
                 });
                 httpBackend = $httpBackend;
                 form = $compile('<form>')(scope);
+                form.$invalid = false;
+                form.$valid = true;
             })
         );
 
@@ -75,15 +77,9 @@ describe('compositesModule', function() {
             });
         });
 
-        describe('buttonCssClass function', function() {
-            it('should use util function buttonCssClass', function() {
-                expect(scope.cssClass).toBe(cssClass);
-            });
-        });
-
         describe('buttonCssClass', function() {
             it('should use util function buttonCssClass', function() {
-                expect(scope.buttonCssClass).toBe(buttonCssClass);
+                expect(scope.buttonCssClass(form, form)).toEqual(buttonCssClass(form));
             });
         });
 
@@ -196,9 +192,7 @@ describe('compositesModule', function() {
 //                scope.compositesClass.composites.push({});
 //                expect(scope.canSaveCompositesClass(form)).toEqual(false);
 //            });
-            it('should return true if isNew is set to true (the rest of criteria is ignored)', function() {
-                form.$invalid = true;
-                form.$valid = false;
+            it('should return true if it is new and valid', function() {
                 scope.compositesClass.isNew = true;
                 expect(scope.canSaveCompositesClass(form)).toEqual(true);
             });
@@ -212,15 +206,24 @@ describe('compositesModule', function() {
         describe('compositesAreValid function', function() {
             it('should return false when composite steps are not defined', function() {
                 scope.compositesClass.composites.push({stepText: 'Given something'});
-                expect(scope.compositesAreValid()).toEqual(false);
+                expect(scope.compositesAreValid(form)).toEqual(false);
+            });
+            it('should return false when form is invalid', function() {
+                form.$valid = false;
+                form.$invalid = true;
+                expect(scope.compositesAreValid(form)).toEqual(false);
+            });
+            it('should return false composite ', function() {
+                scope.compositesClass.composites[0].stepText = '';
+                expect(scope.compositesAreValid(form)).toEqual(false);
             });
             it('should return false when there are no composite steps', function() {
                 scope.compositesClass.composites.push({stepText: 'Given something', compositeSteps: []});
-                expect(scope.compositesAreValid()).toEqual(false);
+                expect(scope.compositesAreValid(form)).toEqual(false);
             });
             it('should return true if all other conditions are fulfilled', function() {
                 scope.compositesClass.composites.push({stepText: 'Given something', compositeSteps: [{steps: 'When something else'}]});
-                expect(scope.compositesAreValid()).toEqual(true);
+                expect(scope.compositesAreValid(form)).toEqual(true);
             });
         });
 

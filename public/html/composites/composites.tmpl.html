@@ -66,7 +66,10 @@
                             <span id="dragCompositeStep{{$index + 1}}" class="input-group-addon">
                                 <span class="glyphicon glyphicon-move"></span>
                             </span>
-                            <input id="compositeStep{{$index + 1}}" name="compositeStep" class="form-control" type="text" ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)" autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25">
+                            <input id="compositeStep{{$index + 1}}" name="compositeStep" class="form-control" type="text"
+                                   ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)"
+                                   autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25"
+                                   ng-pattern="stepTextPattern()">
                             <span class="input-group-btn">
                                 <button id="removeCompositeStep{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
                                     <span class="glyphicon glyphicon-remove"></span>
@@ -75,13 +78,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="compositeStepsError" class="help-block" ng-show="!compositesAreValid()">
+                <div id="compositeStepsError" class="help-block" ng-show="!compositesAreValid(compositeForm)">
                     At least one step must be defined. All steps must start with Given, When or Then words.
                 </div>
             </form>
             <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
                 <div>
-                    <button id="saveComposites" class="btn btn-primary" ng-class="buttonCssClass(compositeForm)" ng-disabled="!canSaveCompositesClass(compositeForm) || !compositesAreValid()" ng-click="saveCompositesClass()" type="button">{{saveCompositesText()}}</button>
+                    <button id="saveComposites" class="btn btn-primary" ng-class="buttonCssClass(compositeClassForm, compositeForm)" ng-disabled="!canSaveCompositesClass(compositeClassForm) || !compositesAreValid(compositeForm)" ng-click="saveCompositesClass()" type="button">{{saveCompositesText()}}</button>
                     <button id="revertComposites" class="btn btn-info" ng-click="revertCompositesClass()" ng-disabled="!canRevertCompositesClass()" type="button">Revert Changes</button>
                     <button id="deleteComposites" class="btn btn-danger" ng-click="deleteCompositesClass()" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
                 </div>

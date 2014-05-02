@@ -26,7 +26,6 @@ Meta:
 
 
 When Web user clears the element className
-Then Web element $selector should have text Class name is required
 Then Web element saveComposites is disabled
 
 Examples:
@@ -78,14 +77,14 @@ Scenario: Composite must use valid parameters naming
 Meta:
 
 
-When Web user sets value <param> to the element compositeText
-Then Web element errorText should have text <param> is incorrect.
+When Web user sets value <step> to the element compositeText
 When Web user clicks the element saveComposites
+Then Web element errorText should have text <errorText>
 
 Examples:
-|param|
-|This param has space|
-|1IsNotAGoodStart|
+|step|errorText|
+|Given there is param <with space>|with space is incorrect|
+|Given there is param <1IsNotAGoodStart>|1IsNotAGoodStart is incorrect|
 
 Scenario: Composites class name must be valid
 
