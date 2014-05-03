@@ -26,8 +26,9 @@ Meta:
 
 
 Given Web user is in the New Composites screen
+Then File app/composites/com/technologyconversations/bdd/steps/@className.java does NOT exist
 When Web user clicks the element saveComposites
-Then Web composites are saved
+Then File app/composites/com/technologyconversations/bdd/steps/@className.java exists
 
 Examples:
 
@@ -36,9 +37,9 @@ Scenario: Can revert changes
 Meta:
 
 
-When Web user sets value ThisIsNewCompositesClass to the element className
-When Web user clicks the element reverComposites
-Then Web element className should NOT have text ThisIsNewCompositesClass
+When Web user sets value Given I can modify the composite to the element compositeText
+When Web user clicks the element revertComposites
+Then Web element className should NOT have text Given I can modify the composite
 
 Examples:
 
@@ -48,18 +49,8 @@ Meta:
 
 
 When Web user clicks the element deleteComposites
-Then Web composites are deleted
-
-Examples:
-
-Scenario: Created composites use BddVariable as param type
-
-Meta:
-
-
-When Web user sets value Given I can use parameter <myParam> to the element compositeText
-When Web user clicks the element saveComposites
-Then Web composites have BddVariable myParam
+When Web user clicks the element ok
+Then File app/composites/com/technologyconversations/bdd/steps/@className.java does NOT exist
 
 Examples:
 
@@ -96,7 +87,7 @@ Scenario: Can NOT save composites when there are validation errors
 Meta:
 
 
-When Web user clears the element className
+When Web user clears the element compositeText
 Then Web element saveComposites is disabled
 
 Examples:
@@ -110,12 +101,12 @@ Then Web element saveComposites is disabled
 
 Examples:
 
-Scenario: Can rename existing composites class
+Scenario: Can not modify the name of an existing composites class
 
 Meta:
 
 
-When Web user sets value TestCompositesRenamed to the element className
-When Web user clicks the element saveComposites
+Given Web user is in the View Composites screen
+Then Web element className is disabled
 
 Examples:

@@ -5,7 +5,7 @@
                 <div ng-class="cssClass(compositeClassForm.className)">
                     <div class="input-group">
                         <span class="input-group-addon">Class</span>
-                        <input id="className" name="className" class="form-control input-lg" type="text" ng-model="compositesClass.class" required="true" ng-pattern="classNamePattern()">
+                        <input id="className" name="className" class="form-control input-lg" type="text" ng-model="compositesClass.class" required="true" ng-pattern="classNamePattern()" ng-disabled="!compositesClass.isNew">
                     </div>
                     <div id="classNameError" class="help-block" ng-show="compositeClassForm.className.$dirty && compositeClassForm.className.$invalid">
                         Invalid:
@@ -31,6 +31,7 @@
                 <tbody ng-repeat="composite in compositesClass.composites | filter:stepText">
                     <tr>
                         <td>
+
                             <a id="composite{{$index + 1}}" href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
                             <button id="deleteComposite{{$index + 1}}" class="btn btn-xs btn-danger pull-right" ng-click="removeCollectionElement(compositesClass.composites, $index)" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
