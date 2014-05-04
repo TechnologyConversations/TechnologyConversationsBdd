@@ -10,14 +10,18 @@ IDEA project
 
 Use the gen-idea sbt task to create Idea project files.
 
+´´´
+$ sbt gen-idea
+´´´
 
-Testing
--------
+
+Unit Tests
+----------
 
 play ~test-quick
 
 
-Web testing
------------
+Functional Tests
+----------------
 
 Directory where chromedriver and IEDriverServer are located must be in the system path.

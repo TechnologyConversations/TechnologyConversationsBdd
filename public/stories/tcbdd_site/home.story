@@ -28,7 +28,7 @@ Meta:
 Then Web element bddAssistantSummaryHeader should have text BDD Assistant
 Then Web element bddAssistantSummaryBody is visible
 When Web user clicks the element bddAssistantSummaryMore
-Then Web page title should have text BDD Assistant
+Then Web page title should have text Application
 
 Examples:
 
