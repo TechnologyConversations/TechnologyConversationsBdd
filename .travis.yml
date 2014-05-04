@@ -1,16 +1,13 @@
 language: scala
-
 scala:
-  - 2.10.0
-
+- 2.10.0
 notifications:
   email:
   - viktor@farcic.com
-
 deploy:
   provider: heroku
   api_key:
-    secure: SRT/QPYeRmfKCJjM6OVxWhId4xVG9ZnavYWeumkEPNGn1Ftd51JnrlGC2G7mUfr6ivQrj5bwK8aZJ3g00DvZce/m674to37kvEG9N85VjqoQIEef0OZEs/XIlbqdNHeDO3sz5JZHIcEe4qrHjlbVPtHYaiSaGeBPR1Px85sGiuE=
-  app: tcbdd
+    secure: Dm6sUS/mQ93P1XGWxpzzstsnumUe4Ir7tfmD9nAFVWqj3FckfSUD4jKfTLwOziEiV5Dzxx0aHxBy52o8JkHaxBvFn3IjDArZE7IZobZ+ZL7LVahfyiL6sMXJvEtV3+UbwwwFi71xRG1voswsILu+7xzQyXsdfI3lXSIBbSuwHes=
+  app: bddassistant
   on:
-    repo: vfarcic/TechnologyConversationsBdd
+    repo: alxgarcia/TechnologyConversationsBdd
