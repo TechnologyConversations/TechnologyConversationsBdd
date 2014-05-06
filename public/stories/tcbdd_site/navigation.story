@@ -40,7 +40,7 @@ Then Web page title should have text Behavior-Driven Development (BDD)
 
 Examples:
 
-Scenario: Should have the link to the BDD Assistant explanation screen
+Scenario: Should have the link to the BDD Assistant screen
 
 Meta:
 
@@ -50,12 +50,21 @@ Then Web page title should have text BDD Assistant
 
 Examples:
 
-Scenario: Should have the link to the BDD Assistant tutorial screen
+Scenario: Should have the link to the tutorial screen
 
 Meta:
 
 
 When Web user clicks the element tutorial
 Then Web page title should have text Tutorial
+
+Examples:
+
+Scenario: Should have the link to the Technology Conversations screen
+
+Meta:
+
+
+
 
 Examples:
