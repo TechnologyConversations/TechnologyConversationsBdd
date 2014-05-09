@@ -26,6 +26,8 @@ Meta:
 
 
 Then Web element tutorialIndex is visible
+Then Web element tutorialIndexIntroduction is visible
+Then Web element tutorialIndexNavigation is visible
 
 Examples:
 
@@ -34,7 +36,18 @@ Scenario: Shold have Introduction
 Meta:
 
 
-When Web user clicks the element tutorialIntroduction
+When Web user clicks the element tutorialIndexIntroduction
 Then Web element pageSubheader should have text Introduction
+Then Web element tutorialNavigation is visible
+
+Examples:
+
+Scenario: Should have Navigation
+
+Meta:
+
+
+When Web user clicks the element tutorialIndexNavigation
+Then Web element pageSubheader should have text Navigation
 
 Examples:
