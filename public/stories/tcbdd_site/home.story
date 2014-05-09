@@ -52,7 +52,7 @@ Meta:
 Then Web element tcSummaryHeader should have text Technology Conversations
 Then Web element tcSummaryBody is visible
 When Web user clicks the element tcSummaryMore
-Then Web element pageHeader should have text Technology Conversations
+Then Web page title should have text Technology | CONVERSATIONS
 
 Examples:
 
