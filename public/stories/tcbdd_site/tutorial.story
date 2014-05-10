@@ -29,6 +29,7 @@ Then Web element tutorialIndex is visible
 Then Web element tutorialIndexIntroduction is visible
 Then Web element tutorialIndexNavigation is visible
 Then Web element tutorialIndexStories is visible
+Then Web element tutorialIndexStoryForm is visible
 
 Examples:
 
@@ -40,6 +41,7 @@ Meta:
 When Web user clicks the element tutorialIndexIntroduction
 Then Web element tutorialNavigation is visible
 Then Web element tutorialStories is visible
+Then Web element tutorialStoryForm is visible
 
 Examples:
 
@@ -54,5 +56,7 @@ When Web user clicks the element tutorialIndexNavigation
 Then Web element pageSubheader should have text Navigation
 When Web user clicks the element tutorialIndexStories
 Then Web element pageSubheader should have text Browse Stories
+When Web user clicks the element tutorialIndexStoryForm
+Then Web element pageSubheader should have text Story Form
 
 Examples:
