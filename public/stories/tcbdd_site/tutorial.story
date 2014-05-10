@@ -30,6 +30,7 @@ Then Web element tutorialIndexIntroduction is visible
 Then Web element tutorialIndexNavigation is visible
 Then Web element tutorialIndexStories is visible
 Then Web element tutorialIndexStoryForm is visible
+Then Web element tutorialIndexStoryOperations is visible
 
 Examples:
 
@@ -42,6 +43,7 @@ When Web user clicks the element tutorialIndexIntroduction
 Then Web element tutorialNavigation is visible
 Then Web element tutorialStories is visible
 Then Web element tutorialStoryForm is visible
+Then Web element tutorialStoryOperations is visible
 
 Examples:
 
@@ -58,5 +60,7 @@ When Web user clicks the element tutorialIndexStories
 Then Web element pageSubheader should have text Browse Stories
 When Web user clicks the element tutorialIndexStoryForm
 Then Web element pageSubheader should have text Story Form
+When Web user clicks the element tutorialIndexStoryOperations
+Then Web element pageSubheader should have text Story Operations
 
 Examples:
