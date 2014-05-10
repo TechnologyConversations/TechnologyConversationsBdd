@@ -10,4 +10,4 @@ deploy:
     secure: Dm6sUS/mQ93P1XGWxpzzstsnumUe4Ir7tfmD9nAFVWqj3FckfSUD4jKfTLwOziEiV5Dzxx0aHxBy52o8JkHaxBvFn3IjDArZE7IZobZ+ZL7LVahfyiL6sMXJvEtV3+UbwwwFi71xRG1voswsILu+7xzQyXsdfI3lXSIBbSuwHes=
   app: bddassistant
   on:
-    repo: alxgarcia/TechnologyConversationsBdd
+    repo: vfarcic/TechnologyConversationsBdd
