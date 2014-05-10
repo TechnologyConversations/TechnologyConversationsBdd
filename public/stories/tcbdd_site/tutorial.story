@@ -28,26 +28,31 @@ Meta:
 Then Web element tutorialIndex is visible
 Then Web element tutorialIndexIntroduction is visible
 Then Web element tutorialIndexNavigation is visible
+Then Web element tutorialIndexStories is visible
 
 Examples:
 
-Scenario: Shold have Introduction
+Scenario: Shold have all sections in the Introduction
+
+Meta:
+
+
+When Web user clicks the element tutorialIndexIntroduction
+Then Web element tutorialNavigation is visible
+Then Web element tutorialStories is visible
+
+Examples:
+
+Scenario: Should have index repeated in all tutorial screens
 
 Meta:
 
 
 When Web user clicks the element tutorialIndexIntroduction
 Then Web element pageSubheader should have text Introduction
-Then Web element tutorialNavigation is visible
-
-Examples:
-
-Scenario: Should have Navigation
-
-Meta:
-
-
 When Web user clicks the element tutorialIndexNavigation
 Then Web element pageSubheader should have text Navigation
+When Web user clicks the element tutorialIndexStories
+Then Web element pageSubheader should have text Browse Stories
 
 Examples:
