@@ -31,6 +31,7 @@ Then Web element tutorialIndexNavigation is visible
 Then Web element tutorialIndexStories is visible
 Then Web element tutorialIndexStoryForm is visible
 Then Web element tutorialIndexStoryOperations is visible
+Then Web element tutorialIndexSingleStoryRunner is visible
 
 Examples:
 
@@ -44,10 +45,11 @@ Then Web element tutorialNavigation is visible
 Then Web element tutorialStories is visible
 Then Web element tutorialStoryForm is visible
 Then Web element tutorialStoryOperations is visible
+Then Web element tutorialSingleStoryRunner is visible
 
 Examples:
 
-Scenario: Should have index repeated in all tutorial screens
+Scenario: Should have complete index repeated in all tutorial screens
 
 Meta:
 
@@ -62,5 +64,7 @@ When Web user clicks the element tutorialIndexStoryForm
 Then Web element pageSubheader should have text Story Form
 When Web user clicks the element tutorialIndexStoryOperations
 Then Web element pageSubheader should have text Story Operations
+When Web user clicks the element tutorialIndexSingleStoryRunner
+Then Web element pageSubheader should have text Single Story Runner
 
 Examples:
