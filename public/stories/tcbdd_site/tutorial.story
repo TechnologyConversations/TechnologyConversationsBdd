@@ -32,6 +32,7 @@ Then Web element tutorialIndexStories is visible
 Then Web element tutorialIndexStoryForm is visible
 Then Web element tutorialIndexStoryOperations is visible
 Then Web element tutorialIndexSingleStoryRunner is visible
+Then Web element tutorialIndexCompositeClasses is visible
 
 Examples:
 
@@ -46,6 +47,7 @@ Then Web element tutorialStories is visible
 Then Web element tutorialStoryForm is visible
 Then Web element tutorialStoryOperations is visible
 Then Web element tutorialSingleStoryRunner is visible
+Then Web element tutorialCompositeClasses is visible
 
 Examples:
 
@@ -66,5 +68,7 @@ When Web user clicks the element tutorialIndexStoryOperations
 Then Web element pageSubheader should have text Story Operations
 When Web user clicks the element tutorialIndexSingleStoryRunner
 Then Web element pageSubheader should have text Single Story Runner
+When Web user clicks the element tutorialIndexCompositeClasses
+Then Web element pageSubheader should have text Browse Composites
 
 Examples:
