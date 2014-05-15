@@ -7,7 +7,7 @@ notifications:
 deploy:
   provider: heroku
   api_key:
-    secure: Dm6sUS/mQ93P1XGWxpzzstsnumUe4Ir7tfmD9nAFVWqj3FckfSUD4jKfTLwOziEiV5Dzxx0aHxBy52o8JkHaxBvFn3IjDArZE7IZobZ+ZL7LVahfyiL6sMXJvEtV3+UbwwwFi71xRG1voswsILu+7xzQyXsdfI3lXSIBbSuwHes=
+    secure: M+5P1xEMeWh7OSf1nV2PclTUBDb9pquwkSwyKSJM7gcCfUOgJTD3PQAAf4htmeSWoBGixFWy/HygsgLaZwZ5paqRT7mhl+AXUfxfyowqIzQuzfcvrEZjXiCLIJayjnJHPdW571vQjwknrs6AWvfzIy16J+02hBmr/9U7PLMy4R8=
   app: bddassistant
   on:
     repo: TechnologyConversations/TechnologyConversationsBdd
