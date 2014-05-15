@@ -99,7 +99,7 @@ Scenario: Can display the list of pending steps
 Meta:
 
 
-Given Web user is in the Story page with pending steps
+Given Web user is in the Story screen with pending steps
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 Then Web element pendingSteps is visible
@@ -148,7 +148,7 @@ Scenario: Can display pending status
 Meta:
 
 
-Given Web user is in the Story page with pending steps
+Given Web user is in the Story screen with pending steps
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 Then Web element runnerStatus should have text Story run was successful with 1 pending steps
@@ -160,7 +160,7 @@ Scenario: Pending steps are links to composites page
 Meta:
 
 
-Given Web user is in the Story page with pending steps
+Given Web user is in the Story screen with pending steps
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 When Web user clicks the element pendingStep1

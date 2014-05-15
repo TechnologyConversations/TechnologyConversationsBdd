@@ -2,7 +2,12 @@ angular.module('storyModule', [])
     .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'classes', 'composites',
         function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, classes, composites) {
             $scope.setAction = function() {
-                $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
+                if ($scope.story.name === '') {
+                    $scope.action = 'POST';
+                } else {
+                    $scope.action = 'PUT';
+                    $scope.addHistoryItem($scope.story.name + ' story');
+                }
             };
             $scope.expandPanels = function() {
                 var scenariosExpanded = true;

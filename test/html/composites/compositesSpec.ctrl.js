@@ -10,11 +10,7 @@ describe('compositesModule', function() {
         var className = 'WebStepsComposites';
         var newClassName = 'OtherStepsComposites';
         var compositesClass;
-        var newCompositesClass = {
-            package: packageName,
-            class: newClassName,
-            composites: [composite]
-        };
+        var newCompositesClass;
         var steps = {"steps":[{"type":"GIVEN","step":"Given Web address $url is opened"}]};
         var emptyComposite = {stepText: '', compositeSteps: [{}]};
         var compositeStepText = 'Given this is my composites step';
@@ -23,9 +19,20 @@ describe('compositesModule', function() {
         beforeEach(
             inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location, $cookieStore) {
                 scope = $rootScope.$new();
+                scope.addHistoryItem = function(text) {
+                    scope.currentTabText = text;
+                };
                 location = $location;
                 cookieStore = $cookieStore;
-                composite = {stepText: 'Given precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
+                composite = {
+                    stepText: 'Given precondition',
+                    compositeSteps :[{step: 'When action'},{step: 'Then result'}]
+                };
+                newCompositesClass = {
+                    package: packageName,
+                    class: newClassName,
+                    composites: [composite]
+                };
                 anotherComposite = {stepText: 'When action', compositeSteps :[{step: 'Then result'}]};
                 compositesClass = {
                     package: packageName,
@@ -203,6 +210,7 @@ describe('compositesModule', function() {
                 expect(scope.canSaveCompositesClass(form)).toEqual(true);
             });
         });
+
         describe('compositesAreValid function', function() {
             it('should return false when composite steps are not defined', function() {
                 scope.compositesClass.composites.push({stepText: 'Given something'});
@@ -293,7 +301,21 @@ describe('compositesModule', function() {
                 scope.compositesClass.isNew = false;
                 expect(scope.saveCompositesText()).toEqual('Update Composites');
             });
-        })
+        });
+
+        describe('addCompositesTab function', function() {
+            it('should NOT add tab when composites class is new', function() {
+                scope.compositesClass.isNew = true;
+                scope.currentTabText = undefined;
+                scope.addCompositesTab();
+                expect(scope.currentTabText).toEqual(undefined);
+            });
+            it('should add tab when composites class is NOT new', function() {
+                scope.currentTabText = undefined;
+                scope.addCompositesTab();
+                expect(scope.currentTabText).toEqual(scope.compositesClass.class + ' composites');
+            })
+        });
 
     });
 

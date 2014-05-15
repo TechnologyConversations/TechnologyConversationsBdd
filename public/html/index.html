@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html ng-app="storiesModule">
 <head>
     <title>BDD Assistant: Technology Conversations</title>
     <script src="/assets/javascripts/jquery-2.1.0.min.js"></script>
@@ -12,6 +13,7 @@
     <script src="/assets/javascripts/sortable.js"></script>
     <script src="/assets/html/config.js"></script>
     <script src="/assets/html/index.js"></script>
+    <script src="/assets/html/common/body.ctrl.js"></script>
     <script src="/assets/html/common/util.js"></script>
     <script src="/assets/html/topMenu/topMenu.ctrl.js"></script>
     <script src="/assets/html/story/story.ctrl.js"></script>
@@ -20,7 +22,8 @@
     <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/stylesheets/tcbdd.css" rel="stylesheet">
 </head>
-<body ng-app="storiesModule">
+<body ng-controller="bodyCtrl">
+<header>
     <!--Top menu-->
     <nav class="navbar navbar-inverse" role="navigation" ng-controller="topMenuController">
         <div class="container-fluid">
@@ -39,11 +42,19 @@
                 <ul class="nav navbar-nav">
                     <li><a id="browseStories" href="#" ng-click="openStory()">Browse Stories</a></li>
                     <li><a id="browseComposites" href="#" ng-click="openCompositeClass()">Browse Composites</a></li>
+                    <li class="dropdown">
+                        <a id="history" href="#" class="dropdown-toggle" data-toggle="dropdown">History <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="historyItem in history"><a id="historyItem{{index + 1}}" href="{{historyItem.url}}">{{historyItem.text}}</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div ng-view>
-        <!--view goes here-->
-    </div>
+</header>
+<div ng-view>
+    <!--view goes here-->
+</div>
 </body>
+</html>

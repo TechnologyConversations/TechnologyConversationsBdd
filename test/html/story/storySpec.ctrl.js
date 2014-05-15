@@ -29,6 +29,9 @@ describe('storyModule', function() {
         beforeEach(
             inject(function($rootScope, $controller, $http, $location, $cookieStore, $compile) {
                 scope = $rootScope.$new();
+                scope.addHistoryItem = function(text) {
+                    scope.currentTabText = text;
+                };
                 story = {
                     name: 'this is a story name',
                     path: 'this/is/path'
@@ -127,7 +130,7 @@ describe('storyModule', function() {
 
         describe('removeCollectionElement function', function() {
            it('should call the general removeCollectionElement function', function() {
-               scope.removeCollectionElement = removeCollectionElement;
+               expect(scope.removeCollectionElement).toEqual(removeCollectionElement);
            });
         });
 
@@ -220,10 +223,14 @@ describe('storyModule', function() {
         });
 
         describe('setAction function', function() {
-            it('should set action to POST when new storyis opened', function() {
+            it('should set action to POST when new story is opened', function() {
                 scope.story.name = '';
                 scope.setAction();
                 expect(scope.action).toEqual('POST');
+            });
+            it('should set add tab story tab when existing story is opened', function() {
+                scope.setAction();
+                expect(scope.currentTabText).toEqual(scope.story.name + ' story');
             });
             it('should set action to PUT when existing story is opened', function() {
                 scope.setAction();
@@ -268,6 +275,24 @@ describe('storyModule', function() {
             it('should return true when form is valid and story runner is NOT in progress', function() {
                 scope.storyRunnerInProgress = false;
                 expect(scope.canRunStory()).toEqual(true);
+            });
+        });
+
+        describe('canDeleteStory function', function() {
+            it('should return false when action is NOT PUT', function() {
+                scope.action = 'POST';
+                scope.storyRunnerInProgress = false;
+                expect(scope.canDeleteStory()).toEqual(false)
+            });
+            it('should return false when story runner is in progress', function() {
+                scope.action = 'PUT';
+                scope.storyRunnerInProgress = true;
+                expect(scope.canDeleteStory()).toEqual(false)
+            });
+            it('should return true when action is PUT and story runner is NOT in progress', function() {
+                scope.action = 'PUT';
+                scope.storyRunnerInProgress = false;
+                expect(scope.canDeleteStory()).toEqual(true)
             });
         });
 

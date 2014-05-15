@@ -1,6 +1,11 @@
 angular.module('compositesModule', [])
     .controller('compositesCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', 'compositesClass', 'steps',
         function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps) {
+            $scope.addCompositesTab = function() {
+                if (!$scope.compositesClass.isNew) {
+                    $scope.addHistoryItem($scope.compositesClass.class + ' composites');
+                }
+            };
             $scope.addNewComposite = function() {
                 $scope.composite = {stepText: '', compositeSteps: [{}]};
                 $scope.compositesClass.composites.push($scope.composite);
@@ -72,6 +77,7 @@ angular.module('compositesModule', [])
                     $scope.compositesClass.isNew = false;
                     $scope.originalCompositesClass = angular.copy($scope.compositesClass);
                     $cookieStore.put('compositeClass', $scope.compositesClass.class);
+                    $scope.addCompositesTab();
                 }, function(response) {
                     openErrorModal($modal, response.data);
                 });
@@ -113,5 +119,7 @@ angular.module('compositesModule', [])
                     return 'Update Composites';
                 }
             };
+            // Initialization
+            $scope.addCompositesTab();
         }
     ]);

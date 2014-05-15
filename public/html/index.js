@@ -4,6 +4,7 @@ angular.module('storiesModule', [
     'ui.bootstrap',
     'ui.sortable',
     'configModule',
+    'bodyModule',
     'topMenuModule',
     'storyModule',
     'compositeClassesModule',

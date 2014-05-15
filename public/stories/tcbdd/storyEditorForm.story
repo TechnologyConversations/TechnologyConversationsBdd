@@ -14,7 +14,8 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given Web user is in the New Story page
+Given Web user is in the New Story screen
+When Web user clicks the element expandPanels
 
 After:
 
