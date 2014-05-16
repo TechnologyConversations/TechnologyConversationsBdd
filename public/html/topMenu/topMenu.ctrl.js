@@ -1,6 +1,7 @@
 angular.module('topMenuModule', [])
     .controller('topMenuController', ['$scope', '$modal', '$location',
         function($scope, $modal, $location) {
+            // TODO Test
             $scope.openStory = function() {
                 $modal.open({
                     templateUrl: '/assets/html/stories.tmpl.html',
@@ -12,6 +13,19 @@ angular.module('topMenuModule', [])
                     }
                 });
             };
+            // TODO Test
+            $scope.openRunner = function() {
+                $modal.open({
+                   templateUrl: '/assets/html/runner/runnerSelector.tmpl.html',
+                    controller: 'runnerSelectorCtrl',
+                    resolve: {
+                        data: function() {
+                            return {};
+                        }
+                    }
+                });
+            };
+            // TODO Test
             $scope.openCompositeClass = function() {
                 openCompositeClass($modal);
             };

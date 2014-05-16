@@ -134,6 +134,23 @@ describe('storyModule', function() {
            });
         });
 
+        describe('getRunnerProgressCss function', function() {
+            it('should return active when story is in progress', function() {
+                scope.storyRunnerInProgress = true;
+                expect(scope.getRunnerProgressCss()).toEqual({
+                    'progress progress-striped active': true,
+                    'progress': false
+                });
+            });
+            it('should return inactive when story is in progress', function() {
+                scope.storyRunnerInProgress = false;
+                expect(scope.getRunnerProgressCss()).toEqual({
+                    'progress progress-striped active': false,
+                    'progress': true
+                });
+            });
+        });
+
         describe('getRunnerStatusCss function', function() {
             it('should return info if story runner is in progress', function() {
                 scope.storyRunnerInProgress = true;
@@ -293,6 +310,20 @@ describe('storyModule', function() {
                 scope.action = 'PUT';
                 scope.storyRunnerInProgress = false;
                 expect(scope.canDeleteStory()).toEqual(true)
+            });
+        });
+
+        describe('addElement function', function() {
+            it('should add an element to the collection', function() {
+                var collection = [{key: 'item1'}, {key: 'item2'}];
+                var expected = collection.length + 1;
+                scope.addElement(collection);
+                expect(collection.length).toEqual(expected);
+            });
+            it('should add an empty element to the collection', function() {
+                var collection = [];
+                scope.addElement(collection);
+                expect(collection[0]).toEqual({});
             });
         });
 

@@ -133,14 +133,12 @@ angular.module('storyModule', [])
                     }
                 });
             };
-            // TODO Test
             $scope.getRunnerProgressCss = function () {
                 return {
                     'progress progress-striped active': $scope.storyRunnerInProgress,
                     'progress': !$scope.storyRunnerInProgress
                 };
             };
-            // TODO Test
             $scope.getRunnerStatusCss = function () {
                 return {
                     'progress-bar progress-bar-info': $scope.storyRunnerInProgress,
@@ -176,7 +174,6 @@ angular.module('storyModule', [])
                 }
             };
             $scope.removeCollectionElement = removeCollectionElement;
-            // TODO Test
             $scope.addElement = function (collection) {
                 collection.push({});
             };
