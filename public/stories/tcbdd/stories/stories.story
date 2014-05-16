@@ -16,7 +16,7 @@ Lifecycle:
 
 Before:
 Given File /public/stories/testDirectory exists
-When File is copied from public/stories/tcbdd/stories.story to public/stories/testDirectory/testStory.story
+When File is copied from public/stories/tcbdd/stories/stories.story to public/stories/testDirectory/testStory.story
 
 After:
 Given Directory public/stories/newTestDirectory does NOT exist
