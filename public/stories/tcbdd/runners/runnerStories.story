@@ -14,7 +14,7 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given File /public/stories/testDirectory/testSubDirectory exists
+Given Directory public/stories/testDirectory/testSubDirectory exists
 When File is copied from public/stories/test/dummy.story to public/stories/testDirectory/testStory.story
 When File is copied from public/stories/test/dummyPending.story to public/stories/testDirectory/testPendingStory.story
 Given Web home page is opened
@@ -45,15 +45,22 @@ Then Web element story1Selector is visible
 
 Examples:
 
-Scenario: Should display REST interface for remote calls
+Scenario: Can cancel the dialog
 
 Meta:
 
 
-When Web user clicks the element directory1Selector
-When Web user clicks the element file1Selector
-When Web user clicks the element file2Selector
-Then Web element rest should have text CHANGE_THIS_TO_THE_REAL_JSON
+When Web user clicks the element cancelRunner
+Then Web element modalHeader is NOT visible
+
+Examples:
+
+Scenario: Can move to the parameters dialog
+
+Meta:
+
+
+Given steps are written
 
 Examples:
 
@@ -78,5 +85,35 @@ When Web user clicks the element file1Selector
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 Then Web element runnerReports is visible
+
+Examples:
+
+Scenario: Can go back to the parent directory
+
+Meta:
+
+
+Given step is written
+
+Examples:
+
+Scenario: Should display the current path
+
+Meta:
+
+
+Then Web element path should have text testDirectory
+
+Examples:
+
+Scenario: Should display REST interface for remote calls
+
+Meta:
+
+
+When Web user clicks the element directory1Selector
+When Web user clicks the element file1Selector
+When Web user clicks the element file2Selector
+Then Web element rest should have text CHANGE_THIS_TO_THE_REAL_JSON
 
 Examples:

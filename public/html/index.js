@@ -26,35 +26,13 @@ angular.module('storiesModule', [
     ])
     .controller('storiesCtrl', ['$scope', '$http', '$modal', '$modalInstance', '$location', '$q',
         function($scope, $http, $modal, $modalInstance, $location, $q) {
-            // TODO Test
-            $scope.rootPath = '';
-            $scope.updateData = function(path) {
-                $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
-                    $scope.files = response.data;
-                    if (path !== '') {
-                        $scope.rootPath += path + '/';
-                    }
-                }, function(response) {
-                    openErrorModal($modal, response.data);
-                });
+            getStories($scope, $http, $modal, '');
+            $scope.openDir = function(path) {
+                openDir($scope, $http, $modal, path);
             };
-            $scope.updateData('');
             // TODO Test
             $scope.close = function() {
                 $modalInstance.close();
-            };
-            // TODO Test
-            $scope.openDir = function(path) {
-                if (path === '..') {
-                    var dirs = $scope.rootPath.split('/');
-                    $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
-                    if ($scope.rootPath !== '') {
-                        $scope.rootPath += '/';
-                    }
-                    $scope.updateData('');
-                } else {
-                    $scope.updateData(path);
-                }
             };
             // TODO Test
             $scope.viewStoryUrl = function(name) {

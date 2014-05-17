@@ -340,6 +340,10 @@ describe('storyModule', function() {
                 cookieStore = $injector.get('$cookieStore');
                 cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[0].key, cookieValue);
                 cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[1].key, 'value2');
+                modalInstance = {
+                    dismiss: jasmine.createSpy('modalInstance.dismiss'),
+                    close: jasmine.createSpy('modalInstance.close')
+                };
                 $controller("runnerCtrl", {
                     $scope: scope ,
                     $modalInstance: modalInstance,
@@ -383,6 +387,20 @@ describe('storyModule', function() {
                 var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
                 expect(actual).toMatch(/ThisIsParamKey/);
             });
+        });
+
+        describe('cancel function', function () {
+            it('should dismiss the modal', function() {
+                scope.cancel();
+                expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
+            })
+        });
+
+        describe('ok function', function () {
+            it('should close the modal and return data', function() {
+                scope.ok();
+                expect(modalInstance.close).toHaveBeenCalledWith(data);
+            })
         });
 
     });

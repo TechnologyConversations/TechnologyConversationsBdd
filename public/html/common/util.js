@@ -65,3 +65,30 @@ function getCompositesJson(http, fullClassName) {
 function stepTextPattern() {
     return (/^(Given|When|Then) .+$/);
 }
+
+function getStories($scope, $http, $modal, path) {
+    if ($scope.rootPath === undefined) {
+        $scope.rootPath = '';
+    }
+    $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
+        $scope.files = response.data;
+        if (path !== '') {
+            $scope.rootPath += path + '/';
+        }
+    }, function(response) {
+        openErrorModal($modal, response.data);
+    });
+}
+
+function openDir($scope, $http, $modal, path) {
+    if (path === '..') {
+        var dirs = $scope.rootPath.split('/');
+        $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
+        if ($scope.rootPath !== '') {
+            $scope.rootPath += '/';
+        }
+        getStories($scope, $http, $modal, '');
+    } else {
+        getStories($scope, $http, $modal, path);
+    }
+}

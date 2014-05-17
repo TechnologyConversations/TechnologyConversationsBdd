@@ -222,11 +222,9 @@ angular.module('storyModule', [])
             $scope.hasParams = function(classEntry) {
                 return classEntry.params !== undefined && classEntry.params.length > 0;
             };
-            // TODO Test
             $scope.ok = function () {
                 $modalInstance.close($scope.data);
             };
-            // TODO Test
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };

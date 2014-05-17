@@ -14,9 +14,13 @@ angular.module('topMenuModule', [])
                 });
             };
             // TODO Test
+            $scope.openCompositeClass = function() {
+                openCompositeClass($modal);
+            };
+            // TODO Test
             $scope.openRunner = function() {
                 $modal.open({
-                   templateUrl: '/assets/html/runner/runnerSelector.tmpl.html',
+                    templateUrl: '/assets/html/runner/runnerSelector.tmpl.html',
                     controller: 'runnerSelectorCtrl',
                     resolve: {
                         data: function() {
@@ -24,10 +28,6 @@ angular.module('topMenuModule', [])
                         }
                     }
                 });
-            };
-            // TODO Test
-            $scope.openCompositeClass = function() {
-                openCompositeClass($modal);
             };
             $scope.getTitle = function() {
                 var path = $location.path();

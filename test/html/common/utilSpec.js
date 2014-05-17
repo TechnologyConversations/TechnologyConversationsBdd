@@ -43,4 +43,48 @@ describe('util', function() {
         });
     });
 
+    describe('getStories function', function() {
+        var scope, http, modal, httpBackend;
+        var filesWithPath = {status: 'OK', files: 'filesWithPath'};
+        beforeEach(
+            inject(function ($rootScope, $http, $httpBackend) {
+                scope = $rootScope.$new();
+                http = $http;
+                httpBackend = $httpBackend;
+            })
+        );
+        it('should update files with data returned from the server', function () {
+            httpBackend.expectGET('/stories/list.json?path=my_path').respond(filesWithPath);
+            getStories(scope, http, modal, 'my_path');
+            httpBackend.flush();
+            expect(scope.files).toEqual(filesWithPath);
+        });
+    });
+
+    describe('openDir function', function() {
+        var scope, http, modal, httpBackend;
+        var filesWithPath = {status: 'OK', files: 'filesWithPath'};
+        beforeEach(
+            inject(function ($rootScope, $http, $httpBackend) {
+                scope = $rootScope.$new();
+                http = $http;
+                httpBackend = $httpBackend;
+            })
+        );
+        it('should call getStories for the parent dir when path is ".."', function() {
+            httpBackend.expectGET('/stories/list.json?path=this/is/').respond(filesWithPath);
+            scope.rootPath = "this/is/dir/";
+            openDir(scope, http, modal, '..');
+            httpBackend.flush();
+            expect(scope.files).toEqual(filesWithPath);
+        });
+        it('should call getStories for the path', function() {
+            httpBackend.expectGET('/stories/list.json?path=this/is/dir').respond(filesWithPath);
+            scope.rootPath = "this/is/";
+            openDir(scope, http, modal, 'dir');
+            httpBackend.flush();
+            expect(scope.files).toEqual(filesWithPath);
+        });
+    });
+
 });
