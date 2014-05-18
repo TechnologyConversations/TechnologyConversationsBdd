@@ -33,7 +33,8 @@ angular.module('topMenuModule', [])
             $scope.openRunner = function() {
                 $scope.openRunnerSelector().result.then(function(data) {
                     $scope.runnerSpectorData = data;
-                    $scope.openRunnerModal().result.then(function (data) {
+                    openRunnerParametersModal($modal).result.then(function (data) {
+                        console.log(data);
                     });
                 });
             };

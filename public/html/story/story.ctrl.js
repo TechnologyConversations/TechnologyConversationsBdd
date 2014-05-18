@@ -123,7 +123,7 @@ angular.module('storyModule', [])
             };
             // TODO Test
             $scope.openRunnerModal = function() {
-                return openRunnerParametersModal($modal, $scope.classes);
+                return openRunnerParametersModal($modal);
             };
             $scope.getRunnerProgressCss = function () {
                 return {
@@ -203,14 +203,12 @@ angular.module('storyModule', [])
             };
         }
     ])
-    .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', '$http',
-        function ($scope, $modalInstance, $cookieStore, $http) {
-            $http.get('/steps/classes.json', {cache: true}).then(function(response) {
-                $scope.classes = response.data.classes;
-                $scope.classes.forEach(function(classEntry) {
-                    classEntry.params.forEach(function(paramEntry) {
-                        paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
-                    });
+    .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
+        function ($scope, $modalInstance, $cookieStore, data) {
+            $scope.classes = data.classes;
+            $scope.classes.forEach(function(classEntry) {
+                classEntry.params.forEach(function(paramEntry) {
+                    paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
                 });
             });
             $scope.hasParams = function(classEntry) {

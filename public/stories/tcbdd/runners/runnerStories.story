@@ -137,3 +137,12 @@ Meta:
 Given steps are written
 
 Examples:
+
+Scenario: Runner Parameters confirm button should have text Run Stories
+
+Meta:
+
+
+Given steps are written
+
+Examples:

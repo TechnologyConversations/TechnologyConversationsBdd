@@ -94,13 +94,13 @@ function openDir($scope, $http, $modal, path) {
 }
 
 // TODO Test
-function openRunnerParametersModal($modal, classes) {
+function openRunnerParametersModal($modal) {
     return $modal.open({
         templateUrl: '/assets/html/runner.tmpl.html',
         controller: 'runnerCtrl',
         resolve: {
-            data: function() {
-                return classes;
+            data: function($route, $http, $modal) {
+                return getJson($http, $modal, '/steps/classes.json', true);
             }
         }
     });
