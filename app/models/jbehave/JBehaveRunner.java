@@ -22,12 +22,12 @@ import java.util.Map;
 
 public class JBehaveRunner extends JUnitStories {
 
-    private String storyPath;
-    public void setStoryPath(String value) {
-        storyPath = value;
+    private List<String> storyPaths;
+    public void setStoryPaths(List<String> value) {
+        storyPaths = value;
     }
-    public String getStoryPath() {
-        return storyPath;
+    public List<String> getStoryPaths() {
+        return storyPaths;
     }
 
     private List<Object> stepsInstances;
@@ -57,10 +57,10 @@ public class JBehaveRunner extends JUnitStories {
         return reportsPath;
     }
 
-    public JBehaveRunner(String storyPathValue,
+    public JBehaveRunner(List<String> storyPathsValue,
                          List<RunnerClass> stepsClasses,
                          String reportsPathValue) throws Exception {
-        setStoryPath(storyPathValue);
+        setStoryPaths(storyPathsValue);
         setStepsInstances(stepsClasses);
         setReportsPath(reportsPathValue);
     }
@@ -68,7 +68,7 @@ public class JBehaveRunner extends JUnitStories {
     @Override
     protected List<String> storyPaths() {
         String searchIn = CodeLocations.codeLocationFromPath("").getFile();
-        return new StoryFinder().findPaths(searchIn, getStoryPath(), "");
+        return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>());
     }
 
     @Override

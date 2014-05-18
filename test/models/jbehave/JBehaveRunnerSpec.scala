@@ -10,16 +10,16 @@ import models.RunnerClass
 class JBehaveRunnerSpec extends Specification {
 
   val storiesDirPath = "test/stories"
-  val storiesPath = s"$storiesDirPath/**/*.story"
+  val storyPaths = List(s"$storiesDirPath/**/*.story")
   val reportsPath = "/test/jbehave/"
   val params = Map("webDriver" -> "firefox", "webUrl" -> "http://www.technologyconversations.com")
   val steps = List(RunnerClass("com.technologyconversations.bdd.steps.WebSteps", params))
-  val runner = new JBehaveRunner(storiesPath, steps, reportsPath)
+  val runner = new JBehaveRunner(storyPaths, steps, reportsPath)
 
   "JBehaveRunner#newInstance" should {
 
-    "store storyPath" in {
-      runner.getStoryPath must be equalTo storiesPath
+    "store storyPaths" in {
+      runner.getStoryPaths must be equalTo storyPaths
     }
 
     "store stepsInstanceNames" in {
@@ -51,7 +51,7 @@ class JBehaveRunnerSpec extends Specification {
       val testSteps = List(
         RunnerClass("com.technologyconversations.bdd.steps.NonExistentSteps", Map())
       )
-      new JBehaveRunner(storiesPath, testSteps, reportsPath) should throwA[Exception]
+      new JBehaveRunner(storyPaths, testSteps, reportsPath) should throwA[Exception]
     }
 
     "have all params set" in {

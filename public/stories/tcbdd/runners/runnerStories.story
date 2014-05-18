@@ -71,7 +71,7 @@ Scenario: Can run selected stories
 Meta:
 
 
-When Web user clicks the element file1Selector
+When Web user clicks the element story1Selector
 When Web user clicks the element runStory
 When Web user clicks the element confirmRunStory
 Then story is running

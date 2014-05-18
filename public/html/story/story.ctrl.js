@@ -98,7 +98,7 @@ angular.module('storyModule', [])
                             });
                         });
                         var json = {
-                            storyPath: $scope.story.path,
+                            storyPaths: [{path: $scope.story.path}],
                             classes: classes,
                             composites: $scope.composites
                         };
