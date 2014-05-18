@@ -92,3 +92,16 @@ function openDir($scope, $http, $modal, path) {
         getStories($scope, $http, $modal, path);
     }
 }
+
+// TODO Test
+function openRunnerParametersModal($modal, classes) {
+    return $modal.open({
+        templateUrl: '/assets/html/runner.tmpl.html',
+        controller: 'runnerCtrl',
+        resolve: {
+            data: function() {
+                return classes;
+            }
+        }
+    });
+}

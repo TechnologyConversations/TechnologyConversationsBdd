@@ -63,7 +63,7 @@ Meta:
 
 Given Web user is in the Story page with all successful steps
 When Web user clicks the element runStory
-Then Web element runnerParams is visible
+Then Web element modalHeader is visible
 
 Examples:
 
@@ -127,7 +127,7 @@ Meta:
 Given Web user is in the Story page with all successful steps
 When Web user clicks the element runStory
 When Web user clicks the element cancelRunStory
-Then Web element runnerParams is NOT visible
+Then Web element modalHeader is NOT visible
 
 Examples:
 

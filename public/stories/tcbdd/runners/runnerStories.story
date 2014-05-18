@@ -50,7 +50,7 @@ Scenario: Can cancel the dialog
 Meta:
 
 
-When Web user clicks the element cancelRunner
+When Web user clicks the element cancelRunnerSelector
 Then Web element modalHeader is NOT visible
 
 Examples:
@@ -60,7 +60,9 @@ Scenario: Can move to the parameters dialog
 Meta:
 
 
-Given steps are written
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+Then Web element modalHeader should have text Runner Parameters
 
 Examples:
 
@@ -115,5 +117,23 @@ When Web user clicks the element directory1Selector
 When Web user clicks the element file1Selector
 When Web user clicks the element file2Selector
 Then Web element rest should have text CHANGE_THIS_TO_THE_REAL_JSON
+
+Examples:
+
+Scenario: Should populate the selector modal with data from the last run
+
+Meta:
+
+
+Given steps are written
+
+Examples:
+
+Scenario: Can NOT move to parameters dialog without at least one directory or story selected
+
+Meta:
+
+
+Given steps are written
 
 Examples:

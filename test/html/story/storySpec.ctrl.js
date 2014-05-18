@@ -5,7 +5,6 @@ describe('storyModule', function() {
     describe('storyCtrl controller', function() {
         var scope, modal, form, story;
         var steps = {status: 'OK'};
-        var classes = {status: 'OK'};
         var composites = {status: 'OK'};
         var pendingSteps = [
             "Given Web user is in the Browse Stories dialog",
@@ -44,7 +43,6 @@ describe('storyModule', function() {
                     $cookieStore: $cookieStore,
                     story: story,
                     steps: steps,
-                    classes: classes,
                     composites: composites
                 });
                 form = $compile('<form>')(scope);
@@ -60,9 +58,6 @@ describe('storyModule', function() {
             });
             it('should put story to the scope', function() {
                 expect(scope.story).toEqual(story);
-            });
-            it('should put classes to the scope', function() {
-                expect(scope.classes).toEqual(classes);
             });
             it('should put composites to the scope', function() {
                 expect(scope.composites).toEqual(composites);
@@ -331,15 +326,19 @@ describe('storyModule', function() {
 
     describe('runnerCtrl controller', function() {
 
-        var modalInstance, data, cookieStore, scope;
+        var modalInstance, data, cookieStore, scope, httpBackend, classes;
         var cookieValue = 'value1';
 
         beforeEach(
-            inject(function($rootScope, $injector, $controller) {
+            inject(function($rootScope, $injector, $controller, $httpBackend, $http) {
                 scope = $rootScope.$new();
+                classes = [{
+                    fullName: 'full.name.of.the.class',
+                    params: [{key: 'key1'}, {key: 'key2'}]
+                }];
                 cookieStore = $injector.get('$cookieStore');
-                cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[0].key, cookieValue);
-                cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[1].key, 'value2');
+                cookieStore.put(classes[0].fullName + "." + classes[0].params[0].key, cookieValue);
+                cookieStore.put(classes[0].fullName + "." + classes[0].params[1].key, 'value2');
                 modalInstance = {
                     dismiss: jasmine.createSpy('modalInstance.dismiss'),
                     close: jasmine.createSpy('modalInstance.close')
@@ -348,22 +347,20 @@ describe('storyModule', function() {
                     $scope: scope ,
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
-                    data: data});
-            }),
-            data = {
-                classes: [{
-                    fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1'}, {key: 'key2'}]
-                }]
-            }
+                    $http: $http});
+                httpBackend = $httpBackend;
+                    httpBackend.expectGET('/steps/classes.json').respond({classes: classes});
+            })
         );
 
         describe('by default', function() {
-            it('should put data to the scope', function() {
-                expect(scope.data).toBe(data);
-            });
-            it('should put values from cookies', function() {
-                expect(scope.data.classes[0].params[0].value).toEqual(cookieValue);
+            it('should put classes with values from cookies to the scope', function() {
+                httpBackend.flush();
+                var expected = [{
+                    fullName: 'full.name.of.the.class',
+                    params: [{key: 'key1', value: 'value1'}, {key: 'key2', value: 'value2'}]
+                }];
+                expect(scope.classes).toEqual(expected);
             });
         });
 

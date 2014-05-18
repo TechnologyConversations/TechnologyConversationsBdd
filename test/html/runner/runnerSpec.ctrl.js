@@ -33,7 +33,6 @@ describe('runnerModule', function() {
         );
 
         describe('getStories function', function() {
-
             it('should be called by the controller with the empty path', function() {
                 expect(scope.files).toBeUndefined();
                 httpBackend.flush();

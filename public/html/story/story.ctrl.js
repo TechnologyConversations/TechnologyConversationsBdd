@@ -1,6 +1,6 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'classes', 'composites',
-        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, classes, composites) {
+    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'composites',
+        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, composites) {
             $scope.setAction = function() {
                 if ($scope.story.name === '') {
                     $scope.action = 'POST';
@@ -29,7 +29,6 @@ angular.module('storyModule', [])
             };
             $scope.story = story;
             $scope.steps = steps;
-            $scope.classes = classes;
             $scope.composites = composites;
             $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
             $scope.storyFormClass = 'col-md-12';
@@ -88,18 +87,19 @@ angular.module('storyModule', [])
                 if ($scope.canRunStory()) {
                     $scope.saveStory();
                     $scope.openRunnerModal().result.then(function (data) {
+                        var classes = data;
                         $scope.storyFormClass = 'col-md-6';
                         $scope.storyRunnerClass = 'col-md-6';
                         $scope.storyRunnerVisible = true;
                         $scope.storyRunnerInProgress = true;
-                        data.classes.forEach(function (classEntry) {
+                        classes.forEach(function (classEntry) {
                             classEntry.params.forEach(function (paramEntry) {
                                 $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
                             });
                         });
                         var json = {
                             storyPath: $scope.story.path,
-                            classes: data.classes,
+                            classes: classes,
                             composites: $scope.composites
                         };
                         $http.post('/runner/run.json', json).then(function (response) {
@@ -123,15 +123,7 @@ angular.module('storyModule', [])
             };
             // TODO Test
             $scope.openRunnerModal = function() {
-                return $modal.open({
-                    templateUrl: '/assets/html/runner.tmpl.html',
-                    controller: 'runnerCtrl',
-                    resolve: {
-                        data: function() {
-                            return $scope.classes;
-                        }
-                    }
-                });
+                return openRunnerParametersModal($modal, $scope.classes);
             };
             $scope.getRunnerProgressCss = function () {
                 return {
@@ -211,19 +203,21 @@ angular.module('storyModule', [])
             };
         }
     ])
-    .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
-        function ($scope, $modalInstance, $cookieStore, data) {
-            $scope.data = data;
-            $scope.data.classes.forEach(function(classEntry) {
-                classEntry.params.forEach(function(paramEntry) {
-                    paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
+    .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', '$http',
+        function ($scope, $modalInstance, $cookieStore, $http) {
+            $http.get('/steps/classes.json', {cache: true}).then(function(response) {
+                $scope.classes = response.data.classes;
+                $scope.classes.forEach(function(classEntry) {
+                    classEntry.params.forEach(function(paramEntry) {
+                        paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
+                    });
                 });
             });
             $scope.hasParams = function(classEntry) {
                 return classEntry.params !== undefined && classEntry.params.length > 0;
             };
             $scope.ok = function () {
-                $modalInstance.close($scope.data);
+                $modalInstance.close($scope.classes);
             };
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');

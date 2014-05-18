@@ -15,9 +15,9 @@ angular.module('configModule', [])
                         steps: function($route, $http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        classes: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/steps/classes.json', true);
-                        },
+//                        classes: function($route, $http, $modal) {
+//                            return getJson($http, $modal, '/steps/classes.json', true);
+//                        },
                         composites: function($route, $http, $modal) {
                             return getJson($http, $modal, '/composites', true);
                         }
@@ -34,9 +34,9 @@ angular.module('configModule', [])
                         steps: function($route, $http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        classes: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/steps/classes.json', true);
-                        },
+//                        classes: function($route, $http, $modal) {
+//                            return getJson($http, $modal, '/steps/classes.json', true);
+//                        },
                         composites: function($route, $http, $modal) {
                             return getJson($http, $modal, '/composites', true);
                         }
@@ -53,9 +53,9 @@ angular.module('configModule', [])
                         steps: function($route, $http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        classes: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/steps/classes.json', true);
-                        },
+//                        classes: function($route, $http, $modal) {
+//                            return getJson($http, $modal, '/steps/classes.json', true);
+//                        },
                         composites: function($route, $http, $modal) {
                             return getJson($http, $modal, '/composites', true);
                         }

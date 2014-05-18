@@ -18,8 +18,8 @@ angular.module('topMenuModule', [])
                 openCompositeClass($modal);
             };
             // TODO Test
-            $scope.openRunner = function() {
-                $modal.open({
+            $scope.openRunnerSelector = function() {
+                return $modal.open({
                     templateUrl: '/assets/html/runner/runnerSelector.tmpl.html',
                     controller: 'runnerSelectorCtrl',
                     resolve: {
@@ -27,6 +27,14 @@ angular.module('topMenuModule', [])
                             return {};
                         }
                     }
+                });
+            };
+            // TODO Test
+            $scope.openRunner = function() {
+                $scope.openRunnerSelector().result.then(function(data) {
+                    $scope.runnerSpectorData = data;
+                    $scope.openRunnerModal().result.then(function (data) {
+                    });
                 });
             };
             $scope.getTitle = function() {
