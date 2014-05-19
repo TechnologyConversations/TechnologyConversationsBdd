@@ -1,0 +1,25 @@
+
+(public/stories/tcbdd/storiesList.story)
+Narrative:
+In order to open existing and create new stories
+As a application user
+I want to be able to browse files and directories
+Lifecycle:
+
+Scenario: Can open dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+Then Web element modalHeader should have text Browse Stories
+
+Scenario: Can navigate through directories
+Given Web user is in the Browse Stories dialog (PENDING)
+When Web user clicks the element tcbdd (NOT PERFORMED)
+Then Web element dirPath should have text tcbdd/ (NOT PERFORMED)
+@Given("Web user is in the Browse Stories dialog")
+@Pending
+public void givenWebUserIsInTheBrowseStoriesDialog() {
+  // PENDING
+}
+
+
+

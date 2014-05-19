@@ -1,0 +1,37 @@
+<xref>
+  <whenMade>1396732781360</whenMade>
+  <createdBy>JBehave</createdBy>
+  <metaFilter></metaFilter>
+  <meta/>
+  <stories>
+    <story>
+      <description></description>
+      <narrative>In order to open existing and create new stories
+As a application user
+I want to be able to browse files and directories
+</narrative>
+      <name>storiesList.story</name>
+      <path>public/stories/tcbdd/storiesList.story</path>
+      <html>public.stories.tcbdd.storiesList.html</html>
+      <meta></meta>
+      <scenarios>Scenario:Can open dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+Then Web element modalHeader should have text Browse Stories
+
+
+Scenario:Can navigate through directories
+Given Web user is in the Browse Stories dialog
+When Web user clicks the element tcbdd
+Then Web element dirPath should have text tcbdd/
+
+
+</scenarios>
+      <passed>true</passed>
+      <pending>true</pending>
+      <started>1396732762182</started>
+      <duration>13900</duration>
+    </story>
+  </stories>
+  <stepMatches/>
+</xref>
