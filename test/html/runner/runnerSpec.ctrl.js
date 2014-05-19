@@ -51,7 +51,7 @@ describe('runnerModule', function() {
             it('should include elements with selected set to true', function() {
                 scope.files = {
                     dirs: [{name: 'dir1', selected: true}],
-                    stories: [{name: 'story1.story', selected: true}]
+                    stories: [{name: 'story1', selected: true}]
                 };
                 var expected = {
                     dirs: [{path: 'dir1'}],
@@ -88,7 +88,7 @@ describe('runnerModule', function() {
                 scope.rootPath = 'this/is/dir/';
                 scope.files = {
                     dirs: [],
-                    stories: [{name: 'story1.story', selected: true}]
+                    stories: [{name: 'story1', selected: true}]
                 };
                 var expected = {
                     dirs: [],
@@ -100,7 +100,7 @@ describe('runnerModule', function() {
             it('should close the modal with selected files', function() {
                 scope.files = {
                     dirs: [{name: 'dir1', selected: true}, {name: 'dir2', selected: false}, {name: 'dir3'}],
-                    stories: [{name: 'story1.story', selected: true}, {name: 'story2.story', selected: true}, {name: 'story2.story'}]
+                    stories: [{name: 'story1', selected: true}, {name: 'story2', selected: true}, {name: 'story2'}]
                 };
                 var expected = {
                     dirs: [{path: 'dir1'}],

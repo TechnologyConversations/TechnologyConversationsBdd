@@ -18,7 +18,7 @@ angular.module('runnerModule', [])
                 });
                 angular.forEach($scope.files.stories, function(value) {
                     if (value.selected) {
-                        selectedFiles.stories.push({path: $scope.rootPath + value.name});
+                        selectedFiles.stories.push({path: $scope.rootPath + value.name + ".story"});
                     }
                 });
                 $modalInstance.close(selectedFiles);

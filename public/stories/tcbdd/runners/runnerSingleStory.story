@@ -26,8 +26,7 @@ Meta:
 
 
 Given Web user is in the Story page with all successful steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then story is running
 
 Examples:
@@ -38,8 +37,7 @@ Meta:
 
 
 Given Web user is in the Story page with all successful steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element runStory is disabled
 
 Examples:
@@ -50,8 +48,7 @@ Meta:
 
 
 Given Web user is in the Story page with all successful steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element runnerStatus should have text Story run is in progress
 
 Examples:
@@ -88,8 +85,7 @@ Meta:
 
 
 Given Web user is in the Story page with all successful steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element runnerStatus should have text Story run was successful
 
 Examples:
@@ -100,8 +96,7 @@ Meta:
 
 
 Given Web user is in the Story screen with pending steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element pendingSteps is visible
 Then Web element pendingStep1 is visible
 
@@ -113,8 +108,7 @@ Meta:
 
 
 Given Web user is in the Story page with all successful steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element runnerReports is visible
 
 Examples:
@@ -137,8 +131,7 @@ Meta:
 
 
 Given Web user is in the Story page with failed steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element runnerStatus should have text Story run failed
 
 Examples:
@@ -149,8 +142,7 @@ Meta:
 
 
 Given Web user is in the Story screen with pending steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 Then Web element runnerStatus should have text Story run was successful with 1 pending steps
 
 Examples:
@@ -161,8 +153,7 @@ Meta:
 
 
 Given Web user is in the Story screen with pending steps
-When Web user clicks the element runStory
-When Web user clicks the element confirmRunStory
+When Web single story runner is run
 When Web user clicks the element pendingStep1
 Then Web user is in the composites modal screen
 

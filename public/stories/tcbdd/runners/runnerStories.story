@@ -72,7 +72,7 @@ Meta:
 
 
 When Web user clicks the element story1Selector
-When Web user clicks the element runStory
+When Web user clicks the element okRunnerSelector
 When Web user clicks the element confirmRunStory
 Then story is running
 
@@ -139,6 +139,15 @@ Given steps are written
 Examples:
 
 Scenario: Runner Parameters confirm button should have text Run Stories
+
+Meta:
+
+
+Given steps are written
+
+Examples:
+
+Scenario: Report screen should be added to the history
 
 Meta:
 

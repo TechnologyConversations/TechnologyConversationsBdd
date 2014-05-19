@@ -326,11 +326,11 @@ describe('storyModule', function() {
 
     describe('runnerCtrl controller', function() {
 
-        var modalInstance, data, cookieStore, scope, httpBackend, classes;
+        var modalInstance, data, cookieStore, scope, classes;
         var cookieValue = 'value1';
 
         beforeEach(
-            inject(function($rootScope, $injector, $controller, $httpBackend, $http) {
+            inject(function($rootScope, $injector, $controller) {
                 scope = $rootScope.$new();
                 classes = [{
                     fullName: 'full.name.of.the.class',
@@ -349,8 +349,6 @@ describe('storyModule', function() {
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
                     data: data});
-                httpBackend = $httpBackend;
-                    httpBackend.expectGET('/steps/classes.json').respond(data);
             })
         );
 
