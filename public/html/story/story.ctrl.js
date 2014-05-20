@@ -217,6 +217,12 @@ angular.module('storyModule', [])
                     paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
                 });
             });
+            $scope.hasOptions = function(options) {
+                if (options)
+                  return options.length > 0;
+                else
+                  return false;
+            };
             $scope.hasParams = function(classEntry) {
                 return classEntry.params !== undefined && classEntry.params.length > 0;
             };
