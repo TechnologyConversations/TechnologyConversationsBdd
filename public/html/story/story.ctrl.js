@@ -1,6 +1,7 @@
 angular.module('storyModule', [])
     .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'composites',
         function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, composites) {
+            $scope.pendingSteps = [];
             $scope.setAction = function() {
                 if ($scope.story.name === '') {
                     $scope.action = 'POST';
@@ -126,18 +127,14 @@ angular.module('storyModule', [])
                 return openRunnerParametersModal($modal);
             };
             $scope.getRunnerProgressCss = function () {
-                return {
-                    'progress progress-striped active': $scope.storyRunnerInProgress,
-                    'progress': !$scope.storyRunnerInProgress
-                };
+                return getRunnerProgressCss($scope.storyRunnerInProgress);
             };
             $scope.getRunnerStatusCss = function () {
-                return {
-                    'progress-bar progress-bar-info': $scope.storyRunnerInProgress,
-                    'progress-bar progress-bar-warning': !$scope.storyRunnerInProgress && $scope.storyRunnerSuccess && $scope.hasPendingSteps(),
-                    'progress-bar progress-bar-success': !$scope.storyRunnerInProgress && $scope.storyRunnerSuccess && !$scope.hasPendingSteps(),
-                    'progress-bar progress-bar-danger': !$scope.storyRunnerInProgress && !$scope.storyRunnerSuccess
-                };
+                return getRunnerStatusCss(
+                    $scope.storyRunnerInProgress,
+                    $scope.storyRunnerSuccess,
+                    ($scope.pendingSteps > 0)
+                );
             };
             $scope.setPendingSteps = function(reports) {
                 $scope.pendingSteps = [];
@@ -153,23 +150,16 @@ angular.module('storyModule', [])
                 return $scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0;
             };
             $scope.getStoryRunnerStatusText = function () {
-                if ($scope.storyRunnerInProgress) {
-                    return 'Story run is in progress';
-                } else if ($scope.storyRunnerSuccess) {
-                    if ($scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0) {
-                        return 'Story run was successful with ' + $scope.pendingSteps.length + " pending steps";
-                    } else {
-                        return 'Story run was successful';
-                    }
-                } else {
-                    return 'Story run failed';
-                }
+                return getStoryRunnerStatusText(
+                    $scope.storyRunnerInProgress,
+                    $scope.storyRunnerSuccess,
+                    $scope.pendingSteps.length
+                );
             };
             $scope.removeCollectionElement = removeCollectionElement;
             $scope.addElement = function (collection) {
                 collection.push({});
             };
-            // TODO Test
             $scope.addScenarioElement = function (collection) {
                 collection.push({title: '', meta: [], steps: [], examplesTable: ''});
             };

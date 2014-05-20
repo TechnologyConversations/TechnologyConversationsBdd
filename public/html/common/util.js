@@ -105,3 +105,33 @@ function openRunnerParametersModal($modal) {
         }
     });
 }
+
+function getRunnerStatusCss(inProgress, success, pendingSteps) {
+    return {
+        'progress-bar progress-bar-info': inProgress,
+        'progress-bar progress-bar-warning': !inProgress && success && pendingSteps,
+        'progress-bar progress-bar-success': !inProgress && success && !pendingSteps,
+        'progress-bar progress-bar-danger': !inProgress && !success
+    };
+}
+
+function getStoryRunnerStatusText(inProgress, success, pendingStepsLength) {
+    if (inProgress) {
+        return 'Story run is in progress';
+    } else if (success) {
+        if (pendingStepsLength > 0) {
+            return 'Story run was successful with ' + pendingStepsLength + ' pending steps';
+        } else {
+            return 'Story run was successful';
+        }
+    } else {
+        return 'Story run failed';
+    }
+}
+
+function getRunnerProgressCss(inProgress) {
+    return {
+        'progress progress-striped active': inProgress,
+        'progress': !inProgress
+    };
+}

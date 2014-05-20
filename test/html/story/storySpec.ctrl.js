@@ -101,25 +101,13 @@ describe('storyModule', function() {
         });
 
         describe('getStoryRunnerStatusText function', function() {
-            it('should return "Story run is in progress" when story runner is in progress', function() {
-                scope.storyRunnerInProgress = true;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run is in progress');
-            });
-            it('should return "Story run was successful with pending steps" when story runner is NOT in progress, status is success and there are pending steps', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
+            it('should use general getStoryRunnerStatusText function', function() {
                 scope.pendingSteps = pendingSteps;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run was successful with 2 pending steps');
-            });
-            it('should return "Story run was successful" when story runner is NOT in progress, status is success and there are NO pending steps', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run was successful');
-            });
-            it('should return "Story run failed" when story runner is NOT in progress and status is NOT success', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = false;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run failed');
+                var expected = getStoryRunnerStatusText(
+                    scope.storyRunnerInProgress,
+                    scope.storyRunnerSuccess,
+                    scope.pendingSteps.length);
+                expect(scope.getStoryRunnerStatusText()).toEqual(expected);
             });
         });
 
@@ -130,62 +118,21 @@ describe('storyModule', function() {
         });
 
         describe('getRunnerProgressCss function', function() {
-            it('should return active when story is in progress', function() {
-                scope.storyRunnerInProgress = true;
-                expect(scope.getRunnerProgressCss()).toEqual({
-                    'progress progress-striped active': true,
-                    'progress': false
-                });
-            });
-            it('should return inactive when story is in progress', function() {
-                scope.storyRunnerInProgress = false;
-                expect(scope.getRunnerProgressCss()).toEqual({
-                    'progress progress-striped active': false,
-                    'progress': true
-                });
+            it('should use general getRunnerProgressCss function', function() {
+                var expected = getRunnerProgressCss(
+                    scope.storyRunnerInProgress
+                );
+                expect(scope.getRunnerProgressCss()).toEqual(expected);
             });
         });
 
         describe('getRunnerStatusCss function', function() {
-            it('should return info if story runner is in progress', function() {
-                scope.storyRunnerInProgress = true;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': true,
-                    'progress-bar progress-bar-warning': false,
-                    'progress-bar progress-bar-success': false,
-                    'progress-bar progress-bar-danger': false
-                });
-            });
-            it('should return warning if story runner finished and has pending steps', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
-                scope.pendingSteps = pendingSteps;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': false,
-                    'progress-bar progress-bar-warning': true,
-                    'progress-bar progress-bar-success': false,
-                    'progress-bar progress-bar-danger': false
-                });
-            });
-            it('should return success if story runner finished', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': false,
-                    'progress-bar progress-bar-warning': false,
-                    'progress-bar progress-bar-success': true,
-                    'progress-bar progress-bar-danger': false
-                });
-            });
-            it('should return danger if story runner finished and is not success', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = false;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': false,
-                    'progress-bar progress-bar-warning': false,
-                    'progress-bar progress-bar-success': false,
-                    'progress-bar progress-bar-danger': true
-                });
+            it('should use general getRunnerStatusCss function', function() {
+                var expected = getRunnerStatusCss(
+                    scope.storyRunnerInProgress,
+                    scope.storyRunnerSuccess,
+                    (scope.pendingSteps > 0));
+                expect(scope.getRunnerStatusCss()).toEqual(expected);
             });
         });
 
@@ -319,6 +266,14 @@ describe('storyModule', function() {
                 var collection = [];
                 scope.addElement(collection);
                 expect(collection[0]).toEqual({});
+            });
+        });
+
+        describe('addScenarioElement function', function() {
+            it('should add empty scenario to the collection', function() {
+                var scenarios = [];
+                scope.addScenarioElement(scenarios);
+                expect(scenarios[0]).toEqual({title: '', meta: [], steps: [], examplesTable: ''})
             });
         });
 
