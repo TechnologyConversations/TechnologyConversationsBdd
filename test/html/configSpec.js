@@ -53,13 +53,13 @@ describe('configModule controllers', function() {
             });
         });
 
-        describe('/page/reports/* path', function() {
-            var path = '/page/reports/:path*';
-            it('should use the template /assets/html/reports/reports.tmpl.html', function() {
-                expect(route.routes[path].templateUrl).toEqual('/assets/html/reports/reports.tmpl.html');
+        describe('/page/runner path', function() {
+            var path = '/page/runner';
+            it('should use the template /assets/html/runner/runner.tmpl.html', function() {
+                expect(route.routes[path].templateUrl).toEqual('/assets/html/runner/runner.tmpl.html');
             });
-            it('should use the controller reportsCtrl', function() {
-                expect(route.routes[path].controller).toBe('reportsCtrl');
+            it('should use the controller runnerCtrl', function() {
+                expect(route.routes[path].controller).toBe('runnerCtrl');
             });
         });
 

@@ -9,8 +9,7 @@ angular.module('storiesModule', [
     'storyModule',
     'compositeClassesModule',
     'compositesModule',
-    'runnerModule',
-    'reportsModule'
+    'runnerModule'
 ])
     .controller('modalCtrl', ['$scope', '$modalInstance', 'data',
         function($scope, $modalInstance, data) {

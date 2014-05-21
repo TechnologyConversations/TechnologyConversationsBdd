@@ -193,7 +193,7 @@ angular.module('storyModule', [])
             };
         }
     ])
-    .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
+    .controller('runnerParamsCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
         function ($scope, $modalInstance, $cookieStore, data) {
             $scope.classes = data.classes;
             $scope.classes.forEach(function(classEntry) {

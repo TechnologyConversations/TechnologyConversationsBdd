@@ -15,9 +15,10 @@ Lifecycle:
 
 Before:
 Given Directory public/stories/testDirectory/testSubDirectory exists
-When File is copied from public/stories/test/dummy.story to public/stories/testDirectory/testStory.story
+When File is copied from public/stories/test/dummySuccess.story to public/stories/testDirectory/1dummy.story
 When File is copied from public/stories/test/dummyPending.story to public/stories/testDirectory/testPendingStory.story
 Given Web home page is opened
+Given Web page is refreshed
 When Web user clicks the element runner
 When Web user clicks the element text:testDirectory
 
@@ -75,18 +76,22 @@ When Web user clicks the element story1Selector
 When Web user clicks the element okRunnerSelector
 When Web user clicks the element confirmRunStory
 Then story is running
+Then story is NOT running
 
 Examples:
 
-Scenario: Should display runner reports
+Scenario: Should display runner reports link
 
 Meta:
 
 
-When Web user clicks the element file1Selector
-When Web user clicks the element runStory
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
 When Web user clicks the element confirmRunStory
-Then Web element runnerReports is visible
+Given Web timeout is 20 seconds
+When Web user clicks the element runnerReports
+Then Web page title should have text JBehave Reports
+Given Web timeout is 4 seconds
 
 Examples:
 
@@ -148,6 +153,15 @@ Given steps are written
 Examples:
 
 Scenario: Report screen should be added to the history
+
+Meta:
+
+
+Given steps are written
+
+Examples:
+
+Scenario: Multiple runners can be executed one after another
 
 Meta:
 

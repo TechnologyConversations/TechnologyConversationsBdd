@@ -1,6 +1,6 @@
 angular.module('topMenuModule', [])
-    .controller('topMenuController', ['$scope', '$modal', '$location', '$http',
-        function($scope, $modal, $location, $http) {
+    .controller('topMenuController', ['$scope', '$modal', '$location',
+        function($scope, $modal, $location) {
             // TODO Test more than checking whether $modal.open was called
             $scope.openStory = function() {
                 $modal.open({
@@ -16,54 +16,6 @@ angular.module('topMenuModule', [])
             // TODO Test
             $scope.openCompositeClass = function() {
                 openCompositeClass($modal);
-            };
-            // TODO Test more than checking whether $modal.open was called
-            $scope.openRunnerSelector = function() {
-                return $modal.open({
-                    templateUrl: '/assets/html/runner/runnerSelector.tmpl.html',
-                    controller: 'runnerSelectorCtrl',
-                    resolve: {
-                        data: function() {
-                            return {};
-                        }
-                    }
-                });
-            };
-            // TODO Test
-            $scope.openRunner = function() {
-                $scope.openRunnerSelector().result.then(function(data) {
-                    var storyPaths = [];
-                    data.dirs.forEach(function(dir) {
-                        storyPaths.push({path: dir.path + "/**/*.story"});
-                    });
-                    data.stories.forEach(function(story) {
-                        storyPaths.push({path: story.path});
-                    });
-                    openRunnerParametersModal($modal).result.then(function (data) {
-                        var classes = data;
-                        $http.get('/composites').then(function(response) {
-                            var composites = response.data;
-                            $scope.run({
-                                storyPaths: storyPaths,
-                                classes: classes,
-                                composites: composites
-                            });
-                        });
-                    });
-                });
-            };
-            // TODO Test
-            $scope.run = function(json) {
-                $http.post('/runner/run.json', json).then(function (response) {
-                    var data = response.data;
-                    if (data.status !== 'OK') {
-                        openErrorModal($modal, data);
-                    } else {
-                        $location.path('/page/reports/' + data.reportsPath);
-                    }
-                }, function (response) {
-                    openErrorModal($modal, response.data);
-                });
             };
             $scope.getTitle = function() {
                 var path = $location.path();

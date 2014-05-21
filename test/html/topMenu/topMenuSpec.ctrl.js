@@ -4,10 +4,10 @@ describe('topMenuModule module', function() {
 
     describe('topMenuController controller', function() {
 
-        var modal, scope, location, httpBackend;
+        var modal, scope, location;
 
         beforeEach(
-            inject(function($rootScope, $controller, $location, $http, $httpBackend) {
+            inject(function($rootScope, $controller, $location, $http) {
                 scope = $rootScope.$new();
                 location = $location;
                 modal = {
@@ -19,7 +19,6 @@ describe('topMenuModule module', function() {
                     $location: $location,
                     $http: $http
                 });
-                httpBackend = $httpBackend;
             })
         );
 
@@ -46,40 +45,6 @@ describe('topMenuModule module', function() {
             it('should call open on modal', function() {
                 scope.openStory();
                 expect(modal.open).toHaveBeenCalled();
-            });
-        });
-
-        describe('openRunnerSelector function', function() {
-            it('openRunnerSelector call open on modal', function() {
-                scope.openRunnerSelector();
-                expect(modal.open).toHaveBeenCalled();
-            });
-        });
-
-        describe('run function', function() {
-            it('should call POST on /runner/run.json', function() {
-                httpBackend.expectPOST('/runner/run.json').respond({});
-                scope.run({});
-                httpBackend.flush();
-            });
-            it('should open error modal in case of an error', function() {
-                httpBackend.expectPOST('/runner/run.json').respond(400, '');
-                scope.run({});
-                httpBackend.flush();
-                expect(modal.open).toHaveBeenCalled();
-            });
-            it('should open error modal in case of a status different than OK', function() {
-                httpBackend.expectPOST('/runner/run.json').respond({status: 'NOK'});
-                scope.run({});
-                httpBackend.flush();
-                expect(modal.open).toHaveBeenCalled();
-            });
-            it('should redirect to report screen when OK', function() {
-                var reportsPath = 'this/is/report/dir/index.html';
-                httpBackend.expectPOST('/runner/run.json').respond({status: 'OK', reportsPath: reportsPath});
-                scope.run({});
-                httpBackend.flush();
-                expect(location.path()).toEqual('/page/reports/' + reportsPath);
             });
         });
 

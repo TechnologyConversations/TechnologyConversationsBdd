@@ -97,7 +97,7 @@ function openDir($scope, $http, $modal, path) {
 function openRunnerParametersModal($modal) {
     return $modal.open({
         templateUrl: '/assets/html/runner.tmpl.html',
-        controller: 'runnerCtrl',
+        controller: 'runnerParamsCtrl',
         resolve: {
             data: function($route, $http, $modal) {
                 return getJson($http, $modal, '/steps/classes.json', true);

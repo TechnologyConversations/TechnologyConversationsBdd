@@ -66,9 +66,9 @@ angular.module('configModule', [])
                         }
                     }
                 })
-                .when('/page/reports/:path*', {
-                    templateUrl: '/assets/html/reports/reports.tmpl.html',
-                    controller: 'reportsCtrl',
+                .when('/page/runner', {
+                    templateUrl: '/assets/html/runner/runner.tmpl.html',
+                    controller: 'runnerCtrl',
                     // TODO Test
                     resolve: {
                         data: function($route) {

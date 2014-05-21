@@ -279,7 +279,7 @@ describe('storyModule', function() {
 
     });
 
-    describe('runnerCtrl controller', function() {
+    describe('runnerParamsCtrl controller', function() {
 
         var modalInstance, data, cookieStore, scope, classes;
         var cookieValue = 'value1';
@@ -299,7 +299,7 @@ describe('storyModule', function() {
                     dismiss: jasmine.createSpy('modalInstance.dismiss'),
                     close: jasmine.createSpy('modalInstance.close')
                 };
-                $controller("runnerCtrl", {
+                $controller('runnerParamsCtrl', {
                     $scope: scope ,
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,

@@ -100,5 +100,9 @@ public class TcBddComposites {
         @When("Web single story runner is run")
         @Composite(steps = {"Given Web page is refreshed", "When Web user clicks the element runStory", "Then Web element modalHeader should have text Runner Parameters", "When Web user clicks the element confirmRunStory"})
         public void compositeStep23() { }
+
+        @Then("story is NOT running")
+        @Composite(steps = {"Then Web element runnerStatus should NOT have text Story run is in progress"})
+        public void compositeStep24() { }
     
 }
