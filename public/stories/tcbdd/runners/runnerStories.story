@@ -88,19 +88,8 @@ Meta:
 When Web user clicks the element story1Selector
 When Web user clicks the element okRunnerSelector
 When Web user clicks the element confirmRunStory
-Given Web timeout is 20 seconds
-When Web user clicks the element runnerReports
-Then Web page title should have text JBehave Reports
-Given Web timeout is 4 seconds
-
-Examples:
-
-Scenario: Can go back to the parent directory
-
-Meta:
-
-
-Given step is written
+Given Web timeout is 30 seconds
+Then Web element runnerReports is visible
 
 Examples:
 
@@ -113,15 +102,27 @@ Then Web element path should have text testDirectory
 
 Examples:
 
+Scenario: Can go back to the parent directory
+
+Meta:
+
+
+When Web user clicks the element text:testSubDirectory
+When Web user clicks the element prevDirectory
+Then Web element path should have text testDirectory
+
+Examples:
+
 Scenario: Should display REST interface for remote calls
 
 Meta:
 
 
 When Web user clicks the element directory1Selector
-When Web user clicks the element file1Selector
-When Web user clicks the element file2Selector
-Then Web element rest should have text CHANGE_THIS_TO_THE_REAL_JSON
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+When Web user clicks the element getRestApi
+Then Web element restApi should have text CHANGE_THIS_TO_THE_REAL_JSON
 
 Examples:
 

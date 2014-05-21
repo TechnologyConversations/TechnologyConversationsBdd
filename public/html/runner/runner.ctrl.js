@@ -109,5 +109,8 @@ angular.module('runnerModule', [])
                 });
                 $modalInstance.close(selectedFiles);
             };
+            $scope.allowToPrevDir = function() {
+                return $scope.rootPath !== '';
+            };
         }
     ]);

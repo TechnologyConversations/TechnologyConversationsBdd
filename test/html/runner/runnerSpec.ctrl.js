@@ -264,6 +264,16 @@ describe('runnerModule', function() {
             });
         });
 
+        describe('allowToPrevDir function', function() {
+            it('should return true when rootPath is NOT an empty string', function() {
+                scope.rootPath = 'this/is/path';
+                expect(scope.allowToPrevDir()).toEqual(true);
+            });
+            it('should return false when rootPath is an empty string', function() {
+                scope.rootPath = '';
+                expect(scope.allowToPrevDir()).toEqual(false);
+            });
+        });
 
     });
 

@@ -4,6 +4,17 @@
 <div class="modal-body">
     <h3 id="path">{{rootPath}}</h3>
     <table class="table table-condensed table-striped">
+        <tbody>
+        <tr ng-hide="!allowToPrevDir()">
+            <td>
+                <a id="prevDirectory" href="#" ng-click="openDir('..')">
+                    <span class="glyphicon glyphicon-book"></span>
+                    ..
+                </a>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        </tbody>
         <tbody ng-repeat="dir in files.dirs">
         <tr>
             <td>

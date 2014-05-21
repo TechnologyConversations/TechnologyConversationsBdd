@@ -38,9 +38,8 @@ angular.module('storiesModule', [
             $scope.viewStoryUrl = function(name) {
                 return getViewStoryUrl() + $scope.rootPath + name;
             };
-            // TODO Test
             $scope.allowToPrevDir = function() {
-                return $scope.rootPath !== "";
+                return $scope.rootPath !== '';
             };
             // TODO Test
             $scope.deleteStory = function(name, index) {

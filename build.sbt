@@ -19,10 +19,6 @@ libraryDependencies ++= Seq(
 
 play.Project.playScalaSettings
 
-requireJs += "main.js"
-
-requireJsShim += "main.js"
-
 org.scalastyle.sbt.ScalastylePlugin.Settings
 
 scalacOptions in Test ++= Seq("-Yrangepos")
