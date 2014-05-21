@@ -88,6 +88,7 @@ angular.module('runnerModule', [])
     ])
     .controller('runnerSelectorCtrl', ['$scope', '$http', '$modal', '$modalInstance',
         function($scope, $http, $modal, $modalInstance) {
+            $scope.files = {dirs: [], stories: []};
             getStories($scope, $http, $modal, '');
             $scope.openDir = function(path) {
                 openDir($scope, $http, $modal, path);
@@ -111,6 +112,22 @@ angular.module('runnerModule', [])
             };
             $scope.allowToPrevDir = function() {
                 return $scope.rootPath !== '';
+            };
+            $scope.canContinue = function() {
+                var hasSelected = false;
+                angular.forEach($scope.files.dirs, function(value) {
+                    if (value.selected) {
+                        hasSelected = true;
+                    }
+                });
+                if (!hasSelected) {
+                    angular.forEach($scope.files.stories, function (value) {
+                        if (value.selected) {
+                            hasSelected = true;
+                        }
+                    });
+                }
+                return hasSelected;
             };
         }
     ]);

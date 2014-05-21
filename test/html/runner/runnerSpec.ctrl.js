@@ -185,9 +185,17 @@ describe('runnerModule', function() {
             })
         );
 
+        describe('by default', function() {
+            it('dirs should be set to an empty array', function() {
+                expect(scope.files.dirs.length).toEqual(0);
+            });
+            it('stories should be set to an empty array', function() {
+                expect(scope.files.stories.length).toEqual(0);
+            });
+        });
+
         describe('getStories function', function() {
             it('should be called by the controller with the empty path', function() {
-                expect(scope.files).toBeUndefined();
                 httpBackend.flush();
                 expect(scope.files).toEqual(filesWithoutPath);
             });
@@ -272,6 +280,30 @@ describe('runnerModule', function() {
             it('should return false when rootPath is an empty string', function() {
                 scope.rootPath = '';
                 expect(scope.allowToPrevDir()).toEqual(false);
+            });
+        });
+
+        describe('canContinue function', function() {
+            it('should return false when there is NO directory or story selected', function() {
+                scope.files = {
+                    dirs: [{name: 'dir1', selected: false}],
+                    stories: [{name: 'story1', selected: false}]
+                };
+                expect(scope.canContinue()).toEqual(false);
+            });
+            it('should return true when there is at least one directory selected', function() {
+                scope.files = {
+                    dirs: [{name: 'dir1', selected: true}],
+                    stories: [{name: 'story1', selected: false}]
+                };
+                expect(scope.canContinue()).toEqual(true);
+            });
+            it('should return true when there is at least one story selected', function() {
+                scope.files = {
+                    dirs: [{name: 'dir1', selected: false}],
+                    stories: [{name: 'story1', selected: true}]
+                };
+                expect(scope.canContinue()).toEqual(true);
             });
         });
 

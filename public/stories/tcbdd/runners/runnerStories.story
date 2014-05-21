@@ -113,52 +113,23 @@ Then Web element path should have text testDirectory
 
 Examples:
 
-Scenario: Should display REST interface for remote calls
-
-Meta:
-
-
-When Web user clicks the element directory1Selector
-When Web user clicks the element story1Selector
-When Web user clicks the element okRunnerSelector
-When Web user clicks the element getRestApi
-Then Web element restApi should have text CHANGE_THIS_TO_THE_REAL_JSON
-
-Examples:
-
-Scenario: Should populate the selector modal with data from the last run
-
-Meta:
-
-
-Given steps are written
-
-Examples:
-
 Scenario: Can NOT move to parameters dialog without at least one directory or story selected
 
 Meta:
 
 
-Given steps are written
+Then Web element okRunnerSelector is disabled
 
 Examples:
 
-Scenario: Runner Parameters confirm button should have text Run Stories
+Scenario: Runner Parameters confirm button should have text Run
 
 Meta:
 
 
-Given steps are written
-
-Examples:
-
-Scenario: Report screen should be added to the history
-
-Meta:
-
-
-Given steps are written
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+Then Web element confirmRunStory should have text Run
 
 Examples:
 
@@ -167,6 +138,8 @@ Scenario: Multiple runners can be executed one after another
 Meta:
 
 
-Given steps are written
+When Web user clicks the element cancelRunnerSelector
+When Web user clicks the element runner
+Then Web user is in the Runner Selector modal screen
 
 Examples:
