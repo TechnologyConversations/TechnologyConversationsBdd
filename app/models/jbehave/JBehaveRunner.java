@@ -4,6 +4,7 @@ import com.technologyconversations.bdd.steps.util.BddParamsBean;
 import models.RunnerClass;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 public class JBehaveRunner extends JUnitStories {
+
+    private Configuration configuration;
 
     private List<String> storyPaths;
     public void setStoryPaths(List<String> value) {
@@ -60,9 +63,22 @@ public class JBehaveRunner extends JUnitStories {
     public JBehaveRunner(List<String> storyPathsValue,
                          List<RunnerClass> stepsClasses,
                          String reportsPathValue) throws Exception {
+        final int secondsInMinute = 60;
+        final int storyTimeoutMinutes = 20;
         setStoryPaths(storyPathsValue);
         setStepsInstances(stepsClasses);
         setReportsPath(reportsPathValue);
+
+        configuration = new MostUsefulConfiguration()
+                .useStoryReporterBuilder(new StoryReporterBuilder()
+                        .withRelativeDirectory(getReportsPath())
+                        .withDefaultFormats()
+                        .withFormats(Format.CONSOLE, Format.HTML, Format.XML, Format.TXT)
+                        .withCrossReference(new CrossReference()))
+                .useStepMonitor(new SilentStepMonitor())
+                .useParameterControls(new ParameterControls().useDelimiterNamedParameters(true));
+        EmbedderControls embedderControls = configuredEmbedder().embedderControls();
+        embedderControls.useStoryTimeoutInSecs(storyTimeoutMinutes * secondsInMinute);
     }
 
     @Override
@@ -78,14 +94,7 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     public Configuration configuration() {
-        return new MostUsefulConfiguration()
-                .useStoryReporterBuilder(new StoryReporterBuilder()
-                        .withRelativeDirectory(getReportsPath())
-                        .withDefaultFormats()
-                        .withFormats(Format.CONSOLE, Format.HTML, Format.XML, Format.TXT)
-                        .withCrossReference(new CrossReference()))
-                .useStepMonitor(new SilentStepMonitor())
-                .useParameterControls(new ParameterControls().useDelimiterNamedParameters(true));
+        return configuration;
     }
 
 
