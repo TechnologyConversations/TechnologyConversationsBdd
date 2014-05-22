@@ -53,8 +53,8 @@ describe('configModule controllers', function() {
             });
         });
 
-        describe('/page/runner path', function() {
-            var path = '/page/runner';
+        describe('/page/runner/ path', function() {
+            var path = '/page/runner/';
             it('should use the template /assets/html/runner/runner.tmpl.html', function() {
                 expect(route.routes[path].templateUrl).toEqual('/assets/html/runner/runner.tmpl.html');
             });

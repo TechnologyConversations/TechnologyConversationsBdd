@@ -66,7 +66,7 @@ angular.module('configModule', [])
                         }
                     }
                 })
-                .when('/page/runner', {
+                .when('/page/runner/', {
                     templateUrl: '/assets/html/runner/runner.tmpl.html',
                     controller: 'runnerCtrl',
                     // TODO Test
