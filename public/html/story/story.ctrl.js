@@ -1,6 +1,6 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'composites',
-        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, composites) {
+    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'groovyComposites',
+        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites) {
             $scope.pendingSteps = [];
             $scope.setAction = function() {
                 if ($scope.story.name === '') {
@@ -30,7 +30,7 @@ angular.module('storyModule', [])
             };
             $scope.story = story;
             $scope.steps = steps;
-            $scope.composites = composites;
+            $scope.groovyComposites = groovyComposites;
             $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
             $scope.storyFormClass = 'col-md-12';
             $scope.storyRunnerVisible = false;
@@ -101,7 +101,7 @@ angular.module('storyModule', [])
                         var json = {
                             storyPaths: [{path: $scope.story.path}],
                             classes: classes,
-                            composites: $scope.composites
+                            groovyComposites: $scope.groovyComposites
                         };
                         $http.post('/runner/run.json', json).then(function (response) {
                             $scope.storyRunnerSuccess = (response.data.status === 'OK');

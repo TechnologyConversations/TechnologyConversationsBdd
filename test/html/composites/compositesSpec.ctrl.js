@@ -6,7 +6,6 @@ describe('compositesModule', function() {
 
         var scope, form, httpBackend, modal, location, cookieStore, composite, anotherComposite;
         var newComposite = {stepText: 'Given some other precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
-        var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
         var newClassName = 'OtherStepsComposites';
         var compositesClass;
@@ -29,13 +28,11 @@ describe('compositesModule', function() {
                     compositeSteps :[{step: 'When action'},{step: 'Then result'}]
                 };
                 newCompositesClass = {
-                    package: packageName,
                     class: newClassName,
                     composites: [composite]
                 };
                 anotherComposite = {stepText: 'When action', compositeSteps :[{step: 'Then result'}]};
                 compositesClass = {
-                    package: packageName,
                     class: className,
                     composites: [composite, anotherComposite],
                     isNew: false
@@ -236,20 +233,20 @@ describe('compositesModule', function() {
         });
 
         describe('saveCompositesClass function', function() {
-            it('should send PUT request to /composites', function() {
-                httpBackend.expectPUT('/composites').respond();
+            it('should send PUT request to /groovyComposites', function() {
+                httpBackend.expectPUT('/groovyComposites').respond();
                 scope.saveCompositesClass();
                 httpBackend.flush();
             });
             it('should put compositesClass to the scope variable originalCompositesClass when response is successful', function () {
                 scope.compositesClass.composites.push(newComposite);
-                httpBackend.expectPUT('/composites').respond();
+                httpBackend.expectPUT('/groovyComposites').respond();
                 scope.saveCompositesClass();
                 httpBackend.flush();
                 expect(scope.originalCompositesClass).toEqual(scope.compositesClass);
             });
             it('should set compositesClass.isNew to false', function() {
-                httpBackend.expectPUT('/composites').respond();
+                httpBackend.expectPUT('/groovyComposites').respond();
                 scope.saveCompositesClass();
                 httpBackend.flush();
                 expect(scope.compositesClass.isNew).toEqual(false);
@@ -257,24 +254,24 @@ describe('compositesModule', function() {
             it('should call openErrorModal function when response is NOT successful', function() {
                 // TODO
             });
-            it('should change location if package or class changed', function() {
-                httpBackend.expectPUT('/composites').respond();
-                httpBackend.expectDELETE('/composites/' + packageName + '.' + className).respond();
+            it('should change location if class changed', function() {
+                httpBackend.expectPUT('/groovyComposites').respond();
+                httpBackend.expectDELETE('/groovyComposites/' + className).respond();
                 scope.compositesClass.class = newClassName;
                 scope.saveCompositesClass();
                 httpBackend.flush();
-                expect(location.path()).toEqual('/page/composites/' + packageName + '.' + newClassName);
+                expect(location.path()).toEqual('/page/composites/' + newClassName + '.groovy');
             });
-            it('should make DELETE request to /composites/FULL_CLASS_NAME when class or package change', function() {
-                httpBackend.expectPUT('/composites').respond();
-                httpBackend.expectDELETE('/composites/' + packageName + '.' + className).respond();
+            it('should make DELETE request to /groovyComposites/CLASS_NAME when class change', function() {
+                httpBackend.expectPUT('/groovyComposites').respond();
+                httpBackend.expectDELETE('/groovyComposites/' + className).respond();
                 scope.compositesClass.class = newClassName;
                 scope.originalCompositesClass.class = className;
                 scope.saveCompositesClass();
                 httpBackend.flush();
             });
             it('should save composite class name as a cookie', function() {
-                httpBackend.expectPUT('/composites').respond();
+                httpBackend.expectPUT('/groovyComposites').respond();
                 scope.saveCompositesClass();
                 httpBackend.flush();
                 expect(cookieStore.get("compositeClass")).toEqual(className);

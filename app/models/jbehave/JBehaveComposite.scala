@@ -14,6 +14,10 @@ case class JBehaveComposite(stepText: String, compositeSteps: List[String]) {
     compositeSteps.map(_.replace("\"", "\\\""))
   }
 
+  def formattedGroovyCompositeSteps: List[String] = {
+    compositeSteps.map(_.replace("\"", "\\\"").replace("$", "\\$"))
+  }
+
   def params: Set[String] = {
     "<.+?>".r
       .findAllIn(stepText + compositeSteps.toString)

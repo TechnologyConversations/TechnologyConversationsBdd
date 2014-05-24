@@ -15,8 +15,8 @@ angular.module('configModule', [])
                         steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        composites: function($http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                        groovyComposites: function($http, $modal) {
+                            return getJson($http, $modal, '/groovyComposites', true);
                         }
                     }
                 })
@@ -31,8 +31,8 @@ angular.module('configModule', [])
                         steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        composites: function($http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                        groovyComposites: function($http, $modal) {
+                            return getJson($http, $modal, '/groovyComposites', true);
                         }
                     }
                 })
@@ -47,8 +47,8 @@ angular.module('configModule', [])
                         steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        composites: function($http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                        groovyComposites: function($http, $modal) {
+                            return getJson($http, $modal, '/groovyComposites', true);
                         }
                     },
                     reloadOnSearch: false

@@ -35,7 +35,7 @@ function openCompositeClass($modal, compositeStepText) {
         controller: 'compositeClassesCtrl',
         resolve: {
             compositeClasses: function($route, $http, $modal) {
-                return getJson($http, $modal, '/composites', false);
+                return getJson($http, $modal, '/groovyComposites', false);
             },
             compositeStepText: function() {
                 return compositeStepText;
@@ -45,16 +45,13 @@ function openCompositeClass($modal, compositeStepText) {
 }
 
 // TODO Test
-function getCompositesJson(http, fullClassName) {
-    var url = '/composites/' + fullClassName;
+function getCompositesJson(http, fileName) {
+    var url = '/groovyComposites/' + fileName;
     return http.get(url, {cache: false}).then(function(response) {
         return response.data;
     }, function() {
-        var lastDotIndex = fullClassName.lastIndexOf('.');
-        var className = fullClassName.substring(lastDotIndex + 1);
-        var packageName = fullClassName.substring(0, lastDotIndex);
+        var className = fileName.substring(0, fileName.lastIndexOf('.'));
         return {
-            package: packageName,
             class: className,
             composites:[{stepText: '', compositeSteps: [{}]}],
             isNew: true

@@ -24,6 +24,7 @@ object RunnerController extends Controller {
     lazy val storyPaths = (json \ "storyPaths").asOpt[List[JsValue]]
     lazy val classesJson = (json \ "classes").asOpt[List[JsValue]]
     lazy val compositesJsonOpt = (json \ "composites").asOpt[List[JsValue]]
+    lazy val groovyCompositesJsonOpt = (json \ "groovyComposites").asOpt[List[JsValue]]
     if (jsonOption.isEmpty) {
       noJsonResultMap
     } else if (storyPaths.isEmpty) {
@@ -41,15 +42,12 @@ object RunnerController extends Controller {
         new Runner(
           fullStoryPaths,
           classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
+          groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
           s"../$reportsPath"
         ).run()
       } catch {
-        case rsf: RunningStoriesFailed => {
-          status = "FAILED"
-        }
-        case e: Exception => {
-          status = "Error"
-        }
+        case rsf: RunningStoriesFailed => status = "FAILED"
+        case e: Exception => status = "Error"
       }
       Map(
         "status" -> status,

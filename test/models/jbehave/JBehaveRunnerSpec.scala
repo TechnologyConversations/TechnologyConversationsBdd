@@ -14,7 +14,7 @@ class JBehaveRunnerSpec extends Specification {
   val reportsPath = "/test/jbehave/"
   val params = Map("webDriver" -> "firefox", "webUrl" -> "http://www.technologyconversations.com")
   val steps = List(RunnerClass("com.technologyconversations.bdd.steps.WebSteps", params))
-  val runner = new JBehaveRunner(storyPaths, steps, reportsPath)
+  val runner = new JBehaveRunner(storyPaths, steps, List(), reportsPath)
 
   "JBehaveRunner#newInstance" should {
 
@@ -51,7 +51,7 @@ class JBehaveRunnerSpec extends Specification {
       val testSteps = List(
         RunnerClass("com.technologyconversations.bdd.steps.NonExistentSteps", Map())
       )
-      new JBehaveRunner(storyPaths, testSteps, reportsPath) should throwA[Exception]
+      new JBehaveRunner(storyPaths, testSteps, List(), reportsPath) should throwA[Exception]
     }
 
     "have all params set" in {

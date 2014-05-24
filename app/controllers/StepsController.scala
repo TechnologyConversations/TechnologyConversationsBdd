@@ -11,9 +11,7 @@ object StepsController extends Controller {
   val appDir = Play.current.configuration.getString("app.root.dir").getOrElse("app")
 
   def listJson: Action[AnyContent] = Action {
-    val composites = Composites(compositesDir).list().map{ file =>
-      file.drop(appDir.length + 1)
-    }
+    val composites = Composites(compositesDir).list()
     Ok(Steps(dir, composites).stepsToJson)
   }
 

@@ -21,9 +21,7 @@ class StepsControllerSpec extends Specification {
     "return JSON from Steps#stepsToJson" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/steps/list.json"))
-        val composites = Composites("app/composites").list().map{ file =>
-          file.drop("app/".length)
-        }
+        val composites = Composites("composites").list()
         contentAsJson(result) must beEqualTo(Steps("steps", composites).stepsToJson)
       }
     }

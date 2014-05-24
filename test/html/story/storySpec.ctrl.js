@@ -5,7 +5,7 @@ describe('storyModule', function() {
     describe('storyCtrl controller', function() {
         var scope, modal, form, story;
         var steps = {status: 'OK'};
-        var composites = {status: 'OK'};
+        var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
             "Given Web user is in the Browse Stories dialog",
             "Given something else"
@@ -43,7 +43,7 @@ describe('storyModule', function() {
                     $cookieStore: $cookieStore,
                     story: story,
                     steps: steps,
-                    composites: composites
+                    groovyComposites: groovyComposites
                 });
                 form = $compile('<form>')(scope);
                 form.$invalid = false;
@@ -59,8 +59,8 @@ describe('storyModule', function() {
             it('should put story to the scope', function() {
                 expect(scope.story).toEqual(story);
             });
-            it('should put composites to the scope', function() {
-                expect(scope.composites).toEqual(composites);
+            it('should put groovyComposites to the scope', function() {
+                expect(scope.groovyComposites).toEqual(groovyComposites);
             });
             it('should put stepTypes to the scope', function() {
                 expect(scope.stepTypes).toEqual(['GIVEN', 'WHEN', 'THEN']);

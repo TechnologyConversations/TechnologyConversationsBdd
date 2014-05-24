@@ -23,9 +23,13 @@ GET     /reporters/list/*id.json                controllers.ReporterController.l
 
 # Composites
 GET     /composites                             controllers.CompositesController.classesToJson
+GET     /groovyComposites                       controllers.CompositesController.groovyClassesToJson
 GET     /composites/*fullClassName              controllers.CompositesController.classToJson(fullClassName: String)
+GET     /groovyComposites/*className            controllers.CompositesController.groovyClassToJson(className: String)
 PUT     /composites                             controllers.CompositesController.putClass
+PUT     /groovyComposites                       controllers.CompositesController.putGroovyClass
 DELETE  /composites/*fullClassName              controllers.CompositesController.deleteClass(fullClassName: String)
+DELETE  /groovyComposites/*className            controllers.CompositesController.deleteGroovyClass(className: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)
