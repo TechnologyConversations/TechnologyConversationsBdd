@@ -27,12 +27,12 @@ angular.module('runnerModule', [])
                         });
                         openRunnerParametersModal($modal).result.then(function (data) {
                             var classes = data;
-                            $http.get('/composites').then(function (response) {
-                                var composites = response.data;
+                            $http.get('/groovyComposites').then(function (response) {
+                                var groovyComposites = response.data;
                                 $scope.run({
                                     storyPaths: storyPaths,
                                     classes: classes,
-                                    composites: composites
+                                    groovyComposites: groovyComposites
                                 });
                             });
                         });
@@ -45,10 +45,17 @@ angular.module('runnerModule', [])
                 $scope.reportsUrl = '';
                 $http.post('/runner/run.json', json).then(function (response) {
                     var data = response.data;
-                    if (data.status !== 'OK') {
-                        openErrorModal($modal, data);
-                    } else {
+                    if (data.status === 'OK') {
                         $scope.reportsUrl = data.reportsPath.replace('public/', '/assets/');
+                        $scope.storyRunnerInProgress = false;
+                        $scope.storyRunnerSuccess = true;
+                    } else if (data.status === 'FAILED') {
+                        $scope.reportsUrl = data.reportsPath.replace('public/', '/assets/');
+                        $scope.storyRunnerInProgress = false;
+                        $scope.storyRunnerSuccess = false;
+                    }
+                    else {
+                        openErrorModal($modal, data);
                     }
                     $scope.storyRunnerInProgress = false;
                     $scope.storyRunnerSuccess = true;
