@@ -86,8 +86,6 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
     ))
   }
 
-
-
   private[jbehave] def steps = {
     val config = new MostUsefulConfiguration()
     classes.map { className =>

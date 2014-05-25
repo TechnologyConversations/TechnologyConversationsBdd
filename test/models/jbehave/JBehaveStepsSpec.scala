@@ -98,10 +98,35 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       list(0) must haveKey("key")
     }
 
-    "return List with Map containing key" in {
+    "return List with Map containing description" in {
       list(0) must haveKey("description")
     }
 
+    "return List with Map containing options" in {
+      list(0) must haveKey("options")
+    }
+  }
+
+  "JBehaveSteps#optionsToJson" should {
+
+    val list = JBehaveSteps().classParamsMap(className)
+
+    "return List[Map]" in {
+      list must beAnInstanceOf[List[Map[String, String]]]
+      list(0) must beAnInstanceOf[Map[String, String]]
+    }
+
+    "return List with Map containing text" in {
+      list(0) must haveKey("text")
+    }
+
+    "return List with Map containing value" in {
+      list(0) must haveKey("value")
+    }
+
+    "return List with Map containing isSelected" in {
+      list(0) must haveKey("isSelected")
+    }
   }
 
   "JBehaveSteps#steps" should {
