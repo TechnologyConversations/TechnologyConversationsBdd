@@ -8,7 +8,7 @@ class StoryListSpec extends Specification {
   "StoryList#stories" should {
 
     "return all stories from files ending with .story" in {
-      StoryList("test/stories").stories must have size 3
+      StoryList("test/stories").stories must have size 6
     }
 
     "return no stories when the destination directory is empty" in {

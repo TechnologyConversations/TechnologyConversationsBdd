@@ -111,6 +111,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
 
     val list = JBehaveSteps().classParamsMap(className)
 
+
     "return List[Map]" in {
       list must beAnInstanceOf[List[Map[String, String]]]
       list(0) must beAnInstanceOf[Map[String, String]]
