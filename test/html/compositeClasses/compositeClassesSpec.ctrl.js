@@ -41,11 +41,38 @@ describe('compositeClassesModule', function() {
             it('should return composites URL', function() {
                 scope.compositeStepText = undefined;
                 var url = scope.compositeClassUrl(packageName, className);
-                expect(url).toEqual('/page/composites/' + packageName + "." + className);
+                expect(url).toEqual('/page/composites/' + packageName + '.' + className);
             });
             it('should add compositeStepText to the URL', function() {
                 var url = scope.compositeClassUrl(packageName, className);
-                expect(url).toEqual('/page/composites/' + packageName + "." + className + '?stepText=' + compositeStepText);
+                expect(url).toEqual('/page/composites/' + packageName + '.' + className + '?stepText=' + compositeStepText);
+            });
+            it('should ignore package if empty', function() {
+                var url = scope.compositeClassUrl('', className);
+                expect(url).toEqual('/page/composites/' + className + '?stepText=' + compositeStepText);
+            });
+            it('should remove directory', function() {
+                var url = scope.compositeClassUrl('', 'composites/something.groovy');
+                expect(url).toEqual('/page/composites/something.groovy?stepText=' + compositeStepText);
+            });
+            it('should remove windows directory', function() {
+                var url = scope.compositeClassUrl('', 'composites\\something.groovy');
+                expect(url).toEqual('/page/composites/something.groovy?stepText=' + compositeStepText);
+            });
+        });
+
+        describe('compositeClassText function', function() {
+            it('should remove extension', function() {
+                var text = scope.compositeClassText('something.groovy');
+                expect(text).toEqual('something');
+            });
+            it('should remove directory', function() {
+                var text = scope.compositeClassText('composites/something');
+                expect(text).toEqual('something');
+            });
+            it('should remove windows directory', function() {
+                var text = scope.compositeClassText('composites\\something');
+                expect(text).toEqual('something');
             });
         });
 

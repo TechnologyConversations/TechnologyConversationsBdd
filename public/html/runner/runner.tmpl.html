@@ -1,0 +1,8 @@
+<div id="runnerStatus" ng-class="getRunnerProgressCss()" ng-show="showRunnerProgress">
+    <div ng-class="getRunnerStatusCss()" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+        <span>{{getStoryRunnerStatusText()}}</span>
+    </div>
+</div>
+<strong class="pull-right">
+    <a id="runnerReports" href="{{reportsUrl}}" ng-show="reportsUrl !== ''" target="_blank">Open the report <span class="glyphicon glyphicon-chevron-right"></span></a>
+</strong>

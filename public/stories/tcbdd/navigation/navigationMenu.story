@@ -28,6 +28,7 @@ Meta:
 Then Web element pageTitle should have text TC BDD Assistant
 Then Web element browseStories should have text Browse Stories
 Then Web element browseComposites should have text Browse Composites
+Then Web element runner should have text Run Stories
 
 Examples:
 
@@ -46,7 +47,6 @@ Scenario: Has link to the Browse Stories screen
 Meta:
 
 
-Then Web element browseStories should have text Browse Stories
 When Web user clicks the element browseStories
 Then Web user is in the stories modal screen
 
@@ -59,5 +59,15 @@ Meta:
 
 When Web user clicks the element browseComposites
 Then Web user is in the composites modal screen
+
+Examples:
+
+Scenario: Has link to the Run Stories screen
+
+Meta:
+
+
+When Web user clicks the element runner
+Then Web user is in the Runner Selector modal screen
 
 Examples:

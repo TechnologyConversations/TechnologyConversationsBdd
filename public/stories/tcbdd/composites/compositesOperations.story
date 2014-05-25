@@ -26,9 +26,9 @@ Meta:
 
 
 Given Web user is in the New Composites screen
-Then File app/composites/com/technologyconversations/bdd/steps/@className.java does NOT exist
+Then File composites/@className.groovy does NOT exist
 When Web user clicks the element saveComposites
-Then File app/composites/com/technologyconversations/bdd/steps/@className.java exists
+Then File composites/@className.groovy exists
 
 Examples:
 
@@ -50,7 +50,7 @@ Meta:
 
 When Web user clicks the element deleteComposites
 When Web user clicks the element ok
-Then File app/composites/com/technologyconversations/bdd/steps/@className.java does NOT exist
+Then File composites/@className.groovy does NOT exist
 
 Examples:
 

@@ -1,8 +1,14 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'classes', 'composites',
-        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, classes, composites) {
+    .controller('storyCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', '$q', '$anchorScroll', 'story', 'steps', 'groovyComposites',
+        function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites) {
+            $scope.pendingSteps = [];
             $scope.setAction = function() {
-                $scope.action = $scope.story.name === '' ? 'POST' : 'PUT';
+                if ($scope.story.name === '') {
+                    $scope.action = 'POST';
+                } else {
+                    $scope.action = 'PUT';
+                    $scope.addHistoryItem($scope.story.name + ' story');
+                }
             };
             $scope.expandPanels = function() {
                 var scenariosExpanded = true;
@@ -24,8 +30,7 @@ angular.module('storyModule', [])
             };
             $scope.story = story;
             $scope.steps = steps;
-            $scope.classes = classes;
-            $scope.composites = composites;
+            $scope.groovyComposites = groovyComposites;
             $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
             $scope.storyFormClass = 'col-md-12';
             $scope.storyRunnerVisible = false;
@@ -83,19 +88,20 @@ angular.module('storyModule', [])
                 if ($scope.canRunStory()) {
                     $scope.saveStory();
                     $scope.openRunnerModal().result.then(function (data) {
+                        var classes = data;
                         $scope.storyFormClass = 'col-md-6';
                         $scope.storyRunnerClass = 'col-md-6';
                         $scope.storyRunnerVisible = true;
                         $scope.storyRunnerInProgress = true;
-                        data.classes.forEach(function (classEntry) {
+                        classes.forEach(function (classEntry) {
                             classEntry.params.forEach(function (paramEntry) {
                                 $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
                             });
                         });
                         var json = {
-                            storyPath: $scope.story.path,
-                            classes: data.classes,
-                            composites: $scope.composites
+                            storyPaths: [{path: $scope.story.path}],
+                            classes: classes,
+                            groovyComposites: $scope.groovyComposites
                         };
                         $http.post('/runner/run.json', json).then(function (response) {
                             $scope.storyRunnerSuccess = (response.data.status === 'OK');
@@ -118,31 +124,17 @@ angular.module('storyModule', [])
             };
             // TODO Test
             $scope.openRunnerModal = function() {
-                return $modal.open({
-                    templateUrl: '/assets/html/runner.tmpl.html',
-                    controller: 'runnerCtrl',
-                    resolve: {
-                        data: function() {
-                            return $scope.classes;
-                        }
-                    }
-                });
+                return openRunnerParametersModal($modal);
             };
-            // TODO Test
             $scope.getRunnerProgressCss = function () {
-                return {
-                    'progress progress-striped active': $scope.storyRunnerInProgress,
-                    'progress': !$scope.storyRunnerInProgress
-                };
+                return getRunnerProgressCss($scope.storyRunnerInProgress);
             };
-            // TODO Test
             $scope.getRunnerStatusCss = function () {
-                return {
-                    'progress-bar progress-bar-info': $scope.storyRunnerInProgress,
-                    'progress-bar progress-bar-warning': !$scope.storyRunnerInProgress && $scope.storyRunnerSuccess && $scope.hasPendingSteps(),
-                    'progress-bar progress-bar-success': !$scope.storyRunnerInProgress && $scope.storyRunnerSuccess && !$scope.hasPendingSteps(),
-                    'progress-bar progress-bar-danger': !$scope.storyRunnerInProgress && !$scope.storyRunnerSuccess
-                };
+                return getRunnerStatusCss(
+                    $scope.storyRunnerInProgress,
+                    $scope.storyRunnerSuccess,
+                    ($scope.pendingSteps > 0)
+                );
             };
             $scope.setPendingSteps = function(reports) {
                 $scope.pendingSteps = [];
@@ -158,24 +150,16 @@ angular.module('storyModule', [])
                 return $scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0;
             };
             $scope.getStoryRunnerStatusText = function () {
-                if ($scope.storyRunnerInProgress) {
-                    return 'Story run is in progress';
-                } else if ($scope.storyRunnerSuccess) {
-                    if ($scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0) {
-                        return 'Story run was successful with ' + $scope.pendingSteps.length + " pending steps";
-                    } else {
-                        return 'Story run was successful';
-                    }
-                } else {
-                    return 'Story run failed';
-                }
+                return getStoryRunnerStatusText(
+                    $scope.storyRunnerInProgress,
+                    $scope.storyRunnerSuccess,
+                    $scope.pendingSteps.length
+                );
             };
             $scope.removeCollectionElement = removeCollectionElement;
-            // TODO Test
             $scope.addElement = function (collection) {
                 collection.push({});
             };
-            // TODO Test
             $scope.addScenarioElement = function (collection) {
                 collection.push({title: '', meta: [], steps: [], examplesTable: ''});
             };
@@ -209,10 +193,10 @@ angular.module('storyModule', [])
             };
         }
     ])
-    .controller('runnerCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
+    .controller('runnerParamsCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
         function ($scope, $modalInstance, $cookieStore, data) {
-            $scope.data = data;
-            $scope.data.classes.forEach(function(classEntry) {
+            $scope.classes = data.classes;
+            $scope.classes.forEach(function(classEntry) {
                 classEntry.params.forEach(function(paramEntry) {
                     paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
                 });
@@ -226,11 +210,9 @@ angular.module('storyModule', [])
             $scope.hasParams = function(classEntry) {
                 return classEntry.params !== undefined && classEntry.params.length > 0;
             };
-            // TODO Test
             $scope.ok = function () {
-                $modalInstance.close($scope.data);
+                $modalInstance.close($scope.classes);
             };
-            // TODO Test
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };

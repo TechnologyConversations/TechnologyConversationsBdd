@@ -1,6 +1,7 @@
 angular.module('topMenuModule', [])
     .controller('topMenuController', ['$scope', '$modal', '$location',
         function($scope, $modal, $location) {
+            // TODO Test more than checking whether $modal.open was called
             $scope.openStory = function() {
                 $modal.open({
                     templateUrl: '/assets/html/stories.tmpl.html',
@@ -12,6 +13,7 @@ angular.module('topMenuModule', [])
                     }
                 });
             };
+            // TODO Test
             $scope.openCompositeClass = function() {
                 openCompositeClass($modal);
             };
@@ -21,10 +23,10 @@ angular.module('topMenuModule', [])
                     return 'View Story';
                 } else if (path.indexOf(getNewStoryUrl()) === 0) {
                     return 'New Story';
-                } else if (path.indexOf(getNewStoryUrl()) === 0) {
-                    return 'New Story';
                 } else if (path.indexOf(getCompositesUrl()) === 0) {
                     return 'Composites';
+                } else if (path.indexOf('/page/reports/') === 0) {
+                    return 'Reports';
                 } else {
                     return '';
                 }

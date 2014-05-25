@@ -6,7 +6,7 @@
                 <span class="input-group-addon">Class</span>
                 <input type="text" id="className" name="className" ng-model="data.class" class="form-control" ng-pattern="classNamePattern()">
                 <span class="input-group-btn">
-                    <a id="createNewClass" class="btn btn-info" href="{{compositeClassUrl('composites.com.technologyconversations.bdd.steps', data.class)}}" ng-click="close()" ng-disabled="!compositeClassForm.className.$dirty || compositeClassForm.className.$invalid">
+                    <a id="createNewClass" class="btn btn-info" href="{{compositeClassUrl('', data.class + '.groovy')}}" ng-click="close()" ng-disabled="!compositeClassForm.className.$dirty || compositeClassForm.className.$invalid">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
@@ -23,7 +23,7 @@
         <tbody ng-repeat="class in compositeClasses | filter:data.class">
             <tr>
                 <td>
-                    <a href="{{compositeClassUrl(class.package, class.class)}}" ng-click="close()">{{class.class}}</a>
+                    <a href="{{compositeClassUrl('', class.path)}}" ng-click="close()">{{compositeClassText(class.path)}}</a>
                 </td>
             </tr>
         </tbody>

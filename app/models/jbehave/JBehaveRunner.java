@@ -1,9 +1,11 @@
 package models.jbehave;
 
 import com.technologyconversations.bdd.steps.util.BddParamsBean;
+import groovy.lang.GroovyClassLoader;
 import models.RunnerClass;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
@@ -16,22 +18,34 @@ import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
 
 import java.lang.reflect.Method;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class JBehaveRunner extends JUnitStories {
 
-    private String storyPath;
-    public void setStoryPath(String value) {
-        storyPath = value;
+    private Configuration configuration;
+
+    private List<String> storyPaths;
+    public final void setStoryPaths(List<String> value) {
+        storyPaths = value;
     }
-    public String getStoryPath() {
-        return storyPath;
+    public final List<String> getStoryPaths() {
+        return storyPaths;
+    }
+
+    private List<String> compositePaths;
+    public final void setCompositePaths(List<String> value) {
+        compositePaths = value;
+    }
+    public final List<String> getCompositePaths() {
+        return compositePaths;
     }
 
     private List<Object> stepsInstances;
-    public void setStepsInstances(List<RunnerClass> value) throws Exception {
+    public final void setStepsInstances(List<RunnerClass> value) throws Exception {
         stepsInstances = new ArrayList<>();
         for (RunnerClass runnerClass : value) {
             Object stepsInstance = Class.forName(runnerClass.fullName()).newInstance();
@@ -57,28 +71,18 @@ public class JBehaveRunner extends JUnitStories {
         return reportsPath;
     }
 
-    public JBehaveRunner(String storyPathValue,
+    public JBehaveRunner(List<String> storyPathsValue,
                          List<RunnerClass> stepsClasses,
+                         List<String> compositePaths,
                          String reportsPathValue) throws Exception {
-        setStoryPath(storyPathValue);
+        final int secondsInMinute = 60;
+        final int storyTimeoutMinutes = 20;
+        setStoryPaths(storyPathsValue);
         setStepsInstances(stepsClasses);
+        setCompositePaths(compositePaths);
         setReportsPath(reportsPathValue);
-    }
 
-    @Override
-    protected List<String> storyPaths() {
-        String searchIn = CodeLocations.codeLocationFromPath("").getFile();
-        return new StoryFinder().findPaths(searchIn, getStoryPath(), "");
-    }
-
-    @Override
-    public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), getStepsInstances());
-    }
-
-    @Override
-    public Configuration configuration() {
-        return new MostUsefulConfiguration()
+        configuration = new MostUsefulConfiguration()
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withRelativeDirectory(getReportsPath())
                         .withDefaultFormats()
@@ -86,6 +90,36 @@ public class JBehaveRunner extends JUnitStories {
                         .withCrossReference(new CrossReference()))
                 .useStepMonitor(new SilentStepMonitor())
                 .useParameterControls(new ParameterControls().useDelimiterNamedParameters(true));
+        EmbedderControls embedderControls = configuredEmbedder().embedderControls();
+        embedderControls.useStoryTimeoutInSecs(storyTimeoutMinutes * secondsInMinute);
+    }
+
+    @Override
+    protected List<String> storyPaths() {
+        String searchIn = CodeLocations.codeLocationFromPath("").getFile();
+        return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>());
+    }
+
+    @Override
+    public InjectableStepsFactory stepsFactory() {
+//        return new InstanceStepsFactory(configuration(), getStepsInstances());
+        List<Object> instances = new ArrayList<>();
+        instances.addAll(getStepsInstances());
+        for(String path : getCompositePaths()) {
+            File groovyStepsFile = new File(path);
+            try {
+                Object instance = new GroovyClassLoader().parseClass(groovyStepsFile).newInstance();
+                instances.add(instance);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new InstanceStepsFactory(configuration(), instances);
+    }
+
+    @Override
+    public Configuration configuration() {
+        return configuration;
     }
 
 

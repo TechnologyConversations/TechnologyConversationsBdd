@@ -1,6 +1,11 @@
 angular.module('compositesModule', [])
     .controller('compositesCtrl', ['$scope', '$http', '$modal', '$location', '$cookieStore', 'compositesClass', 'steps',
         function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps) {
+            $scope.addCompositesTab = function() {
+                if (!$scope.compositesClass.isNew) {
+                    $scope.addHistoryItem($scope.compositesClass.class + ' composites');
+                }
+            };
             $scope.addNewComposite = function() {
                 $scope.composite = {stepText: '', compositeSteps: [{}]};
                 $scope.compositesClass.composites.push($scope.composite);
@@ -66,12 +71,13 @@ angular.module('compositesModule', [])
                 return isValid;
             };
             $scope.saveCompositesClass = function() {
-                $http.put('/composites', $scope.compositesClass).then(function() {
+                $http.put('/groovyComposites', $scope.compositesClass).then(function() {
                     $scope.deleteCompositesClassWithoutConfirmation();
-                    $location.path('/page/composites/' + $scope.compositesClass.package + '.' + $scope.compositesClass.class);
+                    $location.path('/page/composites/' + $scope.compositesClass.class + '.groovy');
                     $scope.compositesClass.isNew = false;
                     $scope.originalCompositesClass = angular.copy($scope.compositesClass);
                     $cookieStore.put('compositeClass', $scope.compositesClass.class);
+                    $scope.addCompositesTab();
                 }, function(response) {
                     openErrorModal($modal, response.data);
                 });
@@ -81,12 +87,10 @@ angular.module('compositesModule', [])
 
             };
             $scope.deleteCompositesClassWithoutConfirmation = function() {
-                var packageName = $scope.compositesClass.package;
                 var className = $scope.compositesClass.class;
-                var originalPackageName = $scope.originalCompositesClass.package;
                 var originalClassName = $scope.originalCompositesClass.class;
-                if (packageName !== originalPackageName || className !== originalClassName) {
-                    $http.delete('/composites/' + originalPackageName + '.' + originalClassName).then(function () {
+                if (className !== originalClassName) {
+                    $http.delete('/groovyComposites/' + originalClassName).then(function () {
                     }, function (response) {
                         openErrorModal($modal, response.data);
                     });
@@ -96,8 +100,7 @@ angular.module('compositesModule', [])
                 var message = {status: 'Delete Composites Class', message: 'Are you sure you want to delete this composites class?'};
                 var okModal = openConfirmationModal($modal, message);
                 okModal.result.then(function() {
-                    var fullClassName = $scope.originalCompositesClass.package + '.' + $scope.originalCompositesClass.class;
-                    $http.delete('/composites/' + fullClassName).then(function() {
+                    $http.delete('/groovyComposites/' + $scope.originalCompositesClass.class).then(function() {
                         $location.path('/');
                     }, function(response) {
                         openErrorModal($modal, response.data);
@@ -113,5 +116,7 @@ angular.module('compositesModule', [])
                     return 'Update Composites';
                 }
             };
+            // Initialization
+            $scope.addCompositesTab();
         }
     ]);

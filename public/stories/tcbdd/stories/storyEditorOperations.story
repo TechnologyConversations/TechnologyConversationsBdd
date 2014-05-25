@@ -26,7 +26,8 @@ Scenario: Can save new story
 Meta:
 
 
-Given Web user is in the New Story page
+Given Web user is in the New Story screen
+When Web user clicks the element expandPanels
 When Web user fills in the new story form
 When Web user adds scenario to the story form
 When Web user clicks the element saveStory
@@ -107,7 +108,7 @@ Scenario: Can NOT delete new story before it is saved
 Meta:
 
 
-Given Web user is in the New Story page
+Given Web user is in the New Story screen
 Then Web element deleteStory is disabled
 
 Examples:

@@ -31,7 +31,6 @@ describe('storiesModule controllers', function() {
 
         var httpBackend;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
-        var filesWithPath = {status: 'OK', files: 'filesWithPath'};
 
         beforeEach(
             inject(function($controller, $httpBackend) {
@@ -47,21 +46,23 @@ describe('storiesModule controllers', function() {
             })
         );
 
-        describe('update data', function() {
-
-            it('should update files with data returned from the server', function() {
-                httpBackend.expectGET('/stories/list.json?path=my_path').respond(filesWithPath);
-                scope.updateData('my_path');
-                httpBackend.flush();
-                expect(scope.files).toEqual(filesWithPath);
-            });
-
+        describe('getStories function', function() {
             it('should be called by the controller with the empty path', function() {
                 expect(scope.files).toBeUndefined();
                 httpBackend.flush();
                 expect(scope.files).toEqual(filesWithoutPath);
             });
+        });
 
+        describe('allowToPrevDir function', function() {
+            it('should return true when rootPath is NOT an empty string', function() {
+                scope.rootPath = 'this/is/path';
+                expect(scope.allowToPrevDir()).toEqual(true);
+            });
+            it('should return false when rootPath is an empty string', function() {
+                scope.rootPath = '';
+                expect(scope.allowToPrevDir()).toEqual(false);
+            });
         });
 
     });

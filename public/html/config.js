@@ -9,69 +9,70 @@ angular.module('configModule', [])
                     controller: 'storyCtrl',
                     // TODO Test
                     resolve: {
-                        story: function($route, $http, $modal) {
+                        story: function($http, $modal) {
                             return getJson($http, $modal, '/stories/story.json', false);
                         },
-                        steps: function($route, $http, $modal) {
+                        steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        classes: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/steps/classes.json', true);
-                        },
-                        composites: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                        groovyComposites: function($http, $modal) {
+                            return getJson($http, $modal, '/groovyComposites', true);
                         }
                     }
                 })
-                // TODO Test
                 .when(getNewStoryUrl() + ':path*', {
                     templateUrl: '/assets/html/story/story.tmpl.html',
                     controller: 'storyCtrl',
+                    // TODO Test
                     resolve: {
                         story: function($route, $http, $modal) {
                             return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story', false);
                         },
-                        steps: function($route, $http, $modal) {
+                        steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        classes: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/steps/classes.json', true);
-                        },
-                        composites: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                        groovyComposites: function($http, $modal) {
+                            return getJson($http, $modal, '/groovyComposites', true);
                         }
                     }
                 })
-                // TODO Test
                 .when(getViewStoryUrl() + ':path*', {
                     templateUrl: '/assets/html/story/story.tmpl.html',
                     controller: 'storyCtrl',
+                    // TODO Test
                     resolve: {
                         story: function($route, $http, $modal) {
                             return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story', false);
                         },
-                        steps: function($route, $http, $modal) {
+                        steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', true);
                         },
-                        classes: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/steps/classes.json', true);
-                        },
-                        composites: function($route, $http, $modal) {
-                            return getJson($http, $modal, '/composites', true);
+                        groovyComposites: function($http, $modal) {
+                            return getJson($http, $modal, '/groovyComposites', true);
                         }
                     },
                     reloadOnSearch: false
                 })
-                // TODO Test
                 .when(getCompositesUrl() + ':className*', {
                     templateUrl: '/assets/html/composites/composites.tmpl.html',
                     controller: 'compositesCtrl',
+                    // TODO Test
                     resolve: {
                         compositesClass: function($route, $http) {
                             return getCompositesJson($http, $route.current.params.className);
                         },
-                        steps: function($route, $http, $modal) {
+                        steps: function($http, $modal) {
                             return getJson($http, $modal, '/steps/list.json', false);
+                        }
+                    }
+                })
+                .when('/page/runner/', {
+                    templateUrl: '/assets/html/runner/runner.tmpl.html',
+                    controller: 'runnerCtrl',
+                    // TODO Test
+                    resolve: {
+                        data: function($route) {
+                            return {reportsPath: $route.current.params.path};
                         }
                     }
                 })

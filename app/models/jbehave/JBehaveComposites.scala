@@ -6,6 +6,7 @@ import org.jbehave.core.annotations.{Then, When, Given, Composite}
 import java.lang.annotation.Annotation
 import java.io.File
 import models._
+import groovy.lang.GroovyClassLoader
 
 trait JBehaveComposites {
 
@@ -15,11 +16,15 @@ trait JBehaveComposites {
     Json.toJson(classesList(files))
   }
 
+  def groovyClassesToJson(files: List[String]): JsValue = {
+    Json.toJson(groovyClassesList(files))
+  }
+
   def classToText(json: JsValue): String = {
     val packageOption = (json \ "package").asOpt[String]
     val classOption = (json \ "class").asOpt[String]
     val compositesOption = (json \ "composites").asOpt[List[JsValue]]
-    validateJson(packageOption, classOption, compositesOption)
+    validateJavaJson(packageOption, classOption, compositesOption)
     val composites = compositesOption.get.map{ composite =>
       JBehaveComposite(
         (composite \ "stepText").as[String],
@@ -33,8 +38,28 @@ trait JBehaveComposites {
     ).toString().trim
   }
 
+  def groovyClassToText(json: JsValue): String = {
+    val classOption = (json \ "class").asOpt[String]
+    val compositesOption = (json \ "composites").asOpt[List[JsValue]]
+    validateGroovyJson(classOption, compositesOption)
+    val composites = compositesOption.get.map{ composite =>
+      JBehaveComposite(
+        (composite \ "stepText").as[String],
+        (composite \ "compositeSteps" \\ "step").map(_.as[String]).toList
+      )
+    }.toList
+    views.html.jBehaveGroovyComposites.render(
+      classOption.get,
+      composites
+    ).toString().trim
+  }
+
   def classToJson(className: String): JsValue = {
     Json.toJson(classMap(className))
+  }
+
+  def groovyClassToJson(dirPath: String, className: String): JsValue = {
+    Json.toJson(groovyClassMap(dirPath, className))
   }
 
   private def classesList(files: List[String]) = {
@@ -48,12 +73,26 @@ trait JBehaveComposites {
     }
   }
 
+  private def groovyClassesList(files: List[String]) = {
+    files
+      .filter(_.endsWith(".groovy"))
+      .map(file => Map("path" -> file))
+  }
+
   private def classMap(className: String) = {
     val compositeClass = Class.forName(className)
     Map(
       "package" -> Json.toJson(compositeClass.getPackage.getName),
       "class" -> Json.toJson(compositeClass.getSimpleName),
       "composites" -> Json.toJson(methodCollection(compositeClass.getMethods.toList))
+    )
+  }
+
+  private def groovyClassMap(path: String, className: String) = {
+    val clazz = new GroovyClassLoader().parseClass(new File(path + "/" + className))
+    Map(
+      "class" -> Json.toJson(className.replace(".groovy", "")),
+      "composites" -> Json.toJson(methodCollection(clazz.getMethods.toList))
     )
   }
 
@@ -90,7 +129,7 @@ trait JBehaveComposites {
     annotation.asInstanceOf[Composite].steps().map(step => Map("step" -> step)).toList
   }
 
-  private def validateJson(packageOption: Option[String],
+  private def validateJavaJson(packageOption: Option[String],
                            classOption: Option[String],
                            compositesOption: Option[List[JsValue]]) {
     if (packageOption.isEmpty) {
@@ -98,8 +137,19 @@ trait JBehaveComposites {
     } else if (classOption.isEmpty) {
       throw new Exception(noNodeMessage("class"))
     }
-    verifyJavaNaming(classOption.get)
-    for(composite <- compositesOption.get) {
+    validateJson(classOption.get, compositesOption.get)
+  }
+
+  private def validateGroovyJson(classOption: Option[String], compositesOption: Option[List[JsValue]]) {
+    if (classOption.isEmpty) {
+      throw new Exception(noNodeMessage("class"))
+    }
+    validateJson(classOption.get, compositesOption.get)
+  }
+
+  private def validateJson(className: String, composites: List[JsValue]) {
+    verifyJavaNaming(className)
+    for(composite <- composites) {
       val stepText = (composite \ "stepText").as[String]
       if (!stepText.matches("""(Given|When|Then) .+""")) {
         throw new Exception(notGivenWhenThenMessage(stepText))

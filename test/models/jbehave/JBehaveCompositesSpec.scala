@@ -14,6 +14,7 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
   val stepText = "Given this is my composite"
   val composite = JBehaveComposite(stepText, steps)
   val composites = List(composite)
+  val compositesDir = "test/composites"
   def compositesJson(composites: List[JBehaveComposite] = composites) = {
     composites.map { composite =>
       Map(
@@ -32,11 +33,6 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
     "composites" -> Json.toJson(compositesJson())
   )
   val json = Json.toJson(jsonMap)
-  val text = views.html.jBehaveComposites.render(
-    compositePackage,
-    compositeClass,
-    composites
-  ).toString().trim
   val jBehaveComposites = new JBehaveComposites {
     override def content = s"""package $compositePackage
                              |
@@ -73,6 +69,26 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
       jsonString must */("class" -> className)
     }
 
+  }
+
+  "JBehaveComposites#groovyClassesToJson" should {
+
+    val groovyPath = "this/is/path/to/my.groovy"
+    val javaPath = "this/is/path/to/my.java"
+    val json = jBehaveComposites.groovyClassesToJson(List(groovyPath, javaPath))
+    val jsonString = json.toString()
+
+    "return JsValue" in {
+      json must beAnInstanceOf[JsValue]
+    }
+
+    "have path" in {
+      jsonString must */("path" -> groovyPath)
+    }
+
+    "have non groovy files excluded" in {
+      jsonString must not */("path" -> javaPath)
+    }
   }
 
   "JBehaveComposites#classToText" should {
@@ -150,7 +166,91 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
     }
 
     "return jBehaveComposites view" in {
+      val text = views.html.jBehaveComposites.render(
+        compositePackage,
+        compositeClass,
+        composites
+      ).toString().trim
       jBehaveComposites.classToText(json) must beEqualTo(text)
+    }
+
+  }
+
+  "JBehaveComposites#groovyClassToText" should {
+
+    "throw exception if class is not present" in {
+      val actualJson = Json.toJson(jsonMap.filterKeys(_ != "class"))
+      jBehaveComposites.groovyClassToText(actualJson) must throwA[Exception](message = noNodeMessage("class"))
+    }
+
+    "throw exception if class starts with a number" in {
+      val actualJson = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("1abc")))
+      jBehaveComposites.groovyClassToText(actualJson) must throwA[Exception](message = nameIsIncorrectMessage("1abc"))
+    }
+
+    "throw exception if class uses any character other than letters, digits, underscores and dollar signs" in {
+      val jsonWithPercentage = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("abc%")))
+      jBehaveComposites.groovyClassToText(jsonWithPercentage) must throwA[Exception](message = nameIsIncorrectMessage("abc%"))
+      val jsonWithSpace = Json.toJson(jsonMap.filterKeys(_ != "class") + ("class" -> Json.toJson("ab c")))
+      jBehaveComposites.groovyClassToText(jsonWithSpace) must throwA[Exception](message = nameIsIncorrectMessage("ab c"))
+    }
+
+    "throw exception if composites > stepText does not start with Given, When or Then" in {
+      val step = "Give me something not starting with Given, When or Then"
+      val composite = JBehaveComposite(step, steps)
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.groovyClassToText(actualJson) must throwA[Exception](message = notGivenWhenThenMessage(step))
+    }
+
+    "throw exception if composites > stepText has parameter that starts with a number or uses any character other than letters, digits, underscores and dollar signs" in {
+      val composite = JBehaveComposite("Given param <1param>", steps)
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.groovyClassToText(actualJson) must throwA[Exception](message = nameIsIncorrectMessage("1param"))
+    }
+
+    "throw exception if composites > compositeSteps > step does not start with Given, When or Then" in {
+      val step = "Give me something"
+      val composite = JBehaveComposite(stepText, steps :+ step)
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.groovyClassToText(actualJson) must throwA[Exception](message = notGivenWhenThenMessage(step))
+    }
+
+    "throw exception if composites > compositeSteps > step has parameter that starts with a number or uses any character other than letters, digits, underscores and dollar signs" in {
+      val composite = JBehaveComposite(stepText, steps :+ "Given there is <param with space>")
+      val composites = List(composite)
+      val jsonMap = Map(
+        "package" -> Json.toJson(compositePackage),
+        "class" -> Json.toJson(compositeClass),
+        "composites" -> Json.toJson(compositesJson(composites))
+      )
+      val actualJson = Json.toJson(jsonMap)
+      jBehaveComposites.groovyClassToText(actualJson) must throwA[Exception](message = nameIsIncorrectMessage("param with space"))
+    }
+
+    "return jBehaveGroovyComposites view" in {
+      val text = views.html.jBehaveGroovyComposites.render(
+        compositeClass,
+        composites
+      ).toString().trim
+      jBehaveComposites.groovyClassToText(json) must beEqualTo(text)
     }
 
   }
@@ -166,6 +266,27 @@ class JBehaveCompositesSpec extends Specification with JsonMatchers {
 
     "have class" in {
       jsonString must /("class" -> compositeClass)
+    }
+
+    "have composites > composite > stepText" in {
+      jsonString must /("composites") */("stepText" -> "(Given|When|Then).*".r)
+    }
+
+    "have composites > composite > compositeSteps > step" in {
+      jsonString must /("composites") */"compositeSteps" */("step" -> "(Given|When|Then).*".r)
+    }
+
+  }
+
+  "JBehaveComposites#groovyClassToJson" should {
+
+    val name = "GroovySteps"
+    val className = s"$name.groovy"
+    val json = jBehaveComposites.groovyClassToJson(compositesDir, className)
+    val jsonString = json.toString()
+
+    "have class" in {
+      jsonString must /("class" -> name)
     }
 
     "have composites > composite > stepText" in {

@@ -21,24 +21,28 @@ object RunnerController extends Controller {
 
   private[controllers] def run(jsonOption: Option[JsValue]): Map[String, String] = {
     lazy val json = jsonOption.get
-    lazy val storyPath = (json \ "storyPath").asOpt[String]
+    lazy val storyPaths = (json \ "storyPaths").asOpt[List[JsValue]]
     lazy val classesJson = (json \ "classes").asOpt[List[JsValue]]
     lazy val compositesJsonOpt = (json \ "composites").asOpt[List[JsValue]]
+    lazy val groovyCompositesJsonOpt = (json \ "groovyComposites").asOpt[List[JsValue]]
     if (jsonOption.isEmpty) {
       noJsonResultMap
-    } else if (storyPath.isEmpty) {
-      noResultMap("storyPath")
+    } else if (storyPaths.isEmpty) {
+      noResultMap("storyPaths")
     } else if (classesJson.isEmpty || classesJson.get.size == 0) {
       noResultMap("classes")
     } else {
       val id = DateTime.now.getMillis
       val reportsPath = reportsDir + "/" + id
-      val storiesPath = storiesDir + "/" + storyPath.get
+      val fullStoryPaths = storyPaths.get.map { path =>
+        storiesDir + "/" + (path \ "path").as[String]
+      }
       var status = "OK"
       try {
         new Runner(
-          storiesPath,
+          fullStoryPaths,
           classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
+          groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
           s"../$reportsPath"
         ).run()
       } catch {

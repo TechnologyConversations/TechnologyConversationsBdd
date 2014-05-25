@@ -8,6 +8,7 @@ import org.jbehave.core.configuration.MostUsefulConfiguration
 import scala.collection.JavaConversions._
 import com.technologyconversations.bdd.steps.util.{BddOptionParam, BddParam}
 import org.jbehave.core.annotations.{Then, When, Given}
+import groovy.lang.GroovyClassLoader
 
 class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.empty[String]) {
 
@@ -44,7 +45,11 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
       .map(_.name)
       .toList
     val compositeClasses = composites.map { composite =>
-      composite.replace(".java", "").replace(File.separator, ".")
+      if (composite.endsWith(".java")) {
+        composite.replace(".java", "").replace(File.separator, ".")
+      } else {
+        composite
+      }
     }
     jarClasses ::: compositeClasses
   }
@@ -86,7 +91,13 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
   private[jbehave] def steps = {
     val config = new MostUsefulConfiguration()
     classes.map { className =>
-      new Steps(config, Class.forName(className).newInstance())
+      if (className.endsWith(".groovy")) {
+        val instance = new GroovyClassLoader().parseClass(new File(className)).newInstance
+        new Steps(config, instance)
+      } else {
+        val instance = Class.forName(className).newInstance()
+        new Steps(config, instance)
+      }
     }
   }
 

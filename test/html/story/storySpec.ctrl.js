@@ -5,8 +5,7 @@ describe('storyModule', function() {
     describe('storyCtrl controller', function() {
         var scope, modal, form, story;
         var steps = {status: 'OK'};
-        var classes = {status: 'OK'};
-        var composites = {status: 'OK'};
+        var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
             "Given Web user is in the Browse Stories dialog",
             "Given something else"
@@ -29,6 +28,9 @@ describe('storyModule', function() {
         beforeEach(
             inject(function($rootScope, $controller, $http, $location, $cookieStore, $compile) {
                 scope = $rootScope.$new();
+                scope.addHistoryItem = function(text) {
+                    scope.currentTabText = text;
+                };
                 story = {
                     name: 'this is a story name',
                     path: 'this/is/path'
@@ -41,8 +43,7 @@ describe('storyModule', function() {
                     $cookieStore: $cookieStore,
                     story: story,
                     steps: steps,
-                    classes: classes,
-                    composites: composites
+                    groovyComposites: groovyComposites
                 });
                 form = $compile('<form>')(scope);
                 form.$invalid = false;
@@ -58,11 +59,8 @@ describe('storyModule', function() {
             it('should put story to the scope', function() {
                 expect(scope.story).toEqual(story);
             });
-            it('should put classes to the scope', function() {
-                expect(scope.classes).toEqual(classes);
-            });
-            it('should put composites to the scope', function() {
-                expect(scope.composites).toEqual(composites);
+            it('should put groovyComposites to the scope', function() {
+                expect(scope.groovyComposites).toEqual(groovyComposites);
             });
             it('should put stepTypes to the scope', function() {
                 expect(scope.stepTypes).toEqual(['GIVEN', 'WHEN', 'THEN']);
@@ -103,74 +101,38 @@ describe('storyModule', function() {
         });
 
         describe('getStoryRunnerStatusText function', function() {
-            it('should return "Story run is in progress" when story runner is in progress', function() {
-                scope.storyRunnerInProgress = true;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run is in progress');
-            });
-            it('should return "Story run was successful with pending steps" when story runner is NOT in progress, status is success and there are pending steps', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
+            it('should use general getStoryRunnerStatusText function', function() {
                 scope.pendingSteps = pendingSteps;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run was successful with 2 pending steps');
-            });
-            it('should return "Story run was successful" when story runner is NOT in progress, status is success and there are NO pending steps', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run was successful');
-            });
-            it('should return "Story run failed" when story runner is NOT in progress and status is NOT success', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = false;
-                expect(scope.getStoryRunnerStatusText()).toEqual('Story run failed');
+                var expected = getStoryRunnerStatusText(
+                    scope.storyRunnerInProgress,
+                    scope.storyRunnerSuccess,
+                    scope.pendingSteps.length);
+                expect(scope.getStoryRunnerStatusText()).toEqual(expected);
             });
         });
 
         describe('removeCollectionElement function', function() {
            it('should call the general removeCollectionElement function', function() {
-               scope.removeCollectionElement = removeCollectionElement;
+               expect(scope.removeCollectionElement).toEqual(removeCollectionElement);
            });
         });
 
+        describe('getRunnerProgressCss function', function() {
+            it('should use general getRunnerProgressCss function', function() {
+                var expected = getRunnerProgressCss(
+                    scope.storyRunnerInProgress
+                );
+                expect(scope.getRunnerProgressCss()).toEqual(expected);
+            });
+        });
+
         describe('getRunnerStatusCss function', function() {
-            it('should return info if story runner is in progress', function() {
-                scope.storyRunnerInProgress = true;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': true,
-                    'progress-bar progress-bar-warning': false,
-                    'progress-bar progress-bar-success': false,
-                    'progress-bar progress-bar-danger': false
-                });
-            });
-            it('should return warning if story runner finished and has pending steps', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
-                scope.pendingSteps = pendingSteps;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': false,
-                    'progress-bar progress-bar-warning': true,
-                    'progress-bar progress-bar-success': false,
-                    'progress-bar progress-bar-danger': false
-                });
-            });
-            it('should return success if story runner finished', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = true;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': false,
-                    'progress-bar progress-bar-warning': false,
-                    'progress-bar progress-bar-success': true,
-                    'progress-bar progress-bar-danger': false
-                });
-            });
-            it('should return danger if story runner finished and is not success', function() {
-                scope.storyRunnerInProgress = false;
-                scope.storyRunnerSuccess = false;
-                expect(scope.getRunnerStatusCss()).toEqual({
-                    'progress-bar progress-bar-info': false,
-                    'progress-bar progress-bar-warning': false,
-                    'progress-bar progress-bar-success': false,
-                    'progress-bar progress-bar-danger': true
-                });
+            it('should use general getRunnerStatusCss function', function() {
+                var expected = getRunnerStatusCss(
+                    scope.storyRunnerInProgress,
+                    scope.storyRunnerSuccess,
+                    (scope.pendingSteps > 0));
+                expect(scope.getRunnerStatusCss()).toEqual(expected);
             });
         });
 
@@ -220,10 +182,14 @@ describe('storyModule', function() {
         });
 
         describe('setAction function', function() {
-            it('should set action to POST when new storyis opened', function() {
+            it('should set action to POST when new story is opened', function() {
                 scope.story.name = '';
                 scope.setAction();
                 expect(scope.action).toEqual('POST');
+            });
+            it('should set add tab story tab when existing story is opened', function() {
+                scope.setAction();
+                expect(scope.currentTabText).toEqual(scope.story.name + ' story');
             });
             it('should set action to PUT when existing story is opened', function() {
                 scope.setAction();
@@ -271,39 +237,83 @@ describe('storyModule', function() {
             });
         });
 
+        describe('canDeleteStory function', function() {
+            it('should return false when action is NOT PUT', function() {
+                scope.action = 'POST';
+                scope.storyRunnerInProgress = false;
+                expect(scope.canDeleteStory()).toEqual(false)
+            });
+            it('should return false when story runner is in progress', function() {
+                scope.action = 'PUT';
+                scope.storyRunnerInProgress = true;
+                expect(scope.canDeleteStory()).toEqual(false)
+            });
+            it('should return true when action is PUT and story runner is NOT in progress', function() {
+                scope.action = 'PUT';
+                scope.storyRunnerInProgress = false;
+                expect(scope.canDeleteStory()).toEqual(true)
+            });
+        });
+
+        describe('addElement function', function() {
+            it('should add an element to the collection', function() {
+                var collection = [{key: 'item1'}, {key: 'item2'}];
+                var expected = collection.length + 1;
+                scope.addElement(collection);
+                expect(collection.length).toEqual(expected);
+            });
+            it('should add an empty element to the collection', function() {
+                var collection = [];
+                scope.addElement(collection);
+                expect(collection[0]).toEqual({});
+            });
+        });
+
+        describe('addScenarioElement function', function() {
+            it('should add empty scenario to the collection', function() {
+                var scenarios = [];
+                scope.addScenarioElement(scenarios);
+                expect(scenarios[0]).toEqual({title: '', meta: [], steps: [], examplesTable: ''})
+            });
+        });
+
     });
 
-    describe('runnerCtrl controller', function() {
+    describe('runnerParamsCtrl controller', function() {
 
-        var modalInstance, data, cookieStore, scope;
+        var modalInstance, data, cookieStore, scope, classes;
         var cookieValue = 'value1';
 
         beforeEach(
             inject(function($rootScope, $injector, $controller) {
                 scope = $rootScope.$new();
+                classes = [{
+                    fullName: 'full.name.of.the.class',
+                    params: [{key: 'key1'}, {key: 'key2'}]
+                }];
+                data = {classes: classes};
                 cookieStore = $injector.get('$cookieStore');
-                cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[0].key, cookieValue);
-                cookieStore.put(data.classes[0].fullName + "." + data.classes[0].params[1].key, 'value2');
-                $controller("runnerCtrl", {
+                cookieStore.put(classes[0].fullName + "." + classes[0].params[0].key, cookieValue);
+                cookieStore.put(classes[0].fullName + "." + classes[0].params[1].key, 'value2');
+                modalInstance = {
+                    dismiss: jasmine.createSpy('modalInstance.dismiss'),
+                    close: jasmine.createSpy('modalInstance.close')
+                };
+                $controller('runnerParamsCtrl', {
                     $scope: scope ,
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
                     data: data});
-            }),
-            data = {
-                classes: [{
-                    fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1'}, {key: 'key2'}]
-                }]
-            }
+            })
         );
 
         describe('by default', function() {
-            it('should put data to the scope', function() {
-                expect(scope.data).toBe(data);
-            });
-            it('should put values from cookies', function() {
-                expect(scope.data.classes[0].params[0].value).toEqual(cookieValue);
+            it('should put classes with values from cookies to the scope', function() {
+                var expected = [{
+                    fullName: 'full.name.of.the.class',
+                    params: [{key: 'key1', value: 'value1'}, {key: 'key2', value: 'value2'}]
+                }];
+                expect(scope.classes).toEqual(expected);
             });
         });
 
@@ -344,6 +354,19 @@ describe('storyModule', function() {
            });
         });
 
+        describe('cancel function', function () {
+            it('should dismiss the modal', function() {
+                scope.cancel();
+                expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
+            })
+        });
+
+        describe('ok function', function () {
+            it('should close the modal and return data', function() {
+                scope.ok();
+                expect(modalInstance.close).toHaveBeenCalledWith(classes);
+            })
+        });
 
     });
 
