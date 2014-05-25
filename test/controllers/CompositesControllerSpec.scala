@@ -89,6 +89,9 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
     "return OK if className is correct" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, "/groovyComposites/TcBddComposites.groovy"))
+        println(status(result))
+        println(contentType(result))
+        println(contentAsJson(result))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
       }
