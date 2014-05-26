@@ -8,6 +8,7 @@ import org.specs2.matcher.JsonMatchers
 import com.technologyconversations.bdd.steps.WebSteps
 import com.technologyconversations.bdd.steps.Dummy
 import models.Composites
+import com.technologyconversations.bdd.steps.util.BddOptionParam
 
 class JBehaveStepsSpec extends Specification with JsonMatchers {
   
@@ -98,10 +99,44 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       list(0) must haveKey("key")
     }
 
-    "return List with Map containing key" in {
+    "return List with Map containing description" in {
       list(0) must haveKey("description")
     }
 
+    "return List with Map containing options" in {
+      list(0) must haveKey("options")
+    }
+  }
+
+  "JBehaveSteps#optionsToJson" should {
+
+    val list = JBehaveSteps().classParams(className)
+    // list(2) is the browser element.
+    val browser = list.filter(_.value() == "browser")(0)
+    val options = JBehaveSteps().optionsToJson(browser.options().toList)
+    val firstOption = options(0)
+
+    "return List[Map]" in {
+      list must beAnInstanceOf[List[Map[String, String]]]
+      options must beAnInstanceOf[List[Map[String, JsValue]]]
+      firstOption must beAnInstanceOf[Map[String, JsValue]]
+    }
+
+    "return empty if options list is empty" in {
+      JBehaveSteps().optionsToJson(List[BddOptionParam]()) must be empty
+    }
+
+    "return List with Map containing text" in {
+      firstOption must haveKey("text")
+    }
+
+    "return List with Map containing value" in {
+      firstOption must haveKey("value")
+    }
+
+    "return List with Map containing isSelected" in {
+      firstOption must haveKey("isSelected")
+    }
   }
 
   "JBehaveSteps#steps" should {
