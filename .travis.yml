@@ -3,6 +3,7 @@ scala:
 - 2.10.3
 notifications:
   email:
+  - viktor@farcic.com
   - jordi.falguera@gmail.com
 deploy:
   provider: heroku

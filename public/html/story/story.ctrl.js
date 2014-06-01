@@ -204,8 +204,7 @@ angular.module('storyModule', [])
             $scope.hasOptions = function(options) {
                 if (options) {
                   return options.length > 0;
-                }
-                else {
+                } else {
                   return false;
                 }
             };

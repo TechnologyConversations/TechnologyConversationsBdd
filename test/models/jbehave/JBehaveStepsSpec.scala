@@ -21,7 +21,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       val list = JBehaveSteps().stepsJars
       list must beAnInstanceOf[List[File]]
       list must not be empty
-      list(0) must beAnInstanceOf[File]
+      list.head must beAnInstanceOf[File]
     }
 
   }
@@ -92,19 +92,19 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
 
     "return List[Map]" in {
       list must beAnInstanceOf[List[Map[String, String]]]
-      list(0) must beAnInstanceOf[Map[String, String]]
+      list.head must beAnInstanceOf[Map[String, String]]
     }
 
     "return List with Map containing key" in {
-      list(0) must haveKey("key")
+      list.head must haveKey("key")
     }
 
     "return List with Map containing description" in {
-      list(0) must haveKey("description")
+      list.head must haveKey("description")
     }
 
     "return List with Map containing options" in {
-      list(0) must haveKey("options")
+      list.head must haveKey("options")
     }
   }
 
@@ -112,9 +112,9 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
 
     val list = JBehaveSteps().classParams(className)
     // list(2) is the browser element.
-    val browser = list.filter(_.value() == "browser")(0)
+    val browser = list.filter(_.value() == "browser").head
     val options = JBehaveSteps().optionsToJson(browser.options().toList)
-    val firstOption = options(0)
+    val firstOption = options.head
 
     "return List[Map]" in {
       list must beAnInstanceOf[List[Map[String, String]]]
@@ -145,7 +145,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       val list = JBehaveSteps().steps
       list must beAnInstanceOf[List[Steps]]
       list.size must beGreaterThan(0)
-      list(0) must beAnInstanceOf[Steps]
+      list.head must beAnInstanceOf[Steps]
     }
 
   }
@@ -156,7 +156,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       val list = JBehaveSteps().stepsCandidates
       list must beAnInstanceOf[List[Steps]]
       list.size must beGreaterThan(0)
-      list(0) must beAnInstanceOf[StepCandidate]
+      list.head must beAnInstanceOf[StepCandidate]
     }
 
   }
