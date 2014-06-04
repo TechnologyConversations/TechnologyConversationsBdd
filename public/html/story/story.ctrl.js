@@ -192,28 +192,4 @@ angular.module('storyModule', [])
                 }
             };
         }
-    ])
-    .controller('runnerParamsCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
-        function ($scope, $modalInstance, $cookieStore, data) {
-            $scope.classes = data.classes;
-            $scope.classes.forEach(function(classEntry) {
-                classEntry.params.forEach(function(paramEntry) {
-                    paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
-                });
-            });
-            $scope.hasParams = function(classEntry) {
-                return classEntry.params !== undefined && classEntry.params.length > 0;
-            };
-            $scope.ok = function () {
-                $modalInstance.close($scope.classes);
-            };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            $scope.paramElementId = function(className, paramKey) {
-                var formattedClassName = className.charAt(0).toLowerCase() + className.slice(1);
-                var formattedParamKey = paramKey.charAt(0).toUpperCase() + paramKey.slice(1);
-                return formattedClassName + formattedParamKey;
-            };
-        }
     ]);
