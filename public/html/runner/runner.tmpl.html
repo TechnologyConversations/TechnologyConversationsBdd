@@ -3,6 +3,15 @@
         <span>{{getStoryRunnerStatusText()}}</span>
     </div>
 </div>
+<article id="api" ng-show="showApi">
+    <h1>API</h1>
+    <p>
+        To execute the selected stories, please do a POST request to the URL <strong>{{apiUrl}}</strong> using the following JSON data POST data.
+    </p>
+    <p>
+        {{apiJson}}
+    </p>
+</article>
 <strong class="pull-right">
     <a id="runnerReports" href="{{reportsUrl}}" ng-show="reportsUrl !== ''" target="_blank">Open the report <span class="glyphicon glyphicon-chevron-right"></span></a>
 </strong>

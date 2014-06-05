@@ -1,6 +1,6 @@
 angular.module('runnerModule', [])
-    .controller('runnerCtrl', ['$scope', '$modal', '$http',
-        function($scope, $modal, $http) {
+    .controller('runnerCtrl', ['$scope', '$modal', '$http', '$location',
+        function($scope, $modal, $http, $location) {
             // TODO Test more than checking whether $modal.open was called
             $scope.openRunnerSelector = function() {
                 return $modal.open({
@@ -25,15 +25,22 @@ angular.module('runnerModule', [])
                         data.stories.forEach(function (story) {
                             storyPaths.push({path: story.path});
                         });
-                        openRunnerParametersModal($modal).result.then(function (data) {
-                            var classes = data;
+                        openRunnerParametersModal($modal, true).result.then(function (data) {
+                            var classes = data.classes;
+                            var action = data.action;
                             $http.get('/groovyComposites').then(function (response) {
                                 var groovyComposites = response.data;
-                                $scope.run({
+                                $scope.apiJson = {
                                     storyPaths: storyPaths,
                                     classes: classes,
                                     groovyComposites: groovyComposites
-                                });
+                                };
+                                if (action === 'run') {
+                                    $scope.run($scope.apiJson);
+                                    $scope.showApi = false;
+                                } else {
+                                    $scope.showApi = true;
+                                }
                             });
                         });
                     });
@@ -89,6 +96,10 @@ angular.module('runnerModule', [])
                 $scope.pendingSteps = [];
                 $scope.reportsUrl = '';
                 $scope.openRunner();
+                $scope.showApi = false;
+            };
+            $scope.apiUrl = function() {
+                return $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/runner/run.json';
             };
             $scope.init();
         }
@@ -138,8 +149,8 @@ angular.module('runnerModule', [])
             };
         }
     ])
-    .controller('runnerParamsCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
-        function ($scope, $modalInstance, $cookieStore, data) {
+    .controller('runnerParamsCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data', 'showGetApi',
+        function ($scope, $modalInstance, $cookieStore, data, showGetApi) {
             $scope.classes = data.classes;
             $scope.classes.forEach(function(classEntry) {
                 classEntry.params.forEach(function(paramEntry) {
@@ -149,11 +160,17 @@ angular.module('runnerModule', [])
             $scope.hasParams = function(classEntry) {
                 return classEntry.params !== undefined && classEntry.params.length > 0;
             };
-            $scope.ok = function () {
-                $modalInstance.close($scope.classes);
+            $scope.ok = function() {
+                $modalInstance.close({action: 'run', classes: $scope.classes});
             };
-            $scope.cancel = function () {
+            $scope.cancel = function() {
                 $modalInstance.dismiss('cancel');
+            };
+            $scope.showGetApi = function() {
+                return showGetApi;
+            };
+            $scope.getApi = function() {
+                $modalInstance.close({action: 'api', classes: $scope.classes});
             };
             $scope.paramElementId = function(className, paramKey) {
                 var formattedClassName = className.charAt(0).toLowerCase() + className.slice(1);

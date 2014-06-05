@@ -88,7 +88,7 @@ angular.module('storyModule', [])
                 if ($scope.canRunStory()) {
                     $scope.saveStory();
                     $scope.openRunnerModal().result.then(function (data) {
-                        var classes = data;
+                        var classes = data.classes;
                         $scope.storyFormClass = 'col-md-6';
                         $scope.storyRunnerClass = 'col-md-6';
                         $scope.storyRunnerVisible = true;
@@ -124,7 +124,7 @@ angular.module('storyModule', [])
             };
             // TODO Test
             $scope.openRunnerModal = function() {
-                return openRunnerParametersModal($modal);
+                return openRunnerParametersModal($modal, false);
             };
             $scope.getRunnerProgressCss = function () {
                 return getRunnerProgressCss($scope.storyRunnerInProgress);

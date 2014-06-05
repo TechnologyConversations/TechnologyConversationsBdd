@@ -151,6 +151,7 @@ Meta:
 
 When Web user clicks the element story1Selector
 When Web user clicks the element okRunnerSelector
+When Web user clicks the element getApi
 Then Web element api is visible
 
 Examples:

@@ -22,13 +22,14 @@ describe('runnerModule', function() {
         ];
 
         beforeEach(
-            inject(function($controller, $httpBackend, $http) {
+            inject(function($controller, $httpBackend, $http, $location) {
                 httpBackend = $httpBackend;
                 $controller('runnerCtrl', {
                     $scope: scope,
                     $modal: modal,
                     $modalInstance: modalInstance,
-                    $http: $http
+                    $http: $http,
+                    $location: $location
                 });
             })
         );
@@ -55,6 +56,9 @@ describe('runnerModule', function() {
             });
             it('should set reportsUrl to an empty string', function() {
                 expect(scope.reportsUrl).toEqual('');
+            });
+            it('should set showApi to false', function() {
+                expect(scope.showApi).toEqual(false);
             });
         });
 
@@ -158,6 +162,12 @@ describe('runnerModule', function() {
                     scope.storyRunnerInProgress
                 );
                 expect(scope.getRunnerProgressCss()).toEqual(expected);
+            });
+        });
+
+        describe('apiUrl function', function() {
+            it('should return the API url', function() {
+                expect(scope.apiUrl()).toMatch('/runner/run.json');
             });
         });
 
@@ -333,7 +343,8 @@ describe('runnerModule', function() {
                     $scope: scope ,
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
-                    data: data});
+                    data: data,
+                    showGetApi: true});
             })
         );
 
@@ -376,11 +387,24 @@ describe('runnerModule', function() {
             })
         });
 
-        describe('ok function', function () {
+        describe('ok function', function() {
             it('should close the modal and return data', function() {
                 scope.ok();
-                expect(modalInstance.close).toHaveBeenCalledWith(classes);
-            })
+                expect(modalInstance.close).toHaveBeenCalledWith({action: 'run', classes: classes});
+            });
+        });
+
+        describe('showGetApi function', function() {
+            it('should return showGetApi value', function() {
+                expect(scope.showGetApi()).toEqual(true);
+            });
+        });
+
+        describe('getApi function', function() {
+            it('should close the modal and return data with action set to api', function() {
+                scope.getApi();
+                expect(modalInstance.close).toHaveBeenCalledWith({action: 'api', classes: classes});
+            });
         });
 
     });
