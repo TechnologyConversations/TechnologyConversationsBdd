@@ -4,6 +4,20 @@ TC Build Assistant
 [![Build Status](https://travis-ci.org/TechnologyConversations/TechnologyConversationsBdd.png?branch=master)](https://travis-ci.org/TechnologyConversations/TechnologyConversationsBdd)
 
 
+Development prerequisites
+-------------------------
+
+### Back-end
+
+* Scala
+* Play
+* SBT
+
+### Front-end
+
+* [NodeJS with NPM](http://nodejs.org/)
+
+
 IDEA project
 ----------------------------
 
@@ -12,6 +26,21 @@ Use the gen-idea sbt task to create Idea project files.
 ´´´
 $ sbt gen-idea
 ´´´
+
+Dependencies
+------------
+
+Front-end dependencies can be installed by running
+
+```shell
+cd public
+npm install
+```
+
+npm install adds two directories:
+
+* public/node_modules
+* public/bower_components
 
 
 Unit Tests
