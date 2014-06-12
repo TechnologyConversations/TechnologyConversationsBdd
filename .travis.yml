@@ -9,14 +9,10 @@ notifications:
 
 before_install: npm install -g grunt-cli
 
-install:
-  - cd public
-  - npm install
-
 script:
   - sbt ++2.10.3 test
   - cd public
-  - grunt jasmine
+  - npm test
 
 deploy:
   provider: heroku
