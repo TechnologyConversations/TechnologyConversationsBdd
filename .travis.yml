@@ -8,8 +8,8 @@ notifications:
   - viktor@farcic.com
 
 script:
-  cd public
-  npm test
+  - cd public
+  - npm test
 
 deploy:
   provider: heroku
