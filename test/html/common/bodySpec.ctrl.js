@@ -25,7 +25,7 @@ describe('bodyModule', function() {
 
         describe('addHistoryItem function', function() {
             it('should load history from cookies', function() {
-                expect(scope.history.length).toEqual(cookieHistory.length + 1000);
+                expect(scope.history.length).toEqual(cookieHistory.length);
             });
             it('should add the history item to the array', function() {
                 scope.addHistoryItem(historyItem.text);
