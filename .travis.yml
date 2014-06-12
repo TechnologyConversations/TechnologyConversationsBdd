@@ -1,9 +1,16 @@
 language: scala
+
 scala:
 - 2.10.3
+
 notifications:
   email:
   - viktor@farcic.com
+
+script:
+  cd public
+  npm test
+
 deploy:
   provider: heroku
   api_key:
