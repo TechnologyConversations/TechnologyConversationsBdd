@@ -29,10 +29,11 @@ module.exports = function(config){
 
         plugins : [
             'karma-chrome-launcher',
-            'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-junit-reporter'
         ],
+
+        logLevel: 'LOG_DEBUG',
 
         junitReporter : {
             outputFile: 'test/output/unit.xml',

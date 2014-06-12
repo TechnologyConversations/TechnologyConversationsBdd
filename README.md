@@ -9,13 +9,19 @@ Development prerequisites
 
 ### Back-end
 
-* Scala
-* Play
-* SBT
+**Scala**
+**Play**
+**SBT**
 
 ### Front-end
 
-* [NodeJS with NPM](http://nodejs.org/)
+**[NodeJS with NPM](http://nodejs.org/)**
+
+**[Grunt](http://gruntjs.com/)**
+
+```shell
+npm install -g grunt-cli
+```
 
 
 IDEA project
@@ -23,9 +29,9 @@ IDEA project
 
 Use the gen-idea sbt task to create Idea project files.
 
-´´´
-$ sbt gen-idea
-´´´
+```shell
+sbt gen-idea
+```
 
 Dependencies
 ------------
