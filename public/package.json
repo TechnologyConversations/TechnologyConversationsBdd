@@ -1,21 +1,18 @@
 {
-    "name": "tcbdd-assistant",
-    "private": true,
-    "version": "0.0.1",
-    "description": "Technology Conversations: BDD Assistant",
-    "repository": "https://github.com/TechnologyConversations/TechnologyConversationsBdd",
-    "license": "Apache License 2",
-    "devDependencies": {
-        "karma": "~0.10",
-        "karma-phantomjs-launcher": "~0.1",
-        "bower": "^1.3.1",
-        "karma-junit-reporter": "^0.2.2"
-    },
-    "scripts": {
-        "postinstall": "bower install",
-
-        "pretest": "npm install",
-        "test": "karma start ../test/karma.conf.js",
-        "test-single-run": "karma start ../test/karma.conf.js  --single-run"
-    }
+  "name": "tcbdd-assistant",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Technology Conversations: BDD Assistant",
+  "repository": "https://github.com/TechnologyConversations/TechnologyConversationsBdd",
+  "license": "Apache License 2",
+  "devDependencies": {
+    "bower": "^1.3.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jasmine": "^0.6.5"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "pretest": "npm install",
+    "test": "grunt jasmine"
+  }
 }

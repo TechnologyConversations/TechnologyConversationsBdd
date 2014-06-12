@@ -154,7 +154,11 @@ angular.module('runnerModule', [])
             $scope.classes = data.classes;
             $scope.classes.forEach(function(classEntry) {
                 classEntry.params.forEach(function(paramEntry) {
-                    paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
+                    try {
+                        paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
+                    } catch(err) {
+                        console.log(err.message);
+                    }
                 });
             });
             $scope.hasParams = function(classEntry) {

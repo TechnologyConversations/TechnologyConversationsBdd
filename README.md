@@ -30,7 +30,7 @@ $ sbt gen-idea
 Dependencies
 ------------
 
-Front-end dependencies can be installed by running
+Front-end dependencies can be installed by running following
 
 ```shell
 cd public
@@ -46,7 +46,18 @@ npm install adds two directories:
 Unit Tests
 ----------
 
+Front-end unit  testing
+
+```shell
+cd public
+npm test
+```
+
+Back-end unit testing
+
+```shell
 play ~test-quick
+```
 
 
 Functional Tests
