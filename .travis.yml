@@ -7,9 +7,16 @@ notifications:
   email:
   - viktor@farcic.com
 
-script:
+before_install: npm install -g grunt-cli
+
+install:
   - cd public
-  - npm test
+  - npm install
+
+script:
+  - sbt ++2.10.3 test
+  - cd public
+  - grunt jasmine
 
 deploy:
   provider: heroku
