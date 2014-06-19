@@ -21,4 +21,4 @@ deploy:
   app: bddassistant
   on:
     repo: TechnologyConversations/TechnologyConversationsBdd
-  buildpack: play
+  buildpack: Play
