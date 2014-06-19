@@ -16,7 +16,6 @@ script:
 
 deploy:
   provider: heroku
-  buildpack: https://github.com/heroku/heroku-buildpack-play.git
   api_key:
     secure: pc2FCZ1BZYRsraP7387dtOI2D8CIQq+v7gBi3YTjQ5PoB7sCm5yq+LZV6iccUUNscV3awjB6vLvu3NVVlnRUq5AD7x1aNORCywn058rYph4hxzwx7bSoRiRcY7KqQdf4ONKtdRCBqHqyz9kzbSvyOrB7hbRnQeK+xKEdPrZyQ5k=
   app: bddassistant
