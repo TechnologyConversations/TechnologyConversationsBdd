@@ -21,3 +21,5 @@ deploy:
   app: bddassistant
   on:
     repo: TechnologyConversations/TechnologyConversationsBdd
+  run:
+    - "play run"
