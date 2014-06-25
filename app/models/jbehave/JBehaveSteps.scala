@@ -36,9 +36,7 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
   }
 
   private[jbehave] def stepsJars = {
-    val jars = ClassFinder.classpath.filter(_.getName.toLowerCase.contains("steps"))
-    println(jars + "!!!!!!!!!!!!!!!!!!!!!")
-    jars
+    ClassFinder.classpath.filter(_.getName.toLowerCase.contains("steps"))
   }
 
   private[jbehave] def classes = {
