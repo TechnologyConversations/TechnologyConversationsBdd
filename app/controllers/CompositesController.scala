@@ -13,6 +13,8 @@ object CompositesController extends Controller {
     val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
     val dir = new File(dirPath)
     val dirAbsolutePath = dir.getAbsolutePath
+    println(dirPath)
+    println(dir.exists())
     if (dir.exists()) dirAbsolutePath
     else dirAbsolutePath.replace("target/universal/stage/", "")
   }
