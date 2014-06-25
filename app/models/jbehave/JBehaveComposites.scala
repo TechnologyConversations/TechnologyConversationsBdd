@@ -17,6 +17,7 @@ trait JBehaveComposites {
   }
 
   def groovyClassesToJson(files: List[String]): JsValue = {
+    println(files + "11111111111111111")
     Json.toJson(groovyClassesList(files))
   }
 
