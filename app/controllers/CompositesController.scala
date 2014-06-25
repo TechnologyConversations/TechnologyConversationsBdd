@@ -15,7 +15,8 @@ object CompositesController extends Controller {
     val dirAbsolutePath = dir.getAbsolutePath
     println(dirPath)
     println(dir.exists())
-    if (dir.exists()) dirAbsolutePath
+    println(new File(dirAbsolutePath).exists())
+    if (new File(dirAbsolutePath).exists()) dirAbsolutePath
     else dirAbsolutePath.replace("target/universal/stage/", "")
   }
 
