@@ -9,7 +9,11 @@ import java.io.File
 object CompositesController extends Controller {
 
   val javaCompositesDir = Play.current.configuration.getString("javaComposites.root.dir").getOrElse("app/composites")
-  val compositesDir = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
+  val compositesDir = {
+    val dir = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
+    if (new File(dir).exists()) dir
+    else dir.replace("target/universal/stage/", "")
+  }
 
   def classesToJson: Action[AnyContent] = Action {
     val composites = Composites(javaCompositesDir)
