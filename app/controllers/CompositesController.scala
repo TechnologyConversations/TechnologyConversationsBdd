@@ -17,6 +17,10 @@ object CompositesController extends Controller {
   }
 
   def groovyClassesToJson: Action[AnyContent] = Action {
+    println("22222222222")
+    println(compositesDir)
+    println(new File(compositesDir).getPath)
+    println(new File(compositesDir).getAbsolutePath)
     val composites = Composites(compositesDir)
     Ok(composites.groovyClassesToJson(composites.list()))
   }
