@@ -52,7 +52,7 @@ trait BddFile {
       if (file.isFile) {
         file.delete
       } else {
-        val (deleted, remaining) = Path.fromString(file.getPath).deleteRecursively()
+        val (deleted, remaining) = Path.fromString(file.getAbsolutePath).deleteRecursively()
         remaining == 0
       }
     } else {

@@ -13,9 +13,6 @@ object CompositesController extends Controller {
     val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
     val dir = new File(dirPath)
     val dirAbsolutePath = dir.getAbsolutePath
-    println(dirPath)
-    println(dir.exists())
-    println(new File(dirAbsolutePath).exists())
     if (new File(dirAbsolutePath).exists()) dirAbsolutePath
     else dirAbsolutePath.replace("target/universal/stage/", "")
   }
@@ -26,10 +23,6 @@ object CompositesController extends Controller {
   }
 
   def groovyClassesToJson: Action[AnyContent] = Action {
-    println("22222222222")
-    println(compositesDir)
-    println(new File(compositesDir).getPath)
-    println(new File(compositesDir).getAbsolutePath)
     val composites = Composites(compositesDir)
     Ok(composites.groovyClassesToJson(composites.list()))
   }
