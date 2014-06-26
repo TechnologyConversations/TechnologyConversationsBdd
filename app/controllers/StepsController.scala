@@ -7,7 +7,6 @@ import play.api.Play
 object StepsController extends Controller {
 
   val dir = Play.current.configuration.getString("steps.root.dir").getOrElse("steps")
-  val compositesDir = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
   val appDir = Play.current.configuration.getString("app.root.dir").getOrElse("app")
 
   def listJson: Action[AnyContent] = Action {

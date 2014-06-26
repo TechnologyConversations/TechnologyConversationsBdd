@@ -1,3 +1,6 @@
+import java.io.File
+
+import play.api.Play
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import play.api.mvc.Results._
@@ -54,5 +57,14 @@ package object controllers {
       "message" -> message
     )
   }
+
+  val compositesDir: String = {
+    val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
+    val dir = new File(dirPath)
+    val dirAbsolutePath = dir.getAbsolutePath
+    if (new File(dirAbsolutePath).exists()) dirAbsolutePath
+    else dirAbsolutePath.replace("target/universal/stage/", "")
+  }
+
 
 }
