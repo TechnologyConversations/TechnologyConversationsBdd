@@ -11,7 +11,6 @@ object StepsController extends Controller {
 
   def listJson: Action[AnyContent] = Action {
     val composites = Composites(compositesDir).list()
-    println(composites + "XXXXXXXXXXXX")
     Ok(Steps(dir, composites).stepsToJson)
   }
 
