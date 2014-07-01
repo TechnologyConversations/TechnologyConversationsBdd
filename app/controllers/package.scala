@@ -58,16 +58,19 @@ package object controllers {
     )
   }
 
+  // TODO Test
   val compositesDir: String = {
     val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
     absolutePath(dirPath)
   }
 
+  // TODO Test
   val reportsDir: String = {
     val dirPath = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
     absolutePath(dirPath)
   }
 
+  // TODO Test
   def absolutePath(dirPath: String): String = {
     val dir = new File(dirPath)
     val dirAbsolutePath = dir.getAbsolutePath

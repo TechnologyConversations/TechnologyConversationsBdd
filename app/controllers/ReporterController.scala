@@ -6,10 +6,8 @@ import play.api.Play
 
 object ReporterController extends Controller {
 
-  val reportsPath = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
-
   def list(id: String): Action[AnyContent] = Action {
-    val json = new Reporter().listJson(reportsPath, id)
+    val json = new Reporter().listJson(reportsDir, id)
     if (json.isEmpty) result(paramIncorrectMap("ID"))
     else Ok(json.get)
   }

@@ -12,7 +12,6 @@ import scala.concurrent.Future
 
 object RunnerController extends Controller {
 
-  val reportsDir = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
   val storiesDir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
   def run: Action[AnyContent] = Action.async { implicit request =>
