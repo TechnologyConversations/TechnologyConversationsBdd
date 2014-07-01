@@ -7,7 +7,7 @@ import scala.xml.XML
 class JBehaveReporter {
 
   def listJson(reportsPath: String, id: String): Option[JsValue] = {
-    val reports = list(s"target/$reportsPath", id)
+    val reports = list(reportsPath, id)
     if (reports.isEmpty) None
     else {
       val reportsMap = reports.get.map { report =>
@@ -22,15 +22,12 @@ class JBehaveReporter {
   }
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
-    var dir = new File(s"$reportsPath/$id")
-//    if (!dir.exists()) dir = new File(s"target/universal/stage/$reportsPath/$id")
-    println(s"DIR: $reportsPath/$id")
-    println(s"ABSOLUTE DIR: ${dir.getAbsolutePath}")
+    val dir = new File(s"$reportsPath/$id")
     if (!dir.exists()) None
     else Some(dir.listFiles()
       .filter(_.getName.endsWith(".html"))
       .sortWith(_.lastModified() < _.lastModified())
-      .map(file => file.getAbsolutePath)
+      .map(file => file.getName)
       .toList
     )
   }
