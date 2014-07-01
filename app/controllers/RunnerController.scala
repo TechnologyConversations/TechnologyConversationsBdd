@@ -42,7 +42,7 @@ object RunnerController extends Controller {
           fullStoryPaths,
           classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
           groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
-          s"../$reportsPath"
+          reportsPath
         ).run()
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
