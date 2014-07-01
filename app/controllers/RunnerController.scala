@@ -9,6 +9,7 @@ import play.api.Play
 import org.jbehave.core.embedder.Embedder.RunningStoriesFailed
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import scala.concurrent.Future
+import java.io.File
 
 object RunnerController extends Controller {
 
@@ -36,7 +37,10 @@ object RunnerController extends Controller {
         storiesDir + "/" + (path \ "path").as[String]
       }
       var status = "OK"
-      println(s"REPORTS PATH: $reportsRelativeDir/$reportsId")
+      val dir = new File(s"$reportsDir/$reportsId")
+      if (!dir.exists()) dir.mkdirs()
+      println(s"REPORTS RELATIVE PATH: $reportsRelativeDir/$reportsId")
+      println(s"REPORTS PATH: $reportsDir/$reportsId")
       try {
         new Runner(
           fullStoryPaths,
