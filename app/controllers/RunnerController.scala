@@ -32,18 +32,17 @@ object RunnerController extends Controller {
       noResultMap("classes")
     } else {
       val reportsId = DateTime.now.getMillis
-      val reportsPath = reportsDir + "/" + reportsId
       val fullStoryPaths = storyPaths.get.map { path =>
         storiesDir + "/" + (path \ "path").as[String]
       }
       var status = "OK"
-      println(s"REPORTS PATH: $reportsPath")
+      println(s"REPORTS PATH: $reportsRelativeDir/$reportsId")
       try {
         new Runner(
           fullStoryPaths,
           classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
           groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
-          reportsPath
+          reportsRelativeDir + "/" + reportsId
         ).run()
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"

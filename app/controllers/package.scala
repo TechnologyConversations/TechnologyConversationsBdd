@@ -8,6 +8,8 @@ import play.api.mvc.Results._
 package object controllers {
 
   val noJsonResultMessage = "JSON was not found in the request body"
+  val stageDir = "target/universal/stage/"
+
   def noResultMessage(node: String) = {
     s"$node was not found"
   }
@@ -71,11 +73,20 @@ package object controllers {
   }
 
   // TODO Test
+  val reportsRelativeDir: String = {
+    val dirPath = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
+    val dir = new File(dirPath)
+    val dirAbsolutePath = dir.getAbsolutePath
+    if (dirAbsolutePath.contains(stageDir)) s"../../../../$dirPath"
+    else s"../$dirPath"
+  }
+
+  // TODO Test
   def absolutePath(dirPath: String): String = {
     val dir = new File(dirPath)
     val dirAbsolutePath = dir.getAbsolutePath
     if (new File(dirAbsolutePath).exists()) dirAbsolutePath
-    else dirAbsolutePath.replace("target/universal/stage/", "")
+    else dirAbsolutePath.replace(stageDir, "")
   }
 
 }
