@@ -60,11 +60,19 @@ package object controllers {
 
   val compositesDir: String = {
     val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
+    absolutePath(dirPath)
+  }
+
+  val reportsDir: String = {
+    val dirPath = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
+    absolutePath(dirPath)
+  }
+
+  def absolutePath(dirPath: String): String = {
     val dir = new File(dirPath)
     val dirAbsolutePath = dir.getAbsolutePath
     if (new File(dirAbsolutePath).exists()) dirAbsolutePath
     else dirAbsolutePath.replace("target/universal/stage/", "")
   }
-
 
 }

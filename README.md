@@ -53,7 +53,8 @@ Deployment to Heroku
 --------------------
 
 ```bash
-heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
+heroku create --stack cedar --buildpack https://github.com/ddollar/heroku-buildpack-multi.git
+git push heroku master
 ```
 
 
