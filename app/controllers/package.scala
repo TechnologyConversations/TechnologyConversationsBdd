@@ -67,18 +67,13 @@ package object controllers {
   }
 
   // TODO Test
-  val reportsDir: String = {
-    val dirPath = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
-    absolutePath(dirPath)
+  val reportsRelativeDir: String = {
+    Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
   }
 
   // TODO Test
-  val reportsRelativeDir: String = {
-    val dirPath = Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
-    val dir = new File(dirPath)
-    val dirAbsolutePath = dir.getAbsolutePath
-    if (dirAbsolutePath.contains(stageDir)) s"../../../../$dirPath"
-    else s"../$dirPath"
+  val reportsDir: String = {
+    absolutePath(reportsRelativeDir)
   }
 
   // TODO Test

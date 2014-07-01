@@ -37,10 +37,6 @@ object RunnerController extends Controller {
         storiesDir + "/" + (path \ "path").as[String]
       }
       var status = "OK"
-      val dir = new File(s"$reportsDir/$reportsId")
-      if (!dir.exists()) dir.mkdirs()
-      println(s"REPORTS RELATIVE PATH: $reportsRelativeDir/$reportsId")
-      println(s"REPORTS PATH: $reportsDir/$reportsId")
       try {
         new Runner(
           fullStoryPaths,
