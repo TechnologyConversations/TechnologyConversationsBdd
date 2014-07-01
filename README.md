@@ -19,7 +19,7 @@ Development prerequisites
 
 **[Grunt](http://gruntjs.com/)**
 
-```shell
+```bash
 npm install -g grunt-cli
 ```
 
@@ -29,7 +29,7 @@ IDEA project
 
 Use the gen-idea sbt task to create Idea project files.
 
-```shell
+```bash
 sbt gen-idea
 ```
 
@@ -38,7 +38,7 @@ Dependencies
 
 Front-end dependencies can be installed by running following
 
-```shell
+```bash
 cd public
 npm install
 ```
@@ -49,19 +49,27 @@ npm install adds two directories:
 * public/bower_components
 
 
+Deployment to Heroku
+--------------------
+
+```bash
+heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
+```
+
+
 Unit Tests
 ----------
 
 Front-end unit  testing
 
-```shell
+```bash
 cd public
 npm test
 ```
 
 Back-end unit testing
 
-```shell
+```bash
 play ~test-quick
 ```
 
