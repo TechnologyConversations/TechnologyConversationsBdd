@@ -10,7 +10,8 @@ class JBehaveReporter {
     val reports = list(s"target/$reportsPath", id)
     if (reports.isEmpty) None
     else {
-      val reportsMap = reports.get.map { reportPath =>
+      val reportsMap = reports.get.map { report =>
+        val reportPath = s"$reportsPath/$id/$report"
         Map(
           "path" -> Json.toJson(s"/$reportPath".replace("/public/", "/assets/")),
           "steps" -> Json.toJson(steps(reportPath.replace(".html", ".xml")))
@@ -21,8 +22,8 @@ class JBehaveReporter {
   }
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
-    var dir = new File(s"$reportsPath/$id")
-    if (!dir.exists()) dir = new File(s"target/universal/stage/$reportsPath/$id")
+    var val = new File(s"$reportsPath/$id")
+//    if (!dir.exists()) dir = new File(s"target/universal/stage/$reportsPath/$id")
     println(s"DIR: $reportsPath/$id")
     println(s"ABSOLUTE DIR: ${dir.getAbsolutePath}")
     if (!dir.exists()) None
