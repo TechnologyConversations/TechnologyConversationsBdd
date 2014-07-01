@@ -22,7 +22,7 @@ class JBehaveReporter {
   }
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
-    var val = new File(s"$reportsPath/$id")
+    var dir = new File(s"$reportsPath/$id")
 //    if (!dir.exists()) dir = new File(s"target/universal/stage/$reportsPath/$id")
     println(s"DIR: $reportsPath/$id")
     println(s"ABSOLUTE DIR: ${dir.getAbsolutePath}")
