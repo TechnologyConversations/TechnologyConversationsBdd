@@ -31,12 +31,13 @@ object RunnerController extends Controller {
     } else if (classesJson.isEmpty || classesJson.get.size == 0) {
       noResultMap("classes")
     } else {
-      val id = DateTime.now.getMillis
-      val reportsPath = reportsDir + "/" + id
+      val reportsId = DateTime.now.getMillis
+      val reportsPath = reportsDir + "/" + reportsId
       val fullStoryPaths = storyPaths.get.map { path =>
         storiesDir + "/" + (path \ "path").as[String]
       }
       var status = "OK"
+      println(s"REPORTS PATH: $reportsPath")
       try {
         new Runner(
           fullStoryPaths,
@@ -50,8 +51,8 @@ object RunnerController extends Controller {
       }
       Map(
         "status" -> status,
-        "id" -> id.toString,
-        "reportsPath" -> s"$reportsPath/view/reports.html"
+        "id" -> reportsId.toString,
+        "reportsPath" -> s"$reportsId/view/reports.html"
       )
     }
   }
