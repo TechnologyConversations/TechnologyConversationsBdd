@@ -10,8 +10,7 @@ class JBehaveReporter {
     val reports = list(s"target/$reportsPath", id)
     if (reports.isEmpty) None
     else {
-      val reportsMap = reports.get.map { report =>
-        val reportPath = s"$reportsPath/$id/$report"
+      val reportsMap = reports.get.map { reportPath =>
         Map(
           "path" -> Json.toJson(s"/$reportPath".replace("/public/", "/assets/")),
           "steps" -> Json.toJson(steps(reportPath.replace(".html", ".xml")))
@@ -30,7 +29,7 @@ class JBehaveReporter {
     else Some(dir.listFiles()
       .filter(_.getName.endsWith(".html"))
       .sortWith(_.lastModified() < _.lastModified())
-      .map(file => file.getName)
+      .map(file => file.getAbsolutePath)
       .toList
     )
   }
