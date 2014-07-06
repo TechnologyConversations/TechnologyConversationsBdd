@@ -123,15 +123,19 @@ public class JBehaveRunner extends JUnitStories {
 
     // TODO Test
     public final void cleanUp() {
+        File reportsDir = new File("target/" + this.getReportsPath());
+        String destinationPath = reportsDir.getAbsolutePath();
+        System.out.println("0000: " + destinationPath);
+
         System.out.println("REPORTS: " + this.getReportsPath());
         File absoluteFile1 = new File(this.getReportsPath());
-        System.out.println(absoluteFile1.getPath() + " " + absoluteFile1.getAbsolutePath() + " " + absoluteFile1.exists());
+        System.out.println("0101: " + absoluteFile1.getPath() + " " + absoluteFile1.getAbsolutePath() + " " + absoluteFile1.exists());
         File absoluteFile2 = new File("target/" + this.getReportsPath());
-        System.out.println(absoluteFile2.getPath() + " " + absoluteFile2.getAbsolutePath() + " " + absoluteFile2.exists());
+        System.out.println("0102: " + absoluteFile2.getPath() + " " + absoluteFile2.getAbsolutePath() + " " + absoluteFile2.exists());
         File absoluteFile3 = new File(this.getReportsPath());
-        System.out.println(absoluteFile3.getPath() + " " + absoluteFile3.getAbsolutePath() + " " + absoluteFile3.exists());
+        System.out.println("0103: " + absoluteFile3.getPath() + " " + absoluteFile3.getAbsolutePath() + " " + absoluteFile3.exists());
         File absoluteFile4 = new File("target/universal/stage/target/" + this.getReportsPath());
-        System.out.println(absoluteFile4.getPath() + " " + absoluteFile4.getAbsolutePath() + " " + absoluteFile4.exists());
+        System.out.println("0104: " + absoluteFile4.getPath() + " " + absoluteFile4.getAbsolutePath() + " " + absoluteFile4.exists());
     }
 
 
