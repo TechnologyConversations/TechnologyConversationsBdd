@@ -3,6 +3,7 @@ package models.jbehave;
 import com.technologyconversations.bdd.steps.util.BddParamsBean;
 import groovy.lang.GroovyClassLoader;
 import models.RunnerClass;
+import org.apache.commons.io.FileUtils;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.EmbedderControls;
@@ -17,6 +18,7 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.io.File;
@@ -126,6 +128,16 @@ public class JBehaveRunner extends JUnitStories {
         File reportsDir = new File("target/" + this.getReportsPath());
         String sourcePath = reportsDir.getAbsolutePath();
         String destinationPath = sourcePath.replace("target/universal/stage/", "").replace("target/", "");
+        File sourceDir = new File(sourcePath);
+        File destinationDir = new File(destinationPath);
+        if (sourceDir.exists() && !destinationDir.exists()) {
+            try {
+                FileUtils.moveDirectory(sourceDir, destinationDir);
+            } catch (IOException e) {
+                // TODO Switch to logger
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.println("0001: " + sourcePath + new File(sourcePath).exists());
         System.out.println("0002: " + destinationPath + new File(destinationPath).exists());
 
