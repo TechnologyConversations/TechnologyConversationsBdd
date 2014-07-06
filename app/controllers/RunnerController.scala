@@ -53,7 +53,7 @@ object RunnerController extends Controller {
         val absoluteFile3 = new File(reportsRelativeDir + "/" + reportsId)
         println(absoluteFile3.getPath + " " + absoluteFile3.getAbsolutePath + " " + absoluteFile3.exists())
         val absoluteFile4 = new File("target/universal/stage/target/" + reportsRelativeDir + "/" + reportsId)
-        println(absoluteFile4.getPath + " " + absoluteFile4.getAbsolutePath + " " + absoluteFile4s.exists())
+        println(absoluteFile4.getPath + " " + absoluteFile4.getAbsolutePath + " " + absoluteFile4.exists())
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
