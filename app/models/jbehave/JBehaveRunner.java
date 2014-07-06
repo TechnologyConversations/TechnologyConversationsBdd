@@ -124,8 +124,10 @@ public class JBehaveRunner extends JUnitStories {
     // TODO Test
     public final void cleanUp() {
         File reportsDir = new File("target/" + this.getReportsPath());
-        String destinationPath = reportsDir.getAbsolutePath();
-        System.out.println("0000: " + destinationPath);
+        String sourcePath = reportsDir.getAbsolutePath();
+        String destinationPath = sourcePath.replace("target/universal/stage/", "").replace("target/", "");
+        System.out.println("0001: " + sourcePath + new File(sourcePath).exists());
+        System.out.println("0002: " + destinationPath + new File(destinationPath).exists());
 
         System.out.println("REPORTS: " + this.getReportsPath());
         File absoluteFile1 = new File(this.getReportsPath());
