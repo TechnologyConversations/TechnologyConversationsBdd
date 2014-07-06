@@ -99,6 +99,8 @@ public class JBehaveRunner extends JUnitStories {
     @Override
     protected List<String> storyPaths() {
         String searchIn = CodeLocations.codeLocationFromPath("").getFile();
+        System.out.println("searchIn: " + searchIn + "!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("getStoryPaths: " + getStoryPaths() + "!!!!!!!!!!!!!!!!");
         return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>());
     }
 
@@ -124,32 +126,15 @@ public class JBehaveRunner extends JUnitStories {
     }
 
     // TODO Test
-    public final void cleanUp() {
+    public final void cleanUp() throws IOException {
         File reportsDir = new File("target/" + this.getReportsPath());
         String sourcePath = reportsDir.getAbsolutePath();
         String destinationPath = sourcePath.replace("target/universal/stage/", "").replace("target/", "");
         File sourceDir = new File(sourcePath);
         File destinationDir = new File(destinationPath);
         if (sourceDir.exists() && !destinationDir.exists()) {
-            try {
-                FileUtils.moveDirectory(sourceDir, destinationDir);
-            } catch (IOException e) {
-                // TODO Switch to logger
-                System.out.println(e.getMessage());
-            }
+            FileUtils.moveDirectory(sourceDir, destinationDir);
         }
-        System.out.println("0001: " + sourcePath + new File(sourcePath).exists());
-        System.out.println("0002: " + destinationPath + new File(destinationPath).exists());
-
-        System.out.println("REPORTS: " + this.getReportsPath());
-        File absoluteFile1 = new File(this.getReportsPath());
-        System.out.println("0101: " + absoluteFile1.getPath() + " " + absoluteFile1.getAbsolutePath() + " " + absoluteFile1.exists());
-        File absoluteFile2 = new File("target/" + this.getReportsPath());
-        System.out.println("0102: " + absoluteFile2.getPath() + " " + absoluteFile2.getAbsolutePath() + " " + absoluteFile2.exists());
-        File absoluteFile3 = new File(this.getReportsPath());
-        System.out.println("0103: " + absoluteFile3.getPath() + " " + absoluteFile3.getAbsolutePath() + " " + absoluteFile3.exists());
-        File absoluteFile4 = new File("target/universal/stage/target/" + this.getReportsPath());
-        System.out.println("0104: " + absoluteFile4.getPath() + " " + absoluteFile4.getAbsolutePath() + " " + absoluteFile4.exists());
     }
 
 

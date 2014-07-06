@@ -61,7 +61,7 @@ class JBehaveRunnerSpec extends Specification {
 
   }
 
-  "JbehaveRunner#configuration" should {
+  "JBehaveRunner#configuration" should {
 
     val reporter = runner.configuration().storyReporterBuilder()
 
