@@ -98,7 +98,7 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        String searchIn = CodeLocations.codeLocationFromPath("").getFile();
+        String searchIn = CodeLocations.codeLocationFromPath("").getFile().replace("target/universal/stage/", "");
         System.out.println("searchIn: " + searchIn + "!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("getStoryPaths: " + getStoryPaths() + "!!!!!!!!!!!!!!!!");
         return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>());
