@@ -44,6 +44,8 @@ object RunnerController extends Controller {
           groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
           reportsRelativeDir + "/" + reportsId
         ).run()
+        println(s"REPORTS RELATIVE DIR: ${reportsRelativeDir + "/" + reportsId}")
+        println(s"REPORTS ABSOLUTE DIR: ${reportsDir}")
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
