@@ -102,7 +102,6 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-//        return new InstanceStepsFactory(configuration(), getStepsInstances());
         List<Object> instances = new ArrayList<>();
         instances.addAll(getStepsInstances());
         for(String path : getCompositePaths()) {
@@ -120,6 +119,19 @@ public class JBehaveRunner extends JUnitStories {
     @Override
     public Configuration configuration() {
         return configuration;
+    }
+
+    // TODO Test
+    public final void cleanUp() {
+        System.out.println("REPORTS: " + this.getReportsPath());
+        File absoluteFile1 = new File(this.getReportsPath());
+        System.out.println(absoluteFile1.getPath() + " " + absoluteFile1.getAbsolutePath() + " " + absoluteFile1.exists());
+        File absoluteFile2 = new File("target/" + this.getReportsPath());
+        System.out.println(absoluteFile2.getPath() + " " + absoluteFile2.getAbsolutePath() + " " + absoluteFile2.exists());
+        File absoluteFile3 = new File(this.getReportsPath());
+        System.out.println(absoluteFile3.getPath() + " " + absoluteFile3.getAbsolutePath() + " " + absoluteFile3.exists());
+        File absoluteFile4 = new File("target/universal/stage/target/" + this.getReportsPath());
+        System.out.println(absoluteFile4.getPath() + " " + absoluteFile4.getAbsolutePath() + " " + absoluteFile4.exists());
     }
 
 

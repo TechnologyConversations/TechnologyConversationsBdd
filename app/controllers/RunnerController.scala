@@ -38,22 +38,24 @@ object RunnerController extends Controller {
       }
       var status = "OK"
       try {
-        new Runner(
+        val runner = new Runner(
           fullStoryPaths,
           classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
           groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
           reportsRelativeDir + "/" + reportsId
-        ).run()
-        println(s"REPORTS RELATIVE DIR: ${reportsRelativeDir + "/" + reportsId}")
-        println(s"REPORTS ABSOLUTE DIR: ${reportsDir}")
-        val absoluteFile1 = new File(reportsRelativeDir + "/" + reportsId)
-        println(absoluteFile1.getPath + " " + absoluteFile1.getAbsolutePath + " " + absoluteFile1.exists())
-        val absoluteFile2 = new File("target/" + reportsRelativeDir + "/" + reportsId)
-        println(absoluteFile2.getPath + " " + absoluteFile2.getAbsolutePath + " " + absoluteFile2.exists())
-        val absoluteFile3 = new File(reportsRelativeDir + "/" + reportsId)
-        println(absoluteFile3.getPath + " " + absoluteFile3.getAbsolutePath + " " + absoluteFile3.exists())
-        val absoluteFile4 = new File("target/universal/stage/target/" + reportsRelativeDir + "/" + reportsId)
-        println(absoluteFile4.getPath + " " + absoluteFile4.getAbsolutePath + " " + absoluteFile4.exists())
+        )
+        runner.run()
+        runner.cleanUp()
+//        println(s"REPORTS RELATIVE DIR: ${reportsRelativeDir + "/" + reportsId}")
+//        println(s"REPORTS ABSOLUTE DIR: ${reportsDir}")
+//        val absoluteFile1 = new File(reportsRelativeDir + "/" + reportsId)
+//        println(absoluteFile1.getPath + " " + absoluteFile1.getAbsolutePath + " " + absoluteFile1.exists())
+//        val absoluteFile2 = new File("target/" + reportsRelativeDir + "/" + reportsId)
+//        println(absoluteFile2.getPath + " " + absoluteFile2.getAbsolutePath + " " + absoluteFile2.exists())
+//        val absoluteFile3 = new File(reportsRelativeDir + "/" + reportsId)
+//        println(absoluteFile3.getPath + " " + absoluteFile3.getAbsolutePath + " " + absoluteFile3.exists())
+//        val absoluteFile4 = new File("target/universal/stage/target/" + reportsRelativeDir + "/" + reportsId)
+//        println(absoluteFile4.getPath + " " + absoluteFile4.getAbsolutePath + " " + absoluteFile4.exists())
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
