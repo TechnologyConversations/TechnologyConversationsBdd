@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
   "org.seleniumhq.selenium" % "selenium-htmlunit-driver" % "2.37.1",
   "com.opera" % "operadriver" % "1.5",
   "com.github.detro.ghostdriver" % "phantomjsdriver" % "1.0.4",
-  "org.apache.commons" % "commons-io" % "2.4"
+  "commons-io" % "commons-io" % "2.4"
 )
 
 play.Project.playScalaSettings
