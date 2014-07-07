@@ -8,11 +8,11 @@ import org.specs2.matcher.JsonMatchers
 
 class ReporterControllerSpec extends Specification with JsonMatchers {
 
-  "GET /reporters/list/[ID].json" should {
+  "GET /api/v1/reporters/list/[ID].json" should {
 
     "return BAD_REQUEST if ID is not correct" in {
       running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(GET, "/reporters/list/xxx.json"))
+        val Some(result) = route(FakeRequest(GET, "/api/v1/reporters/list/xxx"))
         status(result) must equalTo(BAD_REQUEST)
         val json = contentAsJson(result).toString()
         json must /("status" -> "ERROR")

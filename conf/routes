@@ -19,7 +19,7 @@ GET     /steps/classes.json                     controllers.StepsController.clas
 POST    /runner/run.json                        controllers.RunnerController.run
 
 # Reporters
-GET     /reporters/list/*id.json                controllers.ReporterController.list(id: String)
+GET     /api/v1/reporters/list/*id              controllers.ReporterController.list(id: String)
 
 # Composites
 GET     /composites                             controllers.CompositesController.classesToJson

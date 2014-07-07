@@ -130,16 +130,8 @@ public class JBehaveRunner extends JUnitStories {
         String destinationPath = sourcePath.replace("target/universal/stage/", "").replace("target/", "");
         File sourceDir = new File(sourcePath);
         File destinationDir = new File(destinationPath);
-        System.out.println("sourceDir: " + sourceDir.getAbsolutePath());
-        System.out.println("destinationDir: " + destinationDir.getAbsolutePath());
         if (sourceDir.exists() && !destinationDir.exists()) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!1");
             FileUtils.moveDirectory(sourceDir, destinationDir);
-            java.util.Collection<File> list = FileUtils.listFiles(destinationDir, org.apache.commons.io.filefilter.TrueFileFilter.INSTANCE, org.apache.commons.io.filefilter.TrueFileFilter.INSTANCE);
-            for (File file : list) {
-                System.out.println("FILE: " + file.getAbsolutePath());
-            }
-            System.out.println("!!!!!!!!!!!!!!");
         }
     }
 
