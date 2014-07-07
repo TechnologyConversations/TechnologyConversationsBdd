@@ -58,6 +58,14 @@ git push heroku master
 ```
 
 
+Deployment to development environment
+-------------------------------------
+
+```bash
+play run
+```
+
+
 Unit Tests
 ----------
 

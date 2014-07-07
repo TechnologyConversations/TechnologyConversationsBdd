@@ -50,6 +50,7 @@ describe('storyModule', function() {
                 form = $compile('<form>')(scope);
                 form.$invalid = false;
                 form.$valid = true;
+                form.$setPristine = function() {};
                 scope.storyForm = form;
             })
         );
@@ -309,6 +310,22 @@ describe('storyModule', function() {
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.openErrorModal).toHaveBeenCalled();
+            });
+        });
+
+        describe('revertStory function', function() {
+            beforeEach(function() {
+                spyOn(scope.storyForm, '$setPristine');
+            });
+            it('set the value of story to be the copy of the originalStory', function() {
+                scope.story = {value: 'something'};
+                scope.originalStory = {value: 'something else'};
+                scope.revertStory();
+                expect(scope.story).toEqual(scope.originalStory);
+            });
+            it('should call storyForm.$setPristine function', function() {
+                scope.revertStory();
+                expect(scope.storyForm.$setPristine).toHaveBeenCalled();
             });
         });
 

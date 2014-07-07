@@ -37,7 +37,7 @@ angular.module('storyModule', [])
             $scope.storyRunnerInProgress = false;
             $scope.storyRunnerSuccess = true;
             $scope.expandPanels();
-            var originalStory = angular.copy(story);
+            $scope.originalStory = angular.copy(story);
             var pathArray = $scope.story.path.split('/');
             $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
             if ($scope.dirPath !== '') {
@@ -48,7 +48,7 @@ angular.module('storyModule', [])
             $scope.buttonCssClass = buttonCssClass;
             $scope.canSaveStory = function() {
                 var isValid = $scope.storyForm.$valid;
-                var hasChanged = !angular.equals($scope.story, originalStory);
+                var hasChanged = !angular.equals($scope.story, $scope.originalStory);
                 return isValid && hasChanged;
             };
             $scope.stepTextPattern = stepTextPattern;
@@ -64,16 +64,16 @@ angular.module('storyModule', [])
                         }
                         $http.post('/stories/story.json', $scope.story).then(function () {
                             $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
-                            originalStory = angular.copy($scope.story);
+                            $scope.originalStory = angular.copy($scope.story);
                         }, function (response) {
                             $scope.openErrorModal($modal, response.data);
                         });
                     } else {
-                        if ($scope.story.name !== originalStory.name) {
-                            $scope.story.originalPath = originalStory.path;
+                        if ($scope.story.name !== $scope.originalStory.name) {
+                            $scope.story.originalPath = $scope.originalStory.path;
                         }
                         $http.put('/stories/story.json', $scope.story).then(function () {
-                            originalStory = angular.copy($scope.story);
+                            $scope.originalStory = angular.copy($scope.story);
                         }, function (response) {
                             $scope.openErrorModal($modal, response.data);
                         });
@@ -167,14 +167,13 @@ angular.module('storyModule', [])
             $scope.addScenarioElement = function (collection) {
                 collection.push({title: '', meta: [], steps: [], examplesTable: ''});
             };
-            // TODO Test
             $scope.revertStory = function () {
-                $scope.story = angular.copy(originalStory);
+                $scope.story = angular.copy($scope.originalStory);
                 $scope.storyForm.$setPristine();
             };
             // TODO Test
             $scope.canRevertStory = function () {
-                return !angular.equals($scope.story, originalStory);
+                return !angular.equals($scope.story, $scope.originalStory);
             };
             // TODO Test
             $scope.canDeleteStory = function () {
