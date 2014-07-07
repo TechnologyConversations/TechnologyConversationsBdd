@@ -3,7 +3,8 @@ describe('storyModule', function() {
     beforeEach(module('ngCookies', 'storyModule'));
 
     describe('storyCtrl controller', function() {
-        var scope, modal, form, story;
+
+        var scope, modal, form, story, httpBackend;
         var steps = {status: 'OK'};
         var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
@@ -26,7 +27,7 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $http, $location, $cookieStore, $compile) {
+            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile) {
                 scope = $rootScope.$new();
                 scope.addHistoryItem = function(text) {
                     scope.currentTabText = text;
@@ -35,7 +36,7 @@ describe('storyModule', function() {
                     name: 'this is a story name',
                     path: 'this/is/path'
                 };
-                $controller("storyCtrl", {
+                $controller('storyCtrl', {
                     $scope: scope,
                     $http: $http,
                     $modal: modal,
@@ -45,6 +46,7 @@ describe('storyModule', function() {
                     steps: steps,
                     groovyComposites: groovyComposites
                 });
+                httpBackend = $httpBackend;
                 form = $compile('<form>')(scope);
                 form.$invalid = false;
                 form.$valid = true;
@@ -274,6 +276,39 @@ describe('storyModule', function() {
                 var scenarios = [];
                 scope.addScenarioElement(scenarios);
                 expect(scenarios[0]).toEqual({title: '', meta: [], steps: [], examplesTable: ''})
+            });
+        });
+
+        describe('getReports function', function() {
+            var responseData = {data: 'something'};
+            var reportsId = 123;
+            var url = '/api/v1/reporters/list/' + reportsId;
+            beforeEach(function() {
+                spyOn(scope, 'setPendingSteps');
+                spyOn(scope, 'openErrorModal');
+            });
+            it('should call GET /reporters/list/[REPORTS_ID]', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+            });
+            it('should assign GET response to reports', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.reports).toEqual(responseData);
+            });
+            it('should call setPendingSteps function', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.setPendingSteps).toHaveBeenCalled();
+            });
+            it('should call openErrorModal in case of bad request', function() {
+                httpBackend.expectGET(url).respond(400, responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.openErrorModal).toHaveBeenCalled();
             });
         });
 

@@ -66,7 +66,7 @@ angular.module('storyModule', [])
                             $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
                             originalStory = angular.copy($scope.story);
                         }, function (response) {
-                            openErrorModal($modal, response.data);
+                            $scope.openErrorModal($modal, response.data);
                         });
                     } else {
                         if ($scope.story.name !== originalStory.name) {
@@ -75,7 +75,7 @@ angular.module('storyModule', [])
                         $http.put('/stories/story.json', $scope.story).then(function () {
                             originalStory = angular.copy($scope.story);
                         }, function (response) {
-                            openErrorModal($modal, response.data);
+                            $scope.openErrorModal($modal, response.data);
                         });
                     }
                 }
@@ -106,21 +106,25 @@ angular.module('storyModule', [])
                         $http.post('/runner/run.json', json).then(function (response) {
                             $scope.storyRunnerSuccess = (response.data.status === 'OK');
                             $scope.storyRunnerInProgress = false;
-                            $http.get('/reporters/list/' + response.data.id + '.json').then(function (response) {
-                                $scope.reports = response.data;
-                                $scope.setPendingSteps($scope.reports);
-                            }, function (response) {
-                                openErrorModal($modal, response.data);
-                            });
+                            $scope.getReports(response.data.id);
                         }, function (response) {
                             $scope.storyRunnerSuccess = false;
                             $scope.storyRunnerInProgress = false;
-                            openErrorModal($modal, response.data);
+                            $scope.openErrorModal($modal, response.data);
                         });
                     }, function () {
                         // Do nothing
                     });
                 }
+            };
+            $scope.getReports = function(reportsId) {
+                $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
+                    $scope.reports = response.data;
+                    $scope.setPendingSteps($scope.reports);
+                }, function (response) {
+                    // TODO Test
+                    $scope.openErrorModal($modal, response.data);
+                });
             };
             // TODO Test
             $scope.openRunnerModal = function() {
@@ -191,5 +195,7 @@ angular.module('storyModule', [])
                     return $location.search('stepText', stepText).path('/page/composites/composites.com.technologyconversations.bdd.steps.' + compositeClass);
                 }
             };
+            // TODO Test
+            $scope.openErrorModal = openErrorModal;
         }
     ]);
