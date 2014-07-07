@@ -317,7 +317,7 @@ describe('storyModule', function() {
             beforeEach(function() {
                 spyOn(scope.storyForm, '$setPristine');
             });
-            it('set the value of story to be the copy of the originalStory', function() {
+            it('should set the value of story to be the copy of the originalStory', function() {
                 scope.story = {value: 'something'};
                 scope.originalStory = {value: 'something else'};
                 scope.revertStory();
@@ -326,6 +326,19 @@ describe('storyModule', function() {
             it('should call storyForm.$setPristine function', function() {
                 scope.revertStory();
                 expect(scope.storyForm.$setPristine).toHaveBeenCalled();
+            });
+        });
+
+        describe('canRevertStory function', function() {
+           it('should return true when story and originalStory are not equal', function() {
+               scope.story = {value: 'something'};
+               scope.originalStory = {value: 'something else'};
+               expect(scope.canRevertStory()).toBe(true);
+           });
+            it('should return false when story and originalStory are equal', function() {
+                scope.story = {value: 'something'};
+                scope.originalStory = {value: 'something'};
+                expect(scope.canRevertStory()).toBe(false);
             });
         });
 

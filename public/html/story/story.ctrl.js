@@ -3,11 +3,11 @@ angular.module('storyModule', [])
         function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites) {
             $scope.pendingSteps = [];
             $scope.setAction = function() {
-                if ($scope.story.name === '') {
-                    $scope.action = 'POST';
-                } else {
+                if ($scope.story.name !== '') {
                     $scope.action = 'PUT';
                     $scope.addHistoryItem($scope.story.name + ' story');
+                } else {
+                    $scope.action = 'POST';
                 }
             };
             $scope.expandPanels = function() {
@@ -56,7 +56,7 @@ angular.module('storyModule', [])
             $scope.saveStory = function() {
                 if ($scope.canSaveStory()) {
                     $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
-                    if ($scope.action === 'POST') {
+                    if ('POST' === $scope.action) {
                         var strippedPathArray = $scope.dirPath.split('/');
                         var strippedPath = strippedPathArray.slice(0, strippedPathArray.length - 1).join('/');
                         if (strippedPath !== '') {
@@ -171,7 +171,6 @@ angular.module('storyModule', [])
                 $scope.story = angular.copy($scope.originalStory);
                 $scope.storyForm.$setPristine();
             };
-            // TODO Test
             $scope.canRevertStory = function () {
                 return !angular.equals($scope.story, $scope.originalStory);
             };
