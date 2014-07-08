@@ -5,12 +5,14 @@ import models.{Story, StoryList}
 import play.api.Play
 import play.api.libs.json.{JsValue, Json}
 
+import scala.io.Source
+
 object StoryController extends Controller {
 
   val dir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
   def index(path: String): Action[AnyContent] = Action {
-    Ok(scala.io.Source.fromFile("public/html/index.html").mkString).as("text/html")
+    Ok(Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
   def listJson(path: String): Action[AnyContent] = Action {

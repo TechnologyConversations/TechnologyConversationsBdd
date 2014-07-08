@@ -12,4 +12,10 @@ object ReporterController extends Controller {
     else Ok(json.get)
   }
 
+  def get(id: String, report: String): Action[AnyContent] = Action {
+    val reportContent = new Reporter().reportContent(reportsDir, id, report)
+    if (reportContent.isEmpty) result(paramIncorrectMap("ID and/or report"))
+    else Ok(reportContent.get)
+  }
+
 }

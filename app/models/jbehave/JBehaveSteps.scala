@@ -36,11 +36,14 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
   }
 
   private[jbehave] def stepsJars = {
-    ClassFinder.classpath.filter(_.getName.toLowerCase.contains("steps"))
+    val classPathJars = ClassFinder.classpath.filter(_.getName.toLowerCase.contains("steps")).toList
+    val stepsJars = new java.io.File(stepsDir).listFiles.toList
+    classPathJars ::: stepsJars
   }
 
   private[jbehave] def classes = {
     val jarClasses = ClassFinder(stepsJars).getClasses()
+      .filter(classInfo => classInfo.name.toLowerCase.contains("steps"))
       .filter(classInfo => hasSteps(classInfo.name))
       .map(_.name)
       .toList

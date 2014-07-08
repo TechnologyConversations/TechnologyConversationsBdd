@@ -20,6 +20,7 @@ POST    /runner/run.json                        controllers.RunnerController.run
 
 # Reporters
 GET     /api/v1/reporters/list/*id              controllers.ReporterController.list(id: String)
+GET     /api/v1/reporters/get/*id/*report       controllers.ReporterController.get(id: String, report: String)
 
 # Composites
 GET     /composites                             controllers.CompositesController.classesToJson

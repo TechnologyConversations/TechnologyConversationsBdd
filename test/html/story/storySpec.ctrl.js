@@ -281,7 +281,7 @@ describe('storyModule', function() {
         });
 
         describe('getReports function', function() {
-            var responseData = {data: 'something'};
+            var responseData = [{path: 'report1', content: 'Report 1 content'}, {path: 'report2', content: 'Report 2 content'}];
             var reportsId = 123;
             var url = '/api/v1/reporters/list/' + reportsId;
             beforeEach(function() {
@@ -290,17 +290,30 @@ describe('storyModule', function() {
             });
             it('should call GET /reporters/list/[REPORTS_ID]', function() {
                 httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
+                scope.getReports(reportsId);
+                httpBackend.flush();
+            });
+            it('should call GET /api/v1/reporters/get/[ID]/[REPORT] for each report', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
                 scope.getReports(reportsId);
                 httpBackend.flush();
             });
             it('should assign GET response to reports', function() {
                 httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.reports).toEqual(responseData);
             });
             it('should call setPendingSteps function', function() {
                 httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
+                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.setPendingSteps).toHaveBeenCalled();

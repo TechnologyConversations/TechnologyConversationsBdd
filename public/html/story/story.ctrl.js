@@ -112,8 +112,8 @@ angular.module('storyModule', [])
                             $scope.storyRunnerInProgress = false;
                             $scope.openErrorModal($modal, response.data);
                         });
-                    }, function () {
-                        // Do nothing
+                    }, function(response) {
+                        $scope.openErrorModal($modal, response.data);
                     });
                 }
             };
@@ -121,6 +121,11 @@ angular.module('storyModule', [])
                 $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
                     $scope.reports = response.data;
                     $scope.setPendingSteps($scope.reports);
+                    $scope.reports.forEach(function(report) {
+                        $http.get('/api/v1/reporters/get/' + reportsId + '/' + report.path).then(function (response) {
+                            report.content = response.data;
+                        });
+                    });
                 }, function (response) {
                     // TODO Test
                     $scope.openErrorModal($modal, response.data);

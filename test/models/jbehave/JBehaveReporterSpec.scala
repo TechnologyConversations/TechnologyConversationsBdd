@@ -57,7 +57,7 @@ class JBehaveReporterSpec extends Specification with JsonMatchers {
 
     "return JSON with the report path" in {
       val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
-      json must */("path" -> startWith(s"/$dirPath"))
+      json must */("path" -> html)
     }
 
     "return JSON with the list of step texts" in {
@@ -73,15 +73,21 @@ class JBehaveReporterSpec extends Specification with JsonMatchers {
       // TODO Add other statuses (i.e. failed)
     }
 
-    // Does not work with files in GIT since files might not have been created in the correct order
-    // TODO Generate files before the test
-//    "return JSON with the list of generated reports in the correct order" in {
-//      val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
-//      json must /("reports") /#0 /("path" -> endWith(reports(0)))
-//      json must /("reports") /#1 /("path" -> endWith(reports(1)))
-//      json must /("reports") /#2 /("path" -> endWith(reports(2)))
-//    }
+    "JBehaveReporter#getReportContent" should {
+
+      "return empty if report does not exist" in {
+        val report = JBehaveReporter().reportContent(reportsPath, id, "non_existent_report")
+        report must beNone
+      }
+
+      "return report content" in {
+        val report = JBehaveReporter().reportContent(reportsPath, id, html)
+        report must beSome
+      }
+
+    }
 
   }
 
 }
+

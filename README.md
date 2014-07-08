@@ -9,9 +9,9 @@ Development prerequisites
 
 ### Back-end
 
-**Scala**
-**Play**
-**SBT**
+**[Scala](http://www.scala-lang.org/download/)**
+**[Play/Activator](http://www.playframework.com/download)**
+**[SBT](http://www.scala-sbt.org/download.html)**
 
 ### Front-end
 
@@ -62,7 +62,7 @@ Deployment to development environment
 -------------------------------------
 
 ```bash
-play run
+sbt run
 ```
 
 
@@ -79,7 +79,7 @@ npm test
 Back-end unit testing
 
 ```bash
-play ~test-quick
+activator ~test-quick
 ```
 
 

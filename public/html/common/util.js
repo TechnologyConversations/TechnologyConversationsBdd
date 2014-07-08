@@ -97,7 +97,8 @@ function openRunnerParametersModal($modal, showGetApi) {
         controller: 'runnerParamsCtrl',
         resolve: {
             data: function($route, $http, $modal) {
-                return getJson($http, $modal, '/steps/classes.json', true);
+                var json = getJson($http, $modal, '/steps/classes.json', true);
+                return json;
             },
             showGetApi: function() {
                 return showGetApi;
