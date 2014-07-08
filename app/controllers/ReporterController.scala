@@ -2,7 +2,6 @@ package controllers
 
 import play.api.mvc.{Controller, AnyContent, Action}
 import models.Reporter
-import play.api.Play
 
 object ReporterController extends Controller {
 

@@ -17,6 +17,7 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
+import static java.io.File.separator;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -125,9 +126,11 @@ public class JBehaveRunner extends JUnitStories {
 
     // TODO Test
     public final void cleanUp() throws IOException {
-        File reportsDir = new File("target/" + this.getReportsPath());
+        File reportsDir = new File("target" + separator + this.getReportsPath());
         String sourcePath = reportsDir.getAbsolutePath();
-        String destinationPath = sourcePath.replace("target/universal/stage/", "").replace("target/", "");
+        String destinationPath = sourcePath
+                .replace("target" + separator + "universal" + separator + "stage" + separator, "")
+                .replace("target" + separator, "");
         File sourceDir = new File(sourcePath);
         File destinationDir = new File(destinationPath);
         if (sourceDir.exists() && !destinationDir.exists()) {
