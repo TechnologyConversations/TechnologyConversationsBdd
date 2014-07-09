@@ -264,9 +264,8 @@
                 </div>
             </div>
             <div id="runnerReports">
-                {{reports}}
                 <div ng-repeat="report in reports">
-                    <div ng-include="report.content"></div>
+                    <div ng-include="getReportUrl(reports.id, report.path)"></div>
                 </div>
             </div>
         </div>

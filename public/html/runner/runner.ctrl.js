@@ -157,6 +157,7 @@ angular.module('runnerModule', [])
                     try {
                         paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
                     } catch(err) {
+                        console.log('Could not retrieve cookie ' + classEntry.fullName + "." + paramEntry.key);
                         console.log(err.message);
                     }
                 });

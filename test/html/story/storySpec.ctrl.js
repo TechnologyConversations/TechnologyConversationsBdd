@@ -290,30 +290,17 @@ describe('storyModule', function() {
             });
             it('should call GET /reporters/list/[REPORTS_ID]', function() {
                 httpBackend.expectGET(url).respond(responseData);
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
-                scope.getReports(reportsId);
-                httpBackend.flush();
-            });
-            it('should call GET /api/v1/reporters/get/[ID]/[REPORT] for each report', function() {
-                httpBackend.expectGET(url).respond(responseData);
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
                 scope.getReports(reportsId);
                 httpBackend.flush();
             });
             it('should assign GET response to reports', function() {
                 httpBackend.expectGET(url).respond(responseData);
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.reports).toEqual(responseData);
             });
             it('should call setPendingSteps function', function() {
                 httpBackend.expectGET(url).respond(responseData);
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report1').respond('Report 1 content');
-                httpBackend.expectGET('/api/v1/reporters/get/' + reportsId + '/report2').respond('Report 2 content');
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.setPendingSteps).toHaveBeenCalled();
@@ -323,6 +310,22 @@ describe('storyModule', function() {
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.openErrorModal).toHaveBeenCalled();
+            });
+            it('should add reportsId to reports', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.reports.id).toBeDefined();
+                expect(scope.reports.id).toEqual(reportsId);
+            });
+        });
+
+        describe('getReportUrl function', function() {
+            it('should return the report URL', function() {
+                var reportsId = 123;
+                var report = 'myReport';
+                var expected = '/api/v1/reporters/get/' + reportsId + '/' + report;
+                expect(scope.getReportUrl(reportsId, report)).toEqual(expected);
             });
         });
 

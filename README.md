@@ -21,6 +21,7 @@ Development prerequisites
 
 ```bash
 npm install -g grunt-cli
+npm install grunt-contrib-watch --save-dev
 ```
 
 
@@ -69,11 +70,18 @@ sbt run
 Unit Tests
 ----------
 
-Front-end unit  testing
+Front-end unit testing
 
 ```bash
 cd public
 npm test
+```
+
+Front-end unit testing without installation and dependencies
+
+```bash
+cd public
+grunt jasmine
 ```
 
 Back-end unit testing

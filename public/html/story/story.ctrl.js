@@ -120,16 +120,15 @@ angular.module('storyModule', [])
             $scope.getReports = function(reportsId) {
                 $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
                     $scope.reports = response.data;
+                    $scope.reports.id = reportsId;
                     $scope.setPendingSteps($scope.reports);
-                    $scope.reports.forEach(function(report) {
-                        $http.get('/api/v1/reporters/get/' + reportsId + '/' + report.path).then(function (response) {
-                            report.content = response.data;
-                        });
-                    });
                 }, function (response) {
                     // TODO Test
                     $scope.openErrorModal($modal, response.data);
                 });
+            };
+            $scope.getReportUrl = function(reportsId, report) {
+                return '/api/v1/reporters/get/' + reportsId + '/' + report;
             };
             // TODO Test
             $scope.openRunnerModal = function() {
@@ -179,7 +178,6 @@ angular.module('storyModule', [])
             $scope.canRevertStory = function () {
                 return !angular.equals($scope.story, $scope.originalStory);
             };
-            // TODO Test
             $scope.canDeleteStory = function () {
                 return $scope.action === 'PUT' && !$scope.storyRunnerInProgress;
             };
