@@ -46,7 +46,7 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
       .filter(classInfo => classInfo.name.toLowerCase.contains("steps"))
       .filter(classInfo => hasSteps(classInfo.name))
       .map(_.name)
-      .toList
+      .toSet.toList
     val compositeClasses = composites.map { composite =>
       if (composite.endsWith(".java")) {
         composite.replace(".java", "").replace(File.separator, ".")
