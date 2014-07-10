@@ -9,7 +9,7 @@ Running the project in development mode
 Use play to run the BDDAssistant
 
 ´´´
-$ play run
+$ activator run / sbt run
 ´´´
 
 Development prerequisites
