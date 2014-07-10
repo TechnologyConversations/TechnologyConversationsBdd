@@ -2,6 +2,7 @@ package models.jbehave
 
 import java.io.File
 import play.api.libs.json.{Json, JsValue}
+import scala.io.Source
 import scala.xml.XML
 
 class JBehaveReporter {
@@ -11,14 +12,20 @@ class JBehaveReporter {
     if (reports.isEmpty) None
     else {
       val reportsMap = reports.get.map { report =>
-        val reportPath = s"$reportsPath/$id/$report"
+        val stepsReportPath = s"$reportsPath/$id/$report".replace(".html", ".xml")
         Map(
-          "path" -> Json.toJson(s"/$reportPath".replace("/public/", "/assets/")),
-          "steps" -> Json.toJson(steps(reportPath.replace(".html", ".xml")))
+          "path" -> Json.toJson(report),
+          "steps" -> Json.toJson(steps(stepsReportPath))
         )
       }
       Some(Json.toJson(reportsMap))
     }
+  }
+
+  def reportContent(reportsPath: String, id: String, report: String): Option[String] = {
+    val file = new File(s"$reportsPath/$id/$report")
+    if (!file.exists()) None
+    else Some(Source.fromFile(file).mkString)
   }
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
@@ -43,7 +50,5 @@ class JBehaveReporter {
 }
 
 object JBehaveReporter {
-
-  def apply() = { new JBehaveReporter }
-
+  def apply() = new JBehaveReporter
 }

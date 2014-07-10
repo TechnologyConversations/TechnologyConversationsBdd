@@ -3,11 +3,11 @@ angular.module('storyModule', [])
         function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites) {
             $scope.pendingSteps = [];
             $scope.setAction = function() {
-                if ($scope.story.name === '') {
-                    $scope.action = 'POST';
-                } else {
+                if ($scope.story.name !== '') {
                     $scope.action = 'PUT';
                     $scope.addHistoryItem($scope.story.name + ' story');
+                } else {
+                    $scope.action = 'POST';
                 }
             };
             $scope.expandPanels = function() {
@@ -37,7 +37,7 @@ angular.module('storyModule', [])
             $scope.storyRunnerInProgress = false;
             $scope.storyRunnerSuccess = true;
             $scope.expandPanels();
-            var originalStory = angular.copy(story);
+            $scope.originalStory = angular.copy(story);
             var pathArray = $scope.story.path.split('/');
             $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
             if ($scope.dirPath !== '') {
@@ -48,7 +48,7 @@ angular.module('storyModule', [])
             $scope.buttonCssClass = buttonCssClass;
             $scope.canSaveStory = function() {
                 var isValid = $scope.storyForm.$valid;
-                var hasChanged = !angular.equals($scope.story, originalStory);
+                var hasChanged = !angular.equals($scope.story, $scope.originalStory);
                 return isValid && hasChanged;
             };
             $scope.stepTextPattern = stepTextPattern;
@@ -56,7 +56,7 @@ angular.module('storyModule', [])
             $scope.saveStory = function() {
                 if ($scope.canSaveStory()) {
                     $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
-                    if ($scope.action === 'POST') {
+                    if ('POST' === $scope.action) {
                         var strippedPathArray = $scope.dirPath.split('/');
                         var strippedPath = strippedPathArray.slice(0, strippedPathArray.length - 1).join('/');
                         if (strippedPath !== '') {
@@ -64,18 +64,18 @@ angular.module('storyModule', [])
                         }
                         $http.post('/stories/story.json', $scope.story).then(function () {
                             $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
-                            originalStory = angular.copy($scope.story);
+                            $scope.originalStory = angular.copy($scope.story);
                         }, function (response) {
-                            openErrorModal($modal, response.data);
+                            $scope.openErrorModal($modal, response.data);
                         });
                     } else {
-                        if ($scope.story.name !== originalStory.name) {
-                            $scope.story.originalPath = originalStory.path;
+                        if ($scope.story.name !== $scope.originalStory.name) {
+                            $scope.story.originalPath = $scope.originalStory.path;
                         }
                         $http.put('/stories/story.json', $scope.story).then(function () {
-                            originalStory = angular.copy($scope.story);
+                            $scope.originalStory = angular.copy($scope.story);
                         }, function (response) {
-                            openErrorModal($modal, response.data);
+                            $scope.openErrorModal($modal, response.data);
                         });
                     }
                 }
@@ -88,7 +88,7 @@ angular.module('storyModule', [])
                 if ($scope.canRunStory()) {
                     $scope.saveStory();
                     $scope.openRunnerModal().result.then(function (data) {
-                        var classes = data;
+                        var classes = data.classes;
                         $scope.storyFormClass = 'col-md-6';
                         $scope.storyRunnerClass = 'col-md-6';
                         $scope.storyRunnerVisible = true;
@@ -106,25 +106,33 @@ angular.module('storyModule', [])
                         $http.post('/runner/run.json', json).then(function (response) {
                             $scope.storyRunnerSuccess = (response.data.status === 'OK');
                             $scope.storyRunnerInProgress = false;
-                            $http.get('/reporters/list/' + response.data.id + '.json').then(function (response) {
-                                $scope.reports = response.data;
-                                $scope.setPendingSteps($scope.reports);
-                            }, function (response) {
-                                openErrorModal($modal, response.data);
-                            });
+                            $scope.getReports(response.data.id);
                         }, function (response) {
                             $scope.storyRunnerSuccess = false;
                             $scope.storyRunnerInProgress = false;
-                            openErrorModal($modal, response.data);
+                            $scope.openErrorModal($modal, response.data);
                         });
-                    }, function () {
-                        // Do nothing
+                    }, function(response) {
+                        $scope.openErrorModal($modal, response.data);
                     });
                 }
             };
+            $scope.getReports = function(reportsId) {
+                $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
+                    $scope.reports = response.data;
+                    $scope.reports.id = reportsId;
+                    $scope.setPendingSteps($scope.reports);
+                }, function (response) {
+                    // TODO Test
+                    $scope.openErrorModal($modal, response.data);
+                });
+            };
+            $scope.getReportUrl = function(reportsId, report) {
+                return '/api/v1/reporters/get/' + reportsId + '/' + report;
+            };
             // TODO Test
             $scope.openRunnerModal = function() {
-                return openRunnerParametersModal($modal);
+                return openRunnerParametersModal($modal, false);
             };
             $scope.getRunnerProgressCss = function () {
                 return getRunnerProgressCss($scope.storyRunnerInProgress);
@@ -163,16 +171,13 @@ angular.module('storyModule', [])
             $scope.addScenarioElement = function (collection) {
                 collection.push({title: '', meta: [], steps: [], examplesTable: ''});
             };
-            // TODO Test
             $scope.revertStory = function () {
-                $scope.story = angular.copy(originalStory);
+                $scope.story = angular.copy($scope.originalStory);
                 $scope.storyForm.$setPristine();
             };
-            // TODO Test
             $scope.canRevertStory = function () {
-                return !angular.equals($scope.story, originalStory);
+                return !angular.equals($scope.story, $scope.originalStory);
             };
-            // TODO Test
             $scope.canDeleteStory = function () {
                 return $scope.action === 'PUT' && !$scope.storyRunnerInProgress;
             };
@@ -191,36 +196,7 @@ angular.module('storyModule', [])
                     return $location.search('stepText', stepText).path('/page/composites/composites.com.technologyconversations.bdd.steps.' + compositeClass);
                 }
             };
-        }
-    ])
-    .controller('runnerParamsCtrl', ['$scope', '$modalInstance', '$cookieStore', 'data',
-        function ($scope, $modalInstance, $cookieStore, data) {
-            $scope.classes = data.classes;
-            $scope.classes.forEach(function(classEntry) {
-                classEntry.params.forEach(function(paramEntry) {
-                    paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
-                });
-            });
-            $scope.hasOptions = function(options) {
-                if (options) {
-                  return options.length > 0;
-                } else {
-                  return false;
-                }
-            };
-            $scope.hasParams = function(classEntry) {
-                return classEntry.params !== undefined && classEntry.params.length > 0;
-            };
-            $scope.ok = function () {
-                $modalInstance.close($scope.classes);
-            };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            $scope.paramElementId = function(className, paramKey) {
-                var formattedClassName = className.charAt(0).toLowerCase() + className.slice(1);
-                var formattedParamKey = paramKey.charAt(0).toUpperCase() + paramKey.slice(1);
-                return formattedClassName + formattedParamKey;
-            };
+            // TODO Test
+            $scope.openErrorModal = openErrorModal;
         }
     ]);

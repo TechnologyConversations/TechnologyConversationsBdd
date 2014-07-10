@@ -1,14 +1,15 @@
 language: scala
+
 scala:
 - 2.10.3
+
 notifications:
   email:
   - viktor@farcic.com
-  - jordi.falguera@gmail.com
-deploy:
-  provider: heroku
-  api_key:
-    secure: pc2FCZ1BZYRsraP7387dtOI2D8CIQq+v7gBi3YTjQ5PoB7sCm5yq+LZV6iccUUNscV3awjB6vLvu3NVVlnRUq5AD7x1aNORCywn058rYph4hxzwx7bSoRiRcY7KqQdf4ONKtdRCBqHqyz9kzbSvyOrB7hbRnQeK+xKEdPrZyQ5k=
-  app: bddassistant
-  on:
-    repo: TechnologyConversations/TechnologyConversationsBdd
+
+before_install: npm install -g grunt-cli
+
+script:
+  - sbt ++2.10.3 test
+  - cd public
+  - npm test

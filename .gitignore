@@ -4,7 +4,6 @@ project/target
 target
 tmp
 .history
-dist
 /.idea
 /*.iml
 /out
@@ -14,5 +13,4 @@ dist
 /RUNNING_PID
 /.settings
 node_modules
-
 /jbehave

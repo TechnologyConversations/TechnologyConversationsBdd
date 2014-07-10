@@ -3,7 +3,8 @@ describe('storyModule', function() {
     beforeEach(module('ngCookies', 'storyModule'));
 
     describe('storyCtrl controller', function() {
-        var scope, modal, form, story;
+
+        var scope, modal, form, story, httpBackend;
         var steps = {status: 'OK'};
         var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
@@ -26,7 +27,7 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $http, $location, $cookieStore, $compile) {
+            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile) {
                 scope = $rootScope.$new();
                 scope.addHistoryItem = function(text) {
                     scope.currentTabText = text;
@@ -35,7 +36,7 @@ describe('storyModule', function() {
                     name: 'this is a story name',
                     path: 'this/is/path'
                 };
-                $controller("storyCtrl", {
+                $controller('storyCtrl', {
                     $scope: scope,
                     $http: $http,
                     $modal: modal,
@@ -45,9 +46,11 @@ describe('storyModule', function() {
                     steps: steps,
                     groovyComposites: groovyComposites
                 });
+                httpBackend = $httpBackend;
                 form = $compile('<form>')(scope);
                 form.$invalid = false;
                 form.$valid = true;
+                form.$setPristine = function() {};
                 scope.storyForm = form;
             })
         );
@@ -277,65 +280,68 @@ describe('storyModule', function() {
             });
         });
 
-    });
-
-    describe('runnerParamsCtrl controller', function() {
-
-        var modalInstance, data, cookieStore, scope, classes;
-        var cookieValue = 'value1';
-
-        beforeEach(
-            inject(function($rootScope, $injector, $controller) {
-                scope = $rootScope.$new();
-                classes = [{
-                    fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1'}, {key: 'key2'}]
-                }];
-                data = {classes: classes};
-                cookieStore = $injector.get('$cookieStore');
-                cookieStore.put(classes[0].fullName + "." + classes[0].params[0].key, cookieValue);
-                cookieStore.put(classes[0].fullName + "." + classes[0].params[1].key, 'value2');
-                modalInstance = {
-                    dismiss: jasmine.createSpy('modalInstance.dismiss'),
-                    close: jasmine.createSpy('modalInstance.close')
-                };
-                $controller('runnerParamsCtrl', {
-                    $scope: scope ,
-                    $modalInstance: modalInstance,
-                    $cookieStore: cookieStore,
-                    data: data});
-            })
-        );
-
-        describe('by default', function() {
-            it('should put classes with values from cookies to the scope', function() {
-                var expected = [{
-                    fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1', value: 'value1'}, {key: 'key2', value: 'value2'}]
-                }];
-                expect(scope.classes).toEqual(expected);
+        describe('getReports function', function() {
+            var responseData = [{path: 'report1', content: 'Report 1 content'}, {path: 'report2', content: 'Report 2 content'}];
+            var reportsId = 123;
+            var url = '/api/v1/reporters/list/' + reportsId;
+            beforeEach(function() {
+                spyOn(scope, 'setPendingSteps');
+                spyOn(scope, 'openErrorModal');
+            });
+            it('should call GET /reporters/list/[REPORTS_ID]', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+            });
+            it('should assign GET response to reports', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.reports).toEqual(responseData);
+            });
+            it('should call setPendingSteps function', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.setPendingSteps).toHaveBeenCalled();
+            });
+            it('should call openErrorModal in case of bad request', function() {
+                httpBackend.expectGET(url).respond(400, responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.openErrorModal).toHaveBeenCalled();
+            });
+            it('should add reportsId to reports', function() {
+                httpBackend.expectGET(url).respond(responseData);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.reports.id).toBeDefined();
+                expect(scope.reports.id).toEqual(reportsId);
             });
         });
 
-        describe('hasParams function', function() {
-           it('should return true if it contains at least one parameter', function() {
-               var classEntry = {params: [{param: "param1"}, {param: "param2"}]};
-              expect(scope.hasParams(classEntry)).toEqual(true);
-           });
-            it('should return false if it does NOT contain parameters', function() {
-                var classEntry = {params: []};
-                expect(scope.hasParams(classEntry)).toEqual(false);
+        describe('getReportUrl function', function() {
+            it('should return the report URL', function() {
+                var reportsId = 123;
+                var report = 'myReport';
+                var expected = '/api/v1/reporters/get/' + reportsId + '/' + report;
+                expect(scope.getReportUrl(reportsId, report)).toEqual(expected);
             });
         });
 
-        describe('paramElementId function', function() {
-            it('should return first letter of the className as lower case', function() {
-                var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
-                expect(actual).toMatch(/thisIsClassName/);
+        describe('revertStory function', function() {
+            beforeEach(function() {
+                spyOn(scope.storyForm, '$setPristine');
             });
-            it('should return first letter of the paramKey as upper case', function() {
-                var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
-                expect(actual).toMatch(/ThisIsParamKey/);
+            it('should set the value of story to be the copy of the originalStory', function() {
+                scope.story = {value: 'something'};
+                scope.originalStory = {value: 'something else'};
+                scope.revertStory();
+                expect(scope.story).toEqual(scope.originalStory);
+            });
+            it('should call storyForm.$setPristine function', function() {
+                scope.revertStory();
+                expect(scope.storyForm.$setPristine).toHaveBeenCalled();
             });
         });
 
@@ -354,18 +360,17 @@ describe('storyModule', function() {
            });
         });
 
-        describe('cancel function', function () {
-            it('should dismiss the modal', function() {
-                scope.cancel();
-                expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
-            })
-        });
-
-        describe('ok function', function () {
-            it('should close the modal and return data', function() {
-                scope.ok();
-                expect(modalInstance.close).toHaveBeenCalledWith(classes);
-            })
+        describe('canRevertStory function', function() {
+           it('should return true when story and originalStory are not equal', function() {
+               scope.story = {value: 'something'};
+               scope.originalStory = {value: 'something else'};
+               expect(scope.canRevertStory()).toBe(true);
+           });
+            it('should return false when story and originalStory are equal', function() {
+                scope.story = {value: 'something'};
+                scope.originalStory = {value: 'something'};
+                expect(scope.canRevertStory()).toBe(false);
+            });
         });
 
     });

@@ -52,7 +52,7 @@ trait BddFile {
       if (file.isFile) {
         file.delete
       } else {
-        val (deleted, remaining) = Path.fromString(file.getPath).deleteRecursively()
+        val (deleted, remaining) = Path.fromString(file.getAbsolutePath).deleteRecursively()
         remaining == 0
       }
     } else {
@@ -75,8 +75,8 @@ trait BddFile {
     val file = new File(path)
     if (file.exists()) {
       val files = file.listFiles()
-      val filesInCurrentDir = files.filter(_.isFile).map(_.getPath).toList
-      val filesInSubDirs = files.filter(_.isDirectory).flatMap(file => list(file.getPath))
+      val filesInCurrentDir = files.filter(_.isFile).map(_.getAbsolutePath).toList
+      val filesInSubDirs = files.filter(_.isDirectory).flatMap(file => list(file.getAbsolutePath))
       filesInCurrentDir ++ filesInSubDirs
     } else {
       List()

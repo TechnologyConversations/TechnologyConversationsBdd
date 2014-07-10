@@ -1,3 +1,6 @@
+import java.io.File
+
+import play.api.Play
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import play.api.mvc.Results._
@@ -5,6 +8,8 @@ import play.api.mvc.Results._
 package object controllers {
 
   val noJsonResultMessage = "JSON was not found in the request body"
+  val stageDir = "target/universal/stage/"
+
   def noResultMessage(node: String) = {
     s"$node was not found"
   }
@@ -53,6 +58,30 @@ package object controllers {
       "status" -> "OK",
       "message" -> message
     )
+  }
+
+  // TODO Test
+  val compositesDir: String = {
+    val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
+    absolutePath(dirPath)
+  }
+
+  // TODO Test
+  val reportsRelativeDir: String = {
+    Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
+  }
+
+  // TODO Test
+  val reportsDir: String = {
+    absolutePath(reportsRelativeDir)
+  }
+
+  // TODO Test
+  def absolutePath(dirPath: String): String = {
+    val dir = new File(dirPath)
+    val dirAbsolutePath = dir.getAbsolutePath
+    if (new File(dirAbsolutePath).exists()) dirAbsolutePath
+    else dirAbsolutePath.replace(stageDir, "")
   }
 
 }

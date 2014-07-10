@@ -143,3 +143,15 @@ When Web user clicks the element runner
 Then Web user is in the Runner Selector modal screen
 
 Examples:
+
+Scenario: Parameters dialog should have API info
+
+Meta:
+
+
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+When Web user clicks the element getApi
+Then Web element api is visible
+
+Examples:

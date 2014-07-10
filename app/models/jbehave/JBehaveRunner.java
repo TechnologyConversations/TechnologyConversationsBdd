@@ -3,6 +3,7 @@ package models.jbehave;
 import com.technologyconversations.bdd.steps.util.BddParamsBean;
 import groovy.lang.GroovyClassLoader;
 import models.RunnerClass;
+import org.apache.commons.io.FileUtils;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.EmbedderControls;
@@ -16,7 +17,9 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
+import static java.io.File.separator;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.io.File;
@@ -96,13 +99,12 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        String searchIn = CodeLocations.codeLocationFromPath("").getFile();
+        String searchIn = CodeLocations.codeLocationFromPath("").getFile().replace("target/universal/stage/", "");
         return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>());
     }
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-//        return new InstanceStepsFactory(configuration(), getStepsInstances());
         List<Object> instances = new ArrayList<>();
         instances.addAll(getStepsInstances());
         for(String path : getCompositePaths()) {
@@ -120,6 +122,20 @@ public class JBehaveRunner extends JUnitStories {
     @Override
     public Configuration configuration() {
         return configuration;
+    }
+
+    // TODO Test
+    public final void cleanUp() throws IOException {
+        File reportsDir = new File("target" + separator + this.getReportsPath());
+        String sourcePath = reportsDir.getAbsolutePath();
+        String destinationPath = sourcePath
+                .replace("target" + separator + "universal" + separator + "stage" + separator, "")
+                .replace("target" + separator, "");
+        File sourceDir = new File(sourcePath);
+        File destinationDir = new File(destinationPath);
+        if (sourceDir.exists() && !destinationDir.exists()) {
+            FileUtils.moveDirectory(sourceDir, destinationDir);
+        }
     }
 
 

@@ -7,7 +7,6 @@ import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.specs2.matcher.JsonMatchers
 import com.technologyconversations.bdd.steps.WebSteps
 import com.technologyconversations.bdd.steps.Dummy
-import models.Composites
 import com.technologyconversations.bdd.steps.util.BddOptionParam
 
 class JBehaveStepsSpec extends Specification with JsonMatchers {
@@ -17,11 +16,12 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
 
   "JBehaveSteps#stepsJars" should {
 
-    "return a list of all JARs" in {
-      val list = JBehaveSteps().stepsJars
-      list must beAnInstanceOf[List[File]]
-      list must not be empty
-      list.head must beAnInstanceOf[File]
+    val jars = JBehaveSteps().stepsJars
+
+    "return a list of files" in {
+      jars must beAnInstanceOf[List[File]]
+      jars must not be empty
+      jars(0) must beAnInstanceOf[File]
     }
 
   }

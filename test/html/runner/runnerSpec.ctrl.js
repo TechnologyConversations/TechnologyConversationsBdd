@@ -2,7 +2,7 @@ describe('runnerModule', function() {
 
     var scope, modal;
 
-    beforeEach(module('runnerModule'));
+    beforeEach(module('ngCookies', 'runnerModule'));
 
     beforeEach(
         inject(function($rootScope) {
@@ -22,13 +22,14 @@ describe('runnerModule', function() {
         ];
 
         beforeEach(
-            inject(function($controller, $httpBackend, $http) {
+            inject(function($controller, $httpBackend, $http, $location) {
                 httpBackend = $httpBackend;
                 $controller('runnerCtrl', {
                     $scope: scope,
                     $modal: modal,
                     $modalInstance: modalInstance,
-                    $http: $http
+                    $http: $http,
+                    $location: $location
                 });
             })
         );
@@ -55,6 +56,9 @@ describe('runnerModule', function() {
             });
             it('should set reportsUrl to an empty string', function() {
                 expect(scope.reportsUrl).toEqual('');
+            });
+            it('should set showApi to false', function() {
+                expect(scope.showApi).toEqual(false);
             });
         });
 
@@ -158,6 +162,12 @@ describe('runnerModule', function() {
                     scope.storyRunnerInProgress
                 );
                 expect(scope.getRunnerProgressCss()).toEqual(expected);
+            });
+        });
+
+        describe('apiUrl function', function() {
+            it('should return the API url', function() {
+                expect(scope.apiUrl()).toMatch('/runner/run.json');
             });
         });
 
@@ -304,6 +314,96 @@ describe('runnerModule', function() {
                     stories: [{name: 'story1', selected: true}]
                 };
                 expect(scope.canContinue()).toEqual(true);
+            });
+        });
+
+    });
+
+    describe('runnerParamsCtrl controller', function() {
+
+        var modalInstance, data, cookieStore, scope, classes;
+        var cookieValue = 'value1';
+
+        beforeEach(
+            inject(function($rootScope, $injector, $controller) {
+                scope = $rootScope.$new();
+                classes = [{
+                    fullName: 'full.name.of.the.class',
+                    params: [{key: 'key1'}, {key: 'key2'}]
+                }];
+                data = {classes: classes};
+                cookieStore = $injector.get('$cookieStore');
+                cookieStore.put(classes[0].fullName + "." + classes[0].params[0].key, cookieValue);
+                cookieStore.put(classes[0].fullName + "." + classes[0].params[1].key, 'value2');
+                modalInstance = {
+                    dismiss: jasmine.createSpy('modalInstance.dismiss'),
+                    close: jasmine.createSpy('modalInstance.close')
+                };
+                $controller('runnerParamsCtrl', {
+                    $scope: scope ,
+                    $modalInstance: modalInstance,
+                    $cookieStore: cookieStore,
+                    data: data,
+                    showGetApi: true});
+            })
+        );
+
+        describe('by default', function() {
+            it('should put classes with values from cookies to the scope', function() {
+                var expected = [{
+                    fullName: 'full.name.of.the.class',
+                    params: [{key: 'key1', value: 'value1'}, {key: 'key2', value: 'value2'}]
+                }];
+                expect(scope.classes).toEqual(expected);
+            });
+        });
+
+        describe('hasParams function', function() {
+            it('should return true if it contains at least one parameter', function() {
+                var classEntry = {params: [{param: "param1"}, {param: "param2"}]};
+                expect(scope.hasParams(classEntry)).toEqual(true);
+            });
+            it('should return false if it does NOT contain parameters', function() {
+                var classEntry = {params: []};
+                expect(scope.hasParams(classEntry)).toEqual(false);
+            });
+        });
+
+        describe('paramElementId function', function() {
+            it('should return first letter of the className as lower case', function() {
+                var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
+                expect(actual).toMatch(/thisIsClassName/);
+            });
+            it('should return first letter of the paramKey as upper case', function() {
+                var actual = scope.paramElementId("ThisIsClassName", "thisIsParamKey");
+                expect(actual).toMatch(/ThisIsParamKey/);
+            });
+        });
+
+        describe('cancel function', function () {
+            it('should dismiss the modal', function() {
+                scope.cancel();
+                expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
+            })
+        });
+
+        describe('ok function', function() {
+            it('should close the modal and return data', function() {
+                scope.ok();
+                expect(modalInstance.close).toHaveBeenCalledWith({action: 'run', classes: classes});
+            });
+        });
+
+        describe('showGetApi function', function() {
+            it('should return showGetApi value', function() {
+                expect(scope.showGetApi()).toEqual(true);
+            });
+        });
+
+        describe('getApi function', function() {
+            it('should close the modal and return data with action set to api', function() {
+                scope.getApi();
+                expect(modalInstance.close).toHaveBeenCalledWith({action: 'api', classes: classes});
             });
         });
 

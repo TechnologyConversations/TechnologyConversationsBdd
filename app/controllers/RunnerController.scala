@@ -9,10 +9,10 @@ import play.api.Play
 import org.jbehave.core.embedder.Embedder.RunningStoriesFailed
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import scala.concurrent.Future
+import java.io.File
 
 object RunnerController extends Controller {
 
-  val reportsDir = Play.current.configuration.getString("reports.root.dir").getOrElse("jbehave")
   val storiesDir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
   def run: Action[AnyContent] = Action.async { implicit request =>
@@ -32,27 +32,29 @@ object RunnerController extends Controller {
     } else if (classesJson.isEmpty || classesJson.get.size == 0) {
       noResultMap("classes")
     } else {
-      val id = DateTime.now.getMillis
-      val reportsPath = reportsDir + "/" + id
+      val reportsId = DateTime.now.getMillis
       val fullStoryPaths = storyPaths.get.map { path =>
         storiesDir + "/" + (path \ "path").as[String]
       }
       var status = "OK"
       try {
-        new Runner(
+        val runner = new Runner(
           fullStoryPaths,
           classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
           groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
-          s"../$reportsPath"
-        ).run()
+          reportsRelativeDir + "/" + reportsId
+        )
+        runner.run()
+        // TODO Test
+        runner.cleanUp()
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
       }
       Map(
         "status" -> status,
-        "id" -> id.toString,
-        "reportsPath" -> s"$reportsPath/view/reports.html"
+        "id" -> reportsId.toString,
+        "reportsPath" -> s"$reportsId/view/reports.html"
       )
     }
   }
