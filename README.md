@@ -49,6 +49,22 @@ npm install adds two directories:
 * public/node_modules
 * public/bower_components
 
+Running the application
+-----------------------
+
+To run the application in development mode (re-compiles with every change to the code):
+
+```bash
+activator run
+```
+
+To compile and run the application in production mode
+
+```bash
+activator stage
+target/universal/stage/bin/tcbdd
+```
+
 
 Deployment to Heroku
 --------------------
