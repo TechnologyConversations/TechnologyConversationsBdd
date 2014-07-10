@@ -6,7 +6,7 @@ import play.api.libs.json.{Json, JsValue}
 import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.jbehave.core.configuration.MostUsefulConfiguration
 import scala.collection.JavaConversions._
-import com.technologyconversations.bdd.steps.util.BddParam
+import com.technologyconversations.bdd.steps.util.{BddOptionParam, BddParam}
 import org.jbehave.core.annotations.{Then, When, Given}
 import groovy.lang.GroovyClassLoader
 
@@ -73,12 +73,23 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
       .toList
   }
 
-  private[jbehave] def classParamsMap(className: String): List[Map[String, String]] = {
+  private[jbehave] def classParamsMap(className: String): List[Map[String, JsValue]] = {
     classParams(className).map(param => Map(
-      "key" -> param.value(),
-      "description" -> param.description()
+      "key" -> Json.toJson(param.value()),
+      "description" -> Json.toJson(param.description()),
+      "options" -> Json.toJson(optionsToJson(param.options().toList))
     ))
   }
+
+  private[jbehave] def optionsToJson(options: List[BddOptionParam]): List[Map[String, JsValue]] = {
+    options.map(option => Map(
+      "text" -> Json.toJson(option.text()),
+      "value" -> Json.toJson(option.value()),
+      "isSelected" -> Json.toJson(option.isSelected())
+    ))
+  }
+
+
 
   private[jbehave] def steps = {
     val config = new MostUsefulConfiguration()
@@ -102,6 +113,8 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
       }
     }
     stepsCandidates(steps, List()).sortWith(_.toString < _.toString)
+
+
   }
 
 }

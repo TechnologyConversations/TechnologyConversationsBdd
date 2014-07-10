@@ -345,6 +345,21 @@ describe('storyModule', function() {
             });
         });
 
+        describe('hasOptions function', function() {
+           it('should return true if the options array in the parameter has at least one element', function() {
+               var optionsEntry = ["option1","option2","option3"];
+              expect(scope.hasOptions(optionsEntry)).toEqual(true);
+           });
+            it('should return false if the parameter DOES NOT have any element in the options array', function() {
+                var optionsEntry = [];
+                expect(scope.hasOptions(optionsEntry)).toEqual(false);
+            });
+           it('should return false if the options array in the parameter is not defined', function() {
+               var optionsEntry = undefined;
+              expect(scope.hasOptions(optionsEntry)).toEqual(false);
+           });
+        });
+
         describe('canRevertStory function', function() {
            it('should return true when story and originalStory are not equal', function() {
                scope.story = {value: 'something'};
