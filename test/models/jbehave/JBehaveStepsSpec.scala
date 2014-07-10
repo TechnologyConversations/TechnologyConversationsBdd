@@ -7,6 +7,7 @@ import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.specs2.matcher.JsonMatchers
 import com.technologyconversations.bdd.steps.WebSteps
 import com.technologyconversations.bdd.steps.Dummy
+import com.technologyconversations.bdd.steps.util.BddOptionParam
 
 class JBehaveStepsSpec extends Specification with JsonMatchers {
   
@@ -91,17 +92,51 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
 
     "return List[Map]" in {
       list must beAnInstanceOf[List[Map[String, String]]]
-      list(0) must beAnInstanceOf[Map[String, String]]
+      list.head must beAnInstanceOf[Map[String, String]]
     }
 
     "return List with Map containing key" in {
-      list(0) must haveKey("key")
+      list.head must haveKey("key")
     }
 
-    "return List with Map containing key" in {
-      list(0) must haveKey("description")
+    "return List with Map containing description" in {
+      list.head must haveKey("description")
     }
 
+    "return List with Map containing options" in {
+      list.head must haveKey("options")
+    }
+  }
+
+  "JBehaveSteps#optionsToJson" should {
+
+    val list = JBehaveSteps().classParams(className)
+    // list(2) is the browser element.
+    val browser = list.filter(_.value() == "browser").head
+    val options = JBehaveSteps().optionsToJson(browser.options().toList)
+    val firstOption = options.head
+
+    "return List[Map]" in {
+      list must beAnInstanceOf[List[Map[String, String]]]
+      options must beAnInstanceOf[List[Map[String, JsValue]]]
+      firstOption must beAnInstanceOf[Map[String, JsValue]]
+    }
+
+    "return empty if options list is empty" in {
+      JBehaveSteps().optionsToJson(List[BddOptionParam]()) must be empty
+    }
+
+    "return List with Map containing text" in {
+      firstOption must haveKey("text")
+    }
+
+    "return List with Map containing value" in {
+      firstOption must haveKey("value")
+    }
+
+    "return List with Map containing isSelected" in {
+      firstOption must haveKey("isSelected")
+    }
   }
 
   "JBehaveSteps#steps" should {
@@ -110,7 +145,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       val list = JBehaveSteps().steps
       list must beAnInstanceOf[List[Steps]]
       list.size must beGreaterThan(0)
-      list(0) must beAnInstanceOf[Steps]
+      list.head must beAnInstanceOf[Steps]
     }
 
   }
@@ -121,7 +156,7 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
       val list = JBehaveSteps().stepsCandidates
       list must beAnInstanceOf[List[Steps]]
       list.size must beGreaterThan(0)
-      list(0) must beAnInstanceOf[StepCandidate]
+      list.head must beAnInstanceOf[StepCandidate]
     }
 
   }

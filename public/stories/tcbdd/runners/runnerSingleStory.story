@@ -158,3 +158,19 @@ When Web user clicks the element pendingStep1
 Then Web user is in the composites modal screen
 
 Examples:
+
+Scenario: Can choose which browser to run from a dropdown list
+
+Meta:
+
+
+Given Web user is in the Story page with all successful steps
+When Web user clicks the element runStory
+Then Web dropdown list browser contains the option firefox
+Then Web dropdown list browser contains the option chrome
+Then Web dropdown list browser contains the option htmlunit
+Then Web dropdown list browser contains the option opera
+Then Web dropdown list browser contains the option phantomjs
+Then Web dropdown list browser has firefox selected
+
+Examples:

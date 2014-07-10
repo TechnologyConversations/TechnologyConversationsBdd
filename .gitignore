@@ -14,3 +14,4 @@ tmp
 /.settings
 node_modules
 /jbehave
+public/bower_components
