@@ -11,58 +11,54 @@ angular.module('storiesModule', [
     'compositesModule',
     'runnerModule'
 ])
-    .controller('modalCtrl', ['$scope', '$modalInstance', 'data',
-        function($scope, $modalInstance, data) {
-            $scope.data = data;
-            // TODO Test
-            $scope.ok = function () {
-                $modalInstance.close('ok');
-            };
-            // TODO Test
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-        }
-    ])
-    .controller('storiesCtrl', ['$scope', '$http', '$modal', '$modalInstance', '$location', '$q',
-        function($scope, $http, $modal, $modalInstance, $location, $q) {
-            getStories($scope, $http, $modal, '');
-            $scope.openDir = function(path) {
-                openDir($scope, $http, $modal, path);
-            };
-            // TODO Test
-            $scope.close = function() {
-                $modalInstance.close();
-            };
-            // TODO Test
-            $scope.viewStoryUrl = function(name) {
-                return getViewStoryUrl() + $scope.rootPath + name;
-            };
-            $scope.allowToPrevDir = function() {
-                return $scope.rootPath !== '';
-            };
-            // TODO Test
-            $scope.deleteStory = function(name, index) {
-                var path = $scope.rootPath + name + '.story';
-                deleteStory($modal, $http, $location, $q, path).then(function() {
-                    $scope.files.stories.splice(index, 1);
-                });
-            };
-            // TODO Test
-            $scope.createDirectory = function(path) {
-                var json = '{"path": "' + $scope.rootPath + path + '"}';
-                $http.post('/stories/dir.json', json).then(function() {
-                    $scope.files.dirs.push({name: path});
-                }, function(response) {
-                    openErrorModal($modal, response.data);
-                });
-            };
-            // TODO Test
-            $scope.getNewStoryUrl = function() {
-                return getNewStoryUrl();
-            };
-        }
-    ]);
+    .controller('modalCtrl', function($scope, $modalInstance, data) {
+        $scope.data = data;
+        // TODO Test
+        $scope.ok = function () {
+            $modalInstance.close('ok');
+        };
+        // TODO Test
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    })
+    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q) {
+        getStories($scope, $http, $modal, '');
+        $scope.openDir = function(path) {
+            openDir($scope, $http, $modal, path);
+        };
+        // TODO Test
+        $scope.close = function() {
+            $modalInstance.close();
+        };
+        // TODO Test
+        $scope.viewStoryUrl = function(name) {
+            return getViewStoryUrl() + $scope.rootPath + name;
+        };
+        $scope.allowToPrevDir = function() {
+            return $scope.rootPath !== '';
+        };
+        // TODO Test
+        $scope.deleteStory = function(name, index) {
+            var path = $scope.rootPath + name + '.story';
+            deleteStory($modal, $http, $location, $q, path).then(function() {
+                $scope.files.stories.splice(index, 1);
+            });
+        };
+        // TODO Test
+        $scope.createDirectory = function(path) {
+            var json = '{"path": "' + $scope.rootPath + path + '"}';
+            $http.post('/stories/dir.json', json).then(function() {
+                $scope.files.dirs.push({name: path});
+            }, function(response) {
+                openErrorModal($modal, response.data);
+            });
+        };
+        // TODO Test
+        $scope.getNewStoryUrl = function() {
+            return getNewStoryUrl();
+        };
+    });
 
 // TODO Test
 function getJson($http, $modal, url, cacheType) {

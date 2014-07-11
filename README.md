@@ -19,9 +19,11 @@ Development prerequisites
 
 **[Grunt](http://gruntjs.com/)**
 
+**[Gulp](http://gulpjs.com/)**
+
 ```bash
+npm install
 npm install -g grunt-cli
-npm install grunt-contrib-watch --save-dev
 ```
 
 
@@ -33,6 +35,7 @@ Use the gen-idea sbt task to create Idea project files.
 ```bash
 sbt gen-idea
 ```
+
 
 Dependencies
 ------------
@@ -48,6 +51,27 @@ npm install adds two directories:
 
 * public/node_modules
 * public/bower_components
+
+
+Development
+-----------
+
+Front-end files need to pass the process of concatenation, uglification, annotation...
+
+To prepare front-end files execute:
+
+```bash
+cd public
+gulp js
+```
+
+To continuously run gulp js task, execute:
+
+```bash
+cd public
+gulp watch
+```
+
 
 Running the application
 -----------------------
