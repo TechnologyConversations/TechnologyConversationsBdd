@@ -1,5 +1,5 @@
 angular.module('topMenuModule', [])
-    .controller('topMenuController', function($scope, $modal, $location) {
+    .controller('topMenuController', function($scope, $modal, $location, TcBddService) {
         // TODO Test more than checking whether $modal.open was called
         $scope.openStory = function() {
             $modal.open({
@@ -12,9 +12,8 @@ angular.module('topMenuModule', [])
                 }
             });
         };
-        // TODO Test
         $scope.openCompositeClass = function() {
-            openCompositeClass($modal);
+            TcBddService.openCompositeClass($modal);
         };
         $scope.getTitle = function() {
             var path = $location.path();

@@ -11,6 +11,47 @@ describe('storiesModule controllers', function() {
         })
     );
 
+    describe('TcBddService service', function() {
+
+        var service;
+
+        beforeEach(
+            inject(function(TcBddService) {
+                service = TcBddService;
+            })
+        );
+
+        describe('removeCollectionElement function', function() {
+            it('should remove element on specified index', function() {
+                var collection = [{item: 0}, {item: 1}, {item: 2}];
+                service.removeCollectionElement(collection, 1);
+                expect(collection.length).toEqual(2);
+                expect(collection[1]).toEqual({item: 2});
+            });
+        });
+
+        describe('buttonCssClass function', function() {
+            var scope, form;
+            beforeEach(
+                inject(function ($rootScope, $compile) {
+                    scope = $rootScope.$new();
+                    form = $compile('<form>')(scope);
+                })
+            );
+            it('should return success if form is valid', function() {
+                form.$invalid = false;
+                form.$valid = true;
+                expect(service.buttonCssClass(form)).toEqual({'btn-success': true, 'btn-danger': false});
+            });
+            it('should return danger if form is valid', function() {
+                form.$invalid = true;
+                form.$valid = false;
+                expect(service.buttonCssClass(form)).toEqual({'btn-success': false, 'btn-danger': true});
+            });
+        });
+
+    });
+
     describe('modalCtrl controller', function() {
 
         var modalInstance;

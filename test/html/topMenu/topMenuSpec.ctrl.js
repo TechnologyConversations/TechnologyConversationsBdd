@@ -1,13 +1,15 @@
 describe('topMenuModule module', function() {
 
-    beforeEach(module('topMenuModule'));
+    beforeEach(module('topMenuModule', 'storiesModule'));
 
     describe('topMenuController controller', function() {
 
         var modal, scope, location;
+        var service;
 
         beforeEach(
-            inject(function($rootScope, $controller, $location, $http) {
+            inject(function($rootScope, $controller, $location, $http, TcBddService) {
+                service = TcBddService;
                 scope = $rootScope.$new();
                 location = $location;
                 modal = {
@@ -45,6 +47,14 @@ describe('topMenuModule module', function() {
             it('should call open on modal', function() {
                 scope.openStory();
                 expect(modal.open).toHaveBeenCalled();
+            });
+        });
+
+        describe('openCompositeClass function', function() {
+            it('should call openCompositeClass service', function() {
+                spyOn(service, 'openCompositeClass');
+                scope.openCompositeClass();
+                expect(service.openCompositeClass).toHaveBeenCalled();
             });
         });
 

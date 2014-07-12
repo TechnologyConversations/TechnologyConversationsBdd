@@ -1,5 +1,5 @@
 angular.module('bodyModule', [])
-    .controller('bodyCtrl', function ($scope, $cookieStore, $location) {
+    .controller('bodyCtrl', function ($scope, $cookieStore, $location, TcBddService) {
         $scope.history = $cookieStore.get('history');
         if ($scope.history === undefined) {
             $scope.history = [];
@@ -17,7 +17,7 @@ angular.module('bodyModule', [])
             $cookieStore.put('history', $scope.history);
         };
         $scope.removeHistoryItem = function(index) {
-            removeCollectionElement($scope.history, index);
+            TcBddService.removeCollectionElement($scope.history, index);
             $cookieStore.put('history', $scope.history);
         };
     });

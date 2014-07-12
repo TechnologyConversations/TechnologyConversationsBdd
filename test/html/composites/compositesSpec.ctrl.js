@@ -1,10 +1,11 @@
 describe('compositesModule', function() {
 
-    beforeEach(module('ngCookies', 'compositesModule'));
+    beforeEach(module('ngCookies', 'compositesModule', 'storiesModule'));
 
     describe('compositesCtrl controller', function() {
 
         var scope, form, httpBackend, modal, location, cookieStore, composite, anotherComposite;
+        var service;
         var newComposite = {stepText: 'Given some other precondition', compositeSteps :[{step: 'When action'},{step: 'Then result'}]};
         var className = 'WebStepsComposites';
         var newClassName = 'OtherStepsComposites';
@@ -16,7 +17,8 @@ describe('compositesModule', function() {
         var stepTextParam = 'Given URL params have stepText';
 
         beforeEach(
-            inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location, $cookieStore) {
+            inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location, $cookieStore, TcBddService) {
+                service = TcBddService;
                 scope = $rootScope.$new();
                 scope.addHistoryItem = function(text) {
                     scope.currentTabText = text;
@@ -82,8 +84,8 @@ describe('compositesModule', function() {
         });
 
         describe('buttonCssClass', function() {
-            it('should use util function buttonCssClass', function() {
-                expect(scope.buttonCssClass(form, form)).toEqual(buttonCssClass(form));
+            it('should use service function buttonCssClass', function() {
+                expect(scope.buttonCssClass(form, form)).toEqual(service.buttonCssClass(form));
             });
         });
 
@@ -144,14 +146,14 @@ describe('compositesModule', function() {
         });
 
         describe('newCollectionItem function', function() {
-            it('should use util newCollectionItem function', function() {
-                expect(scope.newCollectionItem).toBe(newCollectionItem);
+            it('should use newCollectionItem service function', function() {
+                expect(scope.newCollectionItem).toBe(service.newCollectionItem);
             });
         });
 
         describe('removeCollectionElement function', function() {
             it('should use util removeCollectionElement function', function() {
-                expect(scope.removeCollectionElement).toBe(removeCollectionElement);
+                expect(scope.removeCollectionElement).toBe(service.removeCollectionElement);
             });
         });
 

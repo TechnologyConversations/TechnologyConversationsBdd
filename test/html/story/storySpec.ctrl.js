@@ -1,10 +1,11 @@
 describe('storyModule', function() {
 
-    beforeEach(module('ngCookies', 'storyModule'));
+    beforeEach(module('ngCookies', 'storyModule', 'storiesModule'));
 
     describe('storyCtrl controller', function() {
 
         var scope, modal, form, story, httpBackend;
+        var service;
         var steps = {status: 'OK'};
         var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
@@ -27,7 +28,8 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile) {
+            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile, TcBddService) {
+                service = TcBddService;
                 scope = $rootScope.$new();
                 scope.addHistoryItem = function(text) {
                     scope.currentTabText = text;
@@ -116,7 +118,7 @@ describe('storyModule', function() {
 
         describe('removeCollectionElement function', function() {
            it('should call the general removeCollectionElement function', function() {
-               expect(scope.removeCollectionElement).toEqual(removeCollectionElement);
+               expect(scope.removeCollectionElement).toEqual(service.removeCollectionElement);
            });
         });
 
@@ -141,7 +143,7 @@ describe('storyModule', function() {
 
         describe('stepEnterKey function', function() {
             it('should use global newCollectionItem function', function() {
-                expect(scope.stepEnterKey).toBe(newCollectionItem);
+                expect(scope.stepEnterKey).toBe(service.newCollectionItem);
             });
         });
 
@@ -168,13 +170,13 @@ describe('storyModule', function() {
 
         describe('buttonCssClass function', function() {
             it('should use global buttonCssClass function', function() {
-                expect(scope.buttonCssClass).toEqual(buttonCssClass);
+                expect(scope.buttonCssClass).toEqual(service.buttonCssClass);
             });
         });
 
         describe('buttonCssClass function', function() {
             it('should use the global buttonCssClass function', function() {
-                expect(scope.buttonCssClass).toEqual(buttonCssClass);
+                expect(scope.buttonCssClass).toEqual(service.buttonCssClass);
             });
         });
 

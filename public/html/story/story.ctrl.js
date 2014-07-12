@@ -1,5 +1,5 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites) {
+    .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites, TcBddService) {
         $scope.pendingSteps = [];
         $scope.setAction = function() {
             if ($scope.story.name !== '') {
@@ -44,7 +44,7 @@ angular.module('storyModule', [])
         }
         $scope.setAction();
         $scope.cssClass = cssClass;
-        $scope.buttonCssClass = buttonCssClass;
+        $scope.buttonCssClass = TcBddService.buttonCssClass;
         $scope.canSaveStory = function() {
             var isValid = $scope.storyForm.$valid;
             var hasChanged = !angular.equals($scope.story, $scope.originalStory);
@@ -163,7 +163,7 @@ angular.module('storyModule', [])
                 $scope.pendingSteps.length
             );
         };
-        $scope.removeCollectionElement = removeCollectionElement;
+        $scope.removeCollectionElement = TcBddService.removeCollectionElement;
         $scope.addElement = function (collection) {
             collection.push({});
         };
@@ -185,12 +185,12 @@ angular.module('storyModule', [])
             var path = $scope.dirPath + $scope.story.name + '.story';
             deleteStory($modal, $http, $location, $q, path);
         };
-        $scope.stepEnterKey = newCollectionItem;
+        $scope.stepEnterKey = TcBddService.newCollectionItem;
         // TODO Test
         $scope.clickPendingStep = function(stepText) {
             var compositeClass = $cookieStore.get("compositeClass");
             if (compositeClass === undefined || compositeClass === '') {
-                return openCompositeClass($modal, stepText);
+                return TcBddService.openCompositeClass(stepText);
             } else {
                 return $location.search('stepText', stepText).path('/page/composites/composites.com.technologyconversations.bdd.steps.' + compositeClass);
             }

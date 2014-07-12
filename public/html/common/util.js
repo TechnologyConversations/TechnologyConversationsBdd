@@ -1,20 +1,3 @@
-function newCollectionItem(event, collection) {
-    if (event.which === 13) {
-        collection.push({});
-    }
-}
-
-function removeCollectionElement(collection, index) {
-    collection.splice(index, 1);
-}
-
-function buttonCssClass(ngModelController) {
-    return {
-        'btn-success': ngModelController.$valid,
-        'btn-danger': ngModelController.$invalid
-    };
-}
-
 // TODO Test
 function openConfirmationModal($modal, data) {
     return $modal.open({
@@ -23,22 +6,6 @@ function openConfirmationModal($modal, data) {
         resolve: {
             data: function() {
                 return data;
-            }
-        }
-    });
-}
-
-// TODO Test
-function openCompositeClass($modal, compositeStepText) {
-    $modal.open({
-        templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
-        controller: 'compositeClassesCtrl',
-        resolve: {
-            compositeClasses: function($route, $http, $modal) {
-                return getJson($http, $modal, '/groovyComposites', false);
-            },
-            compositeStepText: function() {
-                return compositeStepText;
             }
         }
     });

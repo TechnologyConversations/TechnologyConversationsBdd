@@ -1,5 +1,5 @@
 angular.module('compositesModule', [])
-    .controller('compositesCtrl', function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps) {
+    .controller('compositesCtrl', function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps, TcBddService) {
         $scope.addCompositesTab = function() {
             if (!$scope.compositesClass.isNew) {
                 $scope.addHistoryItem($scope.compositesClass.class + ' composites');
@@ -35,16 +35,16 @@ angular.module('compositesModule', [])
         $scope.cssClass = cssClass;
         $scope.buttonCssClass = function(compositeClassForm, compositeForm) {
             if (!compositeClassForm.$valid) {
-                return buttonCssClass(compositeClassForm);
+                return TcBddService.buttonCssClass(compositeClassForm);
             } else {
-                return buttonCssClass(compositeForm);
+                return TcBddService.buttonCssClass(compositeForm);
             }
         };
         $scope.openComposite = function(composite) {
             $scope.composite = composite;
         };
-        $scope.newCollectionItem = newCollectionItem;
-        $scope.removeCollectionElement = removeCollectionElement;
+        $scope.newCollectionItem = TcBddService.newCollectionItem;
+        $scope.removeCollectionElement = TcBddService.removeCollectionElement;
         $scope.revertCompositesClass = function() {
             $scope.compositesClass = angular.copy($scope.originalCompositesClass);
             $scope.composite = $scope.compositesClass.composites[0];

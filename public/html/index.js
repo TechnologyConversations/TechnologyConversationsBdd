@@ -11,6 +11,38 @@ angular.module('storiesModule', [
     'compositesModule',
     'runnerModule'
 ])
+    .service('TcBddService', function($modal) {
+        // TODO Test
+        this.openCompositeClass = function(compositeStepText) {
+            $modal.open({
+                templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
+                controller: 'compositeClassesCtrl',
+                resolve: {
+                    compositeClasses: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/groovyComposites', false);
+                    },
+                    compositeStepText: function() {
+                        return compositeStepText;
+                    }
+                }
+            });
+        };
+        // TODO Test
+        this.newCollectionItem = function(event, collection) {
+            if (event.which === 13) {
+                collection.push({});
+            }
+        };
+        this.removeCollectionElement = function(collection, index) {
+            collection.splice(index, 1);
+        };
+        this.buttonCssClass = function(ngModelController) {
+            return {
+                'btn-success': ngModelController.$valid,
+                'btn-danger': ngModelController.$invalid
+            };
+        }
+    })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
         $scope.data = data;
         // TODO Test
