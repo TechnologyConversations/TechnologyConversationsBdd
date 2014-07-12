@@ -4,17 +4,28 @@ var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
 var jasmine = require('gulp-jasmine');
+var jshint = require('gulp-jshint');
+require('jshint-stylish');
+require('gulp-grunt')(gulp);
+
+gulp.task('default', ['test', 'js']);
 
 gulp.task('js', function() {
    gulp.src(['html/index.js', 'html/**/*.js'])
+       .pipe(jshint())
+       .pipe(jshint.reporter('jshint-stylish'))
        .pipe(sourcemaps.init())
        .pipe(concat('app.js'))
        .pipe(ngAnnotate())
        .pipe(uglify())
        .pipe(sourcemaps.write())
-       .pipe(gulp.dest('.'))
+       .pipe(gulp.dest('.'));
 });
 
-gulp.task('watch', ['js'], function() {
-   gulp.watch(['html/**/*.js', '../test/html/**/*Spec*.js'], ['js'])
+gulp.task('test', function() {
+    gulp.run('grunt-jasmine');
+});
+
+gulp.task('watch', ['test', 'js'], function() {
+   gulp.watch(['html/**/*.js', '../test/html/**/*Spec*.js'], ['test', 'js']);
 });

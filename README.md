@@ -23,7 +23,6 @@ Development prerequisites
 
 ```bash
 npm install
-npm install -g grunt-cli
 ```
 
 
@@ -56,13 +55,13 @@ npm install adds two directories:
 Development
 -----------
 
-Front-end files need to pass the process of concatenation, uglification, annotation...
+Front-end files need to pass the process of concatenation, uglification, annotation, testing...
 
 To prepare front-end files execute:
 
 ```bash
 cd public
-gulp js
+gulp
 ```
 
 To continuously run gulp js task, execute:
@@ -110,6 +109,11 @@ sbt run
 Unit Tests
 ----------
 
+### Front-end
+
+All front-end JS unit tests are run as part of **gulp**.
+Alternative ways to run tests are described below.
+
 Front-end unit testing
 
 ```bash
@@ -124,6 +128,9 @@ cd public
 grunt jasmine
 ```
 
+
+### Back-end
+
 Back-end unit testing
 
 ```bash
@@ -134,4 +141,4 @@ activator ~test-quick
 Functional Tests
 ----------------
 
-Directory where chromedriver and IEDriverServer are located must be in the system path.
+Directory where PhantomJS, ChromeDriver and IEDriverServer are located must be in the system path.
