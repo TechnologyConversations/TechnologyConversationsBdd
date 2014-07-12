@@ -134,7 +134,7 @@ angular.module('storyModule', [])
             return openRunnerParametersModal($modal, false);
         };
         $scope.getRunnerProgressCss = function () {
-            return getRunnerProgressCss($scope.storyRunnerInProgress);
+            return TcBddService.getRunnerProgressCss($scope.storyRunnerInProgress);
         };
         $scope.getRunnerStatusCss = function () {
             return getRunnerStatusCss(

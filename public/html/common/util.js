@@ -95,10 +95,3 @@ function getStoryRunnerStatusText(inProgress, success, pendingStepsLength) {
         return 'Story run failed';
     }
 }
-
-function getRunnerProgressCss(inProgress) {
-    return {
-        'progress progress-striped active': inProgress,
-        'progress': !inProgress
-    };
-}

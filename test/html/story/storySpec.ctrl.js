@@ -124,10 +124,9 @@ describe('storyModule', function() {
 
         describe('getRunnerProgressCss function', function() {
             it('should use general getRunnerProgressCss function', function() {
-                var expected = getRunnerProgressCss(
-                    scope.storyRunnerInProgress
-                );
-                expect(scope.getRunnerProgressCss()).toEqual(expected);
+                spyOn(service, 'getRunnerProgressCss');
+                scope.getRunnerProgressCss();
+                expect(service.getRunnerProgressCss).toHaveBeenCalledWith(scope.storyRunnerInProgress);
             });
         });
 

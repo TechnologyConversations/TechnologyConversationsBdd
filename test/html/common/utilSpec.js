@@ -127,25 +127,4 @@ describe('util', function() {
         });
     });
 
-    describe('getRunnerProgressCss function', function() {
-        var inProgress;
-        beforeEach(function() {
-            inProgress = false;
-        });
-        it('should return active when story is in progress', function() {
-            inProgress = true;
-            expect(getRunnerProgressCss(inProgress)).toEqual({
-                'progress progress-striped active': true,
-                'progress': false
-            });
-        });
-        it('should return inactive when story is in progress', function() {
-            inProgress = false;
-            expect(getRunnerProgressCss(inProgress)).toEqual({
-                'progress progress-striped active': false,
-                'progress': true
-            });
-        });
-    });
-
 });

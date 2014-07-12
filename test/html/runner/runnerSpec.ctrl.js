@@ -1,11 +1,12 @@
 describe('runnerModule', function() {
 
-    var scope, modal;
+    var scope, modal, service;
 
-    beforeEach(module('ngCookies', 'runnerModule'));
+    beforeEach(module('ngCookies', 'runnerModule', 'storiesModule'));
 
     beforeEach(
-        inject(function($rootScope) {
+        inject(function($rootScope, TcBddService) {
+            service = TcBddService;
             scope = $rootScope.$new();
             modal = {
                 open: jasmine.createSpy('modal.open')
@@ -158,10 +159,9 @@ describe('runnerModule', function() {
 
         describe('getRunnerProgressCss function', function() {
             it('should use general getRunnerProgressCss function', function() {
-                var expected = getRunnerProgressCss(
-                    scope.storyRunnerInProgress
-                );
-                expect(scope.getRunnerProgressCss()).toEqual(expected);
+                spyOn(service, 'getRunnerProgressCss');
+                scope.getRunnerProgressCss();
+                expect(service.getRunnerProgressCss).toHaveBeenCalledWith(scope.storyRunnerInProgress);
             });
         });
 

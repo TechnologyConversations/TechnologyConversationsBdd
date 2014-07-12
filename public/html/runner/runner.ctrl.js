@@ -1,5 +1,5 @@
 angular.module('runnerModule', [])
-    .controller('runnerCtrl', function($scope, $modal, $http, $location) {
+    .controller('runnerCtrl', function($scope, $modal, $http, $location, TcBddService) {
         // TODO Test more than checking whether $modal.open was called
         $scope.openRunnerSelector = function() {
             return $modal.open({
@@ -86,7 +86,7 @@ angular.module('runnerModule', [])
             );
         };
         $scope.getRunnerProgressCss = function () {
-            return getRunnerProgressCss($scope.storyRunnerInProgress);
+            return TcBddService.getRunnerProgressCss($scope.storyRunnerInProgress);
         };
         $scope.init = function() {
             $scope.storyRunnerInProgress = false;

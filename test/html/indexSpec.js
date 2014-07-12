@@ -61,6 +61,48 @@ describe('storiesModule controllers', function() {
             });
         });
 
+        describe('getRunnerProgressCss function', function() {
+            var inProgress;
+            beforeEach(function() {
+                inProgress = false;
+            });
+            it('should return active when story is in progress', function() {
+                inProgress = true;
+                expect(service.getRunnerProgressCss(inProgress)).toEqual({
+                    'progress progress-striped active': true,
+                    'progress': false
+                });
+            });
+            it('should return inactive when story is in progress', function() {
+                inProgress = false;
+                expect(service.getRunnerProgressCss(inProgress)).toEqual({
+                    'progress progress-striped active': false,
+                    'progress': true
+                });
+            });
+        });
+
+        describe('newCollectionItem function', function() {
+            it('should add new empty collection item when event is the ENTER key', function() {
+                var collection = [];
+                var event = {which: 13};
+                service.newCollectionItem(event, collection);
+                expect(collection).toEqual([{}]);
+            });
+            it('should NOT add new empty collection item when event is NOT the ENTER key', function() {
+                var collection = [];
+                var event = {which: 10};
+                service.newCollectionItem(event, collection);
+                expect(collection).toEqual([]);
+            });
+        });
+        this.newCollectionItem = function(event, collection) {
+            if (event.which === 13) {
+                collection.push({});
+            }
+        };
+
+
     });
 
     describe('modalCtrl controller', function() {
@@ -69,12 +111,34 @@ describe('storiesModule controllers', function() {
         var data = {status: 'OK'};
         beforeEach(
             inject(function($controller) {
-                $controller("modalCtrl", {$scope: scope , $modalInstance: modalInstance, data: data});
+                modalInstance = {
+                    dismiss: jasmine.createSpy('modalInstance.dismiss'),
+                    close: jasmine.createSpy('modalInstance.close')
+                };
+                $controller("modalCtrl", {
+                    $scope: scope ,
+                    $modalInstance: modalInstance,
+                    data: data
+                });
             })
         );
 
         it('should put data to the scope', function() {
             expect(scope.data).toBe(data);
+        });
+
+        describe('ok function', function() {
+            it('should call the close function of the modal', function() {
+                scope.ok();
+                expect(modalInstance.close).toHaveBeenCalledWith('ok');
+            });
+        });
+
+        describe('cancel function', function() {
+            it('should call the dismiss function of the modal', function() {
+                scope.cancel();
+                expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
+            });
         });
 
     });
@@ -86,6 +150,9 @@ describe('storiesModule controllers', function() {
 
         beforeEach(
             inject(function($controller, $httpBackend) {
+                modalInstance = {
+                    close: jasmine.createSpy('modalInstance.close')
+                };
                 $controller('storiesCtrl', {
                     $scope: scope,
                     $http: http,
@@ -97,6 +164,22 @@ describe('storiesModule controllers', function() {
                 httpBackend.expectGET('/stories/list.json?path=').respond(filesWithoutPath);
             })
         );
+
+        describe('close function', function() {
+            it('should call the close function of the modal', function() {
+                scope.close();
+                expect(modalInstance.close).toHaveBeenCalled();
+            });
+        });
+
+        describe('viewStoryUrl function', function() {
+            it('should return the correct URL', function() {
+                var name = "myStory";
+                scope.rootPath = "path/to/";
+                var expected = getViewStoryUrl() + "path/to/myStory";
+                expect(scope.viewStoryUrl(name)).toEqual(expected);
+            });
+        });
 
         describe('getStories function', function() {
             it('should be called by the controller with the empty path', function() {

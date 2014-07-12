@@ -26,7 +26,6 @@ angular.module('storiesModule', [
                 }
             });
         };
-        // TODO Test
         this.newCollectionItem = function(event, collection) {
             if (event.which === 13) {
                 collection.push({});
@@ -40,15 +39,19 @@ angular.module('storiesModule', [
                 'btn-success': ngModelController.$valid,
                 'btn-danger': ngModelController.$invalid
             };
-        }
+        };
+        this.getRunnerProgressCss = function(inProgress) {
+            return {
+                'progress progress-striped active': inProgress,
+                'progress': !inProgress
+            };
+        };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
         $scope.data = data;
-        // TODO Test
         $scope.ok = function () {
             $modalInstance.close('ok');
         };
-        // TODO Test
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -58,11 +61,9 @@ angular.module('storiesModule', [
         $scope.openDir = function(path) {
             openDir($scope, $http, $modal, path);
         };
-        // TODO Test
         $scope.close = function() {
             $modalInstance.close();
         };
-        // TODO Test
         $scope.viewStoryUrl = function(name) {
             return getViewStoryUrl() + $scope.rootPath + name;
         };

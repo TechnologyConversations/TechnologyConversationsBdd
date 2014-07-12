@@ -19,7 +19,7 @@ gulp.task('js', function() {
        .pipe(ngAnnotate())
        .pipe(uglify())
        .pipe(sourcemaps.write())
-       .pipe(gulp.dest('.'));
+       .pipe(gulp.dest('public'));
 });
 
 gulp.task('test', function() {
