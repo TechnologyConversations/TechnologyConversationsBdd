@@ -8,14 +8,14 @@ angular.module('configModule', [])
                 controller: 'storyCtrl',
                 // TODO Test
                 resolve: {
-                    story: function($http, $modal) {
-                        return getJson($http, $modal, '/stories/story.json', false);
+                    story: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/stories/story.json', false);
                     },
-                    steps: function($http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json', true);
+                    steps: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/steps/list.json', true);
                     },
-                    groovyComposites: function($http, $modal) {
-                        return getJson($http, $modal, '/groovyComposites', true);
+                    groovyComposites: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/groovyComposites', true);
                     }
                 }
             })
@@ -24,14 +24,14 @@ angular.module('configModule', [])
                 controller: 'storyCtrl',
                 // TODO Test
                 resolve: {
-                    story: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story', false);
+                    story: function($route, $http, $modal, TcBddService) {
+                        return TcBddService.getJson('/stories/story.json?path=' + $route.current.params.path + '.story', false);
                     },
-                    steps: function($http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json', true);
+                    steps: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/steps/list.json', true);
                     },
-                    groovyComposites: function($http, $modal) {
-                        return getJson($http, $modal, '/groovyComposites', true);
+                    groovyComposites: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/groovyComposites', true);
                     }
                 }
             })
@@ -40,14 +40,14 @@ angular.module('configModule', [])
                 controller: 'storyCtrl',
                 // TODO Test
                 resolve: {
-                    story: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/stories/story.json?path=' + $route.current.params.path + '.story', false);
+                    story: function($route, $http, $modal, TcBddService) {
+                        return TcBddService.getJson('/stories/story.json?path=' + $route.current.params.path + '.story', false);
                     },
-                    steps: function($http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json', true);
+                    steps: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/steps/list.json', true);
                     },
-                    groovyComposites: function($http, $modal) {
-                        return getJson($http, $modal, '/groovyComposites', true);
+                    groovyComposites: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/groovyComposites', true);
                     }
                 },
                 reloadOnSearch: false
@@ -61,6 +61,7 @@ angular.module('configModule', [])
                         var fileName = $route.current.params.className;
                         var url = '/groovyComposites/' + fileName;
                         return $http.get(url, {cache: false}).then(function(response) {
+                            console.log('111');
                             return response.data;
                         }, function() {
                             var className = fileName.substring(0, fileName.lastIndexOf('.'));
@@ -71,8 +72,8 @@ angular.module('configModule', [])
                             };
                         });
                     },
-                    steps: function($http, $modal) {
-                        return getJson($http, $modal, '/steps/list.json', false);
+                    steps: function($http, $modal, TcBddService) {
+                        return TcBddService.getJson('/steps/list.json', false);
                     }
                 }
             })

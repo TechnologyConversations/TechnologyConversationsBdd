@@ -61,14 +61,14 @@ angular.module('runnerModule', [])
                     $scope.storyRunnerSuccess = false;
                 }
                 else {
-                    openErrorModal($modal, data);
+                    TcBddService.openErrorModal(data);
                 }
                 $scope.storyRunnerInProgress = false;
                 $scope.storyRunnerSuccess = true;
             }, function (response) {
                 $scope.storyRunnerInProgress = false;
                 $scope.storyRunnerSuccess = false;
-                openErrorModal($modal, response.data);
+                TcBddService.openErrorModal(response.data);
             });
         };
         $scope.getRunnerStatusCss = function () {

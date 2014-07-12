@@ -191,13 +191,6 @@ describe('compositesModule', function() {
                 form.$valid = true;
                 expect(scope.canSaveCompositesClass(form)).toEqual(false);
             });
-//            it('should return false if composites has an empty element ({})', function() {
-//                form.$invalid = false;
-//                form.$valid = true;
-//                scope.compositesClass = newCompositesClass;
-//                scope.compositesClass.composites.push({});
-//                expect(scope.canSaveCompositesClass(form)).toEqual(false);
-//            });
             it('should return true if it is new and valid', function() {
                 scope.compositesClass.isNew = true;
                 expect(scope.canSaveCompositesClass(form)).toEqual(true);
@@ -253,8 +246,13 @@ describe('compositesModule', function() {
                 httpBackend.flush();
                 expect(scope.compositesClass.isNew).toEqual(false);
             });
-            it('should call openErrorModal function when response is NOT successful', function() {
-                // TODO
+            it('should call service function openErrorModal when response is NOT successful', function() {
+                var response = {any: 'json'};
+                spyOn(service, 'openErrorModal');
+                httpBackend.expectPUT('/groovyComposites').respond(400, response);
+                scope.saveCompositesClass();
+                httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalledWith(response);
             });
             it('should change location if class changed', function() {
                 httpBackend.expectPUT('/groovyComposites').respond();

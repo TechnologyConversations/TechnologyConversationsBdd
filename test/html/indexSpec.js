@@ -25,7 +25,7 @@ describe('storiesModule controllers', function() {
 
         describe('openCompositeClass function', function() {
             var text = 'this is some random text';
-            it('should call $modal.open with templateUrl compositeClasses.tmpl.html', function() {
+            it('should call $modal.open', function() {
                 spyOn(modal, 'open');
                 service.openCompositeClass(text);
                 expect(modal.open).toHaveBeenCalled();
@@ -286,6 +286,38 @@ describe('storiesModule controllers', function() {
                     'has-error': false,
                     'has-success': true
                 });
+            });
+        });
+
+        describe('getJson function', function() {
+            var expected;
+            var url = '/any/url';
+            var json = {any: 'json'};
+            it('should return response', function() {
+                httpBackend.expectGET(url).respond(json);
+                service.getJson(url, true).then(function(response) {
+                    expected = response;
+                });
+                httpBackend.flush();
+                expect(expected).toEqual(json);
+            });
+            it('should call service function openErrorModal', function() {
+                spyOn(service, 'openErrorModal');
+                httpBackend.expectGET(url).respond(400, json);
+                service.getJson(url, true).then(function(response) {
+                    expected = response;
+                });
+                httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalledWith(json);
+            });
+        });
+
+        describe('openErrorModal function', function() {
+            it('should call $modal.open', function() {
+                var data = {};
+                spyOn(modal, 'open');
+                service.openErrorModal(data);
+                expect(modal.open).toHaveBeenCalled();
             });
         });
 

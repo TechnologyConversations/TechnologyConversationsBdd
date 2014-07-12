@@ -65,7 +65,7 @@ angular.module('storyModule', [])
                         $location.path('/page/stories/view/' + strippedPath + $scope.story.name);
                         $scope.originalStory = angular.copy($scope.story);
                     }, function (response) {
-                        $scope.openErrorModal($modal, response.data);
+                        $scope.openErrorModal(response.data);
                     });
                 } else {
                     if ($scope.story.name !== $scope.originalStory.name) {
@@ -74,7 +74,7 @@ angular.module('storyModule', [])
                     $http.put('/stories/story.json', $scope.story).then(function () {
                         $scope.originalStory = angular.copy($scope.story);
                     }, function (response) {
-                        $scope.openErrorModal($modal, response.data);
+                        $scope.openErrorModal(response.data);
                     });
                 }
             }
@@ -109,10 +109,10 @@ angular.module('storyModule', [])
                     }, function (response) {
                         $scope.storyRunnerSuccess = false;
                         $scope.storyRunnerInProgress = false;
-                        $scope.openErrorModal($modal, response.data);
+                        $scope.openErrorModal(response.data);
                     });
                 }, function(response) {
-                    $scope.openErrorModal($modal, response.data);
+                    $scope.openErrorModal(response.data);
                 });
             }
         };
@@ -123,7 +123,7 @@ angular.module('storyModule', [])
                 $scope.setPendingSteps($scope.reports);
             }, function (response) {
                 // TODO Test
-                $scope.openErrorModal($modal, response.data);
+                $scope.openErrorModal(response.data);
             });
         };
         $scope.getReportUrl = function(reportsId, report) {
@@ -195,5 +195,5 @@ angular.module('storyModule', [])
             }
         };
         // TODO Test
-        $scope.openErrorModal = openErrorModal;
+        $scope.openErrorModal = TcBddService.openErrorModal;
     });

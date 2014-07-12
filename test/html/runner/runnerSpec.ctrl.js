@@ -93,16 +93,18 @@ describe('runnerModule', function() {
                 httpBackend.flush();
             });
             it('should open error modal in case of an error', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond(400, '');
                 scope.run({});
                 httpBackend.flush();
-                expect(modal.open).toHaveBeenCalled();
+                expect(service.openErrorModal).toHaveBeenCalled();
             });
             it('should open error modal in case of a status different than OK', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond({status: 'NOK'});
                 scope.run({});
                 httpBackend.flush();
-                expect(modal.open).toHaveBeenCalled();
+                expect(service.openErrorModal).toHaveBeenCalled();
             });
             it('should set storyRunnerInProgress to false after success', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
@@ -117,15 +119,19 @@ describe('runnerModule', function() {
                 expect(scope.storyRunnerSuccess).toEqual(true);
             });
             it('should set storyRunnerInProgress to false after failure', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond(400, '');
                 scope.run({});
                 httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
                 expect(scope.storyRunnerInProgress).toEqual(false);
             });
             it('should set storyRunnerSuccess to false after failure', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond(400, '');
                 scope.run({});
                 httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
                 expect(scope.storyRunnerSuccess).toEqual(false);
             });
             it('should set reportsUrl', function() {

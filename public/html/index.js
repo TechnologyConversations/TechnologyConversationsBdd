@@ -13,12 +13,13 @@ angular.module('storiesModule', [
 ])
     .service('TcBddService', function($modal, $http, $location, $q) {
         this.openCompositeClass = function(compositeStepText) {
+            var self = this;
             $modal.open({
                 templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
                 controller: 'compositeClassesCtrl',
                 resolve: {
                     compositeClasses: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/groovyComposites', false);
+                        return self.getJson('/groovyComposites', false);
                     },
                     compositeStepText: function() {
                         return compositeStepText;
@@ -68,12 +69,13 @@ angular.module('storiesModule', [
             };
         };
         this.openRunnerParametersModal = function(showGetApi) {
+            var self = this;
             return $modal.open({
                 templateUrl: '/assets/html/runner/runnerParams.tmpl.html',
                 controller: 'runnerParamsCtrl',
                 resolve: {
                     data: function($route, $http, $modal) {
-                        return getJson($http, $modal, '/steps/classes.json', true);
+                        return self.getJson('/steps/classes.json', true);
                     },
                     showGetApi: function() {
                         return showGetApi;
@@ -94,6 +96,7 @@ angular.module('storiesModule', [
             }
         };
         this.getStories = function ($scope, path) {
+            var self = this;
             if ($scope.rootPath === undefined) {
                 $scope.rootPath = '';
             }
@@ -103,7 +106,7 @@ angular.module('storiesModule', [
                     $scope.rootPath += path + '/';
                 }
             }, function(response) {
-                openErrorModal($modal, response.data);
+                self.openErrorModal(response.data);
             });
         };
         this.stepTextPattern = function() {
@@ -131,21 +134,41 @@ angular.module('storiesModule', [
         };
         // TODO Test
         this.deleteStory = function(path) {
+            var self = this;
             var deferred = $q.defer();
             var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
-            var okModal = this.openConfirmationModal($modal, message);
+            var okModal = this.openConfirmationModal(message);
             okModal.result.then(function() {
                 $http.delete('/stories/story/' + path).then(function() {
                     $location.path('/page/stories/new/');
                     deferred.resolve('OK');
                 }, function(response) {
-                    openErrorModal($modal, response.data);
+                    self.openErrorModal(response.data);
                     deferred.reject('NOK');
                 });
             }, function() {
                 deferred.reject('NOK');
             });
             return deferred.promise;
+        };
+        this.getJson = function(url, cacheType) {
+            var self = this;
+            return $http.get(url, {cache: cacheType}).then(function(response) {
+                return response.data;
+            }, function(response) {
+                self.openErrorModal(response.data);
+            });
+        };
+        this.openErrorModal = function(data) {
+            $modal.open({
+                templateUrl: '/assets/html/errorModal.tmpl.html',
+                controller: 'modalCtrl',
+                resolve: {
+                    data: function() {
+                        return data;
+                    }
+                }
+            });
         };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
@@ -184,29 +207,7 @@ angular.module('storiesModule', [
             $http.post('/stories/dir.json', json).then(function() {
                 $scope.files.dirs.push({name: path});
             }, function(response) {
-                openErrorModal($modal, response.data);
+                TcBddService.openErrorModal(response.data);
             });
         };
     });
-
-// TODO Test
-function getJson($http, $modal, url, cacheType) {
-    return $http.get(url, {cache: cacheType}).then(function(response) {
-        return response.data;
-    }, function(response) {
-        openErrorModal($modal, response.data);
-    });
-}
-
-// TODO Test
-function openErrorModal($modal, data) {
-    $modal.open({
-        templateUrl: '/assets/html/errorModal.tmpl.html',
-        controller: 'modalCtrl',
-        resolve: {
-            data: function() {
-                return data;
-            }
-        }
-    });
-}

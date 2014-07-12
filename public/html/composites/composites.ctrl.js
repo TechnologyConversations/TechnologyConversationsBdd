@@ -78,20 +78,21 @@ angular.module('compositesModule', [])
                 $cookieStore.put('compositeClass', $scope.compositesClass.class);
                 $scope.addCompositesTab();
             }, function(response) {
-                openErrorModal($modal, response.data);
+                TcBddService.openErrorModal(response.data);
             });
         };
         $scope.canDeleteCompositesClass = function() {
             return (!$scope.compositesClass.isNew);
 
         };
+        // TODO Test
         $scope.deleteCompositesClassWithoutConfirmation = function() {
             var className = $scope.compositesClass.class;
             var originalClassName = $scope.originalCompositesClass.class;
             if (className !== originalClassName) {
                 $http.delete('/groovyComposites/' + originalClassName).then(function () {
                 }, function (response) {
-                    openErrorModal($modal, response.data);
+                    TcBddService.openErrorModal(response.data);
                 });
             }
         };
@@ -103,7 +104,7 @@ angular.module('compositesModule', [])
                 $http.delete('/groovyComposites/' + $scope.originalCompositesClass.class).then(function() {
                     $location.path('/');
                 }, function(response) {
-                    openErrorModal($modal, response.data);
+                    TcBddService.openErrorModal(response.data);
                 });
             }, function() {
                 // Do nothing
