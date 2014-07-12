@@ -157,6 +157,15 @@ angular.module('runnerModule', [])
                 }
             });
         });
+		
+		$scope.hasOptions = function(options) {
+			if (options) {
+			  return options.length > 0;
+			} else {
+			  return false;
+			}
+		};
+		
         $scope.hasParams = function(classEntry) {
             return classEntry.params !== undefined && classEntry.params.length > 0;
         };
