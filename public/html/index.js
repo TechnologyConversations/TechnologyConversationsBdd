@@ -88,10 +88,40 @@ angular.module('storiesModule', [
                 if ($scope.rootPath !== '') {
                     $scope.rootPath += '/';
                 }
-                getStories($scope, $http, $modal, '');
+                this.getStories($scope, '');
             } else {
-                getStories($scope, $http, $modal, path);
+                this.getStories($scope, path);
             }
+        };
+        this.getStories = function ($scope, path) {
+            if ($scope.rootPath === undefined) {
+                $scope.rootPath = '';
+            }
+            $http.get('/stories/list.json?path=' + $scope.rootPath + path).then(function(response) {
+                $scope.files = response.data;
+                if (path !== '') {
+                    $scope.rootPath += path + '/';
+                }
+            }, function(response) {
+                openErrorModal($modal, response.data);
+            });
+        };
+        this.stepTextPattern = function() {
+            return (/^(Given|When|Then) .+$/);
+        };
+        this.openConfirmationModal = function(data) {
+            return $modal.open({
+                templateUrl: '/assets/html/confirmationModal.tmpl.html',
+                controller: 'modalCtrl',
+                resolve: {
+                    data: function() {
+                        return data;
+                    }
+                }
+            });
+        };
+        this.classNamePattern = function() {
+            return (/^[a-zA-Z_$][a-zA-Z\d_$]*$/);
         };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
@@ -104,7 +134,7 @@ angular.module('storiesModule', [
         };
     })
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService) {
-        getStories($scope, $http, $modal, '');
+        TcBddService.getStories($scope, '');
         $scope.openDir = function(path) {
             TcBddService.openDir($scope, path);
         };
@@ -192,14 +222,24 @@ function deleteStory($modal, $http, $location, $q, path) {
     return deferred.promise;
 }
 
+// TODO: Remove after deleteStory is moved to services
+function openConfirmationModal($modal, data) {
+    return $modal.open({
+        templateUrl: '/assets/html/confirmationModal.tmpl.html',
+        controller: 'modalCtrl',
+        resolve: {
+            data: function() {
+                return data;
+            }
+        }
+    });
+}
+
+
 // TODO Test
 function cssClass(ngModelController) {
     return {
         'has-error': ngModelController.$invalid,
         'has-success': ngModelController.$valid && ngModelController.$dirty
     };
-}
-
-function classNamePattern() {
-    return (/^[a-zA-Z_$][a-zA-Z\d_$]*$/);
 }

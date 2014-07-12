@@ -104,7 +104,7 @@ angular.module('runnerModule', [])
     })
     .controller('runnerSelectorCtrl', function($scope, $http, $modal, $modalInstance, TcBddService) {
         $scope.files = {dirs: [], stories: []};
-        getStories($scope, $http, $modal, '');
+        TcBddService.getStories($scope, '');
         $scope.openDir = function(path) {
             TcBddService.openDir($scope, path);
         };

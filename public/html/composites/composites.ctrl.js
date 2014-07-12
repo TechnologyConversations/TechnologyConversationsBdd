@@ -30,8 +30,8 @@ angular.module('compositesModule', [])
         $scope.originalCompositesClass = angular.copy(compositesClass);
         $scope.setLastComposite();
         $scope.steps = steps;
-        $scope.classNamePattern = classNamePattern;
-        $scope.stepTextPattern = stepTextPattern;
+        $scope.classNamePattern = TcBddService.classNamePattern;
+        $scope.stepTextPattern = TcBddService.stepTextPattern;
         $scope.cssClass = cssClass;
         $scope.buttonCssClass = function(compositeClassForm, compositeForm) {
             if (!compositeClassForm.$valid) {
@@ -95,9 +95,10 @@ angular.module('compositesModule', [])
                 });
             }
         };
+        // TODO Test
         $scope.deleteCompositesClass = function() {
             var message = {status: 'Delete Composites Class', message: 'Are you sure you want to delete this composites class?'};
-            var okModal = openConfirmationModal($modal, message);
+            var okModal = TcBddService.openConfirmationModal(message);
             okModal.result.then(function() {
                 $http.delete('/groovyComposites/' + $scope.originalCompositesClass.class).then(function() {
                     $location.path('/');

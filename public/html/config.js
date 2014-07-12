@@ -1,5 +1,18 @@
 angular.module('configModule', [])
     .config(function($routeProvider, $locationProvider) {
+//        this.getCompositesJson = function(fileName) {
+//            var url = '/groovyComposites/' + fileName;
+//            return $http.get(url, {cache: false}).then(function(response) {
+//                return response.data;
+//            }, function() {
+//                var className = fileName.substring(0, fileName.lastIndexOf('.'));
+//                return {
+//                    class: className,
+//                    composites:[{stepText: '', compositeSteps: [{}]}],
+//                    isNew: true
+//                };
+//            });
+//        };
         $locationProvider.html5Mode(true);
         $routeProvider
             // TODO Remove duplication in resolve
@@ -58,7 +71,18 @@ angular.module('configModule', [])
                 // TODO Test
                 resolve: {
                     compositesClass: function($route, $http) {
-                        return getCompositesJson($http, $route.current.params.className);
+                        var fileName = $route.current.params.className;
+                        var url = '/groovyComposites/' + fileName;
+                        return $http.get(url, {cache: false}).then(function(response) {
+                            return response.data;
+                        }, function() {
+                            var className = fileName.substring(0, fileName.lastIndexOf('.'));
+                            return {
+                                class: className,
+                                composites:[{stepText: '', compositeSteps: [{}]}],
+                                isNew: true
+                            };
+                        });
                     },
                     steps: function($http, $modal) {
                         return getJson($http, $modal, '/steps/list.json', false);

@@ -1,10 +1,10 @@
 describe('compositeClassesModule', function() {
 
-    beforeEach(module('compositeClassesModule'));
+    beforeEach(module('compositeClassesModule', 'storiesModule'));
 
     describe('compositeClassesCtrl controller', function() {
 
-        var scope, modalInstance, form;
+        var scope, modalInstance, form, service;
         var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
         var compositeClasses = [
@@ -16,7 +16,8 @@ describe('compositeClassesModule', function() {
         var compositeStepText = 'Given this is my composite';
 
         beforeEach(
-            inject(function($rootScope, $compile, $injector, $controller, $http) {
+            inject(function($rootScope, $compile, $injector, $controller, $http, TcBddService) {
+                service = TcBddService;
                 scope = $rootScope.$new();
                 $controller("compositeClassesCtrl", {
                     $scope: scope,
@@ -78,7 +79,7 @@ describe('compositeClassesModule', function() {
 
         describe('classNamePattern function', function() {
             it('should return common function', function() {
-                expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+                expect(scope.classNamePattern().toString()).toBe(service.classNamePattern().toString());
             });
         });
 

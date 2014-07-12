@@ -13,10 +13,11 @@ describe('storiesModule controllers', function() {
 
     describe('TcBddService service', function() {
 
-        var service, modal;
+        var service, modal, httpBackend;
 
         beforeEach(
-            inject(function(TcBddService, $modal) {
+            inject(function(TcBddService, $modal, $httpBackend) {
+                httpBackend = $httpBackend;
                 service = TcBddService;
                 modal = $modal;
             })
@@ -96,16 +97,9 @@ describe('storiesModule controllers', function() {
                 expect(collection).toEqual([]);
             });
         });
-        this.newCollectionItem = function(event, collection) {
-            if (event.which === 13) {
-                collection.push({});
-            }
-        };
 
         describe('getStoryRunnerStatusText function', function() {
-            var inProgress;
-            var success;
-            var pendingStepsLength;
+            var inProgress, success, pendingStepsLength;
             beforeEach(function() {
                 inProgress = false;
                 success = false;
@@ -208,6 +202,43 @@ describe('storiesModule controllers', function() {
                 service.openDir(scope, 'dir');
                 httpBackend.flush();
                 expect(scope.files).toEqual(filesWithPath);
+            });
+        });
+
+        describe('getStories function', function() {
+            var scope, http, modal, httpBackend;
+            var filesWithPath = {status: 'OK', files: 'filesWithPath'};
+            beforeEach(
+                inject(function ($rootScope, $http, $httpBackend) {
+                    scope = $rootScope.$new();
+                    http = $http;
+                    httpBackend = $httpBackend;
+                })
+            );
+            it('should update files with data returned from the server', function () {
+                var path = 'my_path';
+                httpBackend.expectGET('/stories/list.json?path=' + path).respond(filesWithPath);
+                service.getStories(scope, path);
+                httpBackend.flush();
+                expect(scope.files).toEqual(filesWithPath);
+            });
+        });
+
+        describe('stepTextPattern function', function() {
+            it('should start with Given, When or Then', function() {
+                expect('Given something').toMatch(service.stepTextPattern());
+                expect('When something').toMatch(service.stepTextPattern());
+                expect('Then something').toMatch(service.stepTextPattern());
+                expect('Give me something').not.toMatch(service.stepTextPattern());
+            });
+        });
+
+        describe('openConfirmationModal function', function() {
+            it('should call modal.open function', function() {
+                var data = {};
+                spyOn(modal, 'open');
+                service.openConfirmationModal(data);
+                expect(modal.open).toHaveBeenCalled();
             });
         });
 
@@ -318,28 +349,28 @@ describe('storiesModule controllers', function() {
             });
         });
 
+        describe('classNamePattern validates that values is a valid Java class name', function() {
+            it('should NOT start with a number', function() {
+                expect('1abc').not.toMatch(service.classNamePattern());
+            });
+            it('should use any combination of letters, digits, underscores and dollar signs', function() {
+                expect('aBc').toMatch(service.classNamePattern());
+                expect('a123').toMatch(service.classNamePattern());
+                expect('_a').toMatch(service.classNamePattern());
+                expect('$a').toMatch(service.classNamePattern());
+                expect('aBc_D$23').toMatch(service.classNamePattern());
+            });
+            it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
+                expect('abc%').not.toMatch(service.classNamePattern());
+                expect('ab c').not.toMatch(service.classNamePattern());
+            });
+        });
+
     });
 
 });
 
 describe("common functions", function() {
-
-    describe('classNamePattern validates that values is a valid Java class name', function() {
-        it('should NOT start with a number', function() {
-            expect('1abc').not.toMatch(classNamePattern());
-        });
-        it('should use any combination of letters, digits, underscores and dollar signs', function() {
-            expect('aBc').toMatch(classNamePattern());
-            expect('a123').toMatch(classNamePattern());
-            expect('_a').toMatch(classNamePattern());
-            expect('$a').toMatch(classNamePattern());
-            expect('aBc_D$23').toMatch(classNamePattern());
-        });
-        it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
-            expect('abc%').not.toMatch(classNamePattern());
-            expect('ab c').not.toMatch(classNamePattern());
-        });
-    });
 
     describe('getViewStoryUrl function', function() {
        it('should return /page/stories/view/', function() {

@@ -159,8 +159,8 @@ describe('storyModule', function() {
         });
 
         describe('stepTextPattern function', function() {
-            it('should use util function', function() {
-                expect(scope.stepTextPattern()).toEqual(stepTextPattern());
+            it('should use service function stepTextPattern', function() {
+                expect(scope.stepTextPattern()).toEqual(service.stepTextPattern());
             });
         });
 

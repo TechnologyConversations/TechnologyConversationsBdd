@@ -70,7 +70,7 @@ describe('compositesModule', function() {
                 expect(scope.steps).toEqual(steps);
             });
             it('should return common function from classNamePattern', function() {
-                expect(scope.classNamePattern().toString()).toBe(classNamePattern().toString());
+                expect(scope.classNamePattern().toString()).toBe(service.classNamePattern().toString());
             });
         });
 
@@ -98,7 +98,7 @@ describe('compositesModule', function() {
 
         describe('stepTextPattern function', function() {
             it('should use util function', function() {
-                expect(scope.stepTextPattern()).toEqual(stepTextPattern());
+                expect(scope.stepTextPattern()).toEqual(service.stepTextPattern());
             });
         });
 
@@ -285,10 +285,6 @@ describe('compositesModule', function() {
                 scope.compositesClass.isNew = true;
                 expect(scope.canDeleteCompositesClass()).toEqual(false);
             });
-        });
-
-        describe('deleteCompositesClass function', function() {
-            // TODO
         });
 
         describe('saveCompositesText function', function() {

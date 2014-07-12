@@ -50,7 +50,7 @@ angular.module('storyModule', [])
             var hasChanged = !angular.equals($scope.story, $scope.originalStory);
             return isValid && hasChanged;
         };
-        $scope.stepTextPattern = stepTextPattern;
+        $scope.stepTextPattern = TcBddService.stepTextPattern;
         // TODO Test
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {

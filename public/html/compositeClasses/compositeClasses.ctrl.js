@@ -1,5 +1,5 @@
 angular.module('compositeClassesModule', [])
-    .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, compositeClasses, compositeStepText) {
+    .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, compositeClasses, compositeStepText, TcBddService) {
         $scope.compositeClasses = compositeClasses;
         $scope.compositeStepText = compositeStepText;
         // TODO Test
@@ -36,7 +36,7 @@ angular.module('compositeClassesModule', [])
             }
             return text;
         };
-        $scope.classNamePattern = classNamePattern;
+        $scope.classNamePattern = TcBddService.classNamePattern;
         // TODO Test
         $scope.cssClass = cssClass;
         $scope.data = {class: ''};
