@@ -11,7 +11,7 @@ require('gulp-grunt')(gulp);
 gulp.task('default', ['test', 'js']);
 
 gulp.task('js', function() {
-   gulp.src(['html/index.js', 'html/**/*.js'])
+   gulp.src(['public/html/index.js', 'public/html/**/*.js'])
        .pipe(jshint())
        .pipe(jshint.reporter('jshint-stylish'))
        .pipe(sourcemaps.init())
@@ -27,5 +27,5 @@ gulp.task('test', function() {
 });
 
 gulp.task('watch', ['test', 'js'], function() {
-   gulp.watch(['html/**/*.js', '../test/html/**/*Spec*.js'], ['test', 'js']);
+   gulp.watch(['public/html/**/*.js', 'test/html/**/*Spec*.js'], ['test', 'js']);
 });

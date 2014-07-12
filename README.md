@@ -22,6 +22,9 @@ Development prerequisites
 **[Gulp](http://gulpjs.com/)**
 
 ```bash
+npm install -g grunt-cli
+npm install -g gulp
+npm install -D gulp-jasmine
 npm install
 ```
 
@@ -42,7 +45,6 @@ Dependencies
 Front-end dependencies can be installed by running following
 
 ```bash
-cd public
 npm install
 ```
 
@@ -60,14 +62,12 @@ Front-end files need to pass the process of concatenation, uglification, annotat
 To prepare front-end files execute:
 
 ```bash
-cd public
 gulp
 ```
 
 To continuously run gulp js task, execute:
 
 ```bash
-cd public
 gulp watch
 ```
 
@@ -117,14 +117,12 @@ Alternative ways to run tests are described below.
 Front-end unit testing
 
 ```bash
-cd public
 npm test
 ```
 
 Front-end unit testing without installation and dependencies
 
 ```bash
-cd public
 grunt jasmine
 ```
 
