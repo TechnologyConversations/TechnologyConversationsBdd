@@ -1,13 +1,15 @@
 describe('topMenuModule module', function() {
 
-    beforeEach(module('topMenuModule'));
+    beforeEach(module('topMenuModule', 'storiesModule'));
 
     describe('topMenuController controller', function() {
 
         var modal, scope, location;
+        var service;
 
         beforeEach(
-            inject(function($rootScope, $controller, $location, $http) {
+            inject(function($rootScope, $controller, $location, $http, TcBddService) {
+                service = TcBddService;
                 scope = $rootScope.$new();
                 location = $location;
                 modal = {
@@ -24,12 +26,8 @@ describe('topMenuModule module', function() {
 
         describe('getTitle function', function() {
             it('should return View Story when URL is /page/stories/view/', function() {
-                location.path(getViewStoryUrl() + 'something');
+                location.path('/page/stories/view/something');
                 expect(scope.getTitle()).toEqual("View Story");
-            });
-            it('should return New Story when URL is /page/stories/view/', function() {
-                location.path(getNewStoryUrl() + 'something');
-                expect(scope.getTitle()).toEqual("New Story");
             });
             it('should return Composites when URL is /page/composites/COMPOSITE', function() {
                 location.path('/page/composites/COMPOSITE');
@@ -45,6 +43,14 @@ describe('topMenuModule module', function() {
             it('should call open on modal', function() {
                 scope.openStory();
                 expect(modal.open).toHaveBeenCalled();
+            });
+        });
+
+        describe('openCompositeClass function', function() {
+            it('should call openCompositeClass service', function() {
+                spyOn(service, 'openCompositeClass');
+                scope.openCompositeClass();
+                expect(service.openCompositeClass).toHaveBeenCalled();
             });
         });
 
