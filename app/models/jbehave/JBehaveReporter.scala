@@ -30,9 +30,6 @@ class JBehaveReporter {
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
     val dir = new File(s"$reportsPath/$id")
-    if (!dir.exists()) {
-      Thread.sleep(5000)
-    }
     if (!dir.exists()) None
     else Some(dir.listFiles()
       .filter(_.getName.endsWith(".html"))
