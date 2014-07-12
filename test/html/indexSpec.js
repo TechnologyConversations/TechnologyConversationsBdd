@@ -13,13 +13,24 @@ describe('storiesModule controllers', function() {
 
     describe('TcBddService service', function() {
 
-        var service;
+        var service, modal;
 
         beforeEach(
-            inject(function(TcBddService) {
+            inject(function(TcBddService, $modal) {
                 service = TcBddService;
+                modal = $modal;
             })
         );
+
+        describe('openCompositeClass function', function() {
+            var text = 'this is some random text';
+            it('should call $modal.open with templateUrl compositeClasses.tmpl.html', function() {
+                spyOn(modal, 'open');
+                service.openCompositeClass(text);
+                expect(modal.open).toHaveBeenCalled();
+            });
+
+        });
 
         describe('removeCollectionElement function', function() {
             it('should remove element on specified index', function() {

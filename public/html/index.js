@@ -12,7 +12,6 @@ angular.module('storiesModule', [
     'runnerModule'
 ])
     .service('TcBddService', function($modal) {
-        // TODO Test
         this.openCompositeClass = function(compositeStepText) {
             $modal.open({
                 templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
