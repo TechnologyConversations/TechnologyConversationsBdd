@@ -193,7 +193,7 @@ describe('storyModule', function() {
 
         describe('cssClass function', function() {
             it('should use the global cssClass function', function() {
-                expect(scope.cssClass).toEqual(cssClass);
+                expect(scope.cssClass).toEqual(service.cssClass);
             });
         });
 

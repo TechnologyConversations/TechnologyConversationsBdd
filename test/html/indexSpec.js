@@ -242,6 +242,53 @@ describe('storiesModule controllers', function() {
             });
         });
 
+        describe('cssClass function', function() {
+            it('should return error when model controller is invalid', function() {
+                var modelController = {
+                    $invalid: true,
+                    $valid: false,
+                    $dirty: false
+                };
+                expect(service.cssClass(modelController)).toEqual({
+                    'has-error': true,
+                    'has-success': false
+                });
+            });
+            it('should NOT return success when model controller is NOT dirty', function() {
+                var modelController = {
+                    $invalid: false,
+                    $valid: true,
+                    $dirty: false
+                };
+                expect(service.cssClass(modelController)).toEqual({
+                    'has-error': false,
+                    'has-success': false
+                });
+            });
+            it('should NOT return success when model controller is dirty and invalid', function() {
+                var modelController = {
+                    $invalid: true,
+                    $valid: false,
+                    $dirty: true
+                };
+                expect(service.cssClass(modelController)).toEqual({
+                    'has-error': true,
+                    'has-success': false
+                });
+            });
+            it('should return success when model controller is dirty and valid', function() {
+                var modelController = {
+                    $invalid: false,
+                    $valid: true,
+                    $dirty: true
+                };
+                expect(service.cssClass(modelController)).toEqual({
+                    'has-error': false,
+                    'has-success': true
+                });
+            });
+        });
+
     });
 
     describe('modalCtrl controller', function() {
@@ -312,15 +359,6 @@ describe('storiesModule controllers', function() {
             });
         });
 
-        describe('viewStoryUrl function', function() {
-            it('should return the correct URL', function() {
-                var name = "myStory";
-                scope.rootPath = "path/to/";
-                var expected = getViewStoryUrl() + "path/to/myStory";
-                expect(scope.viewStoryUrl(name)).toEqual(expected);
-            });
-        });
-
         describe('getStories function', function() {
             it('should be called by the controller with the empty path', function() {
                 expect(scope.files).toBeUndefined();
@@ -366,28 +404,6 @@ describe('storiesModule controllers', function() {
             });
         });
 
-    });
-
-});
-
-describe("common functions", function() {
-
-    describe('getViewStoryUrl function', function() {
-       it('should return /page/stories/view/', function() {
-           expect(getViewStoryUrl()).toEqual('/page/stories/view/');
-       });
-    });
-
-    describe('getNewStoryUrl function', function() {
-        it('should return /page/stories/new/', function() {
-            expect(getNewStoryUrl()).toEqual('/page/stories/new/');
-        });
-    });
-
-    describe('getCompositesUrl function', function() {
-        it('should return /page/composites/', function() {
-            expect(getCompositesUrl()).toEqual('/page/composites/');
-        });
     });
 
 });

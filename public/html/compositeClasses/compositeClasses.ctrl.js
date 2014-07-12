@@ -38,6 +38,6 @@ angular.module('compositeClassesModule', [])
         };
         $scope.classNamePattern = TcBddService.classNamePattern;
         // TODO Test
-        $scope.cssClass = cssClass;
+        $scope.cssClass = TcBddService.cssClass;
         $scope.data = {class: ''};
     });

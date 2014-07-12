@@ -17,11 +17,11 @@ angular.module('topMenuModule', [])
         };
         $scope.getTitle = function() {
             var path = $location.path();
-            if (path.indexOf(getViewStoryUrl()) === 0) {
+            if (path.indexOf('/page/stories/view/') === 0) {
                 return 'View Story';
-            } else if (path.indexOf(getNewStoryUrl()) === 0) {
+            } else if (path.indexOf('/page/stories/new/') === 0) {
                 return 'New Story';
-            } else if (path.indexOf(getCompositesUrl()) === 0) {
+            } else if (path.indexOf('/page/composites/') === 0) {
                 return 'Composites';
             } else if (path.indexOf('/page/reports/') === 0) {
                 return 'Reports';

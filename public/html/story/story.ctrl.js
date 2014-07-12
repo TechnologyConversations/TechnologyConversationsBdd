@@ -43,7 +43,7 @@ angular.module('storyModule', [])
             $scope.dirPath += '/';
         }
         $scope.setAction();
-        $scope.cssClass = cssClass;
+        $scope.cssClass = TcBddService.cssClass;
         $scope.buttonCssClass = TcBddService.buttonCssClass;
         $scope.canSaveStory = function() {
             var isValid = $scope.storyForm.$valid;
@@ -62,7 +62,7 @@ angular.module('storyModule', [])
                         strippedPath += '/';
                     }
                     $http.post('/stories/story.json', $scope.story).then(function () {
-                        $location.path(getViewStoryUrl() + strippedPath + $scope.story.name);
+                        $location.path('/page/stories/view/' + strippedPath + $scope.story.name);
                         $scope.originalStory = angular.copy($scope.story);
                     }, function (response) {
                         $scope.openErrorModal($modal, response.data);
@@ -182,7 +182,7 @@ angular.module('storyModule', [])
         // TODO Test
         $scope.deleteStory = function () {
             var path = $scope.dirPath + $scope.story.name + '.story';
-            deleteStory($modal, $http, $location, $q, path);
+            TcBddService.deleteStory(path);
         };
         $scope.stepEnterKey = TcBddService.newCollectionItem;
         // TODO Test

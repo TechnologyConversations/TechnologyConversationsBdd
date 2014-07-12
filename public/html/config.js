@@ -1,22 +1,9 @@
 angular.module('configModule', [])
     .config(function($routeProvider, $locationProvider) {
-//        this.getCompositesJson = function(fileName) {
-//            var url = '/groovyComposites/' + fileName;
-//            return $http.get(url, {cache: false}).then(function(response) {
-//                return response.data;
-//            }, function() {
-//                var className = fileName.substring(0, fileName.lastIndexOf('.'));
-//                return {
-//                    class: className,
-//                    composites:[{stepText: '', compositeSteps: [{}]}],
-//                    isNew: true
-//                };
-//            });
-//        };
         $locationProvider.html5Mode(true);
         $routeProvider
             // TODO Remove duplication in resolve
-            .when(getNewStoryUrl(), {
+            .when('/page/stories/new/', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
                 // TODO Test
@@ -32,7 +19,7 @@ angular.module('configModule', [])
                     }
                 }
             })
-            .when(getNewStoryUrl() + ':path*', {
+            .when('/page/stories/new/:path*', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
                 // TODO Test
@@ -48,7 +35,7 @@ angular.module('configModule', [])
                     }
                 }
             })
-            .when(getViewStoryUrl() + ':path*', {
+            .when('/page/stories/view/:path*', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
                 // TODO Test
@@ -65,7 +52,7 @@ angular.module('configModule', [])
                 },
                 reloadOnSearch: false
             })
-            .when(getCompositesUrl() + ':className*', {
+        .when('/page/composites/:className*', {
                 templateUrl: '/assets/html/composites/composites.tmpl.html',
                 controller: 'compositesCtrl',
                 // TODO Test

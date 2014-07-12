@@ -11,7 +11,7 @@ angular.module('storiesModule', [
     'compositesModule',
     'runnerModule'
 ])
-    .service('TcBddService', function($modal, $http) {
+    .service('TcBddService', function($modal, $http, $location, $q) {
         this.openCompositeClass = function(compositeStepText) {
             $modal.open({
                 templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
@@ -123,6 +123,30 @@ angular.module('storiesModule', [
         this.classNamePattern = function() {
             return (/^[a-zA-Z_$][a-zA-Z\d_$]*$/);
         };
+        this.cssClass = function(ngModelController) {
+            return {
+                'has-error': ngModelController.$invalid,
+                'has-success': ngModelController.$valid && ngModelController.$dirty
+            };
+        };
+        // TODO Test
+        this.deleteStory = function(path) {
+            var deferred = $q.defer();
+            var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
+            var okModal = this.openConfirmationModal($modal, message);
+            okModal.result.then(function() {
+                $http.delete('/stories/story/' + path).then(function() {
+                    $location.path('/page/stories/new/');
+                    deferred.resolve('OK');
+                }, function(response) {
+                    openErrorModal($modal, response.data);
+                    deferred.reject('NOK');
+                });
+            }, function() {
+                deferred.reject('NOK');
+            });
+            return deferred.promise;
+        };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
         $scope.data = data;
@@ -142,7 +166,7 @@ angular.module('storiesModule', [
             $modalInstance.close();
         };
         $scope.viewStoryUrl = function(name) {
-            return getViewStoryUrl() + $scope.rootPath + name;
+            return '/page/stories/view/' + $scope.rootPath + name;
         };
         $scope.allowToPrevDir = function() {
             return $scope.rootPath !== '';
@@ -150,7 +174,7 @@ angular.module('storiesModule', [
         // TODO Test
         $scope.deleteStory = function(name, index) {
             var path = $scope.rootPath + name + '.story';
-            deleteStory($modal, $http, $location, $q, path).then(function() {
+            TcBddService.deleteStory(path).then(function() {
                 $scope.files.stories.splice(index, 1);
             });
         };
@@ -162,10 +186,6 @@ angular.module('storiesModule', [
             }, function(response) {
                 openErrorModal($modal, response.data);
             });
-        };
-        // TODO Test
-        $scope.getNewStoryUrl = function() {
-            return getNewStoryUrl();
         };
     });
 
@@ -189,57 +209,4 @@ function openErrorModal($modal, data) {
             }
         }
     });
-}
-
-function getViewStoryUrl() {
-    return '/page/stories/view/';
-}
-
-function getNewStoryUrl() {
-    return '/page/stories/new/';
-}
-
-function getCompositesUrl() {
-    return '/page/composites/';
-}
-
-// TODO Test
-function deleteStory($modal, $http, $location, $q, path) {
-    var deferred = $q.defer();
-    var message = {status: 'Delete Story', message: 'Are you sure you want to delete this story?'};
-    var okModal = openConfirmationModal($modal, message);
-    okModal.result.then(function() {
-        $http.delete('/stories/story/' + path).then(function() {
-            $location.path(getNewStoryUrl());
-            deferred.resolve('OK');
-        }, function(response) {
-            openErrorModal($modal, response.data);
-            deferred.reject('NOK');
-        });
-    }, function() {
-        deferred.reject('NOK');
-    });
-    return deferred.promise;
-}
-
-// TODO: Remove after deleteStory is moved to services
-function openConfirmationModal($modal, data) {
-    return $modal.open({
-        templateUrl: '/assets/html/confirmationModal.tmpl.html',
-        controller: 'modalCtrl',
-        resolve: {
-            data: function() {
-                return data;
-            }
-        }
-    });
-}
-
-
-// TODO Test
-function cssClass(ngModelController) {
-    return {
-        'has-error': ngModelController.$invalid,
-        'has-success': ngModelController.$valid && ngModelController.$dirty
-    };
 }

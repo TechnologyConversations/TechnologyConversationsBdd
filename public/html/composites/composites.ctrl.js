@@ -32,7 +32,7 @@ angular.module('compositesModule', [])
         $scope.steps = steps;
         $scope.classNamePattern = TcBddService.classNamePattern;
         $scope.stepTextPattern = TcBddService.stepTextPattern;
-        $scope.cssClass = cssClass;
+        $scope.cssClass = TcBddService.cssClass;
         $scope.buttonCssClass = function(compositeClassForm, compositeForm) {
             if (!compositeClassForm.$valid) {
                 return TcBddService.buttonCssClass(compositeClassForm);
