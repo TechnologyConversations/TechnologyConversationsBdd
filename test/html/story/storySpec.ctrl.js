@@ -107,12 +107,14 @@ describe('storyModule', function() {
 
         describe('getStoryRunnerStatusText function', function() {
             it('should use general getStoryRunnerStatusText function', function() {
+                spyOn(service, 'getStoryRunnerStatusText');
                 scope.pendingSteps = pendingSteps;
-                var expected = getStoryRunnerStatusText(
+                scope.getStoryRunnerStatusText();
+                expect(service.getStoryRunnerStatusText).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    scope.pendingSteps.length);
-                expect(scope.getStoryRunnerStatusText()).toEqual(expected);
+                    scope.pendingSteps.length
+                );
             });
         });
 
@@ -132,11 +134,21 @@ describe('storyModule', function() {
 
         describe('getRunnerStatusCss function', function() {
             it('should use general getRunnerStatusCss function', function() {
-                var expected = getRunnerStatusCss(
+                spyOn(service, 'getRunnerStatusCss');
+                scope.getRunnerStatusCss();
+                expect(service.getRunnerStatusCss).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    (scope.pendingSteps > 0));
-                expect(scope.getRunnerStatusCss()).toEqual(expected);
+                    (scope.pendingSteps > 0)
+                );
+            });
+        });
+
+        describe('openRunnerModal function', function() {
+            it('should call service function openRunnerParametersModal', function() {
+                spyOn(service, 'openRunnerParametersModal');
+                scope.openRunnerModal();
+                expect(service.openRunnerParametersModal).toHaveBeenCalledWith(false);
             });
         });
 

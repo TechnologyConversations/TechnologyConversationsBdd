@@ -129,15 +129,14 @@ angular.module('storyModule', [])
         $scope.getReportUrl = function(reportsId, report) {
             return '/api/v1/reporters/get/' + reportsId + '/' + report;
         };
-        // TODO Test
         $scope.openRunnerModal = function() {
-            return openRunnerParametersModal($modal, false);
+            return TcBddService.openRunnerParametersModal(false);
         };
         $scope.getRunnerProgressCss = function () {
             return TcBddService.getRunnerProgressCss($scope.storyRunnerInProgress);
         };
         $scope.getRunnerStatusCss = function () {
-            return getRunnerStatusCss(
+            return TcBddService.getRunnerStatusCss(
                 $scope.storyRunnerInProgress,
                 $scope.storyRunnerSuccess,
                 ($scope.pendingSteps > 0)
@@ -157,7 +156,7 @@ angular.module('storyModule', [])
             return $scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0;
         };
         $scope.getStoryRunnerStatusText = function () {
-            return getStoryRunnerStatusText(
+            return TcBddService.getStoryRunnerStatusText(
                 $scope.storyRunnerInProgress,
                 $scope.storyRunnerSuccess,
                 $scope.pendingSteps.length

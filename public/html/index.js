@@ -11,7 +11,7 @@ angular.module('storiesModule', [
     'compositesModule',
     'runnerModule'
 ])
-    .service('TcBddService', function($modal) {
+    .service('TcBddService', function($modal, $http) {
         this.openCompositeClass = function(compositeStepText) {
             $modal.open({
                 templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
@@ -46,6 +46,53 @@ angular.module('storiesModule', [
                 'progress': !inProgress
             };
         };
+        this.getStoryRunnerStatusText = function(inProgress, success, pendingStepsLength) {
+            if (inProgress) {
+                return 'Story run is in progress';
+            } else if (success) {
+                if (pendingStepsLength > 0) {
+                    return 'Story run was successful with ' + pendingStepsLength + ' pending steps';
+                } else {
+                    return 'Story run was successful';
+                }
+            } else {
+                return 'Story run failed';
+            }
+        };
+        this.getRunnerStatusCss = function(inProgress, success, pendingSteps) {
+            return {
+                'progress-bar progress-bar-info': inProgress,
+                'progress-bar progress-bar-warning': !inProgress && success && pendingSteps,
+                'progress-bar progress-bar-success': !inProgress && success && !pendingSteps,
+                'progress-bar progress-bar-danger': !inProgress && !success
+            };
+        };
+        this.openRunnerParametersModal = function(showGetApi) {
+            return $modal.open({
+                templateUrl: '/assets/html/runner/runnerParams.tmpl.html',
+                controller: 'runnerParamsCtrl',
+                resolve: {
+                    data: function($route, $http, $modal) {
+                        return getJson($http, $modal, '/steps/classes.json', true);
+                    },
+                    showGetApi: function() {
+                        return showGetApi;
+                    }
+                }
+            });
+        };
+        this.openDir = function($scope, path) {
+            if (path === '..') {
+                var dirs = $scope.rootPath.split('/');
+                $scope.rootPath = dirs.slice(0, dirs.length - 2).join('/');
+                if ($scope.rootPath !== '') {
+                    $scope.rootPath += '/';
+                }
+                getStories($scope, $http, $modal, '');
+            } else {
+                getStories($scope, $http, $modal, path);
+            }
+        };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
         $scope.data = data;
@@ -56,10 +103,10 @@ angular.module('storiesModule', [
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q) {
+    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService) {
         getStories($scope, $http, $modal, '');
         $scope.openDir = function(path) {
-            openDir($scope, $http, $modal, path);
+            TcBddService.openDir($scope, path);
         };
         $scope.close = function() {
             $modalInstance.close();

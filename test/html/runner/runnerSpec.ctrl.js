@@ -138,22 +138,26 @@ describe('runnerModule', function() {
 
         describe('getRunnerStatusCss function', function() {
             it('should use general getRunnerStatusCss function', function() {
-                var expected = getRunnerStatusCss(
+                spyOn(service, 'getRunnerStatusCss');
+                scope.getRunnerStatusCss();
+                expect(service.getRunnerStatusCss).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    (scope.pendingSteps.length > 0));
-                expect(scope.getRunnerStatusCss()).toEqual(expected);
+                    (scope.pendingSteps > 0)
+                );
             });
         });
 
         describe('getStoryRunnerStatusText function', function() {
             it('should use general getStoryRunnerStatusText function', function() {
                 scope.pendingSteps = pendingSteps;
-                var expected = getStoryRunnerStatusText(
+                spyOn(service, 'getStoryRunnerStatusText');
+                scope.getStoryRunnerStatusText();
+                expect(service.getStoryRunnerStatusText).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    scope.pendingSteps.length);
-                expect(scope.getStoryRunnerStatusText()).toEqual(expected);
+                    scope.pendingSteps.length
+                );
             });
         });
 
@@ -175,11 +179,12 @@ describe('runnerModule', function() {
 
     describe('runnerSelectorCtrl controller', function() {
 
-        var httpBackend, modal, modalInstance;
+        var httpBackend, modal, modalInstance, service;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
 
         beforeEach(
-            inject(function($controller, $httpBackend, $http) {
+            inject(function($controller, $httpBackend, $http, TcBddService) {
+                service = TcBddService;
                 modalInstance = {
                     dismiss: jasmine.createSpy('modalInstance.dismiss'),
                     close: jasmine.createSpy('modalInstance.close')
@@ -201,6 +206,15 @@ describe('runnerModule', function() {
             });
             it('stories should be set to an empty array', function() {
                 expect(scope.files.stories.length).toEqual(0);
+            });
+        });
+
+        describe('openDir function', function() {
+            it('should call the service function openDir', function() {
+                var path = 'my/path';
+                spyOn(service, 'openDir');
+                scope.openDir(path);
+                expect(service.openDir).toHaveBeenCalledWith(scope, path);
             });
         });
 

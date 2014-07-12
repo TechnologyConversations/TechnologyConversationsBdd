@@ -24,7 +24,7 @@ angular.module('runnerModule', [])
                     data.stories.forEach(function (story) {
                         storyPaths.push({path: story.path});
                     });
-                    openRunnerParametersModal($modal, true).result.then(function (data) {
+                    TcBddService.openRunnerParametersModal(true).result.then(function (data) {
                         var classes = data.classes;
                         var action = data.action;
                         $http.get('/groovyComposites').then(function (response) {
@@ -72,14 +72,14 @@ angular.module('runnerModule', [])
             });
         };
         $scope.getRunnerStatusCss = function () {
-            return getRunnerStatusCss(
+            return TcBddService.getRunnerStatusCss(
                 $scope.storyRunnerInProgress,
                 $scope.storyRunnerSuccess,
                 ($scope.pendingSteps > 0)
             );
         };
         $scope.getStoryRunnerStatusText = function () {
-            return getStoryRunnerStatusText(
+            return TcBddService.getStoryRunnerStatusText(
                 $scope.storyRunnerInProgress,
                 $scope.storyRunnerSuccess,
                 $scope.pendingSteps.length
@@ -102,11 +102,11 @@ angular.module('runnerModule', [])
         };
         $scope.init();
     })
-    .controller('runnerSelectorCtrl', function($scope, $http, $modal, $modalInstance) {
+    .controller('runnerSelectorCtrl', function($scope, $http, $modal, $modalInstance, TcBddService) {
         $scope.files = {dirs: [], stories: []};
         getStories($scope, $http, $modal, '');
         $scope.openDir = function(path) {
-            openDir($scope, $http, $modal, path);
+            TcBddService.openDir($scope, path);
         };
         $scope.cancelRunnerSelector = function () {
             $modalInstance.dismiss('cancel');

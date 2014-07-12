@@ -102,6 +102,114 @@ describe('storiesModule controllers', function() {
             }
         };
 
+        describe('getStoryRunnerStatusText function', function() {
+            var inProgress;
+            var success;
+            var pendingStepsLength;
+            beforeEach(function() {
+                inProgress = false;
+                success = false;
+                pendingStepsLength = 0;
+            });
+            it('should return "Story run is in progress" when story runner is in progress', function() {
+                inProgress = true;
+                expect(service.getStoryRunnerStatusText(inProgress, success, pendingStepsLength)).toEqual('Story run is in progress');
+            });
+            it('should return "Story run was successful with pending steps" when story runner is NOT in progress, status is success and there are pending steps', function() {
+                success = true;
+                pendingStepsLength = 2;
+                expect(service.getStoryRunnerStatusText(inProgress, success, pendingStepsLength)).toEqual('Story run was successful with 2 pending steps');
+            });
+            it('should return "Story run was successful" when story runner is NOT in progress, status is success and there are NO pending steps', function() {
+                success = true;
+                expect(service.getStoryRunnerStatusText(inProgress, success, pendingStepsLength)).toEqual('Story run was successful');
+            });
+            it('should return "Story run failed" when story runner is NOT in progress and status is NOT success', function() {
+                expect(service.getStoryRunnerStatusText(inProgress, success, pendingStepsLength)).toEqual('Story run failed');
+            });
+        });
+
+        describe('getRunnerStatusCss function', function() {
+            var inProgress;
+            var success;
+            var pendingSteps;
+            beforeEach(function() {
+                inProgress = false;
+                success = false;
+                pendingSteps = false;
+            });
+            it('should return info if story runner is in progress', function() {
+                inProgress = true;
+                expect(service.getRunnerStatusCss(inProgress, success, pendingSteps)).toEqual({
+                    'progress-bar progress-bar-info': true,
+                    'progress-bar progress-bar-warning': false,
+                    'progress-bar progress-bar-success': false,
+                    'progress-bar progress-bar-danger': false
+                });
+            });
+            it('should return warning if story runner finished and has pending steps', function() {
+                success = true;
+                pendingSteps = true;
+                expect(service.getRunnerStatusCss(inProgress, success, pendingSteps)).toEqual({
+                    'progress-bar progress-bar-info': false,
+                    'progress-bar progress-bar-warning': true,
+                    'progress-bar progress-bar-success': false,
+                    'progress-bar progress-bar-danger': false
+                });
+            });
+            it('should return success if story runner finished', function() {
+                success = true;
+                expect(service.getRunnerStatusCss(inProgress, success, pendingSteps)).toEqual({
+                    'progress-bar progress-bar-info': false,
+                    'progress-bar progress-bar-warning': false,
+                    'progress-bar progress-bar-success': true,
+                    'progress-bar progress-bar-danger': false
+                });
+            });
+            it('should return danger if story runner finished and is not success', function() {
+                expect(service.getRunnerStatusCss(inProgress, success, pendingSteps)).toEqual({
+                    'progress-bar progress-bar-info': false,
+                    'progress-bar progress-bar-warning': false,
+                    'progress-bar progress-bar-success': false,
+                    'progress-bar progress-bar-danger': true
+                });
+            });
+        });
+
+        describe('openRunnerParametersModal', function() {
+            it('should call modal.open function', function() {
+                var showGetApi = true;
+                spyOn(modal, 'open');
+                service.openRunnerParametersModal(showGetApi);
+                expect(modal.open).toHaveBeenCalled();
+            });
+        });
+
+        describe('openDir function', function() {
+            var scope, http, modal, httpBackend;
+            var filesWithPath = {status: 'OK', files: 'filesWithPath'};
+            beforeEach(
+                inject(function ($rootScope, $http, $httpBackend) {
+                    scope = $rootScope.$new();
+                    http = $http;
+                    httpBackend = $httpBackend;
+                })
+            );
+            it('should call getStories for the parent dir when path is ".."', function() {
+                httpBackend.expectGET('/stories/list.json?path=this/is/').respond(filesWithPath);
+                scope.rootPath = "this/is/dir/";
+                service.openDir(scope, '..');
+                httpBackend.flush();
+                expect(scope.files).toEqual(filesWithPath);
+            });
+            it('should call getStories for the path', function() {
+                httpBackend.expectGET('/stories/list.json?path=this/is/dir').respond(filesWithPath);
+                scope.rootPath = "this/is/";
+                service.openDir(scope, 'dir');
+                httpBackend.flush();
+                expect(scope.files).toEqual(filesWithPath);
+            });
+        });
 
     });
 
@@ -145,17 +253,18 @@ describe('storiesModule controllers', function() {
 
     describe('storiesCtrl controller', function() {
 
-        var httpBackend;
+        var httpBackend, service, http;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
 
         beforeEach(
-            inject(function($controller, $httpBackend) {
+            inject(function($controller, $httpBackend, TcBddService, $http) {
+                service = TcBddService;
                 modalInstance = {
                     close: jasmine.createSpy('modalInstance.close')
                 };
                 $controller('storiesCtrl', {
                     $scope: scope,
-                    $http: http,
+                    $http: $http,
                     $modal: modal,
                     $modalInstance: modalInstance,
                     $location: location
@@ -197,6 +306,15 @@ describe('storiesModule controllers', function() {
             it('should return false when rootPath is an empty string', function() {
                 scope.rootPath = '';
                 expect(scope.allowToPrevDir()).toEqual(false);
+            });
+        });
+
+        describe('openDir function', function() {
+            it('should call service function openDir', function() {
+                var path = 'my/path';
+                spyOn(service, 'openDir');
+                scope.openDir(path);
+                expect(service.openDir).toHaveBeenCalledWith(scope, path);
             });
         });
 
