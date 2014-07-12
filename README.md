@@ -3,14 +3,6 @@ TC Build Assistant
 
 [![Build Status](https://travis-ci.org/TechnologyConversations/TechnologyConversationsBdd.png?branch=master)](https://travis-ci.org/TechnologyConversations/TechnologyConversationsBdd)
 
-Running the project in development mode
----------------------------------------
-
-Use play to run the BDDAssistant
-
-´´´
-$ activator run / sbt run
-´´´
 
 Development prerequisites
 -------------------------
