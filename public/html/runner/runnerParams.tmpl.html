@@ -2,7 +2,6 @@
     <h3>Runner Parameters</h3>
 </div>
 <div class="modal-body">
-    {{classes}}
     <form class="form-horizontal" role="form" id="runnerForm" name="runnerForm">
         <div ng-repeat="class in classes | filter:hasParams">
             <h3>{{class.name}}</h3>
