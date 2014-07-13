@@ -10,7 +10,7 @@
                     {{param.key}}
                 </span>
                 <select id="{{paramElementId(class.name, param.key)}}" ng-show="hasOptions(param.options)" ng-model="param.value" class="form-control">
-                    <option value="{{option.value}}" ng-repeat="option in param.options" ng-selected="{{isSected(option, param)}}">{{option.text}}</option>
+                    <option value="{{option.value}}" ng-repeat="option in param.options" ng-selected="{{selectedOption(option,param.value,param.key)}}">{{option.text}}</option>
                 </select>
                 <input id="{{paramElementId(class.name, param.key)}}" ng-show="!hasOptions(param.options)" name="paramValueInput" class="form-control" type="text" ng-model="param.value" popover="{{param.description}}" popover-trigger="focus">
             </div>
