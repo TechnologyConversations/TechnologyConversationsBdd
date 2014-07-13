@@ -73,7 +73,7 @@ describe('runnerModule', function() {
         describe('run function', function() {
             var runResponse = {
                 status: 'OK',
-                reportsPath: 'public/this/is/reports/path/index.html'
+                reportsPath: '1234/view/reports.html'
             };
             it('should set storyRunnerInProgress to true', function() {
                 scope.run({});
@@ -138,7 +138,7 @@ describe('runnerModule', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
                 scope.run({});
                 httpBackend.flush();
-                expect(scope.reportsUrl).toEqual('/assets/this/is/reports/path/index.html');
+                expect(scope.reportsUrl).toEqual('/assets/jbehave/' + runResponse.reportsPath);
             });
         });
 
@@ -155,15 +155,13 @@ describe('runnerModule', function() {
         });
 
         describe('getStoryRunnerStatusText function', function() {
-            it('should use general getStoryRunnerStatusText function', function() {
-                scope.pendingSteps = pendingSteps;
-                spyOn(service, 'getStoryRunnerStatusText');
-                scope.getStoryRunnerStatusText();
-                expect(service.getStoryRunnerStatusText).toHaveBeenCalledWith(
-                    scope.storyRunnerInProgress,
-                    scope.storyRunnerSuccess,
-                    scope.pendingSteps.length
-                );
+            it('should return "Stories run is in progress" when storyRunnerInProgress is true', function() {
+                scope.storyRunnerInProgress = true;
+                expect(scope.getStoryRunnerStatusText()).toEqual('Stories run is in progress');
+            });
+            it('should return "Stories run is finished" when storyRunnerInProgress is false', function() {
+                scope.storyRunnerInProgress = false;
+                expect(scope.getStoryRunnerStatusText()).toEqual('Stories run is finished');
             });
         });
 

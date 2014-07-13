@@ -37,19 +37,20 @@ object RunnerController extends Controller {
         storiesDir + "/" + (path \ "path").as[String]
       }
       var status = "OK"
+      val runner = new Runner(
+        fullStoryPaths,
+        classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
+        groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
+        reportsRelativeDir + "/" + reportsId
+      )
       try {
-        val runner = new Runner(
-          fullStoryPaths,
-          classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
-          groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
-          reportsRelativeDir + "/" + reportsId
-        )
         runner.run()
-        // TODO Test
-        runner.cleanUp()
       } catch {
         case rsf: RunningStoriesFailed => status = "FAILED"
         case e: Exception => status = "Error"
+      } finally {
+        // TODO Test
+        runner.cleanUp()
       }
       Map(
         "status" -> status,

@@ -61,7 +61,6 @@ angular.module('configModule', [])
                         var fileName = $route.current.params.className;
                         var url = '/groovyComposites/' + fileName;
                         return $http.get(url, {cache: false}).then(function(response) {
-                            console.log('111');
                             return response.data;
                         }, function() {
                             var className = fileName.substring(0, fileName.lastIndexOf('.'));

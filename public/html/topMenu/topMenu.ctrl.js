@@ -13,7 +13,7 @@ angular.module('topMenuModule', [])
             });
         };
         $scope.openCompositeClass = function() {
-            TcBddService.openCompositeClass($modal);
+            TcBddService.openCompositeClass();
         };
         $scope.getTitle = function() {
             var path = $location.path();

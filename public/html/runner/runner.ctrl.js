@@ -46,17 +46,18 @@ angular.module('runnerModule', [])
             }
         };
         $scope.run = function(json) {
+            var reportsPrefix = '/assets/jbehave/';
             $scope.storyRunnerInProgress = true;
             $scope.showRunnerProgress = true;
             $scope.reportsUrl = '';
             $http.post('/runner/run.json', json).then(function (response) {
                 var data = response.data;
                 if (data.status === 'OK') {
-                    $scope.reportsUrl = data.reportsPath.replace('public/', '/assets/');
+                    $scope.reportsUrl = reportsPrefix + data.reportsPath;
                     $scope.storyRunnerInProgress = false;
                     $scope.storyRunnerSuccess = true;
                 } else if (data.status === 'FAILED') {
-                    $scope.reportsUrl = data.reportsPath.replace('public/', '/assets/');
+                    $scope.reportsUrl = reportsPrefix + data.reportsPath;
                     $scope.storyRunnerInProgress = false;
                     $scope.storyRunnerSuccess = false;
                 }
@@ -79,11 +80,11 @@ angular.module('runnerModule', [])
             );
         };
         $scope.getStoryRunnerStatusText = function () {
-            return TcBddService.getStoryRunnerStatusText(
-                $scope.storyRunnerInProgress,
-                $scope.storyRunnerSuccess,
-                $scope.pendingSteps.length
-            );
+            if ($scope.storyRunnerInProgress) {
+                return 'Stories run is in progress';
+            } else {
+                return 'Stories run is finished';
+            }
         };
         $scope.getRunnerProgressCss = function () {
             return TcBddService.getRunnerProgressCss($scope.storyRunnerInProgress);
@@ -157,7 +158,7 @@ angular.module('runnerModule', [])
                 }
             });
         });
-		
+
 		$scope.hasOptions = function(options) {
 			if (options) {
 			  return options.length > 0;
