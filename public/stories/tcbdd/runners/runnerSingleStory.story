@@ -71,11 +71,14 @@ Meta:
 
 Given Web user is in the Story page with all successful steps
 When Web user clicks the element runStory
-When Web user sets value phantomjs to the element webStepsBrowser
+When Web user selects Phantom JS from the dropdown list webStepsBrowserOption
+When Web user sets value http://localhost:9000 to the element webStepsUrl
 When Web user clicks the element confirmRunStory
+Given Web timeout is 30 seconds
 Then Web element runnerStatus should have text Story run was successful
 When Web user clicks the element runStory
-Then Web element webStepsBrowser should have value phantomjs
+Then Web dropdown list webStepsBrowserOption has Phantom JS selected
+Then Web element webStepsUrl should have value http://localhost:9000
 
 Examples:
 

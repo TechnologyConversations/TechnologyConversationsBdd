@@ -168,19 +168,19 @@ angular.module('runnerModule', [])
 			}
 		};
 
-        $scope.paramFound = function (paramName) {
-            return ($scope.paramArray.indexOf(paramName)>=0);
-        };
-
-        $scope.selectedOption = function (option, value, key) {
-            if ($scope.paramFound(key)) {
-                return false;
-            } else if (value == option.value) {
-                $scope.paramArray.push(key);
-                return true;
-            }
-            return (option.isSelected);
-        };
+//        $scope.paramFound = function (paramName) {
+//            return ($scope.paramArray.indexOf(paramName)>=0);
+//        };
+//
+//        $scope.selectedOption = function (option, param) {
+//            if ($scope.paramFound(param.key)) {
+//                return false;
+//            } else if (param.value == option.value) {
+//                $scope.paramArray.push(param.key);
+//                return true;
+//            }
+//            return (option.isSelected);
+//        };
 
         $scope.hasParams = function(classEntry) {
             return classEntry.params !== undefined && classEntry.params.length > 0;
