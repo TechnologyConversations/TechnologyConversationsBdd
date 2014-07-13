@@ -148,6 +148,7 @@ angular.module('runnerModule', [])
     })
     .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi) {
         $scope.classes = data.classes;
+        $scope.paramArray = [];
         $scope.classes.forEach(function(classEntry) {
             classEntry.params.forEach(function(paramEntry) {
                 try {
@@ -166,7 +167,21 @@ angular.module('runnerModule', [])
 			  return false;
 			}
 		};
-		
+
+        $scope.paramFound = function (paramName) {
+            return ($scope.paramArray.indexOf(paramName)>=0);
+        };
+
+        $scope.selectedOption = function (option, value, key) {
+            if ($scope.paramFound(key)) {
+                return false;
+            } else if (value == option.value) {
+                $scope.paramArray.push(key);
+                return true;
+            }
+            return (option.isSelected);
+        };
+
         $scope.hasParams = function(classEntry) {
             return classEntry.params !== undefined && classEntry.params.length > 0;
         };
