@@ -74,7 +74,7 @@ When Web user clicks the element runStory
 When Web user selects Phantom JS from the dropdown list webStepsBrowserOption
 When Web user sets value http://localhost:9000 to the element webStepsUrl
 When Web user clicks the element confirmRunStory
-Given Web timeout is 30 seconds
+Given Web timeout is 60 seconds
 Then Web element runnerStatus should have text Story run was successful
 When Web user clicks the element runStory
 Then Web dropdown list webStepsBrowserOption has Phantom JS selected
@@ -169,11 +169,8 @@ Meta:
 
 Given Web user is in the Story page with all successful steps
 When Web user clicks the element runStory
-Then Web dropdown list browser contains the option firefox
-Then Web dropdown list browser contains the option chrome
-Then Web dropdown list browser contains the option htmlunit
-Then Web dropdown list browser contains the option opera
-Then Web dropdown list browser contains the option phantomjs
-Then Web dropdown list browser has firefox selected
+When Web user selects Mozilla Firefox from the dropdown list webStepsBrowserOption
+When Web user selects Phantom JS from the dropdown list webStepsBrowserOption
+Then Web dropdown list webStepsBrowserOption has Phantom JS selected
 
 Examples:
