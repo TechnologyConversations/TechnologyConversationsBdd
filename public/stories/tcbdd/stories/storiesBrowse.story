@@ -4,7 +4,6 @@
 Meta:
 @dummy
 
-
 Narrative:
 In order to open existing and create new stories
 As a application user
@@ -16,7 +15,7 @@ Lifecycle:
 
 Before:
 Given File /public/stories/testDirectory exists
-When File is copied from public/stories/tcbdd/stories/stories.story to public/stories/testDirectory/testStory.story
+When File is copied from public/stories/test/dummy.story to public/stories/testDirectory/testStory.story
 
 After:
 Given Directory public/stories/newTestDirectory does NOT exist
