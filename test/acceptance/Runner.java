@@ -1,6 +1,9 @@
 package acceptance;
 
+import com.technologyconversations.bdd.steps.CommonSteps;
+import com.technologyconversations.bdd.steps.FileSteps;
 import com.technologyconversations.bdd.steps.WebSteps;
+import groovy.lang.GroovyClassLoader;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
@@ -17,12 +20,14 @@ import org.junit.BeforeClass;
 import play.test.Helpers;
 import play.test.TestServer;
 
-import java.util.Arrays;
-import java.util.List;
+import java.io.File;
+import java.util.*;
 
+
+// TODO extend existing RunnerClass
 public class Runner extends JUnitStories {
     private final CrossReference xref = new CrossReference();
-    private final String storiesLocation = "test/acceptance/stories";
+    private final String storiesLocation = "public/stories/tcbdd";
     private final String storyFilter = "**/*.story";
     private static TestServer testServer;
 
@@ -34,8 +39,8 @@ public class Runner extends JUnitStories {
             configuration = new MostUsefulConfiguration()
                     .useStoryLoader(new LoadFromRelativeFile(CodeLocations.codeLocationFromPath(storiesLocation)))
                     .useStoryReporterBuilder(new StoryReporterBuilder()
-                            .withFormats(Format.STATS, Format.CONSOLE)
-                            //.withFormats(Format.HTML, Format.STATS, Format.CONSOLE) //Usual
+                            .withFormats(Format.STATS, Format.HTML)
+                                    //.withFormats(Format.HTML, Format.STATS, Format.CONSOLE) //Usual
                             .withFailureTrace(true)
                             .withFailureTraceCompression(true)
                             .withCrossReference(xref))
@@ -46,7 +51,31 @@ public class Runner extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new WebSteps());
+        List<Object> stepClasses = new ArrayList<Object>();
+
+        // Steps
+        stepClasses.add(new CommonSteps());
+
+        stepClasses.add(new FileSteps());
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("url", "http://localhost:1234");
+        WebSteps webSteps = new WebSteps();
+        webSteps.setParams(params);
+        webSteps.setWebDriver();
+        stepClasses.add(webSteps);
+
+        // Composites
+        File groovyStepsFile = new File("composites/TcBDDComposites.groovy");
+        try {
+            Object instance = new GroovyClassLoader().parseClass(groovyStepsFile).newInstance();
+            stepClasses.add(instance);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return new InstanceStepsFactory(configuration(), stepClasses);
     }
 
     @Override

@@ -28,3 +28,6 @@ org.scalastyle.sbt.ScalastylePlugin.Settings
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
+
+// steps jar to test classpath
+unmanagedBase in Test := baseDirectory.value / "steps"
