@@ -1,15 +1,15 @@
 describe('bodyModule', function() {
 
-    beforeEach(module('bodyModule', 'ngCookies'));
+    beforeEach(module('bodyModule', 'ngCookies', 'storiesModule'));
 
     describe('bodyCtrl controller', function() {
 
-        var scope, cookieStore, location;
-        var cookieHistory;
+        var scope, cookieStore, location, service, cookieHistory, service;
         var historyItem = {text: 'My History Item', url: '/MyUrl'};
 
         beforeEach(
-            inject(function($rootScope, $injector, $controller, $location) {
+            inject(function($rootScope, $injector, $controller, $location, TcBddService) {
+                service = TcBddService;
                 cookieHistory = [{text: 'My Cookie History Item 1', url: '/MyCookieUrl1'}, {text: 'My Cookie History Item 2', url: '/MyCookieUrl2'}];
                 scope = $rootScope.$new();
                 cookieStore = $injector.get('$cookieStore');

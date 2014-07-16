@@ -1,11 +1,12 @@
 describe('runnerModule', function() {
 
-    var scope, modal;
+    var scope, modal, service;
 
-    beforeEach(module('ngCookies', 'runnerModule'));
+    beforeEach(module('ngCookies', 'runnerModule', 'storiesModule'));
 
     beforeEach(
-        inject(function($rootScope) {
+        inject(function($rootScope, TcBddService) {
+            service = TcBddService;
             scope = $rootScope.$new();
             modal = {
                 open: jasmine.createSpy('modal.open')
@@ -72,7 +73,7 @@ describe('runnerModule', function() {
         describe('run function', function() {
             var runResponse = {
                 status: 'OK',
-                reportsPath: 'public/this/is/reports/path/index.html'
+                reportsPath: '1234/view/reports.html'
             };
             it('should set storyRunnerInProgress to true', function() {
                 scope.run({});
@@ -92,16 +93,18 @@ describe('runnerModule', function() {
                 httpBackend.flush();
             });
             it('should open error modal in case of an error', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond(400, '');
                 scope.run({});
                 httpBackend.flush();
-                expect(modal.open).toHaveBeenCalled();
+                expect(service.openErrorModal).toHaveBeenCalled();
             });
             it('should open error modal in case of a status different than OK', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond({status: 'NOK'});
                 scope.run({});
                 httpBackend.flush();
-                expect(modal.open).toHaveBeenCalled();
+                expect(service.openErrorModal).toHaveBeenCalled();
             });
             it('should set storyRunnerInProgress to false after success', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
@@ -116,52 +119,57 @@ describe('runnerModule', function() {
                 expect(scope.storyRunnerSuccess).toEqual(true);
             });
             it('should set storyRunnerInProgress to false after failure', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond(400, '');
                 scope.run({});
                 httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
                 expect(scope.storyRunnerInProgress).toEqual(false);
             });
             it('should set storyRunnerSuccess to false after failure', function() {
+                spyOn(service, 'openErrorModal');
                 httpBackend.expectPOST('/runner/run.json').respond(400, '');
                 scope.run({});
                 httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
                 expect(scope.storyRunnerSuccess).toEqual(false);
             });
             it('should set reportsUrl', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
                 scope.run({});
                 httpBackend.flush();
-                expect(scope.reportsUrl).toEqual('/assets/this/is/reports/path/index.html');
+                expect(scope.reportsUrl).toEqual('/assets/jbehave/' + runResponse.reportsPath);
             });
         });
 
         describe('getRunnerStatusCss function', function() {
             it('should use general getRunnerStatusCss function', function() {
-                var expected = getRunnerStatusCss(
+                spyOn(service, 'getRunnerStatusCss');
+                scope.getRunnerStatusCss();
+                expect(service.getRunnerStatusCss).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    (scope.pendingSteps.length > 0));
-                expect(scope.getRunnerStatusCss()).toEqual(expected);
+                    (scope.pendingSteps > 0)
+                );
             });
         });
 
         describe('getStoryRunnerStatusText function', function() {
-            it('should use general getStoryRunnerStatusText function', function() {
-                scope.pendingSteps = pendingSteps;
-                var expected = getStoryRunnerStatusText(
-                    scope.storyRunnerInProgress,
-                    scope.storyRunnerSuccess,
-                    scope.pendingSteps.length);
-                expect(scope.getStoryRunnerStatusText()).toEqual(expected);
+            it('should return "Stories run is in progress" when storyRunnerInProgress is true', function() {
+                scope.storyRunnerInProgress = true;
+                expect(scope.getStoryRunnerStatusText()).toEqual('Stories run is in progress');
+            });
+            it('should return "Stories run is finished" when storyRunnerInProgress is false', function() {
+                scope.storyRunnerInProgress = false;
+                expect(scope.getStoryRunnerStatusText()).toEqual('Stories run is finished');
             });
         });
 
         describe('getRunnerProgressCss function', function() {
             it('should use general getRunnerProgressCss function', function() {
-                var expected = getRunnerProgressCss(
-                    scope.storyRunnerInProgress
-                );
-                expect(scope.getRunnerProgressCss()).toEqual(expected);
+                spyOn(service, 'getRunnerProgressCss');
+                scope.getRunnerProgressCss();
+                expect(service.getRunnerProgressCss).toHaveBeenCalledWith(scope.storyRunnerInProgress);
             });
         });
 
@@ -175,11 +183,12 @@ describe('runnerModule', function() {
 
     describe('runnerSelectorCtrl controller', function() {
 
-        var httpBackend, modal, modalInstance;
+        var httpBackend, modal, modalInstance, service;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
 
         beforeEach(
-            inject(function($controller, $httpBackend, $http) {
+            inject(function($controller, $httpBackend, $http, TcBddService) {
+                service = TcBddService;
                 modalInstance = {
                     dismiss: jasmine.createSpy('modalInstance.dismiss'),
                     close: jasmine.createSpy('modalInstance.close')
@@ -201,6 +210,15 @@ describe('runnerModule', function() {
             });
             it('stories should be set to an empty array', function() {
                 expect(scope.files.stories.length).toEqual(0);
+            });
+        });
+
+        describe('openDir function', function() {
+            it('should call the service function openDir', function() {
+                var path = 'my/path';
+                spyOn(service, 'openDir');
+                scope.openDir(path);
+                expect(service.openDir).toHaveBeenCalledWith(scope, path);
             });
         });
 
@@ -356,8 +374,72 @@ describe('runnerModule', function() {
                 }];
                 expect(scope.classes).toEqual(expected);
             });
+           it('should return 0 if the paramArray is empty', function() {
+                expect(scope.paramArray.length).toEqual(0);
+           });
         });
 
+//        describe ('paramFound function', function() {
+//           it('should return false if the paramArray is empty', function() {
+//                expect(scope.paramFound("param1")).toEqual(false);
+//           });
+//
+//           it('should return false if the parameter name is NOT in the paramArray', function() {
+//                scope.paramArray = ["param1","param2"];
+//                expect(scope.paramFound("param3")).toEqual(false);
+//           });
+//
+//           it('should return true if the parameter name is in the paramArray', function() {
+//                scope.paramArray = ["param1","param2"];
+//                expect(scope.paramFound("param1")).toEqual(true);
+//           });
+//        });
+//
+//        describe('selectedOption function', function() {
+//           it('should return true if the selected element is the one from the previous execution', function() {
+//                var option = {text: 'Google Chrome', value: 'chrome', isSelected: false};
+//                var param =  {value: 'chrome', key: 'browser'};
+//                expect(scope.selectedOption(option, param)).toEqual(true);
+//           });
+//           it('should return false if the value of the previous execution has been found already', function() {
+//                var option = {text: 'Mozilla Firefox', value: 'firefox', isSelected: true};
+//                var param =  {value: 'firefox', key: 'browser'};
+//                spyOn(scope, 'paramFound').and.returnValue(true);
+//                expect(scope.selectedOption(option, param)).toEqual(false);
+//                expect(scope.paramFound).toHaveBeenCalledWith('browser');
+//           });
+//           it('should return true if it is the first execution and it is the predefined value ', function() {
+//                var option = {text: 'Mozilla Firefox', value: 'firefox', isSelected: true};
+//                var param =  {value: '', key: 'browser'};
+//                spyOn(scope, 'paramFound').and.returnValue(false);
+//                expect(scope.selectedOption(option, param)).toEqual(true);
+//                expect(scope.paramFound).toHaveBeenCalledWith('browser');
+//           });
+//           it('should return false if it is not the selected param and is not the predefined', function() {
+//                var option = {text: 'Mozilla Firefox', value: 'firefox', isSelected: false};
+//                var param =  {value: 'chrome', key: 'browser'};
+//                spyOn(scope, 'paramFound').and.returnValue(false);
+//                expect(scope.selectedOption(option, param)).toEqual(false);
+//                expect(scope.paramFound).toHaveBeenCalledWith('browser');
+//           });
+//        });
+
+        describe('hasOptions function', function() {
+           it('should return true if the options array in the parameter has at least one element', function() {
+				var optionsEntry = ["option1","option2","option3"];
+				expect(scope.hasOptions(optionsEntry)).toEqual(true);
+           });
+            it('should return false if the parameter DOES NOT have any element in the options array', function() {
+                var optionsEntry = [];
+                expect(scope.hasOptions(optionsEntry)).toEqual(false);
+            });
+           it('should return false if the options array in the parameter is not defined', function() {
+                var optionsEntry = undefined;
+                expect(scope.hasOptions(optionsEntry)).toEqual(false);
+           });
+        });
+
+		
         describe('hasParams function', function() {
             it('should return true if it contains at least one parameter', function() {
                 var classEntry = {params: [{param: "param1"}, {param: "param2"}]};

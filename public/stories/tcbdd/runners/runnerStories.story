@@ -75,8 +75,8 @@ Meta:
 When Web user clicks the element story1Selector
 When Web user clicks the element okRunnerSelector
 When Web user clicks the element confirmRunStory
-Then story is running
-Then story is NOT running
+Then stories are running
+Then stories are NOT running
 
 Examples:
 

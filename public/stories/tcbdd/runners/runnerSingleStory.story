@@ -71,11 +71,14 @@ Meta:
 
 Given Web user is in the Story page with all successful steps
 When Web user clicks the element runStory
-When Web user sets value phantomjs to the element webStepsBrowser
+When Web user selects Phantom JS from the dropdown list webStepsBrowserOption
+When Web user sets value http://localhost:9000 to the element webStepsUrl
 When Web user clicks the element confirmRunStory
+Given Web timeout is 60 seconds
 Then Web element runnerStatus should have text Story run was successful
 When Web user clicks the element runStory
-Then Web element webStepsBrowser should have value phantomjs
+Then Web dropdown list webStepsBrowserOption has Phantom JS selected
+Then Web element webStepsUrl should have value http://localhost:9000
 
 Examples:
 
@@ -156,5 +159,18 @@ Given Web user is in the Story screen with pending steps
 When Web single story runner is run
 When Web user clicks the element pendingStep1
 Then Web user is in the composites modal screen
+
+Examples:
+
+Scenario: Can choose which browser to run from a dropdown list
+
+Meta:
+
+
+Given Web user is in the Story page with all successful steps
+When Web user clicks the element runStory
+When Web user selects Mozilla Firefox from the dropdown list webStepsBrowserOption
+When Web user selects Phantom JS from the dropdown list webStepsBrowserOption
+Then Web dropdown list webStepsBrowserOption has Phantom JS selected
 
 Examples:

@@ -11,5 +11,4 @@ before_install: npm install -g grunt-cli
 
 script:
   - sbt ++2.10.3 test
-  - cd public
   - npm test

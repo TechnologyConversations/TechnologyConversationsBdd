@@ -1,10 +1,11 @@
 describe('storyModule', function() {
 
-    beforeEach(module('ngCookies', 'storyModule'));
+    beforeEach(module('ngCookies', 'storyModule', 'storiesModule'));
 
     describe('storyCtrl controller', function() {
 
         var scope, modal, form, story, httpBackend;
+        var service;
         var steps = {status: 'OK'};
         var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
@@ -27,7 +28,8 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile) {
+            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile, TcBddService) {
+                service = TcBddService;
                 scope = $rootScope.$new();
                 scope.addHistoryItem = function(text) {
                     scope.currentTabText = text;
@@ -105,49 +107,60 @@ describe('storyModule', function() {
 
         describe('getStoryRunnerStatusText function', function() {
             it('should use general getStoryRunnerStatusText function', function() {
+                spyOn(service, 'getStoryRunnerStatusText');
                 scope.pendingSteps = pendingSteps;
-                var expected = getStoryRunnerStatusText(
+                scope.getStoryRunnerStatusText();
+                expect(service.getStoryRunnerStatusText).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    scope.pendingSteps.length);
-                expect(scope.getStoryRunnerStatusText()).toEqual(expected);
+                    scope.pendingSteps.length
+                );
             });
         });
 
         describe('removeCollectionElement function', function() {
            it('should call the general removeCollectionElement function', function() {
-               expect(scope.removeCollectionElement).toEqual(removeCollectionElement);
+               expect(scope.removeCollectionElement).toEqual(service.removeCollectionElement);
            });
         });
 
         describe('getRunnerProgressCss function', function() {
             it('should use general getRunnerProgressCss function', function() {
-                var expected = getRunnerProgressCss(
-                    scope.storyRunnerInProgress
-                );
-                expect(scope.getRunnerProgressCss()).toEqual(expected);
+                spyOn(service, 'getRunnerProgressCss');
+                scope.getRunnerProgressCss();
+                expect(service.getRunnerProgressCss).toHaveBeenCalledWith(scope.storyRunnerInProgress);
             });
         });
 
         describe('getRunnerStatusCss function', function() {
             it('should use general getRunnerStatusCss function', function() {
-                var expected = getRunnerStatusCss(
+                spyOn(service, 'getRunnerStatusCss');
+                scope.getRunnerStatusCss();
+                expect(service.getRunnerStatusCss).toHaveBeenCalledWith(
                     scope.storyRunnerInProgress,
                     scope.storyRunnerSuccess,
-                    (scope.pendingSteps > 0));
-                expect(scope.getRunnerStatusCss()).toEqual(expected);
+                    (scope.pendingSteps > 0)
+                );
+            });
+        });
+
+        describe('openRunnerModal function', function() {
+            it('should call service function openRunnerParametersModal', function() {
+                spyOn(service, 'openRunnerParametersModal');
+                scope.openRunnerModal();
+                expect(service.openRunnerParametersModal).toHaveBeenCalledWith(false);
             });
         });
 
         describe('stepEnterKey function', function() {
             it('should use global newCollectionItem function', function() {
-                expect(scope.stepEnterKey).toBe(newCollectionItem);
+                expect(scope.stepEnterKey).toBe(service.newCollectionItem);
             });
         });
 
         describe('stepTextPattern function', function() {
-            it('should use util function', function() {
-                expect(scope.stepTextPattern()).toEqual(stepTextPattern());
+            it('should use service function stepTextPattern', function() {
+                expect(scope.stepTextPattern()).toEqual(service.stepTextPattern());
             });
         });
 
@@ -168,19 +181,19 @@ describe('storyModule', function() {
 
         describe('buttonCssClass function', function() {
             it('should use global buttonCssClass function', function() {
-                expect(scope.buttonCssClass).toEqual(buttonCssClass);
+                expect(scope.buttonCssClass).toEqual(service.buttonCssClass);
             });
         });
 
         describe('buttonCssClass function', function() {
             it('should use the global buttonCssClass function', function() {
-                expect(scope.buttonCssClass).toEqual(buttonCssClass);
+                expect(scope.buttonCssClass).toEqual(service.buttonCssClass);
             });
         });
 
         describe('cssClass function', function() {
             it('should use the global cssClass function', function() {
-                expect(scope.cssClass).toEqual(cssClass);
+                expect(scope.cssClass).toEqual(service.cssClass);
             });
         });
 

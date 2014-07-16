@@ -19,9 +19,13 @@ Development prerequisites
 
 **[Grunt](http://gruntjs.com/)**
 
+**[Gulp](http://gulpjs.com/)**
+
 ```bash
 npm install -g grunt-cli
-npm install grunt-contrib-watch --save-dev
+npm install -g gulp
+npm install -D gulp-jasmine
+npm install
 ```
 
 
@@ -34,13 +38,13 @@ Use the gen-idea sbt task to create Idea project files.
 sbt gen-idea
 ```
 
+
 Dependencies
 ------------
 
 Front-end dependencies can be installed by running following
 
 ```bash
-cd public
 npm install
 ```
 
@@ -48,6 +52,25 @@ npm install adds two directories:
 
 * public/node_modules
 * public/bower_components
+
+
+Development
+-----------
+
+Front-end files need to pass the process of concatenation, uglification, annotation, testing...
+
+To prepare front-end files execute:
+
+```bash
+gulp
+```
+
+To continuously run gulp js task, execute:
+
+```bash
+gulp watch
+```
+
 
 Running the application
 -----------------------
@@ -86,19 +109,25 @@ sbt run
 Unit Tests
 ----------
 
+### Front-end
+
+All front-end JS unit tests are run as part of **gulp**.
+Alternative ways to run tests are described below.
+
 Front-end unit testing
 
 ```bash
-cd public
 npm test
 ```
 
 Front-end unit testing without installation and dependencies
 
 ```bash
-cd public
 grunt jasmine
 ```
+
+
+### Back-end
 
 Back-end unit testing
 
@@ -110,4 +139,4 @@ activator ~test-quick
 Functional Tests
 ----------------
 
-Directory where chromedriver and IEDriverServer are located must be in the system path.
+Directory where PhantomJS, ChromeDriver and IEDriverServer are located must be in the system path.

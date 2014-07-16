@@ -9,7 +9,9 @@
                 <span class="input-group-addon">
                     {{param.key}}
                 </span>
-                <input id="{{paramElementId(class.name, param.key)}}" name="paramValueInput" class="form-control" type="text" ng-model="param.value" popover="{{param.description}}" popover-trigger="focus">
+                <select id="{{paramElementId(class.name, param.key)}}Option" ng-show="hasOptions(param.options)" ng-model="param.value" class="form-control" ng-options="option.value as option.text for option in param.options">
+                </select>
+                <input id="{{paramElementId(class.name, param.key)}}" ng-show="!hasOptions(param.options)" name="paramValueInput" class="form-control" type="text" ng-model="param.value" popover="{{param.description}}" popover-trigger="focus">
             </div>
         </div>
     </form>

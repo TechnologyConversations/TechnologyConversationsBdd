@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
@@ -28,10 +29,9 @@
                 </div>
             </form>
             <table id="composites" class="table table-condensed table-striped">
-                <tbody ng-repeat="composite in compositesClass.composites | filter:stepText">
+                <tbody ng-repeat="composite in compositesClass.composites">
                     <tr>
                         <td>
-
                             <a id="composite{{$index + 1}}" href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
                             <button id="deleteComposite{{$index + 1}}" class="btn btn-xs btn-danger pull-right" ng-click="removeCollectionElement(compositesClass.composites, $index)" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
