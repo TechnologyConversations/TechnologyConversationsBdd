@@ -37,14 +37,14 @@ public class Runner extends JUnitStories {
     public Configuration configuration() {
         if (configuration == null) {
             configuration = new MostUsefulConfiguration()
-                    .useStoryLoader(new LoadFromRelativeFile(CodeLocations.codeLocationFromPath(storiesLocation)))
-                    .useStoryReporterBuilder(new StoryReporterBuilder()
-                            .withFormats(Format.STATS, Format.HTML)
-                                    //.withFormats(Format.HTML, Format.STATS, Format.CONSOLE) //Usual
-                            .withFailureTrace(true)
-                            .withFailureTraceCompression(true)
-                            .withCrossReference(xref))
-                    .useStepMonitor(xref.getStepMonitor());
+                .useStoryLoader(new LoadFromRelativeFile(CodeLocations.codeLocationFromPath(storiesLocation)))
+                .useStoryReporterBuilder(new StoryReporterBuilder()
+//                    .withFormats(Format.STATS, Format.HTML)
+                        .withFormats(Format.HTML, Format.STATS, Format.CONSOLE)
+                        .withFailureTrace(true)
+                        .withFailureTraceCompression(true)
+                        .withCrossReference(xref))
+                .useStepMonitor(xref.getStepMonitor());
         }
         return configuration;
     }
@@ -67,7 +67,7 @@ public class Runner extends JUnitStories {
         stepClasses.add(webSteps);
 
         // Composites
-        File groovyStepsFile = new File("composites/TcBDDComposites.groovy");
+        File groovyStepsFile = new File("composites/TcBddComposites.groovy");
         try {
             Object instance = new GroovyClassLoader().parseClass(groovyStepsFile).newInstance();
             stepClasses.add(instance);
