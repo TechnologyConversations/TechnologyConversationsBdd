@@ -60,6 +60,7 @@ public class Runner extends JUnitStories {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("url", "http://localhost:1234");
+        params.put("browser", "phantomjs");
         WebSteps webSteps = new WebSteps();
         webSteps.setParams(params);
         webSteps.setWebDriver();
