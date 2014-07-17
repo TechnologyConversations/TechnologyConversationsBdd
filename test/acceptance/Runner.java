@@ -39,11 +39,10 @@ public class Runner extends JUnitStories {
             configuration = new MostUsefulConfiguration()
                 .useStoryLoader(new LoadFromRelativeFile(CodeLocations.codeLocationFromPath(storiesLocation)))
                 .useStoryReporterBuilder(new StoryReporterBuilder()
-//                    .withFormats(Format.STATS, Format.HTML)
-                        .withFormats(Format.HTML, Format.STATS, Format.CONSOLE)
-                        .withFailureTrace(true)
-                        .withFailureTraceCompression(true)
-                        .withCrossReference(xref))
+                    .withFormats(Format.HTML, Format.STATS, Format.CONSOLE)
+                    .withFailureTrace(true)
+                    .withFailureTraceCompression(true)
+                    .withCrossReference(xref))
                 .useStepMonitor(xref.getStepMonitor());
         }
         return configuration;
@@ -61,9 +60,9 @@ public class Runner extends JUnitStories {
         Map<String, String> params = new HashMap<String, String>();
         params.put("url", "http://localhost:1234");
         params.put("browser", "phantomjs");
+        params.put("widthHeight", "1024, 768");
         WebSteps webSteps = new WebSteps();
         webSteps.setParams(params);
-        webSteps.setWebDriver();
         stepClasses.add(webSteps);
 
         // Composites
