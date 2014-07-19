@@ -31,9 +31,6 @@ describe('storyModule', function() {
             inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile, TcBddService) {
                 service = TcBddService;
                 scope = $rootScope.$new();
-                scope.addHistoryItem = function(text) {
-                    scope.currentTabText = text;
-                };
                 story = {
                     name: 'this is a story name',
                     path: 'this/is/path'
@@ -202,10 +199,6 @@ describe('storyModule', function() {
                 scope.story.name = '';
                 scope.setAction();
                 expect(scope.action).toEqual('POST');
-            });
-            it('should set add tab story tab when existing story is opened', function() {
-                scope.setAction();
-                expect(scope.currentTabText).toEqual(scope.story.name + ' story');
             });
             it('should set action to PUT when existing story is opened', function() {
                 scope.setAction();

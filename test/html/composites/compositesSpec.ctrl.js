@@ -20,9 +20,6 @@ describe('compositesModule', function() {
             inject(function($controller, $injector, $rootScope, $http, $httpBackend, $compile, $location, $cookieStore, TcBddService) {
                 service = TcBddService;
                 scope = $rootScope.$new();
-                scope.addHistoryItem = function(text) {
-                    scope.currentTabText = text;
-                };
                 location = $location;
                 cookieStore = $cookieStore;
                 composite = {
@@ -294,20 +291,6 @@ describe('compositesModule', function() {
                 scope.compositesClass.isNew = false;
                 expect(scope.saveCompositesText()).toEqual('Update Composites');
             });
-        });
-
-        describe('addCompositesTab function', function() {
-            it('should NOT add tab when composites class is new', function() {
-                scope.compositesClass.isNew = true;
-                scope.currentTabText = undefined;
-                scope.addCompositesTab();
-                expect(scope.currentTabText).toEqual(undefined);
-            });
-            it('should add tab when composites class is NOT new', function() {
-                scope.currentTabText = undefined;
-                scope.addCompositesTab();
-                expect(scope.currentTabText).toEqual(scope.compositesClass.class + ' composites');
-            })
         });
 
     });

@@ -1,10 +1,5 @@
 angular.module('compositesModule', [])
     .controller('compositesCtrl', function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps, TcBddService) {
-        $scope.addCompositesTab = function() {
-            if (!$scope.compositesClass.isNew) {
-                $scope.addHistoryItem($scope.compositesClass.class + ' composites');
-            }
-        };
         $scope.addNewComposite = function() {
             $scope.composite = {stepText: '', compositeSteps: [{}]};
             $scope.compositesClass.composites.push($scope.composite);
@@ -76,7 +71,6 @@ angular.module('compositesModule', [])
                 $scope.compositesClass.isNew = false;
                 $scope.originalCompositesClass = angular.copy($scope.compositesClass);
                 $cookieStore.put('compositeClass', $scope.compositesClass.class);
-                $scope.addCompositesTab();
             }, function(response) {
                 TcBddService.openErrorModal(response.data);
             });
@@ -117,6 +111,4 @@ angular.module('compositesModule', [])
                 return 'Update Composites';
             }
         };
-        // Initialization
-        $scope.addCompositesTab();
     });

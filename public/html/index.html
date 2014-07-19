@@ -44,12 +44,6 @@
                     <li><a id="browseStories" href="#" ng-click="openStory()">Browse Stories</a></li>
                     <li><a id="browseComposites" href="#" ng-click="openCompositeClass()">Browse Composites</a></li>
                     <li><a id="runner" href="/page/runner" ng-click="reload">Run Stories</a></li>
-                    <li class="dropdown">
-                        <a id="history" href="#" class="dropdown-toggle" data-toggle="dropdown">History <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li ng-repeat="historyItem in history"><a id="historyItem{{index + 1}}" href="{{historyItem.url}}">{{historyItem.text}}</a></li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
         </div>

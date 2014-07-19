@@ -4,7 +4,6 @@ angular.module('storyModule', [])
         $scope.setAction = function() {
             if ($scope.story.name !== '') {
                 $scope.action = 'PUT';
-                $scope.addHistoryItem($scope.story.name + ' story');
             } else {
                 $scope.action = 'POST';
             }

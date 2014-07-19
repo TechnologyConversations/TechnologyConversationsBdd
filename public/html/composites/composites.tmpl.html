@@ -29,7 +29,7 @@
                 </div>
             </form>
             <table id="composites" class="table table-condensed table-striped">
-                <tbody ng-repeat="composite in compositesClass.composites">
+                <tbody ng-repeat="composite in compositesClass.composites | filter:stepText">
                     <tr>
                         <td>
                             <a id="composite{{$index + 1}}" href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
