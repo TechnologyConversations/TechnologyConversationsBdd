@@ -88,7 +88,7 @@ Meta:
 When Web user clicks the element story1Selector
 When Web user clicks the element okRunnerSelector
 When Web user clicks the element confirmRunStory
-Given Web timeout is 30 seconds
+Given Web timeout is 60 seconds
 Then Web element runnerReports is visible
 
 Examples:
