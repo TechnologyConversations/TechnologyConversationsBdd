@@ -138,7 +138,7 @@ describe('runnerModule', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
                 scope.run({});
                 httpBackend.flush();
-                expect(scope.reportsUrl).toEqual('/assets/jbehave/' + runResponse.reportsPath);
+                expect(scope.reportsUrl).toEqual('/api/v1/reporters/get/' + runResponse.reportsPath);
             });
         });
 
@@ -378,51 +378,6 @@ describe('runnerModule', function() {
                 expect(scope.paramArray.length).toEqual(0);
            });
         });
-
-//        describe ('paramFound function', function() {
-//           it('should return false if the paramArray is empty', function() {
-//                expect(scope.paramFound("param1")).toEqual(false);
-//           });
-//
-//           it('should return false if the parameter name is NOT in the paramArray', function() {
-//                scope.paramArray = ["param1","param2"];
-//                expect(scope.paramFound("param3")).toEqual(false);
-//           });
-//
-//           it('should return true if the parameter name is in the paramArray', function() {
-//                scope.paramArray = ["param1","param2"];
-//                expect(scope.paramFound("param1")).toEqual(true);
-//           });
-//        });
-//
-//        describe('selectedOption function', function() {
-//           it('should return true if the selected element is the one from the previous execution', function() {
-//                var option = {text: 'Google Chrome', value: 'chrome', isSelected: false};
-//                var param =  {value: 'chrome', key: 'browser'};
-//                expect(scope.selectedOption(option, param)).toEqual(true);
-//           });
-//           it('should return false if the value of the previous execution has been found already', function() {
-//                var option = {text: 'Mozilla Firefox', value: 'firefox', isSelected: true};
-//                var param =  {value: 'firefox', key: 'browser'};
-//                spyOn(scope, 'paramFound').and.returnValue(true);
-//                expect(scope.selectedOption(option, param)).toEqual(false);
-//                expect(scope.paramFound).toHaveBeenCalledWith('browser');
-//           });
-//           it('should return true if it is the first execution and it is the predefined value ', function() {
-//                var option = {text: 'Mozilla Firefox', value: 'firefox', isSelected: true};
-//                var param =  {value: '', key: 'browser'};
-//                spyOn(scope, 'paramFound').and.returnValue(false);
-//                expect(scope.selectedOption(option, param)).toEqual(true);
-//                expect(scope.paramFound).toHaveBeenCalledWith('browser');
-//           });
-//           it('should return false if it is not the selected param and is not the predefined', function() {
-//                var option = {text: 'Mozilla Firefox', value: 'firefox', isSelected: false};
-//                var param =  {value: 'chrome', key: 'browser'};
-//                spyOn(scope, 'paramFound').and.returnValue(false);
-//                expect(scope.selectedOption(option, param)).toEqual(false);
-//                expect(scope.paramFound).toHaveBeenCalledWith('browser');
-//           });
-//        });
 
         describe('hasOptions function', function() {
            it('should return true if the options array in the parameter has at least one element', function() {

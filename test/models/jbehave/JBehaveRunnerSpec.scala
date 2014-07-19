@@ -1,5 +1,6 @@
 package models.jbehave
 
+import org.specs2.matcher.{PathMatchers, FileMatchers}
 import org.specs2.mutable.Specification
 import java.io.File
 import org.jbehave.core.reporters.Format
@@ -7,7 +8,7 @@ import scala.collection.JavaConversions._
 import com.technologyconversations.bdd.steps.WebSteps
 import models.RunnerClass
 
-class JBehaveRunnerSpec extends Specification {
+class JBehaveRunnerSpec extends Specification with PathMatchers with FileMatchers {
 
   val storiesDirPath = "test/stories"
   val storyPaths = List(s"$storiesDirPath/**/*.story")
@@ -71,6 +72,34 @@ class JBehaveRunnerSpec extends Specification {
 
     "use console, html and xml formats" in {
       reporter.formats().toList must contain(Format.CONSOLE, Format.HTML, Format.XML)
+    }
+
+  }
+
+  "JBehaveRunner#getSourceDir" should {
+
+    "return File with target directory prefixed to the path" in {
+      val path = "some/path"
+      val sourceDir = runner.getSourceDir(path)
+      val expected = new File(s"target/$path").getAbsolutePath
+      sourceDir.getPath must beEqualToIgnoringSep(expected)
+    }
+
+  }
+
+  "JBehaveRunner#getDestinationDir" should {
+
+    "return File created from the path" in {
+      val path = "some/path"
+      val destinationDir = runner.getDestinationDir(path)
+      val expected = new File(path).getAbsolutePath
+      destinationDir.getPath must beEqualToIgnoringSep(expected)
+    }
+
+    "return File with target/universal/stage removed" in {
+      val destinationDir = runner.getDestinationDir("some/target/universal/stage/path")
+      val expected = new File("some/path").getAbsolutePath
+      destinationDir.getPath must beEqualToIgnoringSep(expected)
     }
 
   }

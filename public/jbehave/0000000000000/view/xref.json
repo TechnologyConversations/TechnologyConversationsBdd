@@ -1,0 +1,48 @@
+{"xref": {
+  "whenMade": 1405779851925,
+  "createdBy": "JBehave",
+  "metaFilter": "",
+  "meta": [],
+  "stories": [
+    {
+      "description": "",
+      "narrative": "In order to have more understandable scenarios\nAs a application user\nI want to be able to create composite steps\n",
+      "name": "compositeClasses.story",
+      "path": "public/stories/tcbdd/composites/compositeClasses.story",
+      "html": "public.stories.tcbdd.composites.compositeClasses.html",
+      "meta": "",
+      "scenarios": "Scenario:Can create new composites class\nWhen Web user sets value TestComposites to the element className\nWhen Web user clicks the element createNewClass\nThen Web user is in the New Composites screen\n\n\nScenario:Can open an existing composites class\nWhen Web user clicks the element text:TcBddComposites\nThen Web user is in the View Composites screen\n\n\nScenario:Can filter composites classes\nWhen Web user sets value TcBddComposites to the element className\nThen Web element text:TcBddComposites is visible\nWhen Web user sets value NonExistentComposites to the element className\nThen Web element text:TcBddComposites is NOT visible\n\n\nScenario:Can close the composites modal screen\nThen Web user is in the composites modal screen\nWhen Web user clicks the element closeComposites\nThen Web user is in the home screen\n\n\nScenario:Must have valid composites class name (cannot start with a number, cannot have space character)\nWhen Web user sets value <className> to the element className\nThen Web element compositeClassError is visible\n\n\n",
+      "passed": true,
+      "pending": false,
+      "started": 1405779778751,
+      "duration": 22117
+    },
+    {
+      "description": "",
+      "narrative": "In order to have more understandable scenarios\nAs a application user\nI want to be able to create composite steps\n",
+      "name": "compositesForm.story",
+      "path": "public/stories/tcbdd/composites/compositesForm.story",
+      "html": "public.stories.tcbdd.composites.compositesForm.html",
+      "meta": "",
+      "scenarios": "Scenario:Can display the name of the selected composite class\nThen Web element className should have value @className\n\n\nScenario:Can create new composite\nWhen Web user clicks the element addNewComposite\nWhen Web user sets value Given I can create new composite to the element compositeText\nThen Web element composites should have text Given I can create new composite\n\n\nScenario:Can list composites\nThen Web element composites should have text @compositeText\n\n\nScenario:Can filter composites\nWhen Web user sets value Given this composite does NOT exist to the element compositeTextFilter\nThen Web element text:@compositeText is NOT visible\nWhen Web user sets value @compositeText to the element compositeTextFilter\nThen Web element text:@compositeText exists\n\n\nScenario:Can edit composite class name\nWhen Web user sets value ThisIsNewCompositesClass to the element className\nThen Web element className should have value ThisIsNewCompositesClass\n\n\nScenario:Can edit composite name\nWhen Web user clicks the element text:@compositeText\nWhen Web user sets value When composite text is changed to the element compositeText\nThen Web element composites should have text When composite text is changed\n\n\nScenario:Can add, move and remove composite steps\nWhen Web user clicks the element addNewComposite\nThen Web element compositeStep1 exists\nWhen Web user sets value When I set the first composite step to the element compositeStep1\nWhen Web user clicks the element addNewCompositeStep\nThen Web element compositeStep2 exists\nWhen Web user sets value When I set the second composite step to the element compositeStep2\nWhen Web user drags the element dragCompositeStep2 to the dragCompositeStep1\nThen Web element compositeStep1 should have value When I set the second composite step\nWhen Web user clicks the element removeCompositeStep2\nThen Web element compositeStep2 is NOT visible\nWhen Web user clicks the element removeCompositeStep1\nThen Web element compositeStep1 is NOT visible\n\n\nScenario:Can edit composite steps\nWhen Web user clicks the element composite1\nThen Web element compositeStep1 is enabled\n\n\nScenario:Can delete composite\nWhen Web user clicks the element deleteComposite1\nThen Web element composite1 is NOT visible\n\n\nScenario:Can use code-complete on composite steps\nWhen Web user clicks the element addNewComposite\nWhen Web user clicks the element addNewCompositeStep\nWhen Web user sets value Then variable to the element compositeStep1\nWhen Web user presses the enter key in the element compositeStep1\nThen Web element compositeStep1 should have value Then variable $key has value $value\n\n\n",
+      "passed": false,
+      "pending": false,
+      "started": 1405779800880,
+      "duration": 49229
+    },
+    {
+      "description": "",
+      "narrative": "In order to have more understandable scenarios\nAs a application user\nI want to be able to create composite steps\n",
+      "name": "compositesOperations.story",
+      "path": "public/stories/tcbdd/composites/compositesOperations.story",
+      "html": "public.stories.tcbdd.composites.compositesOperations.html",
+      "meta": "",
+      "scenarios": "Scenario:Can create new composites\nGiven Web user is in the New Composites screen\nThen File composites/@className.groovy does NOT exist\nWhen Web user clicks the element saveComposites\nThen File composites/@className.groovy exists\n\n\nScenario:Can revert changes\nWhen Web user sets value Given I can modify the composite to the element compositeText\nWhen Web user clicks the element revertComposites\nThen Web element className should NOT have text Given I can modify the composite\n\n\nScenario:Can delete composites class\nWhen Web user clicks the element deleteComposites\nWhen Web user clicks the element ok\nThen File composites/@className.groovy does NOT exist\n\n\nScenario:Can update existing composites\nWhen Web user sets value Given I can update composites to the element compositeText\n\n\nScenario:Can NOT revert changes when composites are unchanged\nThen Web element revertComposites is disabled\n\n\nScenario:Can NOT delete new composites class before it is saved for the first time\nGiven Web user is in the New Composites screen\nThen Web element deleteComposites is NOT visible\n\n\nScenario:Can NOT save composites when there are validation errors\nWhen Web user clears the element compositeText\nThen Web element saveComposites is disabled\n\n\nScenario:Can NOT save when composites are unchanged\nThen Web element saveComposites is disabled\n\n\nScenario:Can not modify the name of an existing composites class\nGiven Web user is in the View Composites screen\nThen Web element className is disabled\n\n\n",
+      "passed": false,
+      "pending": false,
+      "started": 1405779850130,
+      "duration": 0
+    }
+  ],
+  "stepMatches": []
+}}

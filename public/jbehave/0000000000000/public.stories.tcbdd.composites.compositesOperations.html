@@ -1,0 +1,49 @@
+<div class="story">
+<h1></h1>
+<div class="path">public/stories/tcbdd/composites/compositesOperations.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> have more understandable scenarios</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to create composite steps</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web user is in the View Composites screen</div>
+</div></div><div class="scenario">
+<h2>Scenario: Can create new composites</h2>
+<div class="step successful">Given Web user is in the View Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestViewComposites</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">test/mocks/@className.groovy.tmpl</span> to <span class="step parameter">composites/@className.groovy</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step failed">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened <span class="keyword failed">(FAILED)</span><br/><span class="message failed">org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+Build info: version: '2.39.0', revision: '14fa800511cc5d66d426e08b0b2ab926c7ed7398', time: '2013-12-16 13:18:38'
+System info: host: 'ViktorLenovo', ip: '192.168.56.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'
+Driver info: driver.version: PhantomJSDriver</span></div>
+<div class="step notPerformed">Given Web page is refreshed <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span> <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span> <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">Then File <span class="step parameter">composites/@className.groovy</span> does NOT exist <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">When Web user clicks the element <span class="step parameter">saveComposites</span> <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">Then File <span class="step parameter">composites/@className.groovy</span> exists <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can revert changes</h2>
+<div class="step successful">Given Web user is in the View Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestViewComposites</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">test/mocks/@className.groovy.tmpl</span> to <span class="step parameter">composites/@className.groovy</span></div>
+<div class="step failed">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened <span class="keyword failed">(FAILED)</span><br/><span class="message failed">org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+Build info: version: '2.39.0', revision: '14fa800511cc5d66d426e08b0b2ab926c7ed7398', time: '2013-12-16 13:18:38'
+System info: host: 'ViktorLenovo', ip: '192.168.56.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'
+Driver info: driver.version: PhantomJSDriver</span></div>
+<div class="step notPerformed">Given Web page is refreshed <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">When Web user sets value <span class="step parameter">Given I can modify the composite</span> to the element <span class="step parameter">compositeText</span> <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">When Web user clicks the element <span class="step parameter">revertComposites</span> <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+<div class="step notPerformed">Then Web element <span class="step parameter">className</span> should NOT have text <span class="step parameter">Given I can modify the composite</span> <span class="keyword notPerformed">(NOT PERFORMED)</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can delete composites class</h2>
+<div class="step successful">Given Web user is in the View Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestViewComposites</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">test/mocks/@className.groovy.tmpl</span> to <span class="step parameter">composites/@className.groovy</span></div>

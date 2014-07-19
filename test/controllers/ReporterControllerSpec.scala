@@ -33,6 +33,23 @@ class ReporterControllerSpec extends Specification with JsonMatchers {
         json must /("message" -> "ID and/or report is NOT correct")
       }
     }
+
+    "return status OK and type text/html when ID and report are correct" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(GET, "/api/v1/reporters/get/0000000000000/public.stories.tcbdd.composites.compositeClasses.html"))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("text/html")
+      }
+    }
+
+    "return report within an directory" in {
+      running(FakeApplication()) {
+        val Some(result) = route(FakeRequest(GET, "/api/v1/reporters/get/0000000000000/view/public.stories.tcbdd.composites.compositeClasses.html"))
+        status(result) must equalTo(OK)
+        contentType(result) must beSome("text/html")
+      }
+    }
+
   }
 
 }

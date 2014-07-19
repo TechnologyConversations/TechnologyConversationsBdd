@@ -1,5 +1,6 @@
 package models
 
+import org.apache.commons.io.FileUtils
 import org.specs2.mutable.Specification
 import play.api.libs.json.Json
 
@@ -8,6 +9,10 @@ class StoryListSpec extends Specification {
   "StoryList#stories" should {
 
     "return all stories from files ending with .story" in {
+      val dir = new java.io.File("test/stories")
+      for (file <- dir.listFiles() if file.getName.startsWith("temp_")) {
+        file.delete()
+      }
       StoryList("test/stories").stories must have size 3
     }
 

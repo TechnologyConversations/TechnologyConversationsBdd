@@ -14,7 +14,7 @@ object ReporterController extends Controller {
   def get(id: String, report: String): Action[AnyContent] = Action {
     val reportContent = new Reporter().reportContent(reportsDir, id, report)
     if (reportContent.isEmpty) result(paramIncorrectMap("ID and/or report"))
-    else Ok(reportContent.get)
+    else Ok(reportContent.get).as("text/html")
   }
 
 }

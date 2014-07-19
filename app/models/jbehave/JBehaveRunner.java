@@ -17,6 +17,8 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
+import play.Logger;
+
 import static java.io.File.separator;
 
 import java.io.IOException;
@@ -125,16 +127,43 @@ public class JBehaveRunner extends JUnitStories {
     }
 
     // TODO Test
-    public final void cleanUp() throws IOException {
-        File reportsDir = new File("target" + separator + this.getReportsPath());
-        String sourcePath = reportsDir.getAbsolutePath();
-        String destinationPath = sourcePath
-                .replace("target" + separator + "universal" + separator + "stage" + separator, "")
-                .replace("target" + separator, "");
-        File sourceDir = new File(sourcePath);
-        File destinationDir = new File(destinationPath);
+    public final void cleanUp() {
+        File sourceDir = this.getSourceDir(this.getReportsPath());
+        File destinationDir = this.getDestinationDir(this.getReportsPath());
         if (sourceDir.exists() && !destinationDir.exists()) {
-            FileUtils.moveDirectory(sourceDir, destinationDir);
+            this.copyDirectory(sourceDir, destinationDir);
+            this.deleteDirectory(sourceDir);
+        }
+    }
+
+    protected File getSourceDir(String path) {
+        File reportsDir = new File("target" + separator + path);
+        String sourcePath = reportsDir.getAbsolutePath();
+        return new File(sourcePath);
+    }
+
+    protected File getDestinationDir(String path) {
+        File reportsDir = new File(path);
+        String stagePath = "target" + separator + "universal" + separator + "stage" + separator;
+        String destinationPath = reportsDir.getAbsolutePath().replace(stagePath, "");
+        return new File(destinationPath);
+    }
+
+    // TODO Test
+    protected void copyDirectory(File sourceDir, File destinationDir) {
+        try {
+            FileUtils.copyDirectory(sourceDir, destinationDir);
+        } catch(IOException e) {
+            Logger.error("Could not copy the JBehave directory.", e);
+        }
+    }
+
+    // TODO Test
+    protected void deleteDirectory(File sourceDir) {
+        try {
+            FileUtils.deleteDirectory(sourceDir);
+        } catch(IOException e) {
+            Logger.error("Could not delete the JBehave directory.", e);
         }
     }
 

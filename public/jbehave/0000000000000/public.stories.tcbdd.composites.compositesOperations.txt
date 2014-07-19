@@ -1,0 +1,49 @@
+
+(public/stories/tcbdd/composites/compositesOperations.story)
+Narrative:
+In order to have more understandable scenarios
+As a application user
+I want to be able to create composite steps
+Lifecycle:
+Before:
+Given Web user is in the View Composites screen
+
+Scenario: Can create new composites
+Given Web user is in the View Composites screen
+Given variable className has value TestViewComposites
+When File is copied from test/mocks/@className.groovy.tmpl to composites/@className.groovy
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened (FAILED)
+(org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+Build info: version: '2.39.0', revision: '14fa800511cc5d66d426e08b0b2ab926c7ed7398', time: '2013-12-16 13:18:38'
+System info: host: 'ViktorLenovo', ip: '192.168.56.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'
+Driver info: driver.version: PhantomJSDriver)
+Given Web page is refreshed (NOT PERFORMED)
+When Web user sets value Given this class has at least one Composite to the element compositeText (NOT PERFORMED)
+When Web user sets value Given variable $key has value $value to the element compositeStep1 (NOT PERFORMED)
+Then File composites/@className.groovy does NOT exist (NOT PERFORMED)
+When Web user clicks the element saveComposites (NOT PERFORMED)
+Then File composites/@className.groovy exists (NOT PERFORMED)
+
+Scenario: Can revert changes
+Given Web user is in the View Composites screen
+Given variable className has value TestViewComposites
+When File is copied from test/mocks/@className.groovy.tmpl to composites/@className.groovy
+Given Web address /page/composites/@className.groovy is opened (FAILED)
+(org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+Build info: version: '2.39.0', revision: '14fa800511cc5d66d426e08b0b2ab926c7ed7398', time: '2013-12-16 13:18:38'
+System info: host: 'ViktorLenovo', ip: '192.168.56.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'
+Driver info: driver.version: PhantomJSDriver)
+Given Web page is refreshed (NOT PERFORMED)
+When Web user sets value Given I can modify the composite to the element compositeText (NOT PERFORMED)
+When Web user clicks the element revertComposites (NOT PERFORMED)
+Then Web element className should NOT have text Given I can modify the composite (NOT PERFORMED)
+
+Scenario: Can delete composites class
+Given Web user is in the View Composites screen
+Given variable className has value TestViewComposites
+When File is copied from test/mocks/@className.groovy.tmpl to composites/@className.groovy

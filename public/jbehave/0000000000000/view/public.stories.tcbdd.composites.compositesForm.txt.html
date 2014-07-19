@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>public.stories.tcbdd.composites.compositesForm</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: txt"><![CDATA[
+
+(public/stories/tcbdd/composites/compositesForm.story)
+Narrative:
+In order to have more understandable scenarios
+As a application user
+I want to be able to create composite steps
+Lifecycle:
+Before:
+Given Web user is in the New Composites screen
+
+Scenario: Can display the name of the selected composite class
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+Then Web element className should have value @className
+
+Scenario: Can create new composite
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user clicks the element addNewComposite
+When Web user sets value Given I can create new composite to the element compositeText
+Then Web element composites should have text Given I can create new composite
+
+Scenario: Can list composites
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+Then Web element composites should have text @compositeText
+
+Scenario: Can filter composites
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user sets value Given this composite does NOT exist to the element compositeTextFilter
+Then Web element text:@compositeText is NOT visible (FAILED)
+(Element should be hidden {By.xpath: .//*/text()[normalize-space(.) = "Given this class has at least one Composite"]/parent::*}
+Element: '<a id=composite1 class=ng-binding href=http://localhost:9000/page/composites/TestComposites.groovy#>Given this class has at least one Composite</a>'
+Screenshot: file:/C:/programming/workspace/TechnologyConversationsBdd2/build/reports/tests/1405779816946.0.png
+Timeout: 4 s.)
+When Web user sets value @compositeText to the element compositeTextFilter (NOT PERFORMED)
+Then Web element text:@compositeText exists (NOT PERFORMED)
+
+Scenario: Can edit composite class name
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user sets value ThisIsNewCompositesClass to the element className
+Then Web element className should have value ThisIsNewCompositesClass
+
+Scenario: Can edit composite name
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user clicks the element text:@compositeText
+When Web user sets value When composite text is changed to the element compositeText
+Then Web element composites should have text When composite text is changed
+
+Scenario: Can add, move and remove composite steps
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user clicks the element addNewComposite
+Then Web element compositeStep1 exists
+When Web user sets value When I set the first composite step to the element compositeStep1
+When Web user clicks the element addNewCompositeStep
+Then Web element compositeStep2 exists
+When Web user sets value When I set the second composite step to the element compositeStep2
+When Web user drags the element dragCompositeStep2 to the dragCompositeStep1
+Then Web element compositeStep1 should have value When I set the second composite step
+When Web user clicks the element removeCompositeStep2
+Then Web element compositeStep2 is NOT visible
+When Web user clicks the element removeCompositeStep1
+Then Web element compositeStep1 is NOT visible
+
+Scenario: Can edit composite steps
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user clicks the element composite1
+Then Web element compositeStep1 is enabled
+
+Scenario: Can delete composite
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user clicks the element deleteComposite1
+Then Web element composite1 is NOT visible
+
+Scenario: Can use code-complete on composite steps
+Given Web user is in the New Composites screen
+Given variable className has value TestComposites
+Given File composites/@className.groovy does NOT exist
+Given Web address /page/composites/@className.groovy is opened
+Given Web page is refreshed
+When Web user sets value Given this class has at least one Composite to the element compositeText
+When Web user sets value Given variable $key has value $value to the element compositeStep1
+When Web user clicks the element addNewComposite
+When Web user clicks the element addNewCompositeStep
+When Web user sets value Then variable to the element compositeStep1
+When Web user presses the enter key in the element compositeStep1
+Then Web element compositeStep1 should have value Then variable $key has value $value
+
+
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

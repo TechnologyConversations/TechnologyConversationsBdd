@@ -1,0 +1,48 @@
+<story path="public/stories/tcbdd/composites/compositesOperations.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">have more understandable scenarios</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to create composite steps</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web user is in the View Composites screen</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Can create new composites">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Given Web user is in the New Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestComposites</parameter></step>
+<step outcome="successful">Given File <parameter>composites/@className.groovy</parameter> does NOT exist</step>
+<step outcome="failed" keyword="FAILED">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened<failure>org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+Build info: version: &apos;2.39.0&apos;, revision: &apos;14fa800511cc5d66d426e08b0b2ab926c7ed7398&apos;, time: &apos;2013-12-16 13:18:38&apos;
+System info: host: &apos;ViktorLenovo&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 8&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.2&apos;, java.version: &apos;1.7.0_45&apos;
+Driver info: driver.version: PhantomJSDriver</failure></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Given Web page is refreshed</step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">When Web user sets value <parameter>Given this class has at least one Composite</parameter> to the element <parameter>compositeText</parameter></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">When Web user sets value <parameter>Given variable $key has value $value</parameter> to the element <parameter>compositeStep1</parameter></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Then File <parameter>composites/@className.groovy</parameter> does NOT exist</step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">When Web user clicks the element <parameter>saveComposites</parameter></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Then File <parameter>composites/@className.groovy</parameter> exists</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can revert changes">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="failed" keyword="FAILED">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened<failure>org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+Build info: version: &apos;2.39.0&apos;, revision: &apos;14fa800511cc5d66d426e08b0b2ab926c7ed7398&apos;, time: &apos;2013-12-16 13:18:38&apos;
+System info: host: &apos;ViktorLenovo&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 8&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.2&apos;, java.version: &apos;1.7.0_45&apos;
+Driver info: driver.version: PhantomJSDriver</failure></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Given Web page is refreshed</step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">When Web user sets value <parameter>Given I can modify the composite</parameter> to the element <parameter>compositeText</parameter></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">When Web user clicks the element <parameter>revertComposites</parameter></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Then Web element <parameter>className</parameter> should NOT have text <parameter>Given I can modify the composite</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can delete composites class">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>

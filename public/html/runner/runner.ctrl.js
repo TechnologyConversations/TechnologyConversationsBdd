@@ -46,7 +46,7 @@ angular.module('runnerModule', [])
             }
         };
         $scope.run = function(json) {
-            var reportsPrefix = '/assets/jbehave/';
+            var reportsPrefix = '/api/v1/reporters/get/';
             $scope.storyRunnerInProgress = true;
             $scope.showRunnerProgress = true;
             $scope.reportsUrl = '';
@@ -159,7 +159,6 @@ angular.module('runnerModule', [])
                 }
             });
         });
-
 		$scope.hasOptions = function(options) {
 			if (options) {
 			  return options.length > 0;
@@ -167,21 +166,6 @@ angular.module('runnerModule', [])
 			  return false;
 			}
 		};
-
-//        $scope.paramFound = function (paramName) {
-//            return ($scope.paramArray.indexOf(paramName)>=0);
-//        };
-//
-//        $scope.selectedOption = function (option, param) {
-//            if ($scope.paramFound(param.key)) {
-//                return false;
-//            } else if (param.value == option.value) {
-//                $scope.paramArray.push(param.key);
-//                return true;
-//            }
-//            return (option.isSelected);
-//        };
-
         $scope.hasParams = function(classEntry) {
             return classEntry.params !== undefined && classEntry.params.length > 0;
         };

@@ -1,0 +1,197 @@
+<xref>
+  <whenMade>1405779851925</whenMade>
+  <createdBy>JBehave</createdBy>
+  <metaFilter></metaFilter>
+  <meta/>
+  <stories>
+    <story>
+      <description></description>
+      <narrative>In order to have more understandable scenarios
+As a application user
+I want to be able to create composite steps
+</narrative>
+      <name>compositeClasses.story</name>
+      <path>public/stories/tcbdd/composites/compositeClasses.story</path>
+      <html>public.stories.tcbdd.composites.compositeClasses.html</html>
+      <meta></meta>
+      <scenarios>Scenario:Can create new composites class
+When Web user sets value TestComposites to the element className
+When Web user clicks the element createNewClass
+Then Web user is in the New Composites screen
+
+
+Scenario:Can open an existing composites class
+When Web user clicks the element text:TcBddComposites
+Then Web user is in the View Composites screen
+
+
+Scenario:Can filter composites classes
+When Web user sets value TcBddComposites to the element className
+Then Web element text:TcBddComposites is visible
+When Web user sets value NonExistentComposites to the element className
+Then Web element text:TcBddComposites is NOT visible
+
+
+Scenario:Can close the composites modal screen
+Then Web user is in the composites modal screen
+When Web user clicks the element closeComposites
+Then Web user is in the home screen
+
+
+Scenario:Must have valid composites class name (cannot start with a number, cannot have space character)
+When Web user sets value &lt;className&gt; to the element className
+Then Web element compositeClassError is visible
+
+
+</scenarios>
+      <passed>true</passed>
+      <pending>false</pending>
+      <started>1405779778751</started>
+      <duration>22117</duration>
+    </story>
+    <story>
+      <description></description>
+      <narrative>In order to have more understandable scenarios
+As a application user
+I want to be able to create composite steps
+</narrative>
+      <name>compositesForm.story</name>
+      <path>public/stories/tcbdd/composites/compositesForm.story</path>
+      <html>public.stories.tcbdd.composites.compositesForm.html</html>
+      <meta></meta>
+      <scenarios>Scenario:Can display the name of the selected composite class
+Then Web element className should have value @className
+
+
+Scenario:Can create new composite
+When Web user clicks the element addNewComposite
+When Web user sets value Given I can create new composite to the element compositeText
+Then Web element composites should have text Given I can create new composite
+
+
+Scenario:Can list composites
+Then Web element composites should have text @compositeText
+
+
+Scenario:Can filter composites
+When Web user sets value Given this composite does NOT exist to the element compositeTextFilter
+Then Web element text:@compositeText is NOT visible
+When Web user sets value @compositeText to the element compositeTextFilter
+Then Web element text:@compositeText exists
+
+
+Scenario:Can edit composite class name
+When Web user sets value ThisIsNewCompositesClass to the element className
+Then Web element className should have value ThisIsNewCompositesClass
+
+
+Scenario:Can edit composite name
+When Web user clicks the element text:@compositeText
+When Web user sets value When composite text is changed to the element compositeText
+Then Web element composites should have text When composite text is changed
+
+
+Scenario:Can add, move and remove composite steps
+When Web user clicks the element addNewComposite
+Then Web element compositeStep1 exists
+When Web user sets value When I set the first composite step to the element compositeStep1
+When Web user clicks the element addNewCompositeStep
+Then Web element compositeStep2 exists
+When Web user sets value When I set the second composite step to the element compositeStep2
+When Web user drags the element dragCompositeStep2 to the dragCompositeStep1
+Then Web element compositeStep1 should have value When I set the second composite step
+When Web user clicks the element removeCompositeStep2
+Then Web element compositeStep2 is NOT visible
+When Web user clicks the element removeCompositeStep1
+Then Web element compositeStep1 is NOT visible
+
+
+Scenario:Can edit composite steps
+When Web user clicks the element composite1
+Then Web element compositeStep1 is enabled
+
+
+Scenario:Can delete composite
+When Web user clicks the element deleteComposite1
+Then Web element composite1 is NOT visible
+
+
+Scenario:Can use code-complete on composite steps
+When Web user clicks the element addNewComposite
+When Web user clicks the element addNewCompositeStep
+When Web user sets value Then variable to the element compositeStep1
+When Web user presses the enter key in the element compositeStep1
+Then Web element compositeStep1 should have value Then variable $key has value $value
+
+
+</scenarios>
+      <passed>false</passed>
+      <pending>false</pending>
+      <started>1405779800880</started>
+      <duration>49229</duration>
+    </story>
+    <story>
+      <description></description>
+      <narrative>In order to have more understandable scenarios
+As a application user
+I want to be able to create composite steps
+</narrative>
+      <name>compositesOperations.story</name>
+      <path>public/stories/tcbdd/composites/compositesOperations.story</path>
+      <html>public.stories.tcbdd.composites.compositesOperations.html</html>
+      <meta></meta>
+      <scenarios>Scenario:Can create new composites
+Given Web user is in the New Composites screen
+Then File composites/@className.groovy does NOT exist
+When Web user clicks the element saveComposites
+Then File composites/@className.groovy exists
+
+
+Scenario:Can revert changes
+When Web user sets value Given I can modify the composite to the element compositeText
+When Web user clicks the element revertComposites
+Then Web element className should NOT have text Given I can modify the composite
+
+
+Scenario:Can delete composites class
+When Web user clicks the element deleteComposites
+When Web user clicks the element ok
+Then File composites/@className.groovy does NOT exist
+
+
+Scenario:Can update existing composites
+When Web user sets value Given I can update composites to the element compositeText
+
+
+Scenario:Can NOT revert changes when composites are unchanged
+Then Web element revertComposites is disabled
+
+
+Scenario:Can NOT delete new composites class before it is saved for the first time
+Given Web user is in the New Composites screen
+Then Web element deleteComposites is NOT visible
+
+
+Scenario:Can NOT save composites when there are validation errors
+When Web user clears the element compositeText
+Then Web element saveComposites is disabled
+
+
+Scenario:Can NOT save when composites are unchanged
+Then Web element saveComposites is disabled
+
+
+Scenario:Can not modify the name of an existing composites class
+Given Web user is in the View Composites screen
+Then Web element className is disabled
+
+
+</scenarios>
+      <passed>false</passed>
+      <pending>false</pending>
+      <started>1405779850130</started>
+      <duration>0</duration>
+    </story>
+  </stories>
+  <stepMatches/>
+</xref>
