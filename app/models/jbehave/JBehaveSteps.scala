@@ -76,6 +76,7 @@ class JBehaveSteps(stepsDir: String = "steps", composites: List[String] = List.e
   private[jbehave] def classParamsMap(className: String): List[Map[String, JsValue]] = {
     classParams(className).map(param => Map(
       "key" -> Json.toJson(param.value()),
+      "value" -> Json.toJson(System.getProperty(className + "." + param.value(), "")),
       "description" -> Json.toJson(param.description()),
       "options" -> Json.toJson(optionsToJson(param.options().toList))
     ))

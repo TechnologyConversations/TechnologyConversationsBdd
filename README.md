@@ -78,13 +78,13 @@ Running the application
 To run the application in development mode (re-compiles with every change to the code):
 
 ```bash
-sbt run
+activator run
 ```
 
 To compile and run the application in production mode
 
 ```bash
-sbt stage
+activator stage
 target/universal/stage/bin/tcbdd
 ```
 
@@ -102,7 +102,7 @@ Deployment to development environment
 -------------------------------------
 
 ```bash
-sbt run
+activator run
 ```
 
 
@@ -132,7 +132,7 @@ grunt jasmine
 Back-end unit testing
 
 ```bash
-sbt ~test-quick
+activator ~test-quick
 ```
 
 

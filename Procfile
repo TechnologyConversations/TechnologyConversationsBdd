@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/tcbdd -Dhttp.port=$PORT
+web: target/universal/stage/bin/tcbdd -Dhttp.port=$PORT -Dcom.technologyconversations.bdd.steps.WebSteps.browser=phantomjs

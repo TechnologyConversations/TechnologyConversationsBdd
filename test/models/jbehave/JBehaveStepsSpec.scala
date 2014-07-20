@@ -2,7 +2,7 @@ package models.jbehave
 
 import org.specs2.mutable.Specification
 import java.io.File
-import play.api.libs.json.JsValue
+import play.api.libs.json.{Json, JsValue}
 import org.jbehave.core.steps.{StepCandidate, Steps}
 import org.specs2.matcher.JsonMatchers
 import com.technologyconversations.bdd.steps.WebSteps
@@ -89,23 +89,41 @@ class JBehaveStepsSpec extends Specification with JsonMatchers {
   "JBehaveSteps#classParamsMap" should {
 
     val list = JBehaveSteps().classParamsMap(className)
+    val listItem = list.head
 
     "return List[Map]" in {
       list must beAnInstanceOf[List[Map[String, String]]]
-      list.head must beAnInstanceOf[Map[String, String]]
+      listItem must beAnInstanceOf[Map[String, String]]
     }
 
     "return List with Map containing key" in {
-      list.head must haveKey("key")
+      listItem must haveKey("key")
+    }
+
+    "return List with Map containing value" in {
+      listItem must haveKey("value")
+    }
+
+    "return List with Map containing value from system properties" in {
+      val expected = "THIS_IS_SYSTEM_PROPERTY"
+      val key = listItem("key").toString.replace("\"", "")
+      System.setProperty(className + "." + key, expected)
+      val reloadedItem = JBehaveSteps().classParamsMap(className).head
+      reloadedItem must havePair("value", Json.toJson(expected))
+    }
+
+    "return List with Map containing value that matches the system variable" in {
+      listItem must haveKey("value")
     }
 
     "return List with Map containing description" in {
-      list.head must haveKey("description")
+      listItem must haveKey("description")
     }
 
     "return List with Map containing options" in {
-      list.head must haveKey("options")
+      listItem must haveKey("options")
     }
+
   }
 
   "JBehaveSteps#optionsToJson" should {

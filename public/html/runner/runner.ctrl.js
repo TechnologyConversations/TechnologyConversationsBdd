@@ -149,16 +149,23 @@ angular.module('runnerModule', [])
     .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi) {
         $scope.classes = data.classes;
         $scope.paramArray = [];
-        $scope.classes.forEach(function(classEntry) {
-            classEntry.params.forEach(function(paramEntry) {
-                try {
-                    paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
-                } catch(err) {
-                    console.log('Could not retrieve cookie ' + classEntry.fullName + "." + paramEntry.key);
-                    console.log(err.message);
-                }
+        $scope.setParams = function() {
+            $scope.classes.forEach(function(classEntry) {
+                classEntry.params.forEach(function(paramEntry) {
+                    if (paramEntry.value !== undefined && paramEntry.value !== '') {
+                        paramEntry.disabled = true;
+                    } else {
+                        paramEntry.disabled = false;
+                        try {
+                            paramEntry.value = $cookieStore.get(classEntry.fullName + "." + paramEntry.key);
+                        } catch(err) {
+                            console.log('Could not retrieve cookie ' + classEntry.fullName + "." + paramEntry.key);
+                            console.log(err.message);
+                        }
+                    }
+                });
             });
-        });
+        };
 		$scope.hasOptions = function(options) {
 			if (options) {
 			  return options.length > 0;
@@ -186,4 +193,5 @@ angular.module('runnerModule', [])
             var formattedParamKey = paramKey.charAt(0).toUpperCase() + paramKey.slice(1);
             return formattedClassName + formattedParamKey;
         };
+        $scope.setParams();
     });

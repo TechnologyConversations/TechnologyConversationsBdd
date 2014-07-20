@@ -339,20 +339,22 @@ describe('runnerModule', function() {
 
     describe('runnerParamsCtrl controller', function() {
 
-        var modalInstance, data, cookieStore, scope, classes;
-        var cookieValue = 'value1';
+        var modalInstance, data, cookieStore, scope, clazz, classes, value;
+        var paramWithValue, paramWithoutValue;
 
         beforeEach(
             inject(function($rootScope, $injector, $controller) {
                 scope = $rootScope.$new();
-                classes = [{
+                value = 'myValue';
+                paramWithValue = {key: 'key1', value: value};
+                paramWithoutValue = {key: 'key2', value: ''};
+                clazz = {
                     fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1'}, {key: 'key2'}]
-                }];
+                    params: [paramWithValue, paramWithoutValue, {key: 'key3', value: ''}]
+                };
+                classes = [clazz];
                 data = {classes: classes};
                 cookieStore = $injector.get('$cookieStore');
-                cookieStore.put(classes[0].fullName + "." + classes[0].params[0].key, cookieValue);
-                cookieStore.put(classes[0].fullName + "." + classes[0].params[1].key, 'value2');
                 modalInstance = {
                     dismiss: jasmine.createSpy('modalInstance.dismiss'),
                     close: jasmine.createSpy('modalInstance.close')
@@ -362,21 +364,40 @@ describe('runnerModule', function() {
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
                     data: data,
-                    showGetApi: true});
+                    showGetApi: true
+                });
             })
         );
 
         describe('by default', function() {
-            it('should put classes with values from cookies to the scope', function() {
-                var expected = [{
-                    fullName: 'full.name.of.the.class',
-                    params: [{key: 'key1', value: 'value1'}, {key: 'key2', value: 'value2'}]
-                }];
-                expect(scope.classes).toEqual(expected);
-            });
            it('should return 0 if the paramArray is empty', function() {
                 expect(scope.paramArray.length).toEqual(0);
            });
+        });
+
+        describe('setParams function', function() {
+            var expected;
+            var cookieValue = 'myCookieValue';
+            beforeEach(function() {
+                expected = angular.copy(classes);
+            });
+            it('should put classes with values from cookies to the scope', function() {
+                cookieStore.put(clazz.fullName + "." + paramWithoutValue.key, cookieValue);
+                scope.setParams();
+                expect(paramWithoutValue.value).toEqual(cookieValue);
+            });
+            it('should use cookies only when value is empty', function() {
+                scope.setParams();
+                expect(paramWithValue.value).toEqual(value);
+            });
+            it('should add disabled to params that have the value', function() {
+                scope.setParams();
+                expect(paramWithValue.disabled).toEqual(true);
+            });
+            it('should add disabled false to params that do NOT have the value', function() {
+                scope.setParams();
+                expect(paramWithoutValue.disabled).toEqual(false);
+            });
         });
 
         describe('hasOptions function', function() {
