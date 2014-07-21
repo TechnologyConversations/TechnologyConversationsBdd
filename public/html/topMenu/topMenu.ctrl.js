@@ -25,6 +25,10 @@ angular.module('topMenuModule', [])
                 return 'Composites';
             } else if (path.indexOf('/page/reports/') === 0) {
                 return 'Reports';
+            } else if (path.indexOf('/page/login/') === 0) {
+                return 'Login';
+            } else if (path.indexOf('/page/loginWelcome/') === 0) {
+                return 'Welcome';
             } else {
                 return '';
             }

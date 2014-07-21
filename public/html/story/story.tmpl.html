@@ -2,7 +2,6 @@
     <div class="row">
         <div class="{{storyFormClass}}">
             <form class="form-horizontal" role="form" id="storyForm" name="storyForm" novalidate="novalidate">
-                <!--Story name-->
                 <div class="input-group input-group-lg" ng-class="cssClass(storyForm.storyName)">
                     <span class="input-group-addon">{{dirPath}}</span>
                     <input id="storyName" name="storyName" class="form-control" type="text" ng-model="story.name" placeholder="story name" required="true">
@@ -12,7 +11,6 @@
                         </button>
                     </span>
                 </div>
-
                 <div class="panel panel-primary">
                     <button id="storyPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.story = !panels.story">
                         Story <span class="glyphicon glyphicon-chevron-down"></span>

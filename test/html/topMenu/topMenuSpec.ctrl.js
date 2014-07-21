@@ -37,6 +37,14 @@ describe('topMenuModule module', function() {
                 location.path('/page/reports/PATH/TO/REPORTS');
                 expect(scope.getTitle()).toEqual("Reports");
             });
+            it('should return Login when URL is /page/login/', function() {
+                location.path('/page/login/');
+                expect(scope.getTitle()).toEqual("Login");
+            });
+            it('should return Welcome when URL is /page/loginWelcome/', function() {
+                location.path('/page/loginWelcome/');
+                expect(scope.getTitle()).toEqual("Welcome");
+            });
         });
 
         describe('openStory function', function() {

@@ -53,13 +53,33 @@ describe('configModule controllers', function() {
             });
         });
 
-        describe('/page/runner/ path', function() {
+        describe('/page/runner path', function() {
             var path = '/page/runner/';
-            it('should use the template /assets/html/runner/runner.tmpl.html', function() {
+            it('should use the template runner.tmpl.html', function() {
                 expect(route.routes[path].templateUrl).toEqual('/assets/html/runner/runner.tmpl.html');
             });
             it('should use the controller runnerCtrl', function() {
                 expect(route.routes[path].controller).toBe('runnerCtrl');
+            });
+        });
+
+        describe('/page/login page', function() {
+            var path = '/page/login/';
+            it('should use the template login.tmpl.html', function() {
+                expect(route.routes[path].templateUrl).toEqual('/assets/html/login/login.tmpl.html');
+            });
+            it('should use the controller loginCtrl', function() {
+                expect(route.routes[path].controller).toBe('loginCtrl');
+            });
+        });
+
+        describe('/page/loginWelcome page', function() {
+            var path = '/page/loginWelcome/';
+            it('should use the template loginWelcome.tmpl.html', function() {
+                expect(route.routes[path].templateUrl).toEqual('/assets/html/login/loginWelcome.tmpl.html');
+            });
+            it('should use the controller loginWelcomeCtrl', function() {
+                expect(route.routes[path].controller).toBe('loginWelcomeCtrl');
             });
         });
 

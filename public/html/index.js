@@ -9,7 +9,8 @@ angular.module('storiesModule', [
     'storyModule',
     'compositeClassesModule',
     'compositesModule',
-    'runnerModule'
+    'runnerModule',
+    'loginModule'
 ])
     .service('TcBddService', function($modal, $http, $location, $q) {
         this.openCompositeClass = function(compositeStepText) {

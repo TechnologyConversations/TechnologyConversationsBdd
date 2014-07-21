@@ -190,7 +190,7 @@ angular.module('storyModule', [])
             if (compositeClass === undefined || compositeClass === '') {
                 return TcBddService.openCompositeClass(stepText);
             } else {
-                return $location.search('stepText', stepText).path('/page/composites/composites.com.technologyconversations.bdd.steps.' + compositeClass);
+                return $location.search('stepText', stepText).path('/page/composites/' + compositeClass + '.groovy');
             }
         };
         // TODO Test

@@ -86,6 +86,14 @@ angular.module('configModule', [])
                     }
                 }
             })
+            .when('/page/login/', {
+                templateUrl: '/assets/html/login/login.tmpl.html',
+                controller: 'loginCtrl'
+            })
+            .when('/page/loginWelcome/', {
+                templateUrl: '/assets/html/login/loginWelcome.tmpl.html',
+                controller: 'loginWelcomeCtrl'
+            })
             // TODO Test
             .otherwise({
                 redirectTo: '/page/stories/new'

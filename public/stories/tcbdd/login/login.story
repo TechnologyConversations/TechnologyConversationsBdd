@@ -5,8 +5,8 @@ Meta:
 
 
 Narrative:
-In order to be able to provide personized experience
-As a user
+In order to be able to provide personalized experience
+As a application user
 I want to be able to identify myself
 
 GivenStories: 
@@ -38,7 +38,6 @@ Meta:
 
 When Web user sets value myPassword to the element password
 Then Web element login is disabled
-Then Web element message should have text Username is required
 
 Examples:
 
@@ -49,7 +48,6 @@ Meta:
 
 When Web user sets value myUsername to the element username
 Then Web element login is disabled
-Then Web element message should have text Password is required
 
 Examples:
 
@@ -60,11 +58,11 @@ Meta:
 
 Given Web user myUsername with password myPassword exists
 When Web user myUsername logs in with password myPassword
-Then Web user is in the welcome screen
+Then Web user is in the Welcome screen
 
 Examples:
 
-Scenario: Should display error message when username does not exist
+Scenario: Should display error message when user does not exist
 
 Meta:
 

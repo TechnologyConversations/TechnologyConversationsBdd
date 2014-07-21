@@ -182,12 +182,6 @@ describe('storyModule', function() {
             });
         });
 
-        describe('buttonCssClass function', function() {
-            it('should use the global buttonCssClass function', function() {
-                expect(scope.buttonCssClass).toEqual(service.buttonCssClass);
-            });
-        });
-
         describe('cssClass function', function() {
             it('should use the global cssClass function', function() {
                 expect(scope.cssClass).toEqual(service.cssClass);
