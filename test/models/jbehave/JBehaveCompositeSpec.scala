@@ -6,7 +6,8 @@ class JBehaveCompositeSpec extends Specification {
 
   val stepWithDoubleQuote = """Given "something" is going on"""
   val stepWithParams = """When there are <param0>, <param1> and <param2> params"""
-  val composite = JBehaveComposite("Given this is my composite with <param0>", List(stepWithDoubleQuote, stepWithParams))
+  val stepWithDollar = """Given $variable is used"""
+  val composite = JBehaveComposite("Given this is my composite with <param0>", List(stepWithDoubleQuote, stepWithParams, stepWithDollar))
 
   "JBehaveComposite#type" should {
 
@@ -16,7 +17,7 @@ class JBehaveCompositeSpec extends Specification {
 
   }
 
-  "JBehaveComposite#strippedStepText" should {
+  "JBehaveComposite#strippedFormattedStepText" should {
 
     "return step without type" in {
       composite.strippedFormattedStepText must equalTo("this is my composite with <param0>")
@@ -28,10 +29,27 @@ class JBehaveCompositeSpec extends Specification {
 
   }
 
+  "JBehaveComposite#strippedFormattedGroovyStepText" should {
+
+    "return step with $ escaped" in {
+      JBehaveComposite("""Given this is $variable""", List()).strippedFormattedGroovyStepText must equalTo("""this is \$variable""")
+    }
+
+  }
+
+
   "JBehaveComposite#formattedCompositeSteps" should {
 
     "return steps with double quotes escaped" in {
       composite.formattedCompositeSteps must contain(stepWithDoubleQuote.replace("\"", "\\\""))
+    }
+
+  }
+
+  "JBehaveComposite#formattedGroovyCompositeSteps" should {
+
+    "return steps with $ escaped" in {
+      composite.formattedGroovyCompositeSteps must contain(stepWithDollar.replace("$", "\\$"))
     }
 
   }

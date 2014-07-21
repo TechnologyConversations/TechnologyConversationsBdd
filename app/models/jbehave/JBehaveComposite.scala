@@ -10,12 +10,16 @@ case class JBehaveComposite(stepText: String, compositeSteps: List[String]) {
     stepText.substring(stepText.indexOf(" ") + 1).replace("\"", "\\\"")
   }
 
+  def strippedFormattedGroovyStepText: String = {
+    strippedFormattedStepText.replace("$", "\\$")
+  }
+
   def formattedCompositeSteps: List[String] = {
     compositeSteps.map(_.replace("\"", "\\\""))
   }
 
   def formattedGroovyCompositeSteps: List[String] = {
-    compositeSteps.map(_.replace("\"", "\\\"").replace("$", "\\$"))
+    formattedCompositeSteps.map(_.replace("$", "\\$"))
   }
 
   def params: Set[String] = {

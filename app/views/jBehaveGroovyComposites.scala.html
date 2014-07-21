@@ -7,7 +7,7 @@ import com.technologyconversations.bdd.steps.util.BddVariable;
 
 @Html(s"public class $compositeClass {")
     @for((composite, index) <- composites.zipWithIndex) {
-        @Html("@" + composite.stepType + "(\"" + composite.strippedFormattedStepText + "\")")
+        @Html("@" + composite.stepType + "(\"" + composite.strippedFormattedGroovyStepText + "\")")
         @Html(composite.formattedGroovyCompositeSteps.mkString("""@Composite(steps = ["""", """", """", """"])"""))
         @Html(composite.params.map(param => s"""@Named("$param") BddVariable $param""").mkString(
             s"def compositeStep$index(",
