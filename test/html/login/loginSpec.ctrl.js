@@ -87,11 +87,28 @@ describe('loginModule', function() {
         });
 
         describe('login function', function() {
-            it('should redirect the the loginWelcome screen', function() {
+            it('should redirect to the welcome screen', function() {
+                scope.users = [user1, user2];
+                scope.user = user1;
                 scope.login();
-                expect(location.path()).toEqual('/page/loginWelcome')
+                expect(location.path()).toEqual('/page/loginWelcome');
+            });
+            it('should NOT redirect to the welcome screen when user does not exist', function() {
+                var expected = location.path();
+                scope.users = [user2];
+                scope.user = user1;
+                scope.login();
+                expect(location.path()).toEqual(expected);
+            });
+            it('should set user.valid to false when user does not exist', function() {
+                scope.users = [user2];
+                scope.user = user1;
+                scope.login();
+                expect(scope.user.notRegistered).toEqual(true);
             });
         });
+
+//        describe('')
 
     });
 

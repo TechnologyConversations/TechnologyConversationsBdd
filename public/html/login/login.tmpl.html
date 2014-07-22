@@ -14,6 +14,9 @@
                         <input id="password" name="password" class="form-control" type="text" ng-model="user.password" placeholder="Password" required="true">
                     </div>
                 </div>
+                <div id="message" ng-show="user.notRegistered" class="alert alert-danger">
+                    Specified username and/or password is incorrect.
+                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <button id="login" class="btn btn-primary" type="button" ng-class="buttonCssClass(loginForm)" ng-disabled="!canLogin()" ng-click="login()">Login</button>
@@ -25,4 +28,3 @@
         </div>
     </div>
 </div>
-{{users}}
