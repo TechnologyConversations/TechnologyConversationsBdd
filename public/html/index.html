@@ -20,13 +20,13 @@
     <!--<script src="/assets/html/compositeClasses/compositeClasses.ctrl.js"></script>-->
     <!--<script src="/assets/html/composites/composites.ctrl.js"></script>-->
     <!--<script src="/assets/html/runner/runner.ctrl.js"></script>-->
-    <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/stylesheets/flat-ui.css" rel="stylesheet">
     <link href="/assets/stylesheets/tcbdd.css" rel="stylesheet">
 </head>
 <body ng-controller="bodyCtrl">
-<header>
+<header ng-controller="topMenuController">
     <!--Top menu-->
-    <nav class="navbar navbar-inverse" role="navigation" ng-controller="topMenuController">
+    <nav class="navbar navbar-inverse" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-default">
@@ -36,11 +36,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="pageTitle" class="navbar-brand" href="/page/stories/new">TC BDD Assistant: {{getTitle()}}</a>
+                <a id="pageTitle" class="navbar-brand" href="/page/stories/new">TC BDD Assistant</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li><a id="newStory" href="/page/stories/new">New Story</a></li>
                     <li><a id="browseStories" href="#" ng-click="openStory()">Browse Stories</a></li>
                     <li><a id="browseComposites" href="#" ng-click="openCompositeClass()">Browse Composites</a></li>
                     <li><a id="runner" href="/page/runner" ng-click="reload">Run Stories</a></li>
@@ -48,6 +49,10 @@
             </div>
         </div>
     </nav>
+
+    <div class="jumbotron limited">
+        <h4 id="pageHeader">{{getTitle()}}</h4>
+    </div>
 </header>
 <div ng-view>
     <!--view goes here-->

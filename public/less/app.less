@@ -1,0 +1,110 @@
+/* Required for Angular UI module*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+.container .text-muted {
+    margin: 20px 0;
+}
+
+footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+.jumbotron {
+  margin-top: -30px;
+  background: @brand-secondary;
+  color: #fff;
+  &.limited {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+.panel-primary {
+  border: 0;
+  background: @brand-primary;
+
+  >.panel-heading {
+    background: @brand-secondary;
+    border: 0;
+  }
+
+  >.panel-footer {
+    background: @third-grey;
+    border: 0;
+    font-size: .8em;
+  }
+}
+
+.navbar {
+  border-radius: 0;
+}
+.navbar-nav > li > a {
+  font-weight: 600;
+}
+
+h1, h2, h3, h4 {
+  color: #fff;
+}
+
+.content-item {
+  padding: 10px 0 30px 0;
+
+  &:nth-child(odd) {
+    background: @brand-primary;
+  }
+}
+
+
+/**
+ * MODALS
+ */
+.modal-dialog {
+  .modal-header {
+    background-color: @brand-secondary;
+    border: 0;
+  }
+  .modal-body {
+    background-color: @brand-primary;
+  }
+  .modal-footer {
+    background-color: @third-grey;
+    border: 0;
+    margin-top: 0;
+  }
+}
+
+.table-condensed {
+  td {
+    background-color: #f0f0f0;
+
+    a {
+      color: #2d2f31;
+    }
+  }
+}
+
+.search-add-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #147f4f;
+}

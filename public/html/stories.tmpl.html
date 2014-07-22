@@ -2,13 +2,14 @@
 <div class="modal-body">
     <div id="path">{{rootPath}}</div>
     <div class="input-group">
-        <input type="text" id="searchStories" ng-model="criteria" class="form-control">
+        <input type="text" id="searchStories" ng-model="criteria" class="form-control" placeholder="New folder name">
         <span class="input-group-btn">
             <button id="createNewDirectory" class="btn" ng-click="createDirectory(criteria)">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         </span>
     </div>
+    <br>
     <table class="table table-condensed table-striped">
         <tbody>
             <tr>

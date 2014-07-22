@@ -30,7 +30,7 @@ angular.module('storyModule', [])
         $scope.steps = steps;
         $scope.groovyComposites = groovyComposites;
         $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
-        $scope.storyFormClass = 'col-md-12';
+        $scope.storyFormClass = 'col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2';
         $scope.storyRunnerVisible = false;
         $scope.storyRunnerInProgress = false;
         $scope.storyRunnerSuccess = true;
