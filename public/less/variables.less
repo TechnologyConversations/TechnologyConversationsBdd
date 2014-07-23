@@ -50,7 +50,7 @@
 @grey-darkened:             #454648;
 @grey-dark:                 #262729;
 @gray-super-light:          #f0f0f0;
-@inverse:                   #c1c1c1;
+@inverse:                   #eaeaea;
 
 // Brand colors
 @brand-primary:             #2d2f31;
@@ -73,9 +73,8 @@
 @link-hover-color:          @turquoise;
 
 @panel-bg:                    @grey-darkened;
+@panel-body-padding:          10px;
 @panel-info-border:           @grey-darkened;
-@panel-info-heading-bg:       #455b5e;
-@panel-info-text:             #69d0d0;
 
 
 //== Typography
@@ -84,7 +83,7 @@
 
 @font-family-base:          "Open Sans", sans-serif;
 @font-family-monospace:     Monaco, Menlo, Consolas, "Courier New", monospace;
-@font-size-base:            16px;
+@font-size-base:            14px;
 
 @local-font-path:               "/assets/fonts/lato/";
 @local-font-name:               "lato-regular";
@@ -100,14 +99,13 @@
 @local-font-name-bold-italic:   "lato-bolditalic";
 @local-font-svg-id-bold-italic: "latobold-italic";
 
-@font-size-h1:              floor(@font-size-base * 3.444); // ~62px
-@font-size-h2:              ceil(@font-size-base * 2.889); // ~52px
-@font-size-h3:              ceil(@font-size-base * 2.222); // ~40px
-@font-size-h4:              ceil(@font-size-base * 1.611); // ~29px
-@font-size-h5:              floor(@font-size-base * 1.556); // ~28px
-@font-size-h6:              ceil(@font-size-base * 1.333); // ~24px
+//@font-size-h1:              floor(@font-size-base * 3.444); // ~62px
+//@font-size-h2:              ceil(@font-size-base * 2.889); // ~52px
+//@font-size-h3:              ceil(@font-size-base * 2.222); // ~40px
+//@font-size-h4:              ceil(@font-size-base * 1.611); // ~29px
+//@font-size-h5:              floor(@font-size-base * 1.556); // ~28px
+//@font-size-h6:              ceil(@font-size-base * 1.333); // ~24px
 
-@line-height-base:          1.72222; // 31/18
 @line-height-computed:      floor(@font-size-base * @line-height-base); // ~31px
 
 @headings-font-family:      inherit;
@@ -135,7 +133,7 @@
 //## Define common padding and border radius sizes and more.
 
 //** Default font-size in components
-@component-font-size-base:  ceil(@font-size-base * 0.833); // ~15px
+@component-font-size-base:  @font-size-base; // ~15px
 
 // Border-radius
 @border-radius-base:        4px;
@@ -210,7 +208,6 @@
 @input-bg-disabled:         mix(@gray, white, 10%);
 
 @input-height-small:        35px;
-@input-height-base:         41px;
 @input-height-large:        45px;
 @input-height-huge:         53px;
 
@@ -286,7 +283,7 @@
 
 // Reset inverted navbar basics
 @navbar-inverse-color:                @inverse;
-@navbar-inverse-bg:                   @brand-primary;
+@navbar-inverse-bg:                   #212324;
 @navbar-inverse-border:               darken(@navbar-inverse-bg, 10%);
 
 // Inverted navbar links
@@ -434,8 +431,8 @@
 @state-success-bg:            #dff0d8;
 @state-success-border:        darken(spin(@state-success-bg, -10), 5%);
 
-@state-info-text:             @brand-info;
-@state-info-bg:               #d9edf7;
+@state-info-text:             #fff;
+@state-info-bg:               lighten(@brand-info, 10%);
 @state-info-border:           darken(spin(@state-info-bg, -10), 7%);
 
 @state-warning-text:          @brand-warning;
@@ -457,9 +454,9 @@
 @kbd-color:                   @inverse;
 @kbd-bg:                      @brand-primary;
 
-@pre-bg:                      @inverse;
+@pre-bg:                      #212324;
 @pre-color:                   inherit;
-@pre-border-color:            mix(@brand-primary, @inverse, 12%);
+@pre-border-color:            @brand-primary;
 @pre-scrollable-max-height:   340px;
 @pre-border-radius:           @border-radius-large;
 
@@ -495,3 +492,6 @@
 
 @popover-bg:                    @brand-primary;
 @table-bg-hover:               @gray-lighted;
+
+@padding-base-vertical:     6px;
+@padding-base-horizontal:   12px;

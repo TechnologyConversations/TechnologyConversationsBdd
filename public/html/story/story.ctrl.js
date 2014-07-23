@@ -26,6 +26,7 @@ angular.module('storyModule', [])
                 scenarios: scenariosExpanded
             };
         };
+
         $scope.story = story;
         $scope.steps = steps;
         $scope.groovyComposites = groovyComposites;
@@ -35,6 +36,11 @@ angular.module('storyModule', [])
         $scope.storyRunnerInProgress = false;
         $scope.storyRunnerSuccess = true;
         $scope.expandPanels();
+        $scope.panels.story = true; // expand story by default
+        $scope.activateRunnerTab = {
+            value: false
+        };
+
         $scope.originalStory = angular.copy(story);
         var pathArray = $scope.story.path.split('/');
         $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
@@ -84,6 +90,7 @@ angular.module('storyModule', [])
         // TODO Test
         $scope.runStory = function () {
             if ($scope.canRunStory()) {
+                $scope.activateRunnerTab.value = true;
                 $scope.saveStory();
                 $scope.openRunnerModal().result.then(function (data) {
                     var classes = data.classes;
@@ -155,11 +162,19 @@ angular.module('storyModule', [])
             return $scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0;
         };
         $scope.getStoryRunnerStatusText = function () {
-            return TcBddService.getStoryRunnerStatusText(
+            var result;
+
+            result = TcBddService.getStoryRunnerStatusText(
                 $scope.storyRunnerInProgress,
                 $scope.storyRunnerSuccess,
                 $scope.pendingSteps.length
             );
+
+            if(!$scope.storyRunnerVisible){
+                result = 'Not run';
+            }
+
+            return result;
         };
         $scope.removeCollectionElement = TcBddService.removeCollectionElement;
         $scope.addElement = function (collection) {

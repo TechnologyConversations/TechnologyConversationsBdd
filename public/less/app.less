@@ -39,6 +39,9 @@ code {
   }
 }
 
+.panel {
+  margin-bottom: 15px;
+}
 .panel-primary {
   border: 0;
   background: @brand-primary;
@@ -106,5 +109,45 @@ h1, h2, h3, h4 {
 .search-add-box {
   margin-top: 20px;
   padding: 15px;
-  background: #147f4f;
+  background: #212324;
+}
+
+/**
+ * TABS
+ */
+
+.tab-content {
+  > .tab-pane {
+    padding: @panel-body-padding;
+  }
+  > .active {
+    background-color: @brand-primary;
+  }
+}
+
+@nav-tabs-border-color:                     @brand-primary;
+@nav-tabs-active-link-hover-border-color:   @brand-primary;
+@nav-tabs-active-link-hover-bg:             @brand-primary;
+@nav-tabs-link-hover-border-color:          @brand-primary;
+.nav-tabs {
+  background: #2a2a2b;
+  > li > a {
+    color: #787878;
+    font-weight: bold;
+  }
+  > li > a:hover {
+    background: @brand-primary;
+  }
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: @brand-secondary;
+}
+
+
+.sortable {
+  margin-bottom: 1px;
+}
+
+.input-group-btn > .btn:hover {
+  z-index: inherit;
 }

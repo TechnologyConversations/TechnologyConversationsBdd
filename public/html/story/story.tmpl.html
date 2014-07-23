@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="{{storyFormClass}}">
+        <div class="col-md-4">
             <form class="form-horizontal" role="form" id="storyForm" name="storyForm" novalidate="novalidate">
                 <!--Story name-->
                 <div class="input-group input-group" ng-class="cssClass(storyForm.storyName)">
@@ -36,18 +36,20 @@
                             <button id="storyMetaPanel" type="button" class="panel-heading panel-title btn btn-block btn-info" ng-click="panels.meta = !panels.meta">
                                 Meta <span class="glyphicon " ng-class="{'glyphicon-chevron-down': !panels.meta, 'glyphicon-chevron-up': panels.meta}"></span>
                             </button>
-                            <div id="storyMetaPanelBody" ui-sortable ng-model="story.meta" class="panel-body" ng-show="panels.meta">
-                                <div class="sortable input-group" ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="cssClass(storyMetaForm.storyMeta)">
-                                    <span id="dragStoryMeta{{$index + 1}}" class="input-group-addon">
-                                        <span class="glyphicon glyphicon-move"></span>
-                                        @
-                                    </span>
-                                    <input id="storyMeta{{$index + 1}}" name="storyMeta" class="form-control" type="text" ng-model="meta.element" required="true">
-                                    <span class="input-group-btn">
-                                        <button id="removeStoryMeta{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.meta, $index)" type="button">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                    </span>
+                            <div id="storyMetaPanelBody" class="panel-body" ng-show="panels.meta">
+                                <div ui-sortable ng-model="story.meta">
+                                    <div class="sortable input-group" ng-repeat="meta in story.meta" ng-form="storyMetaForm" ng-class="cssClass(storyMetaForm.storyMeta)">
+                                        <span id="dragStoryMeta{{$index + 1}}" class="input-group-addon">
+                                            <span class="glyphicon glyphicon-move"></span>
+                                            @
+                                        </span>
+                                        <input id="storyMeta{{$index + 1}}" name="storyMeta" class="form-control" type="text" ng-model="meta.element" required="true">
+                                        <span class="input-group-btn">
+                                            <button id="removeStoryMeta{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(story.meta, $index)" type="button">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                                 <br>
                                 <div>
@@ -66,20 +68,20 @@
                             </button>
                             <div class="panel-body" id="storyNarrativePanelBody" ng-show="panels.narrative">
                                 <div ng-class="cssClass(storyForm.storyNarrativeInOrderTo)">
-                                    <label for="storyNarrativeInOrderTo" class="control-label col-sm-2">In order to</label>
-                                    <div class="col-sm-10">
+                                    <label for="storyNarrativeInOrderTo" class="control-label">In order to</label>
+                                    <div class="">
                                         <input id="storyNarrativeInOrderTo" name="storyNarrativeInOrderTo" class="form-control" type="text" ng-model="story.narrative.inOrderTo">
                                     </div>
                                 </div>
                                 <div ng-class="cssClass(storyForm.storyNarrativeAsA)">
-                                    <label for="storyNarrativeAsA" class="control-label col-sm-2">As a</label>
-                                    <div class="col-sm-10">
+                                    <label for="storyNarrativeAsA" class="control-label">As a</label>
+                                    <div class="">
                                         <input id="storyNarrativeAsA" name="storyNarrativeAsA" class="form-control" type="text" ng-model="story.narrative.asA">
                                     </div>
                                 </div>
                                 <div ng-class="cssClass(storyForm.storyNarrativeIWantTo)">
-                                    <label for="storyNarrativeIWantTo" class="control-label col-sm-2">I want to</label>
-                                    <div class="col-sm-10">
+                                    <label for="storyNarrativeIWantTo" class="control-label">I want to</label>
+                                    <div class="">
                                         <input id="storyNarrativeIWantTo" name="storyNarrativeIWantTo" class="form-control" type="text" ng-model="story.narrative.iWantTo">
                                     </div>
                                 </div>
@@ -167,13 +169,29 @@
                         </div>
                     </div>
                 </div>
-                <!--Scenarios-->
-                <div class="panel panel-primary">
-                    <button id="scenariosPanel" type="button" class="panel-heading panel-title btn btn-block btn btn-primary" ng-click="panels.scenarios = !panels.scenarios">
-                        Scenarios <span class="glyphicon " ng-class="{'glyphicon-chevron-down': !panels.scenarios, 'glyphicon-chevron-up': panels.scenarios}"></span>
-                    </button>
-                    <div id="storyScenariosPanelBody" class="panel-body" ng-show="panels.scenarios">
-                        <div class="panel panel-info" ng-repeat="(scenarioIndex, scenario) in story.scenarios" ng-form="storyScenarioForm" ng-class="cssClass(storyScenarioForm.scenarioTitle)">
+
+                <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+                    <div class="container-fluid">
+                        <div id="invalidForm" class="has-error" ng-show="storyForm.$dirty && storyForm.$invalid">
+                            <div class="help-block">Form is incorrect!</div>
+                        </div>
+                        <div class="navbar-form navbar-right">
+                            <button id="saveStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
+                            <button id="runStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
+                            <button id="revertStory" class="btn btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()" type="button">Revert Changes</button>
+                            <button id="deleteStory" class="btn btn-danger" ng-click="deleteStory()" ng-disabled="!canDeleteStory()" type="button">Delete Story</button>
+                        </div>
+                    </div>
+                </nav>
+            </form>
+        </div>
+
+        <div class="col-md-8">
+            <tabset>
+                <tab heading="Scenarios Editor" ng-click="activateRunnerTab.value=false">
+                    <!--Scenarios-->
+                    <div id="storyScenariosPanelBody">
+                        <div class="panel panel-info" ng-repeat="(scenarioIndex, scenario) in story.scenarios" ng-init="moreInfo = false;" ng-form="storyScenarioForm" ng-class="cssClass(storyScenarioForm.scenarioTitle)">
                             <div class="input-group">
                                 <span class="input-group-addon" ng-click="toggleScenario = !toggleScenario">
                                     Scenario
@@ -189,32 +207,6 @@
                                 </span>
                             </div>
                             <div ng-show="toggleScenario" class="panel-body">
-                                <!--Scenario meta-->
-                                <div>
-                                    <h4 id="storyScenarioMetaHeader">
-                                        Meta
-                                    </h4>
-                                </div>
-                                <div ui-sortable ng-model="scenario.meta">
-                                    <div class="sortable input-group" ng-repeat="meta in scenario.meta" ng-form="storyScenarioMetaForm" ng-class="cssClass(storyScenarioMetaForm.scenarioMeta)">
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-move"></span> @
-                                        </span>
-                                        <input id="scenario{{scenarioIndex + 1}}Meta{{$index + 1}}" name="scenarioMeta" class="form-control" type="text" ng-model="meta.element" required="true" ng-keypress="stepEnterKey($event, scenario.meta)" autofocus>
-                                        <span class="input-group-btn">
-                                            <button id="removeScenario{{scenarioIndex + 1}}Meta{{$index}}" class="btn btn-danger" ng-click="removeCollectionElement(scenario.meta, $index)" type="button">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="text-right">
-                                    <button id="addScenario{{scenarioIndex + 1}}Meta" class="btn btn-info" ng-click="addElement(scenario.meta, element)" type="button">
-                                        <span class="glyphicon glyphicon-plus"></span> ADD META
-                                    </button>
-                                </div>
-                                <hr>
                                 <!--Scenario steps-->
                                 <div>
                                     <h4 id="storyScenarioStepsHeader{{$index}}">
@@ -236,60 +228,88 @@
                                 </div>
                                 <br>
                                 <div class="text-right">
+                                    <button id="addScenario{{scenarioIndex + 1}}Step" class="btn btn-primary pull-left" ng-click="moreInfo = !moreInfo" type="button">
+                                        MORE INFO <span class="glyphicon" ng-class="{'glyphicon-chevron-down': !moreInfo, 'glyphicon-chevron-up': moreInfo}"></span>
+                                    </button>
                                     <button id="addScenario{{scenarioIndex + 1}}Step" class="btn btn-info" ng-click="addElement(scenario.steps, step)" type="button">
                                         <span class="glyphicon glyphicon-plus"></span> ADD STEP
                                     </button>
                                 </div>
-                                <hr>
-                                <!--Scenario examples-->
-                                <h4 id="storyScenarioExamplesHeader{{$index}}">Examples</h4>
-                                <div>
-                                    <textarea id="scenario{{scenarioIndex + 1}}Examples" rows="4" style="resize: vertical" name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
+
+                                <div class="row" collapse="!moreInfo">
+                                    <div class="col-md-6">
+                                        <hr>
+                                        <!--Scenario meta-->
+                                        <div>
+                                            <h4 id="storyScenarioMetaHeader">
+                                                Meta
+                                            </h4>
+                                        </div>
+                                        <div ui-sortable ng-model="scenario.meta">
+                                            <div class="sortable input-group" ng-repeat="meta in scenario.meta" ng-form="storyScenarioMetaForm" ng-class="cssClass(storyScenarioMetaForm.scenarioMeta)">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-move"></span> @
+                                                </span>
+                                                <input id="scenario{{scenarioIndex + 1}}Meta{{$index + 1}}" name="scenarioMeta" class="form-control" type="text" ng-model="meta.element" required="true" ng-keypress="stepEnterKey($event, scenario.meta)" autofocus>
+                                                <span class="input-group-btn">
+                                                    <button id="removeScenario{{scenarioIndex + 1}}Meta{{$index}}" class="btn btn-danger" ng-click="removeCollectionElement(scenario.meta, $index)" type="button">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <br ng-if="scenario.meta.length > 0">
+                                        <div class="text-right">
+                                            <button id="addScenario{{scenarioIndex + 1}}Meta" class="btn btn-info" ng-click="addElement(scenario.meta, element)" type="button">
+                                                <span class="glyphicon glyphicon-plus"></span> ADD META
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <hr>
+                                        <!--Scenario examples-->
+                                        <h4 id="storyScenarioExamplesHeader{{$index}}">Examples</h4>
+                                        <div>
+                                            <textarea id="scenario{{scenarioIndex + 1}}Examples" rows="4" style="resize: vertical" name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            &nbsp;
-                            <div class="pull-right">
+                            <div class="text-right">
                                 <button id="addScenario" class="btn btn-info" ng-click="addScenarioElement(story.scenarios)" type="button">
                                     <span class="glyphicon glyphicon-plus"></span> ADD SCENARIO
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-                    <div class="container-fluid">
-                        <div id="invalidForm" class="has-error" ng-show="storyForm.$dirty && storyForm.$invalid">
-                            <div class="help-block">Form is incorrect!</div>
+                </tab>
+
+                <tab heading="Runner ({{getStoryRunnerStatusText()}})" active="activateRunnerTab.value">
+                    <div ng-show="!storyRunnerVisible">
+                        Nothing to show. Please select "run" button on bottom or use top navigation. 
+                    </div>
+                    <div ng-hide="!storyRunnerVisible">
+                        <div id="runnerStatus" ng-class="getRunnerProgressCss()">
+                            <div ng-class="getRunnerStatusCss()"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>{{getStoryRunnerStatusText()}}</span>
+                            </div>
                         </div>
-                        <div class="navbar-form navbar-right">
-                            <button id="saveStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
-                            <button id="runStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
-                            <button id="revertStory" class="btn btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()" type="button">Revert Changes</button>
-                            <button id="deleteStory" class="btn btn-danger" ng-click="deleteStory()" ng-disabled="!canDeleteStory()" type="button">Delete Story</button>
+                        <div id="pendingSteps" ng-show="hasPendingSteps()">
+                            <h4>Pending Steps</h4>
+                            <div ng-repeat="step in pendingSteps">
+                                <div><a id="pendingStep{{index + 1}}" href="#" ng-click="clickPendingStep(step.text)">{{step.text}}</a></div>
+                            </div>
+                        </div>
+                        <div id="runnerReports">
+                            <div ng-repeat="report in reports">
+                                <div ng-include="getReportUrl(reports.id, report.path)"></div>
+                            </div>
                         </div>
                     </div>
-                </nav>
-            </form>
-        </div>
-        <div class="col-md-6" ng-hide="!storyRunnerVisible">
-            <div id="runnerStatus" ng-class="getRunnerProgressCss()">
-                <div ng-class="getRunnerStatusCss()"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                    <span>{{getStoryRunnerStatusText()}}</span>
-                </div>
-            </div>
-            <div id="pendingSteps" ng-show="hasPendingSteps()">
-                <h4>Pending Steps</h4>
-                <div ng-repeat="step in pendingSteps">
-                    <div><a id="pendingStep{{index + 1}}" href="#" ng-click="clickPendingStep(step.text)">{{step.text}}</a></div>
-                </div>
-            </div>
-            <div id="runnerReports">
-                <div ng-repeat="report in reports">
-                    <div ng-include="getReportUrl(reports.id, report.path)"></div>
-                </div>
-            </div>
+                </tab>
+            </tabset>
         </div>
     </div>
 </div>
