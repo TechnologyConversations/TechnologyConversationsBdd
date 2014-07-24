@@ -18,7 +18,8 @@ libraryDependencies ++= Seq(
   "org.seleniumhq.selenium" % "selenium-htmlunit-driver" % "2.37.1",
   "com.opera" % "operadriver" % "1.5",
   "com.github.detro.ghostdriver" % "phantomjsdriver" % "1.0.4",
-  "commons-io" % "commons-io" % "2.4"
+  "commons-io" % "commons-io" % "2.4",
+  "net.sourceforge.findbugs" % "annotations" % "1.3.2" % "test"
 )
 
 play.Project.playScalaSettings
@@ -28,3 +29,6 @@ org.scalastyle.sbt.ScalastylePlugin.Settings
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
+
+// steps jar to test classpath
+unmanagedBase in Test := baseDirectory.value / "steps"
