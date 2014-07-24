@@ -67,9 +67,6 @@ describe('storyModule', function() {
             it('should put stepTypes to the scope', function() {
                 expect(scope.stepTypes).toEqual(['GIVEN', 'WHEN', 'THEN']);
             });
-            it('should put storyFormClass to the scope', function() {
-                expect(scope.storyFormClass).toEqual('col-md-12');
-            });
             it('should set storyRunnerVisible to false', function() {
                 expect(scope.storyRunnerVisible).toEqual(false);
             });
