@@ -16,21 +16,23 @@ describe('runnerModule', function() {
 
     describe('runnerCtrl controller', function() {
 
-        var modalInstance, httpBackend;
+        var modalInstance, httpBackend, timeout;
         var pendingSteps = [
             "Given Web user is in the Browse Stories dialog",
             "Given something else"
         ];
 
         beforeEach(
-            inject(function($controller, $httpBackend, $http, $location) {
+            inject(function($controller, $httpBackend, $http, $location, $timeout) {
                 httpBackend = $httpBackend;
+                timeout = $timeout;
                 $controller('runnerCtrl', {
                     $scope: scope,
                     $modal: modal,
                     $modalInstance: modalInstance,
                     $http: $http,
-                    $location: $location
+                    $location: $location,
+                    $timeout: timeout
                 });
             })
         );
@@ -73,11 +75,11 @@ describe('runnerModule', function() {
         describe('run function', function() {
             var runResponse = {
                 status: 'OK',
+                id: "123",
                 reportsPath: '1234/view/reports.html'
             };
-            it('should set storyRunnerInProgress to true', function() {
-                scope.run({});
-                expect(scope.storyRunnerInProgress).toEqual(true);
+            beforeEach(function() {
+                spyOn(scope, 'getReports');
             });
             it('should set showRunnerProgress to true', function() {
                 scope.run({});
@@ -106,17 +108,17 @@ describe('runnerModule', function() {
                 httpBackend.flush();
                 expect(service.openErrorModal).toHaveBeenCalled();
             });
-            it('should set storyRunnerInProgress to false after success', function() {
+            it('should set storyRunnerInProgress to true after success', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
                 scope.run({});
                 httpBackend.flush();
-                expect(scope.storyRunnerInProgress).toEqual(false);
+                expect(scope.storyRunnerInProgress).toEqual(true);
             });
-            it('should set storyRunnerSuccess to true after success', function() {
+            it('should set storyRunnerSuccess to false after success', function() {
                 httpBackend.expectPOST('/runner/run.json').respond(runResponse);
                 scope.run({});
                 httpBackend.flush();
-                expect(scope.storyRunnerSuccess).toEqual(true);
+                expect(scope.storyRunnerSuccess).toEqual(false);
             });
             it('should set storyRunnerInProgress to false after failure', function() {
                 spyOn(service, 'openErrorModal');
@@ -139,6 +141,69 @@ describe('runnerModule', function() {
                 scope.run({});
                 httpBackend.flush();
                 expect(scope.reportsUrl).toEqual('/api/v1/reporters/get/' + runResponse.reportsPath);
+            });
+            it('should call the function getReports', function() {
+                httpBackend.expectPOST('/runner/run.json').respond(runResponse);
+                scope.run({});
+                httpBackend.flush();
+                expect(scope.getReports).toHaveBeenCalledWith(runResponse.id);
+            });
+        });
+
+        describe('getReports function', function() {
+            var reportsId = '123';
+            var responseJson;
+            beforeEach(function() {
+                spyOn(service, 'openErrorModal');
+                responseJson = {
+                    status: 'finished'
+                };
+            });
+            it('should request GET /api/v1/reporters/list/[REPORTS_ID]', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+            });
+            it('should call the openErrorModal function when the response is an error', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
+            });
+            it('should set the response to $scope.reports', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.reports).toEqual(responseJson);
+            });
+            it('should set showRunnerProgress to false when the response is an error', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.showRunnerProgress).toEqual(false);
+            });
+            it('should set showRunnerProgress to false when the response status is finished', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.showRunnerProgress).toEqual(false);
+            });
+            it('should set showRunnerProgress to true when the response status is NOT finished', function() {
+                responseJson.status = 'inProgress';
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.showRunnerProgress).toEqual(true);
+            });
+            it('should repeat the request until the response is an error', function() {
+                responseJson.status = 'inProgress';
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
+                timeout.flush();
+                httpBackend.flush();
+                timeout.flush();
             });
         });
 

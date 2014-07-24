@@ -281,7 +281,10 @@ describe('storyModule', function() {
         });
 
         describe('getReports function', function() {
-            var responseData = [{path: 'report1', content: 'Report 1 content'}, {path: 'report2', content: 'Report 2 content'}];
+            var responseData = {reports: [
+                {path: 'report1', content: 'Report 1 content'},
+                {path: 'report2', content: 'Report 2 content'}
+            ]};
             var reportsId = 123;
             var url = '/api/v1/reporters/list/' + reportsId;
             beforeEach(function() {
@@ -297,7 +300,7 @@ describe('storyModule', function() {
                 httpBackend.expectGET(url).respond(responseData);
                 scope.getReports(reportsId);
                 httpBackend.flush();
-                expect(scope.reports).toEqual(responseData);
+                expect(scope.reports).toEqual(responseData.reports);
             });
             it('should call setPendingSteps function', function() {
                 httpBackend.expectGET(url).respond(responseData);

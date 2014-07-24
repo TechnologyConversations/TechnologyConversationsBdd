@@ -15,16 +15,20 @@ object RunnerController extends Controller {
 
   val storiesDir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
-  def run: Action[AnyContent] = Action.async { implicit request =>
-    Future(run(request.body.asJson)).map(out => result(out))
+  def run: Action[AnyContent] = Action { implicit request =>
+    val reportsId = DateTime.now.getMillis
+    val json = request.body.asJson
+    val resultMap = validate(json, reportsId)
+    if (resultMap("status") == "OK") {
+      Future(runStories(json, reportsId))
+    }
+    result(resultMap)
   }
 
-  private[controllers] def run(jsonOption: Option[JsValue]): Map[String, String] = {
+  private[controllers] def validate(jsonOption: Option[JsValue], reportsId: Long): Map[String, String] = {
     lazy val json = jsonOption.get
     lazy val storyPaths = (json \ "storyPaths").asOpt[List[JsValue]]
     lazy val classesJson = (json \ "classes").asOpt[List[JsValue]]
-    lazy val compositesJsonOpt = (json \ "composites").asOpt[List[JsValue]]
-    lazy val groovyCompositesJsonOpt = (json \ "groovyComposites").asOpt[List[JsValue]]
     if (jsonOption.isEmpty) {
       noJsonResultMap
     } else if (storyPaths.isEmpty) {
@@ -32,31 +36,34 @@ object RunnerController extends Controller {
     } else if (classesJson.isEmpty || classesJson.get.size == 0) {
       noResultMap("classes")
     } else {
-      val reportsId = DateTime.now.getMillis
-      val fullStoryPaths = storyPaths.get.map { path =>
-        storiesDir + "/" + (path \ "path").as[String]
-      }
-      var status = "OK"
-      val runner = new Runner(
-        fullStoryPaths,
-        classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
-        groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
-        reportsRelativeDir + "/" + reportsId
-      )
-      try {
-        runner.run()
-      } catch {
-        case rsf: RunningStoriesFailed => status = "FAILED"
-        case e: Exception => status = "Error"
-      } finally {
-        // TODO Test
-        runner.cleanUp()
-      }
       Map(
-        "status" -> status,
+        "status" -> "OK",
         "id" -> reportsId.toString,
         "reportsPath" -> s"$reportsId/view/reports.html"
       )
+    }
+  }
+
+  private[controllers] def runStories(jsonOption: Option[JsValue], reportsId: Long) = {
+    val json = jsonOption.get
+    val storyPaths = (json \ "storyPaths").asOpt[List[JsValue]]
+    val classesJson = (json \ "classes").asOpt[List[JsValue]]
+    val compositesJsonOpt = (json \ "composites").asOpt[List[JsValue]]
+    val groovyCompositesJsonOpt = (json \ "groovyComposites").asOpt[List[JsValue]]
+    val fullStoryPaths = storyPaths.get.map { path =>
+      storiesDir + "/" + (path \ "path").as[String]
+    }
+    val runner = new Runner(
+      fullStoryPaths,
+      classesFromSteps(classesJson.get) ::: classesFromComposites(compositesJsonOpt),
+      groovyCompositesJsonOpt.getOrElse(List()).map(composite => (composite \ "path").as[String]),
+      reportsRelativeDir + "/" + reportsId
+    )
+    try {
+      runner.run()
+    } finally {
+      // TODO Test
+      runner.cleanUp()
     }
   }
 

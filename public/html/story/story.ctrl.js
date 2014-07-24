@@ -117,7 +117,7 @@ angular.module('storyModule', [])
         };
         $scope.getReports = function(reportsId) {
             $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
-                $scope.reports = response.data;
+                $scope.reports = response.data.reports;
                 $scope.reports.id = reportsId;
                 $scope.setPendingSteps($scope.reports);
             }, function (response) {

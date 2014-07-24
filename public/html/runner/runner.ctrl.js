@@ -1,5 +1,5 @@
 angular.module('runnerModule', [])
-    .controller('runnerCtrl', function($scope, $modal, $http, $location, TcBddService) {
+    .controller('runnerCtrl', function($scope, $modal, $http, $location, $timeout, TcBddService) {
         // TODO Test more than checking whether $modal.open was called
         $scope.openRunnerSelector = function() {
             return $modal.open({
@@ -47,29 +47,52 @@ angular.module('runnerModule', [])
         };
         $scope.run = function(json) {
             var reportsPrefix = '/api/v1/reporters/get/';
-            $scope.storyRunnerInProgress = true;
-            $scope.showRunnerProgress = true;
             $scope.reportsUrl = '';
+            $scope.storyRunnerSuccess = false;
+            $scope.showRunnerProgress = true;
             $http.post('/runner/run.json', json).then(function (response) {
                 var data = response.data;
                 if (data.status === 'OK') {
                     $scope.reportsUrl = reportsPrefix + data.reportsPath;
-                    $scope.storyRunnerInProgress = false;
-                    $scope.storyRunnerSuccess = true;
+                    $scope.storyRunnerInProgress = true;
+//                    $timeout(function() {
+//                        $scope.getReports(data.id);
+//                    }, 30000);
+                    $scope.getReports(data.id);
                 } else if (data.status === 'FAILED') {
                     $scope.reportsUrl = reportsPrefix + data.reportsPath;
                     $scope.storyRunnerInProgress = false;
-                    $scope.storyRunnerSuccess = false;
-                }
-                else {
+                } else {
+                    console.log('333' + data.status);
                     TcBddService.openErrorModal(data);
                 }
-                $scope.storyRunnerInProgress = false;
-                $scope.storyRunnerSuccess = true;
             }, function (response) {
                 $scope.storyRunnerInProgress = false;
                 $scope.storyRunnerSuccess = false;
                 TcBddService.openErrorModal(response.data);
+            });
+        };
+        $scope.getReports = function(reportsId) {
+            $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
+                $scope.reports = response.data;
+                if ($scope.reports.status !== 'finished') {
+                    $scope.showRunnerProgress = true;
+                    $timeout(function() {
+                        $scope.getReports(reportsId);
+                    }, 5000);
+                } else {
+                    $scope.showRunnerProgress = false;
+                }
+            }, function (response) {
+                if (response.data.message === 'ID is NOT correct') {
+                    console.log(response.data);
+                    $timeout(function() {
+                        $scope.getReports(reportsId);
+                    }, 5000);
+                } else {
+                    $scope.showRunnerProgress = false;
+                    TcBddService.openErrorModal(response.data);
+                }
             });
         };
         $scope.getRunnerStatusCss = function () {

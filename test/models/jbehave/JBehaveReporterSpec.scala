@@ -3,8 +3,9 @@ package models.jbehave
 import org.specs2.mutable.Specification
 import org.specs2.matcher.JsonMatchers
 import play.api.libs.json.Json
+import org.specs2.mock._
 
-class JBehaveReporterSpec extends Specification with JsonMatchers {
+class JBehaveReporterSpec extends Specification with JsonMatchers with Mockito {
 
   val id = "1394658780515"
   val reportsPath = "test/jbehave"
@@ -29,44 +30,51 @@ class JBehaveReporterSpec extends Specification with JsonMatchers {
 
   "JBehaveReported#steps" should {
 
-    val steps = JBehaveReporter().steps(s"$dirPath/$xml")
+    val steps = JBehaveReporter().steps(s"$dirPath/$xml", reportsPath, id)
 
     "return List" in {
-      steps must beAnInstanceOf[List[Map[String, String]]]
+      steps.get must beAnInstanceOf[List[Map[String, String]]]
     }
 
     "return List with Maps" in {
-      steps(0) must beAnInstanceOf[Map[String, String]]
+      steps.get(0) must beAnInstanceOf[Map[String, String]]
     }
 
     "return an element for each pending" in {
-      steps must haveSize(6)
+      steps.get must haveSize(6)
     }
 
     "return steps map with text and status keys" in {
-      steps(0) must haveKeys("text", "status")
+      steps.get(0) must haveKeys("text", "status")
     }
 
   }
 
   "JBehaveReporter#listJson" should {
 
+    val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
+
     "return empty if ID does not exist" in {
       JBehaveReporter().listJson(reportsPath, "xxx").isEmpty must beTrue
     }
 
     "return JSON with the report path" in {
-      val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
       json must */("path" -> html)
     }
 
+    "return JSON with status" in {
+      val s = spy(new JBehaveReporter)
+      val status = "someStatus"
+      s.status(reportsPath, id) returns status
+      val actualJson = s.listJson(reportsPath, id).get.toString()
+      actualJson must */("status" -> status)
+    }
+
     "return JSON with the list of step texts" in {
-      val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
       json must */("steps") */("text" -> "(Given|When|Then) .*".r)
     }
 
     "return JSON with the list of step statuses" in {
-      val json = JBehaveReporter().listJson(reportsPath, id).get.toString()
       json must */("steps") */("status" -> "pending")
       json must */("steps") */("status" -> "successful")
       json must */("steps") */("status" -> "notPerformed")
@@ -85,6 +93,20 @@ class JBehaveReporterSpec extends Specification with JsonMatchers {
         report must beSome
       }
 
+    }
+
+  }
+
+  "JBehaveReporter#status" should {
+
+    "return inProgress when view directory does not exist" in {
+      val status = JBehaveReporter().status(reportsPath, "non_existent_id")
+      status must equalTo("inProgress")
+    }
+
+    "return finished when view directory exists" in {
+      val status = JBehaveReporter().status(reportsPath, id)
+      status must equalTo("finished")
     }
 
   }

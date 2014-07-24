@@ -7,18 +7,24 @@ import scala.xml.XML
 
 class JBehaveReporter {
 
+  val FINISHED = "finished"
+
   def listJson(reportsPath: String, id: String): Option[JsValue] = {
-    val reports = list(reportsPath, id)
+    val realReportsPath = {
+      if (new File(s"$reportsPath/$id").exists()) {
+        reportsPath
+      } else {
+        s"target/$reportsPath"
+      }
+    }
+    val reports = list(realReportsPath, id)
     if (reports.isEmpty) None
     else {
-      val reportsMap = reports.get.map { report =>
-        val stepsReportPath = s"$reportsPath/$id/$report".replace(".html", ".xml")
-        Map(
-          "path" -> Json.toJson(report),
-          "steps" -> Json.toJson(steps(stepsReportPath))
-        )
-      }
-      Some(Json.toJson(reportsMap))
+      val data = Map(
+        "status" -> Json.toJson(status(realReportsPath, id)),
+        "reports" -> Json.toJson(reportsMap(realReportsPath, id, reports.get))
+      )
+      Some(Json.toJson(data))
     }
   }
 
@@ -39,13 +45,33 @@ class JBehaveReporter {
     )
   }
 
-  private[jbehave] def steps(reportPath: String) = {
-    val xml = XML.loadFile(new File(reportPath))
-    (xml \ "scenario" \ "step").map(node => Map(
-      "text" -> node.text,
-      "status" -> (node \ "@outcome").text
-    ))
+  private[jbehave] def steps(reportPath: String, reportsPath: String, id: String) = {
+    if (status(reportsPath, id).equals(FINISHED)) {
+      val xml = XML.loadFile(new File(reportPath))
+      Some((xml \ "scenario" \ "step").map(node => Map(
+        "text" -> node.text,
+        "status" -> (node \ "@outcome").text
+      )))
+    } else {
+      None
+    }
   }
+
+  private[jbehave] def status(reportsPath: String, id: String): String = {
+    if (new File(s"$reportsPath/$id/view").exists()) FINISHED
+    else "inProgress"
+  }
+
+  private[jbehave] def reportsMap(reportsPath: String, id: String, reports: List[String]) = {
+    reports.map { report =>
+      val stepsReportPath = s"$reportsPath/$id/$report".replace(".html", ".xml")
+      Map(
+        "path" -> Json.toJson(report),
+        "steps" -> Json.toJson(steps(stepsReportPath, reportsPath, id).getOrElse(List()))
+      )
+    }
+  }
+
 
 }
 
