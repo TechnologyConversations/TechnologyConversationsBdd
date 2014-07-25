@@ -14,7 +14,7 @@ class JBehaveReporter {
       if (new File(s"$reportsPath/$id").exists()) {
         reportsPath
       } else {
-        s"target/$reportsPath"
+        new File(s"target/$reportsPath").getAbsolutePath
       }
     }
     println(realReportsPath)
@@ -37,8 +37,7 @@ class JBehaveReporter {
   }
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
-//    val path = new File(s"$reportsPath/$id").getAbsoluteFile
-    val dir = new File(s"$reportsPath/$id").getAbsoluteFile
+    val dir = new File(s"$reportsPath/$id")
     println(dir + " " + dir.exists())
     if (!dir.exists()) None
     else Some(dir.listFiles()
