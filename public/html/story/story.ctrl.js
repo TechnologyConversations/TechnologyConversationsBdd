@@ -1,5 +1,5 @@
 angular.module('storyModule', [])
-    .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, story, steps, groovyComposites, TcBddService) {
+    .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, $timeout, story, steps, groovyComposites, TcBddService) {
         $scope.pendingSteps = [];
         $scope.setAction = function() {
             if ($scope.story.name !== '') {
@@ -102,8 +102,6 @@ angular.module('storyModule', [])
                         groovyComposites: $scope.groovyComposites
                     };
                     $http.post('/runner/run.json', json).then(function (response) {
-                        $scope.storyRunnerSuccess = (response.data.status === 'OK');
-                        $scope.storyRunnerInProgress = false;
                         $scope.getReports(response.data.id);
                     }, function (response) {
                         $scope.storyRunnerSuccess = false;
@@ -117,13 +115,40 @@ angular.module('storyModule', [])
         };
         $scope.getReports = function(reportsId) {
             $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
-                $scope.reports = response.data.reports;
-                $scope.reports.id = reportsId;
-                $scope.setPendingSteps($scope.reports);
+                if (response.data.status !== 'finished') {
+                    $scope.storyRunnerInProgress = true;
+                    $timeout(function() {
+                        $scope.getReports(reportsId);
+                    }, 5000);
+                } else {
+                    var reports = response.data.reports;
+                    $scope.reports = reports;
+                    $scope.reports.id = reportsId;
+                    $scope.setPendingSteps(reports);
+                    $scope.storyRunnerInProgress = false;
+                    $scope.storyRunnerSuccess = $scope.isStoryRunnerSuccess(reports);
+                }
             }, function (response) {
-                // TODO Test
-                $scope.openErrorModal(response.data);
+                if (response.data.message === 'ID is NOT correct') {
+                    $timeout(function() {
+                        $scope.getReports(reportsId);
+                    }, 5000);
+                } else {
+                    $scope.storyRunnerInProgress = false;
+                    TcBddService.openErrorModal(response.data);
+                }
             });
+        };
+        $scope.isStoryRunnerSuccess = function(reports) {
+            var result = true;
+            reports.forEach(function(report) {
+                report.steps.forEach(function(step) {
+                    if (step.status !== 'successful' && step.status !== 'pending' && step.status !== 'notPerformed') {
+                        result = false;
+                    }
+                });
+            });
+            return result;
         };
         $scope.getReportUrl = function(reportsId, report) {
             return '/api/v1/reporters/get/' + reportsId + '/' + report;
@@ -151,6 +176,7 @@ angular.module('storyModule', [])
                 });
             });
         };
+
         $scope.hasPendingSteps = function() {
             return $scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0;
         };

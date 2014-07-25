@@ -164,23 +164,11 @@ describe('runnerModule', function() {
                 scope.getReports(reportsId);
                 httpBackend.flush();
             });
-            it('should call the openErrorModal function when the response is an error', function() {
-                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
-                scope.getReports(reportsId);
-                httpBackend.flush();
-                expect(service.openErrorModal).toHaveBeenCalled();
-            });
             it('should set the response to $scope.reports', function() {
                 httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.reports).toEqual(responseJson);
-            });
-            it('should set showRunnerProgress to false when the response is an error', function() {
-                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
-                scope.getReports(reportsId);
-                httpBackend.flush();
-                expect(scope.showRunnerProgress).toEqual(false);
             });
             it('should set showRunnerProgress to false when the response status is finished', function() {
                 httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
@@ -195,7 +183,19 @@ describe('runnerModule', function() {
                 httpBackend.flush();
                 expect(scope.showRunnerProgress).toEqual(true);
             });
-            it('should repeat the request until the response is an error', function() {
+            it('should call the openErrorModal function when the response is an error', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
+            });
+            it('should set showRunnerProgress to false when the response is an error', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.showRunnerProgress).toEqual(false);
+            });
+            it('should repeat the request until the response is an error and the message is NOT ID is NOT correct', function() {
                 responseJson.status = 'inProgress';
                 httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
                 scope.getReports(reportsId);
@@ -204,6 +204,15 @@ describe('runnerModule', function() {
                 timeout.flush();
                 httpBackend.flush();
                 timeout.flush();
+            });
+            it('should repeat the request when the response is an error and the message is ID is NOT correct', function() {
+                responseJson.message = 'ID is NOT correct';
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
+                timeout.flush();
+                httpBackend.flush();
             });
         });
 

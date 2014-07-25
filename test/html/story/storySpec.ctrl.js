@@ -5,7 +5,7 @@ describe('storyModule', function() {
     describe('storyCtrl controller', function() {
 
         var scope, modal, form, story, httpBackend;
-        var service;
+        var service, timeout;
         var steps = {status: 'OK'};
         var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
@@ -28,9 +28,10 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $compile, TcBddService) {
+            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $timeout, $compile, TcBddService) {
                 service = TcBddService;
                 scope = $rootScope.$new();
+                timeout = $timeout;
                 story = {
                     name: 'this is a story name',
                     path: 'this/is/path'
@@ -43,7 +44,8 @@ describe('storyModule', function() {
                     $cookieStore: $cookieStore,
                     story: story,
                     steps: steps,
-                    groovyComposites: groovyComposites
+                    groovyComposites: groovyComposites,
+                    $timeout: timeout
                 });
                 httpBackend = $httpBackend;
                 form = $compile('<form>')(scope);
@@ -281,45 +283,114 @@ describe('storyModule', function() {
         });
 
         describe('getReports function', function() {
-            var responseData = {reports: [
-                {path: 'report1', content: 'Report 1 content'},
-                {path: 'report2', content: 'Report 2 content'}
-            ]};
+            var responseJson;
             var reportsId = 123;
             var url = '/api/v1/reporters/list/' + reportsId;
             beforeEach(function() {
-                spyOn(scope, 'setPendingSteps');
-                spyOn(scope, 'openErrorModal');
+                spyOn(scope, 'setPendingSteps').and.returnValue(true);
+                spyOn(service, 'openErrorModal');
+                spyOn(scope, 'isStoryRunnerSuccess');
+                responseJson = {
+                    status: 'finished',
+                    reports: [
+                        {path: 'report1', steps: [{status: 'successful'}, {status: 'pending'}]},
+                        {path: 'report2', steps: [{status: 'notPerformed'}]}
+                    ]
+                };
             });
             it('should call GET /reporters/list/[REPORTS_ID]', function() {
-                httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET(url).respond(responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
             });
             it('should assign GET response to reports', function() {
-                httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET(url).respond(responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
-                expect(scope.reports).toEqual(responseData.reports);
+                expect(scope.reports).toEqual(responseJson.reports);
             });
             it('should call setPendingSteps function', function() {
-                httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET(url).respond(responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.setPendingSteps).toHaveBeenCalled();
             });
-            it('should call openErrorModal in case of bad request', function() {
-                httpBackend.expectGET(url).respond(400, responseData);
-                scope.getReports(reportsId);
-                httpBackend.flush();
-                expect(scope.openErrorModal).toHaveBeenCalled();
-            });
             it('should add reportsId to reports', function() {
-                httpBackend.expectGET(url).respond(responseData);
+                httpBackend.expectGET(url).respond(responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
                 expect(scope.reports.id).toBeDefined();
                 expect(scope.reports.id).toEqual(reportsId);
+            });
+            it('should set storyRunnerInProgress to false when the response status is finished', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.storyRunnerInProgress).toEqual(false);
+            });
+            it('should set storyRunnerInProgress to true when the response status is NOT finished', function() {
+                responseJson.status = 'inProgress';
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.storyRunnerInProgress).toEqual(true);
+            });
+            it('should call the openErrorModal function when the response is an error', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(service.openErrorModal).toHaveBeenCalled();
+            });
+            it('should set storyRunnerInProgress to false when the response is an error', function() {
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, {});
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.storyRunnerInProgress).toEqual(false);
+            });
+            it('should repeat the request until the response is an error and the message is NOT ID is NOT correct', function() {
+                responseJson.status = 'inProgress';
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
+                timeout.flush();
+                httpBackend.flush();
+                timeout.flush();
+            });
+            it('should repeat the request when the response is an error and the message is ID is NOT correct', function() {
+                responseJson.message = 'ID is NOT correct';
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
+                timeout.flush();
+                httpBackend.flush();
+            });
+            it('should assign the isStoryRunnerSuccess function to storyRunnerSuccess when finished', function() {
+                httpBackend.expectGET(url).respond(responseJson);
+                scope.getReports(reportsId);
+                httpBackend.flush();
+                expect(scope.isStoryRunnerSuccess).toHaveBeenCalledWith(responseJson.reports);
+                expect(scope.storyRunnerSuccess).toEqual(scope.isStoryRunnerSuccess());
+            });
+        });
+
+        describe('isStoryRunnerSuccess function', function() {
+            it('should return true when all statuses are successful, pending or notPerformed', function() {
+                var reports = [
+                    {steps: [{status: 'successful'}, {status: 'pending'}]},
+                    {steps: [{status: 'notPerformed'}]}
+                ];
+                var result = scope.isStoryRunnerSuccess(reports);
+                expect(result).toEqual(true);
+            });
+            it('should return false when at least one of statuses is NOT successful, pending or notPerformed', function() {
+                var reports = [
+                    {steps: [{status: 'failed'}, {status: 'pending'}]},
+                    {steps: [{status: 'notPerformed'}]}
+                ];
+                var result = scope.isStoryRunnerSuccess(reports);
+                expect(result).toEqual(false);
             });
         });
 

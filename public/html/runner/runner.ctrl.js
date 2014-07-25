@@ -55,15 +55,11 @@ angular.module('runnerModule', [])
                 if (data.status === 'OK') {
                     $scope.reportsUrl = reportsPrefix + data.reportsPath;
                     $scope.storyRunnerInProgress = true;
-//                    $timeout(function() {
-//                        $scope.getReports(data.id);
-//                    }, 30000);
                     $scope.getReports(data.id);
                 } else if (data.status === 'FAILED') {
                     $scope.reportsUrl = reportsPrefix + data.reportsPath;
                     $scope.storyRunnerInProgress = false;
                 } else {
-                    console.log('333' + data.status);
                     TcBddService.openErrorModal(data);
                 }
             }, function (response) {
@@ -85,7 +81,6 @@ angular.module('runnerModule', [])
                 }
             }, function (response) {
                 if (response.data.message === 'ID is NOT correct') {
-                    console.log(response.data);
                     $timeout(function() {
                         $scope.getReports(reportsId);
                     }, 5000);
