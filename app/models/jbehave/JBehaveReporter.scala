@@ -17,8 +17,6 @@ class JBehaveReporter {
         new File(s"target/$reportsPath").getAbsolutePath
       }
     }
-    println(realReportsPath)
-    println(new File(realReportsPath).getAbsolutePath)
     val reports = list(realReportsPath, id)
     if (reports.isEmpty) None
     else {
@@ -38,7 +36,6 @@ class JBehaveReporter {
 
   private[jbehave] def list(reportsPath: String, id: String): Option[List[String]] = {
     val dir = new File(s"$reportsPath/$id")
-    println(dir + " " + dir.exists())
     if (!dir.exists()) None
     else Some(dir.listFiles()
       .filter(_.getName.endsWith(".html"))

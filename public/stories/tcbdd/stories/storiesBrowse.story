@@ -14,7 +14,7 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given File /public/stories/testDirectory exists
+Given Directory public/stories/testDirectory exists
 When File is copied from public/stories/test/dummy.story to public/stories/testDirectory/testStory.story
 
 After:
