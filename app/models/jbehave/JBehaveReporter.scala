@@ -17,6 +17,8 @@ class JBehaveReporter {
         s"target/$reportsPath"
       }
     }
+    println(realReportsPath)
+    println(new File(realReportsPath).getAbsolutePath)
     val reports = list(realReportsPath, id)
     if (reports.isEmpty) None
     else {

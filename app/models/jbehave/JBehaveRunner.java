@@ -86,7 +86,6 @@ public class JBehaveRunner extends JUnitStories {
         setStepsInstances(stepsClasses);
         setCompositePaths(compositePaths);
         setReportsPath(reportsPathValue);
-
         configuration = new MostUsefulConfiguration()
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withRelativeDirectory(getReportsPath())
