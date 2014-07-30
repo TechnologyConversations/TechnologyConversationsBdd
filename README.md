@@ -7,7 +7,19 @@ TC Build Assistant
 Running the application
 -----------------------
 
-To compile and run the application in production mode
+### To compile and run the application from the release
+
+Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
+Download the release from [https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases](https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases).
+
+```bash
+sbt stage
+target/universal/stage/bin/tcbdd
+```
+
+Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
+
+### To compile and run the application in production mode:
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
 
@@ -17,7 +29,9 @@ sbt stage
 target/universal/stage/bin/tcbdd
 ```
 
-To run the application in development mode (re-compiles with every change to the code):
+Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
+
+### To run the application in development mode (re-compiles with every change to the code):
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
 
@@ -25,6 +39,8 @@ Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](htt
 git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
 sbt run
 ```
+
+Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
 
 Development prerequisites
