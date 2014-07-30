@@ -8,9 +8,11 @@ import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.io.CodeLocations;
+import org.jbehave.core.io.LoadFromURL;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.CrossReference;
+import org.jbehave.core.reporters.FilePrintStreamFactory;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -19,15 +21,14 @@ import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.SilentStepMonitor;
 import play.Logger;
 
-import static java.io.File.separator;
-
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.io.File.separator;
 
 public class JBehaveRunner extends JUnitStories {
 
@@ -88,11 +89,13 @@ public class JBehaveRunner extends JUnitStories {
         setReportsPath(reportsPathValue);
         configuration = new MostUsefulConfiguration()
                 .useStoryReporterBuilder(new StoryReporterBuilder()
+                        .withPathResolver(new FilePrintStreamFactory.ResolveToSimpleName())
                         .withRelativeDirectory(getReportsPath())
                         .withDefaultFormats()
                         .withFormats(Format.CONSOLE, Format.HTML, Format.XML, Format.TXT)
                         .withCrossReference(new CrossReference()))
                 .useStepMonitor(new SilentStepMonitor())
+                .useStoryLoader(new LoadFromURL())
                 .useParameterControls(new ParameterControls().useDelimiterNamedParameters(true));
         EmbedderControls embedderControls = configuredEmbedder().embedderControls();
         embedderControls.useStoryTimeoutInSecs(storyTimeoutMinutes * secondsInMinute);
@@ -100,8 +103,8 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        String searchIn = CodeLocations.codeLocationFromPath("").getFile().replace("target/universal/stage/", "");
-        return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>());
+        String searchIn = CodeLocations.codeLocationFromPath("").getFile().replace("target/universal/stage/", "../../../");
+        return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>(), "file:");
     }
 
     @Override
