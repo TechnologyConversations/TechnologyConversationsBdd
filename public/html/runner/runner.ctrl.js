@@ -75,7 +75,7 @@ angular.module('runnerModule', [])
                     $scope.showRunnerProgress = true;
                     $timeout(function() {
                         $scope.getReports(reportsId);
-                    }, 5000);
+                    }, 15000);
                 } else {
                     $scope.showRunnerProgress = false;
                 }
@@ -83,7 +83,7 @@ angular.module('runnerModule', [])
                 if (response.data.message === 'ID is NOT correct') {
                     $timeout(function() {
                         $scope.getReports(reportsId);
-                    }, 5000);
+                    }, 15000);
                 } else {
                     $scope.showRunnerProgress = false;
                     TcBddService.openErrorModal(response.data);

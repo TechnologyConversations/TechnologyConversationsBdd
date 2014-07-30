@@ -6,17 +6,15 @@ import play.api.libs.json.JsValue
 import scala.collection.JavaConversions._
 import org.joda.time.DateTime
 import play.api.Play
-import org.jbehave.core.embedder.Embedder.RunningStoriesFailed
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import scala.concurrent.Future
-import java.io.File
 
 object RunnerController extends Controller {
 
   val storiesDir = Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
 
   def run: Action[AnyContent] = Action { implicit request =>
-    val reportsId = DateTime.now.getMillis
+    val reportsId = System.currentTimeMillis()
     val json = request.body.asJson
     val resultMap = validate(json, reportsId)
     if (resultMap("status") == "OK") {
@@ -62,7 +60,6 @@ object RunnerController extends Controller {
     try {
       runner.run()
     } finally {
-      // TODO Test
       runner.cleanUp()
     }
   }

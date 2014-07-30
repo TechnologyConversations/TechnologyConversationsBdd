@@ -4,6 +4,29 @@ TC Build Assistant
 [![Build Status](https://travis-ci.org/TechnologyConversations/TechnologyConversationsBdd.png?branch=master)](https://travis-ci.org/TechnologyConversations/TechnologyConversationsBdd)
 
 
+Running the application
+-----------------------
+
+To compile and run the application in production mode
+
+Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
+
+```bash
+git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
+sbt stage
+target/universal/stage/bin/tcbdd
+```
+
+To run the application in development mode (re-compiles with every change to the code):
+
+Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
+
+```bash
+git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
+sbt run
+```
+
+
 Development prerequisites
 -------------------------
 
@@ -69,23 +92,6 @@ To continuously run gulp js task, execute:
 
 ```bash
 gulp watch
-```
-
-
-Running the application
------------------------
-
-To run the application in development mode (re-compiles with every change to the code):
-
-```bash
-sbt run
-```
-
-To compile and run the application in production mode
-
-```bash
-sbt stage
-target/universal/stage/bin/tcbdd
 ```
 
 
