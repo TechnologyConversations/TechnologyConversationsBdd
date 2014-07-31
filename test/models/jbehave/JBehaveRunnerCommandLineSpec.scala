@@ -2,12 +2,11 @@ package models.jbehave
 
 import com.technologyconversations.bdd.steps.{CommonSteps, FileSteps, WebSteps}
 import models.RunnerClass
-import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import scala.collection.JavaConversions._
 import java.io.File
 
-class JBehaveRunnerCommandLineSpec extends Specification with Mockito {
+class JBehaveRunnerCommandLineSpec extends Specification {
 
   val runner = new JBehaveRunnerCommandLine()
   val storyPath1 = "path/to/my.story"
@@ -25,9 +24,8 @@ class JBehaveRunnerCommandLineSpec extends Specification with Mockito {
       storyPathsList.toList must containTheSameElementsAs(Seq(storyPath1, storyPath2))
     }
 
-    "return the list with public/stories/**/*.story when the array is empty" in {
-      val storyPathsArray: Array[String] = Array()
-      val storyPathsList = runner.getStoryPaths(storyPathsArray)
+    "return the list with public/stories/**/*.story when the array is null" in {
+      val storyPathsList = runner.getStoryPaths(null)
       storyPathsList must beAnInstanceOf[java.util.List[String]]
       storyPathsList.toList must containTheSameElementsAs(Seq("public/stories/**/*.story"))
     }
@@ -52,14 +50,13 @@ class JBehaveRunnerCommandLineSpec extends Specification with Mockito {
       stepsClassesList.toList must containTheSameElementsAs(expected)
     }
 
-    "return the list with default steps classes when the array is empty" in {
-      val stepClassesArray: Array[String] = Array()
+    "return the list with default steps classes when the array is null" in {
       val expected = List(
         RunnerClass(classOf[CommonSteps].getName(), defaultParamsMap),
         RunnerClass(classOf[WebSteps].getName(), defaultParamsMap),
         RunnerClass(classOf[FileSteps].getName(), defaultParamsMap)
       )
-      val stepsClassesList = runner.getStepClasses(stepClassesArray, paramsMap)
+      val stepsClassesList = runner.getStepClasses(null, paramsMap)
       stepsClassesList must beAnInstanceOf[java.util.List[String]]
       stepsClassesList.toList must containTheSameElementsAs(expected)
     }
@@ -71,6 +68,17 @@ class JBehaveRunnerCommandLineSpec extends Specification with Mockito {
         RunnerClass(class2Name, defaultParamsMap)
       )
       val stepsClassesList = runner.getStepClasses(stepClassesArray, paramsMap)
+      stepsClassesList must beAnInstanceOf[java.util.List[String]]
+      stepsClassesList.toList must containTheSameElementsAs(expected)
+    }
+
+    "set parameters as empty map when null" in {
+      val stepClassesArray = Array(class1Name, class2Name)
+      val expected = List(
+        RunnerClass(class1Name, Map()),
+        RunnerClass(class2Name, Map())
+      )
+      val stepsClassesList = runner.getStepClasses(stepClassesArray, null)
       stepsClassesList must beAnInstanceOf[java.util.List[String]]
       stepsClassesList.toList must containTheSameElementsAs(expected)
     }
@@ -87,8 +95,7 @@ class JBehaveRunnerCommandLineSpec extends Specification with Mockito {
     }
 
     "return the list with composites/**/*.groovy when the array is empty" in {
-      val storyPathsArray: Array[String] = Array()
-      val storyPathsList = runner.getCompositesPaths(storyPathsArray)
+      val storyPathsList = runner.getCompositesPaths(null)
       storyPathsList must beAnInstanceOf[java.util.List[String]]
       storyPathsList.toList must containTheSameElementsAs(Seq("composites/**/*.groovy"))
     }

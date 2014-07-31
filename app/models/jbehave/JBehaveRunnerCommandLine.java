@@ -74,14 +74,16 @@ public class JBehaveRunnerCommandLine {
 
     private Map<String, String> convertPropertiesToMap(Properties properties) {
         Map<String, String> map = new HashMap<>();
-        for (String name : properties.stringPropertyNames()) {
-            map.put(name, properties.getProperty(name));
+        if (properties != null) {
+            for (String name : properties.stringPropertyNames()) {
+                map.put(name, properties.getProperty(name));
+            }
         }
         return map;
     }
 
     public List<String> getStoryPaths(String[] paths) {
-        if (paths.length > 0) {
+        if (paths != null && paths.length > 0) {
             return Arrays.asList(paths);
         } else {
             return Arrays.asList("public/stories/**/*.story");
@@ -90,10 +92,13 @@ public class JBehaveRunnerCommandLine {
 
     public List<RunnerClass> getStepClasses(String[] classes, Map<String, String> params) {
         List<String> classNames;
-        if (classes.length > 0) {
+        if (classes != null && classes.length > 0) {
             classNames = Arrays.asList(classes);
         } else {
             classNames = defaultStepsClasses;
+        }
+        if (params == null) {
+            params = new HashMap<>();
         }
         List<RunnerClass> list = new ArrayList<>();
         for (String className : classNames) {
@@ -103,7 +108,7 @@ public class JBehaveRunnerCommandLine {
     }
 
     public List<String> getCompositesPaths(String[] paths) {
-        if (paths.length > 0) {
+        if (paths != null && paths.length > 0) {
             return Arrays.asList(paths);
         } else {
             return Arrays.asList("composites/**/*.groovy");
