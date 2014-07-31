@@ -1,92 +1,113 @@
 package models.jbehave;
 
+import com.technologyconversations.bdd.steps.CommonSteps;
 import com.technologyconversations.bdd.steps.FileSteps;
 import com.technologyconversations.bdd.steps.WebSteps;
 import models.RunnerClass;
+import org.apache.commons.cli.*;
 
-import java.util.HashMap;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.io.File;
 
 public class JBehaveRunnerCommandLine {
 
+    final private List<String> defaultStepsClasses = Arrays.asList(
+        CommonSteps.class.getName(),
+        WebSteps.class.getName(),
+        FileSteps.class.getName()
+    );
+
     // TODO Test
     public static void main(String[] args) throws Throwable {
         JBehaveRunnerCommandLine cpRunner = new JBehaveRunnerCommandLine();
-        cpRunner.verifyArguments(args);
-        JBehaveRunner runner = cpRunner.getRunner(args);
-//        try {
-//            runner.run();
-//        } catch (Throwable e) {
-//            throw e;
-//        } finally {
-//            runner.cleanUp();
-//        }
+        if (!cpRunner.isHelp(args)) {
+            JBehaveRunner runner = cpRunner.getRunner(args);
+            try {
+                runner.run();
+                runner.cleanUp();
+            } catch (Throwable e) {
+                runner.cleanUp();
+                throw e;
+            }
+        }
     }
 
-    public JBehaveRunner getRunner(String args[]) throws Exception {
+    protected boolean isHelp(String[] args) throws ParseException {
+        CommandLineParser parser = new BasicParser();
+        CommandLine cmd = parser.parse(getOptions(), args);
+        if (cmd.hasOption("help")) {
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("JBehaveRunnerCommandLine", getOptions());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected Options getOptions() {
+        Options options = new Options();
+        options.addOption("h", "help", false, "Prints this message");
+        options.addOption("s", "story_path", true, "Specifies path to the story. Ant format can be used in each path. If not specified, default path public/stories/**/*.story is used. Multiple values are allowed.");
+        options.addOption("c", "steps_class", true, "Specifies steps class. If not specified, default classes are used. Multiple values are allowed.");
+        Option params = OptionBuilder.withArgName("param=value")
+                .hasArgs(2)
+                .withValueSeparator()
+                .withDescription("Specifies steps parameters as key/value pairs. Comma separated list of steps parameters. Multiple values are allowed.")
+                .create("P");
+        options.addOption(params);
+        options.addOption("o", "composites_path", true, "Specifies path to the composite. Comma separated list of composite classes paths. Ant format can be used in each path. If not specified, default path composites/**/*.groovy is used. Multiple values are allowed.");
+        options.addOption("r", "reports_path", true, "Path to the reports directory. Ant format can be used. If not specified, default path public/jbehave is used.");
+        return options;
+    }
+
+    public JBehaveRunner getRunner(String[] args) throws Exception {
+        CommandLineParser parser = new BasicParser();
+        CommandLine cmd = parser.parse(getOptions(), args);
         return new JBehaveRunner(
-            getStoryPaths(args[0]),
-            getStepClasses(args[1], args[2]),
-            getCompositesPaths(args[3]),
-            getUniqueReportsPath(args[4])
+            getStoryPaths(cmd.getOptionValues("story_path")),
+            getStepClasses(cmd.getOptionValues("steps_class"), convertPropertiesToMap(cmd.getOptionProperties("P"))),
+            getCompositesPaths(cmd.getOptionValues("composites_path")),
+            getUniqueReportsPath(cmd.getOptionValue("reports_path"))
         );
     }
 
-    public void verifyArguments(String[] args) {
-        if (args.length < 5) {
-            StringBuilder message = new StringBuilder();
-            message.append("JBehaveRunner [STORY_PATHS] [STEPS_CLASSES] [STEPS_PARAMS] [COMPOSITES_PATH] [REPORTS_PATH]");
-            message.append("\nSTORY_PATHS: Comma separated list of story paths. Ant format can be used in each path. If empty, default path is used.");
-            message.append("\nSTEPS_CLASSES: Comma separated list of steps classes. If empty, default classes are used.");
-            message.append("\nSTEPS_PARAMS: Comma separated list of steps classes. If empty, default classes are used.");
-            message.append("\nCOMPOSITES_PATH: Comma separated list of composite classes paths. Ant format can be used in each path. If empty, default paths are used.");
-            message.append("\nREPORTS_PATH: Path to the reports directory. Ant format can be used. If empty, default path is used.");
-            throw new IllegalArgumentException(message.toString());
-        }
-    }
-
-    public List<String> argToList(String arg, String defaultValue) {
-        if (arg == null || arg.isEmpty()) {
-            return Arrays.asList(defaultValue.split(","));
-        } else {
-            return Arrays.asList(arg.split(","));
-        }
-    }
-
-    public Map<String, String> argToMap(String arg) {
+    private Map<String, String> convertPropertiesToMap(Properties properties) {
         Map<String, String> map = new HashMap<>();
-        if (arg != null && !arg.isEmpty()) {
-            List<String> list = Arrays.asList(arg.split(","));
-            for (String param : list) {
-                String[] keyValue = param.split("=");
-                map.put(keyValue[0], keyValue[1]);
-            }
+        for (String name : properties.stringPropertyNames()) {
+            map.put(name, properties.getProperty(name));
         }
         return map;
     }
 
-    public List<String> getStoryPaths(String arg) {
-        return argToList(arg, "public/stories/**/*.story");
+    public List<String> getStoryPaths(String[] paths) {
+        if (paths.length > 0) {
+            return Arrays.asList(paths);
+        } else {
+            return Arrays.asList("public/stories/**/*.story");
+        }
     }
 
-    public List<RunnerClass> getStepClasses(String classes, String params) {
-        String defaultValue = WebSteps.class.getName() + "," + FileSteps.class.getName();
-        List<String> classNames = argToList(classes, defaultValue);
-        Map<String, String> paramsMap = argToMap(params);
+    public List<RunnerClass> getStepClasses(String[] classes, Map<String, String> params) {
+        List<String> classNames;
+        if (classes.length > 0) {
+            classNames = Arrays.asList(classes);
+        } else {
+            classNames = defaultStepsClasses;
+        }
         List<RunnerClass> list = new ArrayList<>();
         for (String className : classNames) {
-            list.add(RunnerClass.runnerClassFromJava(className, paramsMap));
+            list.add(RunnerClass.runnerClassFromJava(className, params));
         }
         return list;
     }
 
-    public List<String> getCompositesPaths(String arg) {
-        return argToList(arg, "composites/**/*.groovy");
+    public List<String> getCompositesPaths(String[] paths) {
+        if (paths.length > 0) {
+            return Arrays.asList(paths);
+        } else {
+            return Arrays.asList("composites/**/*.groovy");
+        }
     }
 
     protected String getUniqueReportsPath(String reportsPath) {

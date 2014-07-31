@@ -19,7 +19,7 @@ target/universal/stage/bin/tcbdd
 
 Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
-### To compile and run the application in production mode:
+### To compile and run the application in production mode
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
 
@@ -31,7 +31,7 @@ target/universal/stage/bin/tcbdd
 
 Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
-### To run the application in development mode (re-compiles with every change to the code):
+### To run the application in development mode (re-compiles with every change to the code)
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
 
