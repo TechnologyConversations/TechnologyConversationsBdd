@@ -41,6 +41,24 @@ sbt run
 Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
 
+Running the stories
+-------------------
+
+In cases when running stories from the Web application is not a good option, an alternative runner can be executed from the command line.
+
+To see the list of parameters, run the following:
+
+```bash
+sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --help"
+```
+
+An example (used as part of our Travis setup):
+
+```bash
+sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path public/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy"
+```
+
+
 Development prerequisites
 -------------------------
 

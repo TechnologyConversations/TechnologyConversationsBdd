@@ -94,10 +94,10 @@ class JBehaveRunnerCommandLineSpec extends Specification {
       storyPathsList.toList must containTheSameElementsAs(Seq(compositePath1))
     }
 
-    "return the list with composites/**/*.groovy when the array is empty" in {
+    "return the empty list when the array is empty" in {
       val storyPathsList = runner.getCompositesPaths(null)
       storyPathsList must beAnInstanceOf[java.util.List[String]]
-      storyPathsList.toList must containTheSameElementsAs(Seq("composites/**/*.groovy"))
+      storyPathsList.toList must containTheSameElementsAs(Seq())
     }
 
   }

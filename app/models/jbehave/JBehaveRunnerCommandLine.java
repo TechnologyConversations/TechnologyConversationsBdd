@@ -56,7 +56,7 @@ public class JBehaveRunnerCommandLine {
                 .withDescription("Specifies steps parameters as key/value pairs. Comma separated list of steps parameters. Multiple values are allowed.")
                 .create("P");
         options.addOption(params);
-        options.addOption("o", "composites_path", true, "Specifies path to the composite. Comma separated list of composite classes paths. Ant format can be used in each path. If not specified, default path composites/**/*.groovy is used. Multiple values are allowed.");
+        options.addOption("o", "composites_path", true, "Specifies path to the composite. Comma separated list of composite classes paths. Ant format can be used in each path. Multiple values are allowed.");
         options.addOption("r", "reports_path", true, "Path to the reports directory. Ant format can be used. If not specified, default path public/jbehave is used.");
         return options;
     }
@@ -111,7 +111,7 @@ public class JBehaveRunnerCommandLine {
         if (paths != null && paths.length > 0) {
             return Arrays.asList(paths);
         } else {
-            return Arrays.asList("composites/**/*.groovy");
+            return Collections.emptyList();
         }
     }
 

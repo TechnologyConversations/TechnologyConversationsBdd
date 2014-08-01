@@ -18,6 +18,7 @@ public class JBehaveRunnerAssistant extends JBehaveRunnerCommandLine {
                 cpRunner.stopFakeApp();
             } catch (Throwable e) {
                 runner.cleanUp();
+                cpRunner.stopFakeApp();
                 throw e;
             }
         }
