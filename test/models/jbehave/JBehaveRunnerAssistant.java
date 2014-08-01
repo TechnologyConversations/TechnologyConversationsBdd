@@ -9,19 +9,30 @@ public class JBehaveRunnerAssistant extends JBehaveRunnerCommandLine {
 
     public static void main(String[] args) throws Throwable {
         JBehaveRunnerAssistant cpRunner = new JBehaveRunnerAssistant();
+        System.out.println("111");
         if (!cpRunner.isHelp(args)) {
+            System.out.println("222");
             JBehaveRunner runner = cpRunner.getRunner(args);
+            System.out.println("333");
             try {
                 cpRunner.startFakeApp();
+                System.out.println("444");
                 runner.run();
-                runner.cleanUp();
+                System.out.println("444");
                 cpRunner.stopFakeApp();
+                System.out.println("555");
+                runner.cleanUp();
+                System.out.println("666");
+                System.exit(0);
             } catch (Throwable e) {
-                runner.cleanUp();
+                System.out.println("777");
                 cpRunner.stopFakeApp();
-                throw e;
+                System.out.println("888");
+                runner.cleanUp();
+                System.exit(1);
             }
         }
+        System.out.println("000");
     }
 
     public void startFakeApp() {
