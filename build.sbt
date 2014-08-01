@@ -2,6 +2,8 @@ import sbt.Attributed
 
 name := "tcbdd"
 
+scalaVersion := "2.11.2"
+
 version := "0.3.0-SNAPSHOT"
 
 unmanagedBase := baseDirectory.value / "composites"

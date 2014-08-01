@@ -1,7 +1,7 @@
 language: scala
 
 scala:
-- 2.10.3
+- 2.11.2
 
 notifications:
   email:
@@ -10,5 +10,5 @@ notifications:
 before_install: npm install -g grunt-cli
 
 script:
-  - sbt ++2.10.3 test
+  - sbt ++2.11.2 test
   - npm test
