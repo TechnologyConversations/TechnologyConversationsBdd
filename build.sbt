@@ -13,7 +13,7 @@ unmanagedBase := baseDirectory.value / "steps"
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.3.7" % "test",
   "com.github.nscala-time" %% "nscala-time" % "0.8.0",
-  "org.clapper" %% "classutil" % "1.0.2",
+  "org.clapper" % "classutil_2.10" % "1.0.2",
   "org.jbehave" % "jbehave-core" % "3.9.2",
   "org.jbehave" % "jbehave-groovy" % "3.9.2",
   "com.codeborne" % "selenide" % "2.8",
