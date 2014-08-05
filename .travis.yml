@@ -1,7 +1,7 @@
 language: scala
 
 scala:
-- 2.11.2
+- 2.10.3
 
 notifications:
   email:
@@ -10,6 +10,6 @@ notifications:
 before_install: npm install -g grunt-cli
 
 script:
-  - sbt ++2.11.2 test
+  - sbt ++2.10.3 test
   - npm test
   - sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path public/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy"
