@@ -111,12 +111,12 @@
                                 Lifecycle <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
                             <div id="storyLifecyclePanelBody" class="panel-body" ui-sortable ng-model="story.givenStories" ng-show="panels.lifecycle">
-                                <h3 id="storyLifecycleBeforeHeader">
+                                <h4 id="storyLifecycleBeforeHeader">
                                     Before:
                                     <button id="addStoryLifecycleBeforeStep" class="btn btn-info pull-right" ng-click="addElement(story.lifecycle.before, step)" type="button">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
-                                </h3>
+                                </h4>
                                 <div class="steps" ui-sortable ng-model="story.lifecycle.before">
                                     <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.before" ng-form="storyLifecycleBeforeForm" ng-class="cssClass(storyLifecycleBeforeForm.storyStepInput)">
                                         <span id="dragStoryLifecycleBeforeStep{{$index + 1}}" class="input-group-addon">
@@ -130,12 +130,12 @@
                                         </span>
                                     </div>
                                 </div>
-                                <h3 id="storyLifecycleAfterHeader">
+                                <h4 id="storyLifecycleAfterHeader">
                                     After:
                                     <button id="addStoryLifecycleAfterStep" class="btn btn-info pull-right" ng-click="addElement(story.lifecycle.after, step)" type="button">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
-                                </h3>
+                                </h4>
                                 <div class="steps" ui-sortable ng-model="story.lifecycle.after">
                                     <div class="sortable input-group" ng-repeat="stepElement in story.lifecycle.after" ng-form="storyLifecycleAfterForm" ng-class="cssClass(storyLifecycleAfterForm.storyStepInput)">
                                         <span id="dragStoryLifecycleAfterStep{{$index + 1}}" class="input-group-addon">
@@ -153,7 +153,6 @@
                         </div>
                     </div>
                 </div>
-                <!--Scenarios-->
                 <div class="panel panel-primary">
                     <button id="scenariosPanel" type="button" class="panel-heading panel-title btn btn-block btn-lg btn-primary" ng-click="panels.scenarios = !panels.scenarios">
                         Scenarios <span class="glyphicon glyphicon-chevron-down"></span>
@@ -177,12 +176,12 @@
                             <div ng-show="toggleScenario" class="panel-body">
                                 <!--Scenario meta-->
                                 <div>
-                                    <h3 id="storyScenarioMetaHeader">
+                                    <h4 id="storyScenarioMetaHeader">
                                         Meta:
                                         <button id="addScenario{{scenarioIndex + 1}}Meta" class="btn btn-info pull-right" ng-click="addElement(scenario.meta, element)" type="button">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
-                                    </h3>
+                                    </h4>
                                 </div>
                                 <div ui-sortable ng-model="scenario.meta">
                                     <div class="sortable input-group" ng-repeat="meta in scenario.meta" ng-form="storyScenarioMetaForm" ng-class="cssClass(storyScenarioMetaForm.scenarioMeta)">
@@ -199,12 +198,12 @@
                                 </div>
                                 <!--Scenario steps-->
                                 <div>
-                                    <h3 id="storyScenarioStepsHeader{{$index}}">
+                                    <h4 id="storyScenarioStepsHeader{{$index}}">
                                         Steps:
                                         <button id="addScenario{{scenarioIndex + 1}}Step" class="btn btn-info pull-right" ng-click="addElement(scenario.steps, step)" type="button">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
-                                    </h3>
+                                    </h4>
                                 </div>
                                 <div class="steps" ng-model="scenario.steps" ui-sortable>
                                     <div class="sortable input-group" ng-repeat="stepElement in scenario.steps" ng-form="storyScenarioStepForm" ng-class="cssClass(storyScenarioStepForm.scenarioStep)">
@@ -220,7 +219,7 @@
                                     </div>
                                 </div>
                                 <!--Scenario examples-->
-                                <h3 id="storyScenarioExamplesHeader{{$index}}">Examples:</h3>
+                                <h4 id="storyScenarioExamplesHeader{{$index}}">Examples:</h4>
                                 <div>
                                     <textarea id="scenario{{scenarioIndex + 1}}Examples" rows="4" style="resize: vertical" name="storyScenarioExamplesInput" class="form-control" ng-model="scenario.examplesTable"></textarea>
                                 </div>

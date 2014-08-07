@@ -5,6 +5,8 @@ var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
 var jasmine = require('gulp-jasmine');
 var jshint = require('gulp-jshint');
+var less = require('gulp-less');
+var minifyCss = require('gulp-minify-css');
 require('jshint-stylish');
 require('gulp-grunt')(gulp);
 
@@ -20,6 +22,15 @@ gulp.task('js', function() {
        .pipe(uglify())
        .pipe(sourcemaps.write())
        .pipe(gulp.dest('public'));
+});
+
+gulp.task('less', function() {
+    gulp.src(['less/bootstrap.less'])
+        .pipe(sourcemaps.init())
+        .pipe(less())
+        .pipe(minifyCss())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('public/stylesheets'))
 });
 
 gulp.task('test', function() {
