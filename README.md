@@ -1,6 +1,16 @@
 TC Build Assistant
 =====================================
 
+What is BDD Assistant?
+----------------------
+
+BDD Assistant is an open source project that pretends to facilitate the creation and execution of Behavior Driven Development (BDD) stories as a way to better define the requirements.
+More info can be found in the [BDD Asssitant site](http://bddassistant.com).
+
+Software is still in early stages.
+We are looking for early adopters to help us out.
+If you are interested in trying it out, please send an email to [viktor@farcic.com](mailto:viktor@farcic.com) for any help that you might need.
+
 
 Running the application
 -----------------------
@@ -11,7 +21,7 @@ Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](htt
 Download the release from [https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases](https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases).
 
 ```bash
-sbt stage
+sbt clean stage
 target/universal/stage/bin/tcbdd
 ```
 
@@ -23,7 +33,7 @@ Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](htt
 
 ```bash
 git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
-sbt stage
+sbt clean stage
 target/universal/stage/bin/tcbdd
 ```
 

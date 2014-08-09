@@ -121,14 +121,14 @@ Meta:
 
 When Web user clicks the element saveStory
 When Web user clicks the element storyPanel
-When Web user clicks the element scenario1Panel
-When Web user clicks the element scenario2Panel
-When Web user clicks the element scenario3Panel
-When Web user clicks the element scenario4Panel
 When Web user clicks the element scenario5Panel
+When Web user clicks the element scenario4Panel
+When Web user clicks the element scenario3Panel
+When Web user clicks the element scenario2Panel
+When Web user clicks the element scenario1Panel
 When Web user clicks the element runStory
 When Web user sets value 4 to the element fileStepsTimeout
-When Web user sets value 1024,700 to the element webStepsWidthHeight
+When Web user sets value 960,540 to the element webStepsWidthHeight
 When Web user sets value http://localhost:9000/ to the element webStepsUrl
 When Web user selects Google Chrome from the dropdown list webStepsBrowserOption
 When Web user sets value 4 to the element webStepsTimeout
@@ -143,6 +143,7 @@ Meta:
 
 Given Web timeout is 60 seconds
 Then Web element runnerStatus should have text Story run was successful
+Given Web timeout is 60 seconds
 Then Web element runnerStatus should have text Story run failed
 
 Examples:
