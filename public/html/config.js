@@ -2,7 +2,10 @@ angular.module('configModule', [])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
-            // TODO Remove duplication in resolve
+            .when('/page/tour/', {
+                templateUrl: '/assets/html/tour/tour.tmpl.html',
+                controller: 'tourCtrl'
+            })
             .when('/page/stories/new/', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
@@ -94,8 +97,7 @@ angular.module('configModule', [])
                 templateUrl: '/assets/html/login/loginWelcome.tmpl.html',
                 controller: 'loginWelcomeCtrl'
             })
-            // TODO Test
             .otherwise({
-                redirectTo: '/page/stories/new'
+                redirectTo: '/page/tour'
             });
     });

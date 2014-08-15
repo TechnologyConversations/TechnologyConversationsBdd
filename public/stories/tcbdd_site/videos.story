@@ -29,7 +29,7 @@ Given Web user is in the New Story screen
 When Web user sets value login to the element storyName
 When Web user clicks the element storyPanel
 When Web user clicks the element storyNarrativePanel
-When Web user sets value be able to provide personalized experience to the element storyNarrativeInOrderTo
+When Web user sets value have personalized experience to the element storyNarrativeInOrderTo
 When Web user sets value application user to the element storyNarrativeAsA
 When Web user sets value be able to identify myself to the element storyNarrativeIWantTo
 When Web user clicks the element storyLifecyclePanel
@@ -88,7 +88,7 @@ Meta:
 
 
 When Web user clicks the element addScenario
-When Web user sets value Should have password required to the element scenario4Title
+When Web user sets value Should redirect to the confirmation screen to the element scenario4Title
 When Web user clicks the element addScenario4Step
 When Web user sets value Given Web user myUsername with password myPassword exists to the element scenario4Step1
 When Web user clicks the element addScenario4Step
@@ -121,14 +121,9 @@ Meta:
 
 When Web user clicks the element saveStory
 When Web user clicks the element storyPanel
-When Web user clicks the element scenario5Panel
-When Web user clicks the element scenario4Panel
-When Web user clicks the element scenario3Panel
-When Web user clicks the element scenario2Panel
-When Web user clicks the element scenario1Panel
 When Web user clicks the element runStory
 When Web user sets value 4 to the element fileStepsTimeout
-When Web user sets value 960,540 to the element webStepsWidthHeight
+When Web user sets value 1360,700 to the element webStepsWidthHeight
 When Web user sets value http://localhost:9000/ to the element webStepsUrl
 When Web user selects Google Chrome from the dropdown list webStepsBrowserOption
 When Web user sets value 4 to the element webStepsTimeout

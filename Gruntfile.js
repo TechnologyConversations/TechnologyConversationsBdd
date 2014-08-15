@@ -18,6 +18,7 @@ module.exports = function(grunt) {
                     'public/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                     'public/bower_components/angular-ui-sortable/sortable.min.js',
                     'public/bower_components/angular-mocks/angular-mocks.js',
+                    'public/bower_components/ng-joyride/ng-joyride.js',
                     'public/html/**/*.js'
                 ],
                 options: {

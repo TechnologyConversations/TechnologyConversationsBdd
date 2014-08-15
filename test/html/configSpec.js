@@ -13,13 +13,23 @@ describe('configModule controllers', function() {
 
     describe('config controller', function() {
 
+        describe('/page/tour/ page', function() {
+            var path = '/page/tour/';
+            it('should use the template /assets/html/tour.tmpl.html', function() {
+                expect(route.routes[path].templateUrl).toEqual('/assets/html/tour/tour.tmpl.html');
+            });
+            it('should use the controller tourCtrl', function() {
+                expect(route.routes[path].controller).toEqual('tourCtrl');
+            });
+        });
+
         describe('/page/stories/new/ path', function() {
             var path = '/page/stories/new/';
             it('should use the template /assets/html/story/story.tmpl.html', function() {
                 expect(route.routes[path].templateUrl).toEqual('/assets/html/story/story.tmpl.html');
             });
             it('should use the controller storyCtrl', function() {
-                expect(route.routes[path].controller).toBe('storyCtrl');
+                expect(route.routes[path].controller).toEqual('storyCtrl');
             });
         });
 
@@ -80,6 +90,12 @@ describe('configModule controllers', function() {
             });
             it('should use the controller loginWelcomeCtrl', function() {
                 expect(route.routes[path].controller).toBe('loginWelcomeCtrl');
+            });
+        });
+
+        describe('unknown route', function() {
+            it('should redirect to /page/tour/', function() {
+                expect(route.routes[null].redirectTo).toEqual('/page/tour');
             });
         });
 

@@ -8,18 +8,20 @@
     <script src="/assets/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/assets/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/assets/bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="/assets/bower_components/bootstrap/docs/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/assets/bower_components/angular-ui-sortable/sortable.min.js"></script>
+    <script src="/assets/bower_components/ng-joyride/ng-joyride.js"></script>
     <script src="/assets/app.js"></script>
-    <!--<link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">-->
+    <link href="/assets/stylesheets/ng-joyride.css" rel="stylesheet">
     <link href="/assets/stylesheets/bootstrap.css" rel="stylesheet">
     <link href="/assets/stylesheets/tcbdd.css" rel="stylesheet">
 </head>
 <body ng-controller="bodyCtrl">
 <header>
+    <div ng-joy-ride="startJoyRideFlag" config="configJoyRide" on-finish="onFinishJoyRide()" on-skip="onFinishJoyRide()"></div>
     <!--Top menu-->
-    <nav class="navbar navbar-inverse" role="navigation" ng-controller="topMenuController">
+    <nav id="menu" class="navbar navbar-inverse" role="navigation" ng-controller="topMenuController">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-default">

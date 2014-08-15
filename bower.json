@@ -1,20 +1,21 @@
 {
-    "name": "tcbdd-assistant",
-    "private": true,
-    "version": "0.0.1",
-    "description": "Technology Conversations: BDD Assistant",
-    "repository": "https://github.com/TechnologyConversations/TechnologyConversationsBdd",
-    "license": "Apache License 2",
-    "dependencies": {
-        "angular": "1.2.x",
-        "angular-resource": "1.2.x",
-        "angular-route": "1.2.x",
-        "angular-cookies": "1.2.x",
-        "angular-mocks": "1.2.x",
-        "jquery": "2.1.x",
-        "bootstrap": "2.1.x",
-        "angular-bootstrap": "0.11.x",
-        "angular-ui-sortable": "0.12.x",
-        "jasmine": "2.0.x"
-    }
+  "name": "tcbdd-assistant",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Technology Conversations: BDD Assistant",
+  "repository": "https://github.com/TechnologyConversations/TechnologyConversationsBdd",
+  "license": "Apache License 2",
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-resource": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-cookies": "1.2.x",
+    "angular-mocks": "1.2.x",
+    "jquery": "2.1.x",
+    "bootstrap": "2.1.x",
+    "angular-bootstrap": "0.11.x",
+    "angular-ui-sortable": "0.12.x",
+    "jasmine": "2.0.x",
+    "ng-joyride": "~0.1.4"
+  }
 }
