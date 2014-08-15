@@ -29,6 +29,8 @@ angular.module('topMenuModule', [])
                 return 'Login';
             } else if (path.indexOf('/page/loginWelcome/') === 0) {
                 return 'Welcome';
+            } else if (path.indexOf('/page/tour/') === 0) {
+                return 'Home';
             } else {
                 return '';
             }

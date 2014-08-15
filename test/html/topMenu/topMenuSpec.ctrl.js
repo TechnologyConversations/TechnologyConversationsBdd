@@ -45,6 +45,10 @@ describe('topMenuModule module', function() {
                 location.path('/page/loginWelcome/');
                 expect(scope.getTitle()).toEqual("Welcome");
             });
+            it('should return Home when URL is /page/tour/', function() {
+                location.path('/page/tour/');
+                expect(scope.getTitle()).toEqual("Home");
+            });
         });
 
         describe('openStory function', function() {
