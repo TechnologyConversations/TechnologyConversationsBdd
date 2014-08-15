@@ -38,7 +38,7 @@ Meta:
 
 
 When Web user clicks the element pageTitle
-Then Web element pageTitle should have text New Story
+Then Web element pageTitle should have text Home
 
 Examples:
 
