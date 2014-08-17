@@ -1,8 +1,8 @@
 {
     "deleteStory": {
         "displayed": true,
-        "enabled": true,
-        "description": ""
+        "enabled": false,
+        "description": "This feature is temporarily disabled in the demo due to our hosting limitations."
     },
     "runStory": {
         "displayed": true,
