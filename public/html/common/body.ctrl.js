@@ -1,5 +1,5 @@
 angular.module('bodyModule', ['ngJoyRide'])
-    .controller('bodyCtrl', function ($scope) {
+    .controller('bodyCtrl', function ($scope, $http) {
         $scope.startJoyRideFlag = false;
         $scope.configJoyRide = [
             {
@@ -52,4 +52,14 @@ angular.module('bodyModule', ['ngJoyRide'])
         $scope.startJoyRide = function() {
             $scope.startJoyRideFlag = true;
         };
+        $scope.loadFeatures = function() {
+            $http.get('/api/v1/data/features').then(function(response) {
+                console.log("LOADED!!!!!!!!!!!!!!!");
+                $scope.features = response.data.data;
+            }, function() {
+                console.log("NOT LOADED!!!!!!!!!!!!!!!");
+                $scope.features = [];
+            });
+        };
+        $scope.loadFeatures();
     });

@@ -8,6 +8,9 @@ angular.module('topMenuModule', [])
                 resolve: {
                     data: function() {
                         return {};
+                    },
+                    features: function() {
+                        return {deleteStory: $scope.features.deleteStory};
                     }
                 }
             });

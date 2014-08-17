@@ -182,8 +182,9 @@ angular.module('storiesModule', [
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService) {
+    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService, features) {
         TcBddService.getStories($scope, '');
+        $scope.features = features;
         $scope.openDir = function(path) {
             TcBddService.openDir($scope, path);
         };

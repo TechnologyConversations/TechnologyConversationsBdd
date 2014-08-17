@@ -365,6 +365,11 @@ describe('storiesModule controllers', function() {
 
         var httpBackend, service, http;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
+        var deleteStory = {
+            "display": true,
+            "enable": false,
+            "description": ""
+        };
 
         beforeEach(
             inject(function($controller, $httpBackend, TcBddService, $http) {
@@ -377,7 +382,8 @@ describe('storiesModule controllers', function() {
                     $http: $http,
                     $modal: modal,
                     $modalInstance: modalInstance,
-                    $location: location
+                    $location: location,
+                    features: {deleteStory: deleteStory}
                 });
                 httpBackend = $httpBackend;
                 httpBackend.expectGET('/stories/list.json?path=').respond(filesWithoutPath);
@@ -433,6 +439,12 @@ describe('storiesModule controllers', function() {
             it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
                 expect('abc%').not.toMatch(service.classNamePattern());
                 expect('ab c').not.toMatch(service.classNamePattern());
+            });
+        });
+
+        describe('on load', function() {
+            it('deleteStory should be added to the scope', function() {
+                expect(scope.features.deleteStory).toEqual(deleteStory);
             });
         });
 
