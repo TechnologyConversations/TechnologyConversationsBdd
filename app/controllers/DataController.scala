@@ -10,7 +10,8 @@ import scala.io.Source
 object DataController extends Controller {
 
   def get(id: String): Action[AnyContent] = Action { implicit request =>
-    val path = s"public/data/$id.json"
+    val dataSuffix = System.getProperty("dataSuffix", "")
+    val path = s"public/data/$id$dataSuffix.json"
     val file = new File(path)
     if (file.exists()) {
       val jsonString = Source.fromFile(path).mkString
