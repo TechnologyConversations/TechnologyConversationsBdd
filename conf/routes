@@ -32,6 +32,10 @@ PUT     /groovyComposites                       controllers.CompositesController
 DELETE  /composites/*fullClassName              controllers.CompositesController.deleteClass(fullClassName: String)
 DELETE  /groovyComposites/*className            controllers.CompositesController.deleteGroovyClass(className: String)
 
+# Data
+
+GET     /api/v1/data/*id                        controllers.DataController.get(id: String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)
 

@@ -47,6 +47,9 @@ angular.module('bodyModule', ['ngJoyRide'])
             }
         ];
         $scope.onFinishJoyRide = function() {
-            console.log('TOUR FINISHED');
+            $scope.startJoyRideFlag = false;
+        };
+        $scope.startJoyRide = function() {
+            $scope.startJoyRideFlag = true;
         };
     });

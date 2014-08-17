@@ -1,0 +1,16 @@
+[{
+    "id": "deleteStory",
+    "display": true,
+    "enable": true,
+    "description": ""
+}, {
+    "id": "runStory",
+    "display": true,
+    "enable": true,
+    "description": ""
+}, {
+    "id": "runStories",
+    "display": true,
+    "enable": true,
+    "description": ""
+}]
