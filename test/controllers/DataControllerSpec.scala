@@ -23,11 +23,10 @@ class DataControllerSpec extends Specification with JsonMatchers with FileMatche
       }
     }
 
-    "return JSON should have data" in {
+    "return JSON should have data from the specified file" in {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, url))
         val actual = contentAsString(result)
-        actual must /("data") /".*".r
         val expectedJson = Json.parse(Source.fromFile("public/data/features.json").mkString)
         val expected = toJson(data = Option(expectedJson)).toString()
         actual must equalTo(expected)
