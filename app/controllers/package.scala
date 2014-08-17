@@ -10,9 +10,10 @@ package object controllers {
   val noJsonResultMessage = "JSON was not found in the request body"
   val stageDir = "target/universal/stage/"
 
-  def toJson(error: Option[String] = Option.empty, data: Option[JsValue] = Option.empty) = {
+  def toJson(error: Option[String] = Option.empty, message: Option[String] = Option.empty, data: Option[JsValue] = Option.empty) = {
     val meta = Map(
-      "error" -> error.getOrElse("")
+      "error" -> error.getOrElse(""),
+      "messaage" -> message.getOrElse("")
     )
     val map = Map(
       "meta" -> Json.toJson(meta),
@@ -86,26 +87,22 @@ package object controllers {
   }
 
   // TODO Test
-  @deprecated("Use toJson instead")
   val compositesDir: String = {
     val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
     absolutePath(dirPath)
   }
 
   // TODO Test
-  @deprecated("Use toJson instead")
   val reportsRelativeDir: String = {
     Play.current.configuration.getString("reports.root.dir").getOrElse("public/jbehave")
   }
 
   // TODO Test
-  @deprecated("Use toJson instead")
   val reportsDir: String = {
     absolutePath(reportsRelativeDir)
   }
 
   // TODO Test
-  @deprecated("Use toJson instead")
   def absolutePath(dirPath: String): String = {
     val dir = new File(dirPath)
     val dirAbsolutePath = dir.getAbsolutePath

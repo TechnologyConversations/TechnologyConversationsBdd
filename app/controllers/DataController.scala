@@ -1,6 +1,6 @@
 package controllers
 
-import java.nio.file.{Files, Paths}
+import java.io.File
 
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -11,11 +11,15 @@ object DataController extends Controller {
 
   def get(id: String): Action[AnyContent] = Action { implicit request =>
     val path = s"public/data/$id.json"
-    if (Files.exists(Paths.get(path))) {
+    val file = new File(path)
+    if (file.exists()) {
       val jsonString = Source.fromFile(path).mkString
       Ok(toJson(data = Option(Json.parse(jsonString))))
     } else {
-      NotFound(toJson(error = Option(s"ID $id could not be found")))
+      val absPath = file.getAbsolutePath
+      NotFound(toJson(
+        error = Option(s"ID $id could not be found"),
+        message = Option(s"Could not find $absPath")))
     }
   }
 
