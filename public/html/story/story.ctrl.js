@@ -248,7 +248,7 @@ angular.module('storyModule', [])
         };
         // TODO Test
         $scope.createDirectory = function(path) {
-            var json = '{path: "' + $scope.rootPath + path + '"}';
+            var json = '{"path": "' + $scope.rootPath + path + '"}';
             $http.post('/stories/dir.json', json).then(function() {
                 $scope.files.dirs.push({name: path});
             }, function(response) {
