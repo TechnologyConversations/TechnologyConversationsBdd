@@ -221,4 +221,44 @@ angular.module('storyModule', [])
         };
         // TODO Test
         $scope.openErrorModal = TcBddService.openErrorModal;
+    })
+    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService, features) {
+        TcBddService.getStories($scope, '');
+        $scope.features = features;
+        $scope.openDir = function(path) {
+            TcBddService.openDir($scope, path);
+        };
+        $scope.close = function() {
+            $modalInstance.close();
+        };
+        $scope.openStory = function(name) {
+            $scope.onFinishJoyRide();
+            $modalInstance.close();
+            $location.path('/page/stories/view/' + $scope.rootPath + name);
+        };
+        $scope.allowToPrevDir = function() {
+            return $scope.rootPath !== '';
+        };
+        // TODO Test
+        $scope.deleteStory = function(name, index) {
+            var path = $scope.rootPath + name + '.story';
+            TcBddService.deleteStory(path).then(function() {
+                $scope.files.stories.splice(index, 1);
+            });
+        };
+        // TODO Test
+        $scope.createDirectory = function(path) {
+            var json = '{path: "' + $scope.rootPath + path + '"}';
+            $http.post('/stories/dir.json', json).then(function() {
+                $scope.files.dirs.push({name: path});
+            }, function(response) {
+                TcBddService.openErrorModal(response.data);
+            });
+        };
+        $scope.onFinishJoyRide = function() {
+            TcBddService.onFinishJoyRide($scope);
+        };
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
     });

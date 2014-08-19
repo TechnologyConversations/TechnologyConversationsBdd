@@ -434,4 +434,110 @@ describe('storyModule', function() {
 
     });
 
+    describe('storiesCtrl controller', function() {
+
+        var httpBackend, location, service, scope, modal, modalInstance;
+        var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
+        var deleteStory = {
+            "display": true,
+            "enable": false,
+            "description": ""
+        };
+
+        beforeEach(
+            inject(function($controller, $httpBackend, TcBddService, $http, $location) {
+                scope = {};
+                service = TcBddService;
+                location = $location;
+                modalInstance = {
+                    close: jasmine.createSpy('modalInstance.close')
+                };
+                $controller('storiesCtrl', {
+                    $scope: scope,
+                    $http: $http,
+                    $modal: modal,
+                    $modalInstance: modalInstance,
+                    $location: location,
+                    features: {deleteStory: deleteStory}
+                });
+                httpBackend = $httpBackend;
+                httpBackend.expectGET('/stories/list.json?path=').respond(filesWithoutPath);
+            })
+        );
+
+        describe('on load', function() {
+            it('deleteStory should be added to the scope', function() {
+                expect(scope.features.deleteStory).toEqual(deleteStory);
+            });
+        });
+
+        describe('close function', function() {
+            it('should call the close function of the modal', function() {
+                scope.close();
+                expect(modalInstance.close).toHaveBeenCalled();
+            });
+        });
+
+        describe('getStories function', function() {
+            it('should be called by the controller with the empty path', function() {
+                expect(scope.files).toBeUndefined();
+                httpBackend.flush();
+                expect(scope.files).toEqual(filesWithoutPath);
+            });
+        });
+
+        describe('allowToPrevDir function', function() {
+            it('should return true when rootPath is NOT an empty string', function() {
+                scope.rootPath = 'this/is/path';
+                expect(scope.allowToPrevDir()).toEqual(true);
+            });
+            it('should return false when rootPath is an empty string', function() {
+                scope.rootPath = '';
+                expect(scope.allowToPrevDir()).toEqual(false);
+            });
+        });
+
+        describe('openDir function', function() {
+            it('should call service function openDir', function() {
+                var path = 'my/path';
+                spyOn(service, 'openDir');
+                scope.openDir(path);
+                expect(service.openDir).toHaveBeenCalledWith(scope, path);
+            });
+        });
+
+        describe('classNamePattern validates that values is a valid Java class name', function() {
+            it('should NOT start with a number', function() {
+                expect('1abc').not.toMatch(service.classNamePattern());
+            });
+            it('should use any combination of letters, digits, underscores and dollar signs', function() {
+                expect('aBc').toMatch(service.classNamePattern());
+                expect('a123').toMatch(service.classNamePattern());
+                expect('_a').toMatch(service.classNamePattern());
+                expect('$a').toMatch(service.classNamePattern());
+                expect('aBc_D$23').toMatch(service.classNamePattern());
+            });
+            it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
+                expect('abc%').not.toMatch(service.classNamePattern());
+                expect('ab c').not.toMatch(service.classNamePattern());
+            });
+        });
+
+        describe('openStory function', function() {
+            var name = 'myStory';
+            var rootPath = 'rootPath/';
+            beforeEach(function() {
+                scope.rootPath = rootPath;
+                scope.openStory(name);
+            });
+            it('should call modal.close', function() {
+                expect(modalInstance.close).toHaveBeenCalled();
+            });
+            it('should change path', function() {
+                expect(location.path()).toEqual('/page/stories/view/' + rootPath + name)
+            });
+        });
+
+    });
+
 });

@@ -1,3 +1,3 @@
 angular.module('tourModule', [])
-    .controller('tourCtrl', function ($scope) {
+    .controller('tourCtrl', function ($scope, $location) {
     });

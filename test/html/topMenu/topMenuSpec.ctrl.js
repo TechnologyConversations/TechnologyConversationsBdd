@@ -4,22 +4,17 @@ describe('topMenuModule module', function() {
 
     describe('topMenuController controller', function() {
 
-        var modal, scope, location;
+        var scope, location;
         var service;
 
         beforeEach(
-            inject(function($rootScope, $controller, $location, $http, TcBddService) {
+            inject(function($rootScope, $controller, $location, TcBddService) {
                 service = TcBddService;
                 scope = $rootScope.$new();
                 location = $location;
-                modal = {
-                    open: jasmine.createSpy('modal.open')
-                };
                 $controller("topMenuController", {
                     $scope: scope,
-                    $modal: modal,
-                    $location: $location,
-                    $http: $http
+                    $location: $location
                 });
             })
         );
@@ -48,13 +43,6 @@ describe('topMenuModule module', function() {
             it('should return Home when URL is /page/tour/', function() {
                 location.path('/page/tour/');
                 expect(scope.getTitle()).toEqual("Home");
-            });
-        });
-
-        describe('openStory function', function() {
-            it('should call open on modal', function() {
-                scope.openStory();
-                expect(modal.open).toHaveBeenCalled();
             });
         });
 

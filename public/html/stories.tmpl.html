@@ -1,8 +1,13 @@
 <div id="browseStoriesDialog">
-    <div class="modal-header"><h3 id="modalHeader">Browse Stories</h3></div>
+    <div class="modal-header">
+        <h3 id="modalHeader">
+            Browse Stories
+            <button ng-click="startJoyRide('tour_browse_stories')" type="button" class="btn btn-primary btn-sm pull-right">Tour <span class="glyphicon glyphicon-film"></span></button>
+        </h3>
+    </div>
     <div class="modal-body">
         <div id="path">{{rootPath}}</div>
-        <div class="input-group">
+        <div id="searchStoriesGroup" class="input-group">
             <input type="text" id="searchStories" ng-model="criteria" class="form-control">
             <span class="input-group-btn">
                 <button id="createNewDirectory" class="btn" ng-click="createDirectory(criteria)">
@@ -10,7 +15,7 @@
                 </button>
             </span>
         </div>
-        <table class="table table-condensed table-striped">
+        <table id="storiesList" class="table table-condensed table-striped">
             <tbody>
                 <tr>
                     <td><a id="createNewStory" href="/page/stories/new/{{rootPath}}" ng-click="close()">Create New Story</a></td>
@@ -42,7 +47,7 @@
             <tbody ng-repeat="storyItem in filteredStories = (files.stories | filter:criteria)">
                 <tr>
                     <td>
-                        <a href="{{viewStoryUrl(storyItem.name)}}" ng-click="close()">
+                        <a href="#" ng-click="openStory(storyItem.name)">
                             <span class="glyphicon glyphicon-file"></span>
                             {{storyItem.name}}
                         </a>
@@ -59,4 +64,7 @@
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="close()">Close</button>
     </div>
+</div>
+<div ng-repeat="tour in tours">
+    <div ng-joy-ride="startJoyRideFlag" config="configJoyRide" on-finish="onFinishJoyRide()" on-skip="onFinishJoyRide()"></div>
 </div>

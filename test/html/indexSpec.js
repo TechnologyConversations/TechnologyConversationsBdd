@@ -321,6 +321,56 @@ describe('storiesModule controllers', function() {
             });
         });
 
+        describe('startJoyRide function', function() {
+            var id = 'tour_navigation';
+            var url = '/api/v1/data/' + id;
+            var json = [{key: 'value1'}, {key: 'value2'}];
+            var responseJson = {
+                meta: {},
+                data: json
+            };
+            it('should set response data to configJoyRide', function() {
+                httpBackend.expectGET(url).respond(responseJson);
+                service.startJoyRide(id, scope);
+                httpBackend.flush();
+                expect(scope.configJoyRide).toEqual(json);
+            });
+            it('should set startJoyRide to true', function() {
+                httpBackend.expectGET(url).respond(responseJson);
+                scope.startJoyRideFlag = false;
+                service.startJoyRide(id, scope);
+                httpBackend.flush();
+                expect(scope.startJoyRideFlag).toEqual(true);
+            });
+            it('should set startJoyRide to false when response is an error', function() {
+                httpBackend.expectGET(url).respond(400, responseJson);
+                scope.startJoyRideFlag = true;
+                service.startJoyRide(id, scope);
+                httpBackend.flush();
+                expect(scope.startJoyRideFlag).toEqual(false);
+            });
+            it('should set tours to array with a single item', function() {
+                httpBackend.expectGET(url).respond(responseJson);
+                scope.startJoyRideFlag = false;
+                service.startJoyRide(id, scope);
+                httpBackend.flush();
+                expect(scope.tours.length).toEqual(1);
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should set startJoyRideFlag to false', function() {
+                scope.startJoyRideFlag = true;
+                service.onFinishJoyRide(scope);
+                expect(scope.startJoyRideFlag).toEqual(false);
+            });
+            it('should set tours to array with a single item', function() {
+                scope.tours = [{}];
+                service.onFinishJoyRide(scope);
+                expect(scope.tours.length).toEqual(0);
+            });
+        });
+
     });
 
     describe('modalCtrl controller', function() {
@@ -356,95 +406,6 @@ describe('storiesModule controllers', function() {
             it('should call the dismiss function of the modal', function() {
                 scope.cancel();
                 expect(modalInstance.dismiss).toHaveBeenCalledWith('cancel');
-            });
-        });
-
-    });
-
-    describe('storiesCtrl controller', function() {
-
-        var httpBackend, service, http;
-        var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
-        var deleteStory = {
-            "display": true,
-            "enable": false,
-            "description": ""
-        };
-
-        beforeEach(
-            inject(function($controller, $httpBackend, TcBddService, $http) {
-                service = TcBddService;
-                modalInstance = {
-                    close: jasmine.createSpy('modalInstance.close')
-                };
-                $controller('storiesCtrl', {
-                    $scope: scope,
-                    $http: $http,
-                    $modal: modal,
-                    $modalInstance: modalInstance,
-                    $location: location,
-                    features: {deleteStory: deleteStory}
-                });
-                httpBackend = $httpBackend;
-                httpBackend.expectGET('/stories/list.json?path=').respond(filesWithoutPath);
-            })
-        );
-
-        describe('close function', function() {
-            it('should call the close function of the modal', function() {
-                scope.close();
-                expect(modalInstance.close).toHaveBeenCalled();
-            });
-        });
-
-        describe('getStories function', function() {
-            it('should be called by the controller with the empty path', function() {
-                expect(scope.files).toBeUndefined();
-                httpBackend.flush();
-                expect(scope.files).toEqual(filesWithoutPath);
-            });
-        });
-
-        describe('allowToPrevDir function', function() {
-            it('should return true when rootPath is NOT an empty string', function() {
-                scope.rootPath = 'this/is/path';
-                expect(scope.allowToPrevDir()).toEqual(true);
-            });
-            it('should return false when rootPath is an empty string', function() {
-                scope.rootPath = '';
-                expect(scope.allowToPrevDir()).toEqual(false);
-            });
-        });
-
-        describe('openDir function', function() {
-            it('should call service function openDir', function() {
-                var path = 'my/path';
-                spyOn(service, 'openDir');
-                scope.openDir(path);
-                expect(service.openDir).toHaveBeenCalledWith(scope, path);
-            });
-        });
-
-        describe('classNamePattern validates that values is a valid Java class name', function() {
-            it('should NOT start with a number', function() {
-                expect('1abc').not.toMatch(service.classNamePattern());
-            });
-            it('should use any combination of letters, digits, underscores and dollar signs', function() {
-                expect('aBc').toMatch(service.classNamePattern());
-                expect('a123').toMatch(service.classNamePattern());
-                expect('_a').toMatch(service.classNamePattern());
-                expect('$a').toMatch(service.classNamePattern());
-                expect('aBc_D$23').toMatch(service.classNamePattern());
-            });
-            it('should NOT use any character other than letters, digits, underscores and dollar signs', function() {
-                expect('abc%').not.toMatch(service.classNamePattern());
-                expect('ab c').not.toMatch(service.classNamePattern());
-            });
-        });
-
-        describe('on load', function() {
-            it('deleteStory should be added to the scope', function() {
-                expect(scope.features.deleteStory).toEqual(deleteStory);
             });
         });
 

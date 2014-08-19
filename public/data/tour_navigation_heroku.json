@@ -1,0 +1,42 @@
+[
+    {
+        "type": "title",
+        "heading": "Demo",
+        "text": "Welcome to the BDD Assistant demo tour. Unfortunately, some features are temporarily disabled due to our hosting limitations. To see the application with all features enabled, please install the latest release"
+    }, {
+        "type": "element",
+        "selector": "#menu",
+        "heading": "Navigation",
+        "text": "The main purpose of the navigation menu is to provide quick links to major sections of the application as well as the information about the current location.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#browseStories",
+        "heading": "Browse Stories",
+        "text": "Displays the dialog that can be used to open an existing or create a new story.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#browseComposites",
+        "heading": "Browse Composites",
+        "text": "Displays the dialog that can be used to open an existing or create a new composites class.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#runner",
+        "heading": "Run Stories",
+        "text": "Displays the dialog that can be used to select one or more stories and directories with stories that will be run.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#menu",
+        "heading": "Navigation",
+        "text": "Please use one of the links from this menu. When dialog is opened, you will find the <span class=\"glyphicon glyphicon-film\"></span> button that can be used to continue the tour.",
+        "placement": "bottom",
+        "scroll": true
+    }
+]

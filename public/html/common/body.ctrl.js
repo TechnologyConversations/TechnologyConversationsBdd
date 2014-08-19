@@ -1,65 +1,47 @@
 angular.module('bodyModule', ['ngJoyRide'])
-    .controller('bodyCtrl', function ($scope, $http) {
-        $scope.startJoyRideFlag = false;
-        $scope.configJoyRide = [
-            {
-                type: 'element',
-                selector: '#menu',
-                heading: 'Navigation',
-                text: 'The main purpose of the navigation menu is to provide quick links to major sections of the application as well as the information about the current location.',
-                placement: 'bottom',
-                scroll: true
-            }, {
-                type: 'element',
-                selector: '#browseStories',
-                heading: 'Browse Stories',
-                text: 'Displays the dialog that can be used to open an existing or create a new story.',
-                placement: 'bottom',
-                scroll: true
-            }, {
-                type: 'element',
-                selector: '#browseComposites',
-                heading: 'Browse Composites',
-                text: 'Displays the dialog that can be used to open an existing or create a new composites class.',
-                placement: 'bottom',
-                scroll: true
-            }, {
-                type: 'element',
-                selector: '#runner',
-                heading: 'Run Stories',
-                text: 'Displays the dialog that can be used to select one or more stories and directories with stories that will be run.',
-                placement: 'bottom',
-                scroll: true
-//            }, {
-//                type: 'element',
-//                selector: '#menu',
-//                heading: 'Navigation',
-//                text: 'Please use one of the links from this menu. When dialog is opened, you will find the XXX button that can be used to continue the tour.',
-//                placement: 'bottom',
-//                scroll: true
-            }, {
-                type: 'element',
-                selector: '#menu',
-                heading: 'Navigation',
-                text: 'This tour is still under construction. More will be added soon.',
-                placement: 'bottom',
-                scroll: true
-            }
-        ];
+    .controller('bodyCtrl', function ($scope, $http, $modal, $location, TcBddService) {
         $scope.onFinishJoyRide = function() {
-            $scope.startJoyRideFlag = false;
+            TcBddService.onFinishJoyRide($scope);
         };
-        $scope.startJoyRide = function() {
-            $scope.startJoyRideFlag = true;
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
+        $scope.startJoyRideOnLoad = function() {
+            if ($location.search().tour !== undefined) {
+                $scope.startJoyRide('tour_' + $location.search().tour);
+            }
+        };
+        // TODO Test more than checking whether $modal.open was called
+        $scope.openStory = function() {
+            $modal.open({
+                templateUrl: '/assets/html/stories.tmpl.html',
+                controller: 'storiesCtrl',
+                resolve: {
+                    data: function() {
+                        return {};
+                    },
+                    features: function() {
+                        return {deleteStory: $scope.features.deleteStory};
+                    }
+                }
+            });
+        };
+        $scope.openMenu = function() {
+            if ($location.search().openMenu !== undefined) {
+                var menu = $location.search().openMenu;
+                if (menu === 'openStory') {
+                    $scope.openStory();
+                }
+            }
         };
         $scope.loadFeatures = function() {
             $http.get('/api/v1/data/features').then(function(response) {
-                console.log("LOADED!!!!!!!!!!!!!!!");
                 $scope.features = response.data.data;
+                $scope.openMenu();
             }, function() {
-                console.log("NOT LOADED!!!!!!!!!!!!!!!");
                 $scope.features = [];
             });
         };
         $scope.loadFeatures();
+        $scope.startJoyRideOnLoad();
     });

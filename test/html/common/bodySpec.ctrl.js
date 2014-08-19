@@ -1,24 +1,30 @@
 describe('bodyModule', function() {
 
-    var scope, httpBackend, featuresResponseData, featuresResponseJson, featuresUrl, feature1, feature2;
-
-    beforeEach(module('bodyModule'));
+    beforeEach(module('bodyModule', 'storiesModule'));
 
     describe('bodyCtrl controller', function() {
 
+        var scope, modal, location, service, httpBackend, tourResponseJson;
+        var featuresResponseData, featuresResponseJson;
+        var featuresUrl = '/api/v1/data/features';
+        var feature1 = {
+            display: true,
+            enable: true,
+            description: ''
+        };
+        var feature2 = {
+            display: false,
+            enable: false,
+            description: 'This is feature 2 description'
+        };
+
         beforeEach(
-            inject(function($controller, $rootScope, $http, $httpBackend) {
-                featuresUrl = '/api/v1/data/features';
-                feature1 = {
-                    display: true,
-                    enable: true,
-                    description: ''
+            inject(function($controller, $rootScope, $http, $httpBackend, $location, TcBddService) {
+                modal = {
+                    open: jasmine.createSpy('modal.open')
                 };
-                feature2 = {
-                    display: false,
-                    enable: false,
-                    description: 'This is feature 2 description'
-                };
+                service = TcBddService;
+                location = $location;
                 featuresResponseData = {feature1: feature1, feature2: feature2};
                 featuresResponseJson = {
                     meta: {},
@@ -29,32 +35,12 @@ describe('bodyModule', function() {
                 scope = $rootScope.$new();
                 $controller('bodyCtrl', {
                     $scope: scope,
-                    $http: $http
+                    $http: $http,
+                    $location: $location,
+                    $modal: modal
                 });
             })
         );
-
-        describe('when loaded', function() {
-            it('should have startJoyRideFlag set to false', function() {
-                expect(scope.startJoyRideFlag).toEqual(false);
-            });
-        });
-
-        describe('onFinishJoyRide function', function() {
-            it('should set startJoyRideFlag to false', function() {
-                scope.startJoyRideFlag = true;
-                scope.onFinishJoyRide();
-                expect(scope.startJoyRideFlag).toEqual(false);
-            });
-        });
-
-        describe('startJoyRide function', function() {
-            it('should set startJoyRide to true', function() {
-                scope.startJoyRideFlag = false;
-                scope.startJoyRide();
-                expect(scope.startJoyRideFlag).toEqual(true);
-            });
-        });
 
         describe('loadFeatures function', function() {
             it('should set response data to features variable', function() {
@@ -69,6 +55,68 @@ describe('bodyModule', function() {
                 scope.loadFeatures();
                 httpBackend.flush();
                 expect(scope.features).toEqual([]);
+            });
+            it('should call openMenu function', function() {
+                spyOn(scope, 'openMenu');
+                httpBackend.expectGET(featuresUrl).respond(featuresResponseJson);
+                scope.loadFeatures();
+                httpBackend.flush();
+                expect(scope.openMenu).toHaveBeenCalled();
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            var id = 'ID';
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+
+        });
+
+        describe('startJoyRideOnLoad function', function() {
+            it('should call startJoyRide when search contains tour', function() {
+                var id = 'navigation';
+                location.search('tour', 'navigation');
+                spyOn(scope, 'startJoyRide');
+                scope.startJoyRideOnLoad();
+                expect(scope.startJoyRide).toHaveBeenCalledWith('tour_' + id);
+            });
+            it('should not call startJoyRide when search does NOT contain tour', function() {
+                spyOn(scope, 'startJoyRide');
+                scope.startJoyRideOnLoad();
+                expect(scope.startJoyRide).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('openStory function', function() {
+            it('should call open on modal', function() {
+                scope.openStory();
+                expect(modal.open).toHaveBeenCalled();
+            });
+        });
+
+        describe('openMenu function', function() {
+            it('should call openStory function when search contains openMenu=openStory', function() {
+                location.search('openMenu', 'openStory');
+                spyOn(scope, 'openStory');
+                scope.openMenu();
+                expect(scope.openStory).toHaveBeenCalled();
+            });
+            it('should not call openStory when search does NOT contain openMenu=openStory', function() {
+                spyOn(scope, 'openStory');
+                scope.openMenu();
+                expect(scope.openStory).not.toHaveBeenCalled();
             });
         });
 

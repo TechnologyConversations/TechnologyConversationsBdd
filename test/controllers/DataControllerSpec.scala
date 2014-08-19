@@ -1,6 +1,6 @@
 package controllers
 
-import org.specs2.matcher.{FileMatchers, JsonMatchers}
+import org.specs2.matcher.JsonMatchers
 import org.specs2.mutable.Specification
 import play.api.libs.json.Json
 import play.api.test.Helpers._
@@ -8,7 +8,7 @@ import play.api.test.{FakeApplication, FakeRequest}
 
 import scala.io.Source
 
-class DataControllerSpec extends Specification with JsonMatchers with FileMatchers {
+class DataControllerSpec extends Specification with JsonMatchers {
 
   val url = "/api/v1/data/features"
   val nonExistingUrl = "/api/v1/data/NON_EXISTENT_ID"
@@ -50,4 +50,19 @@ class DataControllerSpec extends Specification with JsonMatchers with FileMatche
     }
 
   }
+
+  "data directory" should {
+
+    "contain heroku for each data file" in {
+      val directory = new java.io.File("public/data")
+      val files = directory.list().toList
+        .filter(!_.contains("_heroku"))
+      val herokuFiles = files
+        .map(_.replace(".json", ""))
+        .map(name => s"${name}_heroku.json")
+      directory.list().toList must containTheSameElementsAs(files ++ herokuFiles)
+    }
+
+  }
+
 }

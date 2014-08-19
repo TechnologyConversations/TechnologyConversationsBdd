@@ -172,6 +172,19 @@ angular.module('storiesModule', [
                 }
             });
         };
+        this.startJoyRide = function(id, scope) {
+            $http.get('/api/v1/data/' + id).then(function(response) {
+                scope.configJoyRide = response.data.data;
+                scope.tours = [{}];
+                scope.startJoyRideFlag = true;
+            }, function() {
+                scope.startJoyRideFlag = false;
+            });
+        };
+        this.onFinishJoyRide = function(scope) {
+            scope.startJoyRideFlag = false;
+            scope.tours = [];
+        };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
         $scope.data = data;
@@ -180,37 +193,5 @@ angular.module('storiesModule', [
         };
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
-        };
-    })
-    .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService, features) {
-        TcBddService.getStories($scope, '');
-        $scope.features = features;
-        $scope.openDir = function(path) {
-            TcBddService.openDir($scope, path);
-        };
-        $scope.close = function() {
-            $modalInstance.close();
-        };
-        $scope.viewStoryUrl = function(name) {
-            return '/page/stories/view/' + $scope.rootPath + name;
-        };
-        $scope.allowToPrevDir = function() {
-            return $scope.rootPath !== '';
-        };
-        // TODO Test
-        $scope.deleteStory = function(name, index) {
-            var path = $scope.rootPath + name + '.story';
-            TcBddService.deleteStory(path).then(function() {
-                $scope.files.stories.splice(index, 1);
-            });
-        };
-        // TODO Test
-        $scope.createDirectory = function(path) {
-            var json = '{"path": "' + $scope.rootPath + path + '"}';
-            $http.post('/stories/dir.json', json).then(function() {
-                $scope.files.dirs.push({name: path});
-            }, function(response) {
-                TcBddService.openErrorModal(response.data);
-            });
         };
     });

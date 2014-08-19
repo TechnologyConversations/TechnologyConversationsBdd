@@ -19,7 +19,6 @@
 </head>
 <body ng-controller="bodyCtrl">
 <header>
-    <div ng-joy-ride="startJoyRideFlag" config="configJoyRide" on-finish="onFinishJoyRide()" on-skip="onFinishJoyRide()"></div>
     <!--Top menu-->
     <nav id="menu" class="navbar navbar-inverse" role="navigation" ng-controller="topMenuController">
         <div class="container-fluid">
@@ -47,5 +46,9 @@
 <div ng-view>
     <!--view goes here-->
 </div>
+<div ng-repeat="tour in tours">
+    <div ng-joy-ride="startJoyRideFlag" config="configJoyRide" on-finish="onFinishJoyRide()" on-skip="onFinishJoyRide()"></div>
+</div>
+
 </body>
 </html>

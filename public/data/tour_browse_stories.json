@@ -1,0 +1,42 @@
+[
+    {
+        "type": "title",
+        "heading": "Browse Stories",
+        "text": "Browse Stories dialog allows users to navigate directories and stories, create new directories, create new stories, open or delete an existing story."
+    }, {
+        "type": "element",
+        "selector": "#storiesList",
+        "heading": "Browse Stories",
+        "text": "Stories (marked with <span class=\"glyphicon glyphicon-file\"></span>) are organized inside directories (marked with <span class=\"glyphicon glyphicon-book\"></span>). Open the tcbdd and login directories. Click next when finished to continue with the tour.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#searchStoriesGroup",
+        "heading": "Create New Directory",
+        "text": "New directory can be created by typing the name in the search field and clicking the <span class=\"glyphicon glyphicon-plus\"></span> icon.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#createNewStory",
+        "heading": "Create New Story",
+        "text": "<strong>Create New Story</strong> allows story creation in the selected directory.",
+        "placement": "right",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storiesList",
+        "heading": "Delete the Story",
+        "text": "Each story is followed with the (<span class=\"glyphicon glyphicon-remove\"></span>) button that can be used to delete the story.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storiesList",
+        "heading": "Open the Story",
+        "text": "Story can be opened by clicking on the desired name. Click finish to end this part of the tour. When tour is finished, please open the login story. You'll find the <span class=\"glyphicon glyphicon-film\"></span> button that can be used to tour the story screen.",
+        "placement": "bottom",
+        "scroll": true
+    }
+]
