@@ -25,21 +25,16 @@ object StoryController extends Controller {
   }
 
   def createDirectoryJson: Action[AnyContent] = Action { implicit request =>
-    println("111")
     val jsonOption = request.body.asJson
     lazy val json = jsonOption.get
     lazy val pathOption = (json \ "path").asOpt[String]
     if (jsonOption.isEmpty) {
-      println("222")
       noJsonResult
     } else if (pathOption.isEmpty) {
-      println("333")
       noResult("path")
     } else {
-      println("444")
       val path = pathOption.get
       Story(storiesDir, path).createDirectory()
-      println("555")
       Ok(Json.toJson("""{"status": "OK"}"""))
     }
   }
