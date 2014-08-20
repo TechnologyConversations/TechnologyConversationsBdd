@@ -1,0 +1,126 @@
+[
+    {
+        "type": "title",
+        "heading": "Story Form",
+        "text": "Story Form is a representation of a BDD story. It is divided into 3 parts: Name, Story and Scenarios."
+    }, {
+        "type": "element",
+        "selector": "#storyNameGroup",
+        "heading": "Story Name",
+        "text": "Name, together with the directory path, forms the unique identification of the BDD story.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyNameGroup",
+        "heading": "Expand Panels",
+        "text": "<mark>Click the <span class=\"glyphicon glyphicon-chevron-down\"></span> button to expand panels. Click next when finished to continue with the tour.</mark>",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyPanel",
+        "heading": "Story Panel",
+        "text": "Story is divided into 5 sections. None of the sections is mandatory.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyDescriptionPanelBody",
+        "heading": "Story Description",
+        "text": "This free-text field is for informational purposes only. It can be used as a way to provide any type of information not already covered with other sections (i.e. narrative, scenarios, etc). In cases where narrative is not appropriate, description can be used as an alternative.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyNarrativePanelBody",
+        "heading": "Story Narrative",
+        "text": "Narrative is equivalent to a user story. The purpose of narrative is to capture initial idea or requirement and initiate conversation that will result in one or more scenarios. It consists of 3 fields:<ul><li><strong>In order to</strong> [ACCOMPLISH SOMETHING]</li><li><strong>As a</strong> [USER OR ROLE THAT NEEDS THE NEW FEATURE]</li><li><strong>I want to</strong> [DO SOMETHING]</li></ul>",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyLifecyclePanelBody",
+        "heading": "Story Lifecycle",
+        "text": "Lifecycle is split into two sub-sections: Before and After. Each can define a set of steps that are run before or after each scenario. Lifecycle is very useful when all scenarios of one BDD story start or end with the same set of steps.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#scenario4PanelGroup",
+        "heading": "Scenarios",
+        "text": "<mark>Click the <span class=\"glyphicon glyphicon-chevron-down\"></span> button to expand this scenario. Click next when finished to continue with the tour.</mark>",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#scenario4PanelGroup",
+        "heading": "Scenarios",
+        "text": "Each BDD story has at least one scenario. Each of the scenarios is separated into 3 sections: Meta, Steps and Examples.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#scenario4Steps",
+        "heading": "Scenario Steps",
+        "text": "Scenario steps are the heart and soul of BDD stories. They describe preconditions (Given), actions (When) and expected outcomes (Then).",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#scenario4PanelGroup",
+        "heading": "Add Elements",
+        "text": "Metas, given stories, lifecycle steps, steps and scenarios can be added (<span class=\"glyphicon glyphicon-plus\"></span>), moved (<span class=\"glyphicon glyphicon-move\"></span>), and removed (<span class=\"glyphicon glyphicon-remove\"></span>)",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#scenario4Step1",
+        "heading": "Auto-complete",
+        "text": "All step fields (within lifecycle or scenarios) support the auto-complete feature. Start writing the word that identifies some step and the GUI will display the list of candidates. Once the desired step is found, space of enter key will add it to the corresponding field.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyOperations",
+        "heading": "Story Operations",
+        "text": "Following story operations are allowed: save, revert changes, delete and rename.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#saveStory",
+        "heading": "Save Story",
+        "text": "If the BDD story form is valid, data can be permanently saved on the server. In case of a new story, new file is created. Otherwise, the contents of the existing story are overwritten with the modified version. To save the story, click the \"Save\" button. If saving is not allowed (i.e. invalid story), the button is disabled. This function is temporarily disabled in the demo due to our hosting limitations.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#revertStory",
+        "heading": "Revert Story",
+        "text": "Any change made to the BDD story can be reverted to the version created on the last save. To revert the BDD story, click the \"Revert Changes\" button. This operation cannot be undone. If there were no changes in the BDD story, the button is disabled.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#deleteStory",
+        "heading": "Delete Story",
+        "text": "Any BDD story can be deleted. This operation cannot be undone. If the BDD story was not previously saved in the server, the button is disabled. This function is temporarily disabled in the demo due to our hosting limitations.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#storyName",
+        "heading": "Rename Story",
+        "text": "Any BDD story can be renamed by changing the name and saving changes.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#runStory",
+        "heading": "Run Story",
+        "text": "This button brings up the dialog with parameters required to run the story. More information can be found in the tour available inside the dialog.",
+        "placement": "top",
+        "scroll": true
+    }
+]

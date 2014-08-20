@@ -7,7 +7,7 @@
         "type": "element",
         "selector": "#storiesList",
         "heading": "Browse Stories",
-        "text": "Stories (marked with <span class=\"glyphicon glyphicon-file\"></span>) are organized inside directories (marked with <span class=\"glyphicon glyphicon-book\"></span>). Open the tcbdd and login directories. Click next when finished to continue with the tour.",
+        "text": "Stories (marked with <span class=\"glyphicon glyphicon-file\"></span>) are organized inside directories (marked with <span class=\"glyphicon glyphicon-book\"></span>). <mark>Open the tcbdd and login directories. Click next when finished to continue with the tour.</mark>",
         "placement": "bottom",
         "scroll": true
     }, {
@@ -35,7 +35,7 @@
         "type": "element",
         "selector": "#storiesList",
         "heading": "Open the Story",
-        "text": "Story can be opened by clicking on the desired name. Click finish to end this part of the tour. When tour is finished, please open the login story. You'll find the <span class=\"glyphicon glyphicon-film\"></span> button that can be used to tour the story screen.",
+        "text": "Story can be opened by clicking on the desired name. <mark>Click finish to end this part of the tour. When tour is finished, please open the login story. You'll find the <span class=\"glyphicon glyphicon-film\"></span> button that can be used to tour the story screen.</mark>",
         "placement": "bottom",
         "scroll": true
     }
