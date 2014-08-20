@@ -52,7 +52,7 @@
                             {{storyItem.name}}
                         </a>
                     </td>
-                    <td popover="{{features.deleteStory.description}}" popover-trigger="mouseenter" popover-placement="left">
+                    <td tooltip="{{features.deleteStory.description}}" tooltip-trigger="mouseenter" tooltip-placement="left">
                         <button id="delete{{storyItem.name}}" ng-click="deleteStory(storyItem.name, $index)" class="btn btn-danger btn-xs pull-right" type="button" ng-disabled="!features.deleteStory.enabled">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>

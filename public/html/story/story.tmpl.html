@@ -240,11 +240,11 @@
                     <div id="invalidForm" class="has-error" ng-show="storyForm.$dirty && storyForm.$invalid">
                         <div class="help-block">Form is incorrect!</div>
                     </div>
-                    <div>
-                        <button id="saveStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canSaveStory()" ng-click="saveStory()" type="button">Save</button>
+                    <div tooltip="{{features.saveStory.description}}{{features.deleteStory.description}}" tooltip-trigger="mouseenter" tooltip-placement="top">
+                        <button id="saveStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!features.saveStory.enabled || !canSaveStory()" ng-click="saveStory()" type="button">Save</button>
                         <button id="runStory" class="btn btn-primary" ng-class="buttonCssClass(storyForm)" ng-disabled="!canRunStory()" ng-click="runStory()" type="button">Run Story</button>
                         <button id="revertStory" class="btn btn-info" ng-click="revertStory()" ng-disabled="!canRevertStory()" type="button">Revert Changes</button>
-                        <button id="deleteStory" class="btn btn-danger" ng-click="deleteStory()" ng-disabled="!canDeleteStory()" type="button">Delete Story</button>
+                        <button id="deleteStory" class="btn btn-danger" ng-click="deleteStory()" ng-disabled="!features.deleteStory.enabled || !canDeleteStory()" type="button">Delete Story</button>
                     </div>
                 </nav>
             </form>
