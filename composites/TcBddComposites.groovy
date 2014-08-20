@@ -14,7 +14,7 @@ public class TcBddComposites {
         def compositeStep1() { }
     
         @Given("Web user is in the New Story screen")
-        @Composite(steps = ["Given File public/stories/testDirectory/newStory.story does NOT exist", "Given Web address /page/stories/new/testDirectory/ is opened"])
+        @Composite(steps = ["Given File data/stories/testDirectory/newStory.story does NOT exist", "Given Web address /page/stories/new/testDirectory/ is opened"])
         def compositeStep2() { }
     
         @Given("Web user is in the New Composites screen")
@@ -50,11 +50,11 @@ public class TcBddComposites {
         def compositeStep10(@Named("username") BddVariable username, @Named("password") BddVariable password) { }
     
         @Given("Web user is in the Story screen with pending steps")
-        @Composite(steps = ["When File is copied from public/stories/test/dummyPending.story to public/stories/testDirectory/testPendingStory.story", "Given Web address /page/stories/view/testDirectory/testPendingStory is opened", "When Web user clicks the element expandPanels"])
+        @Composite(steps = ["When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story", "Given Web address /page/stories/view/testDirectory/testPendingStory is opened", "When Web user clicks the element expandPanels"])
         def compositeStep11() { }
     
         @Given("Web user is in the Story page with failed steps")
-        @Composite(steps = ["When File is copied from public/stories/test/dummyFailed.story to public/stories/testDirectory/testFailedStory.story", "Given Web address /page/stories/view/testDirectory/testFailedStory is opened", "When Web user clicks the element expandPanels"])
+        @Composite(steps = ["When File is copied from data/stories/test/dummyFailed.story to data/stories/testDirectory/testFailedStory.story", "Given Web address /page/stories/view/testDirectory/testFailedStory is opened", "When Web user clicks the element expandPanels"])
         def compositeStep12() { }
     
         @Then("Web story scenario is saved")
@@ -98,7 +98,7 @@ public class TcBddComposites {
         def compositeStep22() { }
     
         @Then("Web story is deleted")
-        @Composite(steps = ["Then File public/stories/testDirectory/testStory.story does NOT exist"])
+        @Composite(steps = ["Then File data/stories/testDirectory/testStory.story does NOT exist"])
         def compositeStep23() { }
     
         @Given("Web user is in the Browse Stories dialog")
@@ -106,7 +106,7 @@ public class TcBddComposites {
         def compositeStep24() { }
     
         @Given("Web user is in the Story page with all successful steps")
-        @Composite(steps = ["When File is copied from public/stories/test/dummySuccess.story to public/stories/testDirectory/testSuccessStory.story", "Given Web address /page/stories/view/testDirectory/testSuccessStory is opened", "When Web user clicks the element expandPanels"])
+        @Composite(steps = ["When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/testSuccessStory.story", "Given Web address /page/stories/view/testDirectory/testSuccessStory is opened", "When Web user clicks the element expandPanels"])
         def compositeStep25() { }
     
         @Given("Web user \$username with password \$password exists")
@@ -114,7 +114,7 @@ public class TcBddComposites {
         def compositeStep26(@Named("username") BddVariable username, @Named("password") BddVariable password) { }
     
         @Then("Web story is renamed")
-        @Composite(steps = ["Then File public/stories/testDirectory/@storyName.story exists"])
+        @Composite(steps = ["Then File data/stories/testDirectory/@storyName.story exists"])
         def compositeStep27() { }
     
         @Then("Web user is in the home screen")
@@ -122,7 +122,7 @@ public class TcBddComposites {
         def compositeStep28() { }
     
         @Given("Web user is in the View Story page")
-        @Composite(steps = ["Given variable storyName has value testStory", "When File is copied from public/stories/test/dummy.story to public/stories/testDirectory/testStory.story", "Given Web address /page/stories/view/testDirectory/testStory is opened", "When Web user clicks the element expandPanels"])
+        @Composite(steps = ["Given variable storyName has value testStory", "When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story", "Given Web address /page/stories/view/testDirectory/testStory is opened", "When Web user clicks the element expandPanels"])
         def compositeStep29() { }
     
         @Given("Web user is in the Login screen")

@@ -14,9 +14,9 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given Directory public/stories/testDirectory/testSubDirectory exists
-When File is copied from public/stories/test/dummySuccess.story to public/stories/testDirectory/1dummy.story
-When File is copied from public/stories/test/dummyPending.story to public/stories/testDirectory/testPendingStory.story
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
 Given Web home page is opened
 Given Web page is refreshed
 When Web user clicks the element runner

@@ -27,7 +27,7 @@ class DataControllerSpec extends Specification with JsonMatchers {
       running(FakeApplication()) {
         val Some(result) = route(FakeRequest(GET, url))
         val actual = contentAsString(result)
-        val expectedJson = Json.parse(Source.fromFile("public/data/features.json").mkString)
+        val expectedJson = Json.parse(Source.fromFile("data/json/features.json").mkString)
         val expected = toJson(data = Option(expectedJson)).toString()
         actual must equalTo(expected)
       }
@@ -54,7 +54,7 @@ class DataControllerSpec extends Specification with JsonMatchers {
   "data directory" should {
 
     "contain heroku for each data file" in {
-      val directory = new java.io.File("public/data")
+      val directory = new java.io.File("data/json")
       val files = directory.list().toList
         .filter(!_.contains("_heroku"))
       val herokuFiles = files

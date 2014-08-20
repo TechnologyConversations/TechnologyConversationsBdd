@@ -10,7 +10,7 @@ import scala.io.Source
 
 object DataController extends Controller {
 
-  val dataRootDir = Play.current.configuration.getString("data.root.dir").getOrElse("public/data")
+  val dataRootDir = Play.current.configuration.getString("data.root.dir").getOrElse("data/json")
 
   def get(id: String): Action[AnyContent] = Action { implicit request =>
     val dataSuffix = System.getProperty("dataSuffix", "")

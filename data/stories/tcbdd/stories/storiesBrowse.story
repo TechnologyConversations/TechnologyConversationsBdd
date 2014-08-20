@@ -14,11 +14,11 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given Directory public/stories/testDirectory exists
-When File is copied from public/stories/test/dummy.story to public/stories/testDirectory/testStory.story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
 
 After:
-Given Directory public/stories/newTestDirectory does NOT exist
+Given Directory data/stories/newTestDirectory does NOT exist
 
 
 Scenario: Can open dialog

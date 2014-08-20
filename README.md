@@ -65,7 +65,7 @@ sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --help"
 An example (used as part of our Travis setup):
 
 ```bash
-sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path public/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy"
+sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path data/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy"
 ```
 
 

@@ -24,10 +24,10 @@ class JBehaveRunnerCommandLineSpec extends Specification {
       storyPathsList.toList must containTheSameElementsAs(Seq(storyPath1, storyPath2))
     }
 
-    "return the list with public/stories/**/*.story when the array is null" in {
+    "return the list with data/stories/**/*.story when the array is null" in {
       val storyPathsList = runner.getStoryPaths(null)
       storyPathsList must beAnInstanceOf[java.util.List[String]]
-      storyPathsList.toList must containTheSameElementsAs(Seq("public/stories/**/*.story"))
+      storyPathsList.toList must containTheSameElementsAs(Seq("data/stories/**/*.story"))
     }
 
   }

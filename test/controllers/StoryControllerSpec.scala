@@ -10,7 +10,7 @@ import java.io.File
 class StoryControllerSpec extends Specification with PathMatchers with JsonMatchers {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
-  val storiesPath = "public/stories"
+  val storiesPath = "data/stories"
 
   "StoryController" should {
 

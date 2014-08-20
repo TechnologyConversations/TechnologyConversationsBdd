@@ -48,7 +48,7 @@ public class JBehaveRunnerCommandLine {
     protected Options getOptions() {
         Options options = new Options();
         options.addOption("h", "help", false, "Prints this message");
-        options.addOption("s", "story_path", true, "Specifies path to the story. Ant format can be used in each path. If not specified, default path public/stories/**/*.story is used. Multiple values are allowed.");
+        options.addOption("s", "story_path", true, "Specifies path to the story. Ant format can be used in each path. If not specified, default path data/stories/**/*.story is used. Multiple values are allowed.");
         options.addOption("c", "steps_class", true, "Specifies steps class. If not specified, default classes are used. Multiple values are allowed.");
         Option params = OptionBuilder.withArgName("param=value")
                 .hasArgs(2)
@@ -86,7 +86,7 @@ public class JBehaveRunnerCommandLine {
         if (paths != null && paths.length > 0) {
             return Arrays.asList(paths);
         } else {
-            return Arrays.asList("public/stories/**/*.story");
+            return Arrays.asList("data/stories/**/*.story");
         }
     }
 

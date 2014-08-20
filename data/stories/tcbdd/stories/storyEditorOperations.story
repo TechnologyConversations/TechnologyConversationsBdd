@@ -14,8 +14,8 @@ GivenStories:
 Lifecycle:
 
 Before:
-Given File public/stories/testDirectory/testStory.story does NOT exist
-Given File public/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
 
 After:
 
