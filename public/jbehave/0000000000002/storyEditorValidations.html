@@ -1,0 +1,145 @@
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/stories/storyEditorValidations.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> have valid stories</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> have my entries validated</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web user is in the View Story page</div>
+<div class="step">Then Web element invalidForm is NOT visible</div>
+</div></div><div class="scenario">
+<h2>Scenario: Name value is required</h2>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clears the element <span class="step parameter">storyName</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Story meta, given story and lifecycle step values are required</h2>
+<div class="examples">
+<h3>Examples:</h3>
+<div class="step">When Web user clicks the element &lt;addElement&gt;</div>
+<div class="step">When Web user sets value some value to the element &lt;element&gt;</div>
+<div class="step">When Web user clears the element &lt;element&gt;</div>
+<div class="step">Then Web element invalidForm is visible</div>
+<table>
+<thead>
+<tr>
+<th>addElement</th><th>element</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>addStoryMeta</td><td>storyMeta1</td></tr>
+<tr>
+<td>addStoryGivenStory</td><td>storyGivenStory1</td></tr>
+<tr>
+<td>addStoryLifecycleBeforeStep</td><td>storyLifecycleBeforeStep1</td></tr>
+<tr>
+<td>addStoryLifecycleAfterStep</td><td>storyLifecycleAfterStep1</td></tr>
+</tbody>
+</table>
+
+<h3 class="example">Example: {addElement=addStoryMeta, element=storyMeta1}</h3>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryMeta</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">some value</span> to the element <span class="step parameter">storyMeta1</span></div>
+<div class="step successful">When Web user clears the element <span class="step parameter">storyMeta1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+
+<h3 class="example">Example: {addElement=addStoryGivenStory, element=storyGivenStory1}</h3>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">some value</span> to the element <span class="step parameter">storyGivenStory1</span></div>
+<div class="step successful">When Web user clears the element <span class="step parameter">storyGivenStory1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+
+<h3 class="example">Example: {addElement=addStoryLifecycleBeforeStep, element=storyLifecycleBeforeStep1}</h3>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleBeforeStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">some value</span> to the element <span class="step parameter">storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user clears the element <span class="step parameter">storyLifecycleBeforeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+
+<h3 class="example">Example: {addElement=addStoryLifecycleAfterStep, element=storyLifecycleAfterStep1}</h3>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleAfterStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">some value</span> to the element <span class="step parameter">storyLifecycleAfterStep1</span></div>
+<div class="step successful">When Web user clears the element <span class="step parameter">storyLifecycleAfterStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Scenario meta value is required</h2>
+<div class="examples">
+<h3>Examples:</h3>
+<div class="step">When Web user clicks the element scenario1Panel</div>
+<div class="step">When Web user clicks the element &lt;addElement&gt;</div>
+<div class="step">When Web user sets value &lt;value&gt; to the element &lt;element&gt;</div>
+<div class="step">When Web user clears the element &lt;element&gt;</div>
+<div class="step">Then Web element invalidForm is visible</div>
+<table>
+<thead>
+<tr>
+<th>addElement</th><th>value</th><th>element</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>addScenario1Meta</td><td>myMeta</td><td>scenario1Meta1</td></tr>
+<tr>
+<td>addScenario1Step</td><td>Given something</td><td>scenario1Step1</td></tr>
+</tbody>
+</table>
+
+<h3 class="example">Example: {addElement=addScenario1Meta, value=myMeta, element=scenario1Meta1}</h3>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Meta</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">myMeta</span> to the element <span class="step parameter">scenario1Meta1</span></div>
+<div class="step successful">When Web user clears the element <span class="step parameter">scenario1Meta1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+
+<h3 class="example">Example: {addElement=addScenario1Step, value=Given something, element=scenario1Step1}</h3>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given something</span> to the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">When Web user clears the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">invalidForm</span> is visible</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>storyEditorValidations</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<story path="file:data/stories/tcbdd/stories/storyEditorValidations.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">have valid stories</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">have my entries validated</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web user is in the View Story page</step>
+<step>Then Web element invalidForm is NOT visible</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Name value is required">
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clears the element <parameter>storyName</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Story meta, given story and lifecycle step values are required">
+<examples keyword="Examples:">
+<step>When Web user clicks the element &lt;addElement&gt;</step>
+<step>When Web user sets value some value to the element &lt;element&gt;</step>
+<step>When Web user clears the element &lt;element&gt;</step>
+<step>Then Web element invalidForm is visible</step>
+<parameters>
+<names><name>addElement</name><name>element</name></names>
+<values><value>addStoryMeta</value><value>storyMeta1</value></values>
+<values><value>addStoryGivenStory</value><value>storyGivenStory1</value></values>
+<values><value>addStoryLifecycleBeforeStep</value><value>storyLifecycleBeforeStep1</value></values>
+<values><value>addStoryLifecycleAfterStep</value><value>storyLifecycleAfterStep1</value></values>
+</parameters>
+
+<example keyword="Example:">{addElement=addStoryMeta, element=storyMeta1}</example>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryMeta</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>some value</parameter> to the element <parameter>storyMeta1</parameter></step>
+<step outcome="successful">When Web user clears the element <parameter>storyMeta1</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+
+<example keyword="Example:">{addElement=addStoryGivenStory, element=storyGivenStory1}</example>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>some value</parameter> to the element <parameter>storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user clears the element <parameter>storyGivenStory1</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+
+<example keyword="Example:">{addElement=addStoryLifecycleBeforeStep, element=storyLifecycleBeforeStep1}</example>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleBeforeStep</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>some value</parameter> to the element <parameter>storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user clears the element <parameter>storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+
+<example keyword="Example:">{addElement=addStoryLifecycleAfterStep, element=storyLifecycleAfterStep1}</example>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleAfterStep</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>some value</parameter> to the element <parameter>storyLifecycleAfterStep1</parameter></step>
+<step outcome="successful">When Web user clears the element <parameter>storyLifecycleAfterStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+</examples>
+</scenario>
+<scenario keyword="Scenario:" title="Scenario meta value is required">
+<examples keyword="Examples:">
+<step>When Web user clicks the element scenario1Panel</step>
+<step>When Web user clicks the element &lt;addElement&gt;</step>
+<step>When Web user sets value &lt;value&gt; to the element &lt;element&gt;</step>
+<step>When Web user clears the element &lt;element&gt;</step>
+<step>Then Web element invalidForm is visible</step>
+<parameters>
+<names><name>addElement</name><name>value</name><name>element</name></names>
+<values><value>addScenario1Meta</value><value>myMeta</value><value>scenario1Meta1</value></values>
+<values><value>addScenario1Step</value><value>Given something</value><value>scenario1Step1</value></values>
+</parameters>
+
+<example keyword="Example:">{addElement=addScenario1Meta, value=myMeta, element=scenario1Meta1}</example>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Meta</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>myMeta</parameter> to the element <parameter>scenario1Meta1</parameter></step>
+<step outcome="successful">When Web user clears the element <parameter>scenario1Meta1</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+
+<example keyword="Example:">{addElement=addScenario1Step, value=Given something, element=scenario1Step1}</example>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given something</parameter> to the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">When Web user clears the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">Then Web element <parameter>invalidForm</parameter> is visible</step>
+</examples>
+</scenario>
+</story>
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

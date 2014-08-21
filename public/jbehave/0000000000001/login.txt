@@ -1,0 +1,56 @@
+
+(file:data/stories/tcbdd/login/login.story)
+Narrative:
+In order to be able to provide personalized experience
+As a application user
+I want to be able to identify myself
+Lifecycle:
+Before:
+Given Web user is in the Login screen
+
+Scenario: Should have all fields
+Given Web user is in the Login screen
+Given Web address /page/login is opened
+Then Web element username is visible
+Then Web element password is visible
+Then Web element login is visible
+
+Scenario: Should have username required
+Given Web user is in the Login screen
+Given Web address /page/login is opened
+When Web user sets value myPassword to the element password
+Then Web element login is disabled
+
+Scenario: Should have password required
+Given Web user is in the Login screen
+Given Web address /page/login is opened
+When Web user sets value myUsername to the element username
+Then Web element login is disabled
+
+Scenario: Should redirect to the confirmation screen
+Given Web user is in the Login screen
+Given Web address /page/login is opened
+Given Web user myUsername with password myPassword exists
+When Web user sets value myUsername to the element username
+When Web user sets value myPassword to the element password
+When Web user clicks the element register
+When Web user myUsername logs in with password myPassword
+When Web user sets value myUsername to the element username
+When Web user sets value myPassword to the element password
+When Web user clicks the element login
+Then Web user is in the Welcome screen
+Then Web element pageTitle should have text Welcome
+
+Scenario: Should display error message when user does not exist
+Given Web user is in the Login screen
+Given Web address /page/login is opened
+Given Web user myUsername does NOT exists
+When Web user sets value myUsername to the element username
+When Web user clicks the element delete
+When Web user myUsername logs in with password myPassword
+When Web user sets value myUsername to the element username
+When Web user sets value myPassword to the element password
+When Web user clicks the element login
+Then Web element message should have text Specified username and/or password is incorrect
+
+

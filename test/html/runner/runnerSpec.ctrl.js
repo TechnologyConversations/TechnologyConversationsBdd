@@ -16,7 +16,7 @@ describe('runnerModule', function() {
 
     describe('runnerCtrl controller', function() {
 
-        var modalInstance, httpBackend, timeout;
+        var modalInstance, httpBackend, timeout, location;
         var pendingSteps = [
             "Given Web user is in the Browse Stories dialog",
             "Given something else"
@@ -26,6 +26,7 @@ describe('runnerModule', function() {
             inject(function($controller, $httpBackend, $http, $location, $timeout) {
                 httpBackend = $httpBackend;
                 timeout = $timeout;
+                location = $location;
                 $controller('runnerCtrl', {
                     $scope: scope,
                     $modal: modal,
@@ -37,13 +38,32 @@ describe('runnerModule', function() {
             })
         );
 
-        describe('init function', function() {
-            beforeEach(function() {
-                spyOn(scope, 'openRunner');
-                scope.init();
-            });
+        describe('onLoad function', function() {
             it('should call the openRunner function', function() {
+                spyOn(scope, 'openRunner');
+                scope.onLoad();
                 expect(scope.openRunner).toHaveBeenCalled();
+            });
+            it('should NOT call the openRunner function when location.search contains reportsId', function() {
+                var reportsId = 'reportsId';
+                location.search('reportsId', reportsId);
+                spyOn(scope, 'openRunner');
+                scope.onLoad();
+                expect(scope.openRunner).not.toHaveBeenCalled();
+            });
+            it('should call getReports when location.search contains reportsId', function() {
+                var reportsId = 'reportsId';
+                location.search('reportsId', reportsId);
+                spyOn(scope, 'getReports');
+                scope.onLoad();
+                expect(scope.getReports).toHaveBeenCalledWith(reportsId);
+            });
+            it('should set reportsUrl when location.search contains reportsId', function() {
+                var reportsId = 'reportsId';
+                location.search('reportsId', reportsId);
+                spyOn(scope, 'getReports');
+                scope.onLoad();
+                expect(scope.reportsUrl).toEqual('/api/v1/reporters/get/' + reportsId + '/view/reports.html');
             });
             it('should set storyRunnerInProgress to false', function() {
                 expect(scope.storyRunnerInProgress).toEqual(false);
@@ -415,6 +435,12 @@ describe('runnerModule', function() {
 
         var modalInstance, data, cookieStore, scope, clazz, classes, value;
         var paramWithValue, paramWithoutValue;
+        var runStoryFeature = {
+            displayed: true,
+            enabled: false,
+            description: "This feature is temporarily disabled in the demo due to our hosting limitations."
+        };
+        var features = {runStory: runStoryFeature};
 
         beforeEach(
             inject(function($rootScope, $injector, $controller) {
@@ -438,15 +464,19 @@ describe('runnerModule', function() {
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
                     data: data,
-                    showGetApi: true
+                    showGetApi: true,
+                    features: features
                 });
             })
         );
 
-        describe('by default', function() {
-           it('should return 0 if the paramArray is empty', function() {
+        describe('onLoad function', function() {
+            it('should set paramArray to an empty array', function() {
                 expect(scope.paramArray.length).toEqual(0);
-           });
+            });
+            it('should set features to the controller argument', function() {
+                expect(scope.features).toEqual(features);;
+            });
         });
 
         describe('setParams function', function() {
@@ -536,6 +566,23 @@ describe('runnerModule', function() {
             it('should close the modal and return data with action set to api', function() {
                 scope.getApi();
                 expect(modalInstance.close).toHaveBeenCalledWith({action: 'api', classes: classes});
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service function', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service function', function() {
+                var id = 'id';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
             });
         });
 

@@ -70,7 +70,7 @@ angular.module('storiesModule', [
                 'progress-bar progress-bar-danger': !inProgress && !success
             };
         };
-        this.openRunnerParametersModal = function(showGetApi) {
+        this.openRunnerParametersModal = function(showGetApi, $scope) {
             var self = this;
             return $modal.open({
                 templateUrl: '/assets/html/runner/runnerParams.tmpl.html',
@@ -81,6 +81,9 @@ angular.module('storiesModule', [
                     },
                     showGetApi: function() {
                         return showGetApi;
+                    },
+                    features: function() {
+                        return {runStory: $scope.features.runStory};
                     }
                 }
             });

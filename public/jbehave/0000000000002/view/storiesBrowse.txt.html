@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>storiesBrowse</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: txt"><![CDATA[
+
+(file:data/stories/tcbdd/stories/storiesBrowse.story)
+Meta:
+@dummy 
+
+Narrative:
+In order to open existing and create new stories
+As a application user
+I want to be able to browse files and directories
+Lifecycle:
+Before:
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+After:
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can open dialog
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web home page is opened
+When Web user clicks the element browseStories
+Then Web user is in the stories modal screen
+Then Web element modalHeader should have text Browse Stories
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can navigate through directories
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+Then Web element path should have text testDirectory
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can display stories
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+Then Web element text:testStory exists
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can open story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+When Web user clicks the element text:testStory
+Then Web element pageTitle should have text View Story
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can create new story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element createNewStory
+Then Web element pageTitle should have text New Story
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can delete story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+When Web user clicks the element deletetestStory
+When Web user clicks the element ok
+Then Web element text:testStory disappeared
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can create new directory
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user sets value newTestDirectory to the element searchStories
+When Web user clicks the element createNewDirectory
+Then Web element text:newTestDirectory appears
+Given Directory data/stories/newTestDirectory does NOT exist
+
+
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

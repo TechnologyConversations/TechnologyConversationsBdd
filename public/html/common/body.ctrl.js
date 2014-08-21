@@ -1,5 +1,5 @@
 angular.module('bodyModule', ['ngJoyRide'])
-    .controller('bodyCtrl', function ($scope, $http, $modal, $location, TcBddService) {
+    .controller('bodyCtrl', function ($scope, $http, $modal, $location, TcBddService, $rootScope) {
         $scope.onFinishJoyRide = function() {
             TcBddService.onFinishJoyRide($scope);
         };
@@ -26,9 +26,9 @@ angular.module('bodyModule', ['ngJoyRide'])
                 }
             });
         };
-        $scope.openMenu = function() {
-            if ($location.search().openMenu !== undefined) {
-                var menu = $location.search().openMenu;
+        $scope.openModal = function() {
+            if ($location.search().openModal !== undefined) {
+                var menu = $location.search().openModal;
                 if (menu === 'openStory') {
                     $scope.openStory();
                 }
@@ -37,7 +37,7 @@ angular.module('bodyModule', ['ngJoyRide'])
         $scope.loadFeatures = function() {
             $http.get('/api/v1/data/features').then(function(response) {
                 $scope.features = response.data.data;
-                $scope.openMenu();
+                $scope.openModal();
             }, function() {
                 $scope.features = [];
             });

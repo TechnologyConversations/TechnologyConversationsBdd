@@ -1,0 +1,172 @@
+<story path="file:data/stories/tcbdd/runners/runnerSingleStory.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">verify behaviours</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to run story and see results</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+</lifecycle>
+<scenario keyword="Scenario:" title="Can run story">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then story is running</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Story run is in progress</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT run multiple stories">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runStory</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has progress bar">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Story run is in progress</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Has parameters dialog">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can retrieve values of last parameters used">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">When Web user selects <parameter>Phantom JS</parameter> from the dropdown list <parameter>webStepsBrowserOption</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>http://localhost:9000</parameter> to the element <parameter>webStepsUrl</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Story run was successful</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web dropdown list <parameter>webStepsBrowserOption</parameter> has <parameter>Phantom JS</parameter> selected</step>
+<step outcome="successful">Then Web element <parameter>webStepsUrl</parameter> should have value <parameter>http://localhost:9000</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can display successful status">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Story run was successful</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can display the list of pending steps">
+<step outcome="successful">Given Web user is in the Story screen with pending steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testPendingStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>pendingSteps</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>pendingStep1</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can display runner reports">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerReports</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can cancel story runner from the parameters dialog">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>cancelRunStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> is NOT visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can display failed status">
+<step outcome="successful">Given Web user is in the Story page with failed steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyFailed.story</parameter> to <parameter>data/stories/testDirectory/testFailedStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testFailedStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Story run failed</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can display pending status">
+<step outcome="successful">Given Web user is in the Story screen with pending steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testPendingStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Story run was successful with 1 pending steps</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Pending steps are links to composites page">
+<step outcome="successful">Given Web user is in the Story screen with pending steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testPendingStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web single story runner is run</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">When Web user clicks the element <parameter>pendingStep1</parameter></step>
+<step outcome="successful">Then Web user is in the composites modal screen</step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Browse Composites</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can choose which browser to run from a dropdown list">
+<step outcome="successful">Given Web user is in the Story page with all successful steps</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/testSuccessStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testSuccessStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>runStory</parameter></step>
+<step outcome="successful">When Web user selects <parameter>Mozilla Firefox</parameter> from the dropdown list <parameter>webStepsBrowserOption</parameter></step>
+<step outcome="successful">When Web user selects <parameter>Phantom JS</parameter> from the dropdown list <parameter>webStepsBrowserOption</parameter></step>
+<step outcome="successful">Then Web dropdown list <parameter>webStepsBrowserOption</parameter> has <parameter>Phantom JS</parameter> selected</step>
+</scenario>
+</story>

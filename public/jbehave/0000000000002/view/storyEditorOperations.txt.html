@@ -1,0 +1,220 @@
+<html>
+<head>
+<title>storyEditorOperations</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: txt"><![CDATA[
+
+(file:data/stories/tcbdd/stories/storyEditorOperations.story)
+Narrative:
+As a 
+I want to 
+So that 
+Lifecycle:
+Before:
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+
+Scenario: Can save new story
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user fills in the new story form
+When Web user sets value newStory to the element storyName
+When Web user sets value story description to the element storyDescription
+When Web user clicks the element addStoryMeta
+When Web user sets value story meta 1 to the element storyMeta1
+When Web user sets value accomplish something to the element storyNarrativeInOrderTo
+When Web user sets value user to the element storyNarrativeAsA
+When Web user sets value do something to the element storyNarrativeIWantTo
+When Web user clicks the element addStoryGivenStory
+When Web user sets value path/to/my/given/story to the element storyGivenStory1
+When Web user clicks the element addStoryLifecycleBeforeStep
+When Web user sets value Given this is before step to the element storyLifecycleBeforeStep1
+When Web user clicks the element addStoryLifecycleAfterStep
+When Web user sets value Given this is after step to the element storyLifecycleAfterStep1
+When Web user adds scenario to the story form
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user sets value Scenario 1 Title to the element scenario1Title
+When Web user clicks the element addScenario1Meta
+When Web user sets value Scenario1Meta1 to the element scenario1Meta1
+When Web user clicks the element addScenario1Step
+When Web user sets value When step is written to the element scenario1Step1
+When Web user clicks the element addScenario1Step
+When Web user sets value Then there is still hope to the element scenario1Step2
+When Web user clicks the element saveStory
+Then Web story is saved
+Given Web address /page/stories/view/testDirectory/@storyName is opened
+Given Web page is refreshed
+When Web user clicks the element scenariosPanel
+Then Web element storyName should have value @storyName
+When Web user clicks the element storyPanel
+When Web user clicks the element storyDescriptionPanel
+Then Web element storyDescription should have value @storyDescription
+When Web user clicks the element storyMetaPanel
+Then Web element storyMeta1 should have value @storyMeta1
+When Web user clicks the element storyNarrativePanel
+Then Web element storyNarrativeInOrderTo should have value @storyNarrativeInOrderTo
+Then Web element storyNarrativeAsA should have value @storyNarrativeAsA
+Then Web element storyNarrativeIWantTo should have value @storyNarrativeIWantTo
+When Web user clicks the element storyGivenStoriesPanel
+Then Web element storyGivenStory1 should have value @storyGivenStory1
+When Web user clicks the element storyLifecyclePanel
+Then Web element storyLifecycleBeforeStep1 should have value @storyLifecycleBeforeStep1
+When Web user clicks the element scenariosPanel
+
+Scenario: Can update an existing story
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+When Web user fills in the existing story form
+When Web user sets value story description to the element storyDescription
+When Web user sets value story meta 1 to the element storyMeta1
+When Web user sets value accomplish something to the element storyNarrativeInOrderTo
+When Web user sets value user to the element storyNarrativeAsA
+When Web user sets value do something to the element storyNarrativeIWantTo
+When Web user clicks the element addStoryGivenStory
+When Web user sets value path/to/my/given/story to the element storyGivenStory1
+When Web user sets value Given this is before step to the element storyLifecycleBeforeStep1
+When Web user sets value Given this is after step to the element storyLifecycleAfterStep1
+When Web user clicks the element saveStory
+Then Web story is saved
+Given Web address /page/stories/view/testDirectory/@storyName is opened
+Given Web page is refreshed
+When Web user clicks the element scenariosPanel
+Then Web element storyName should have value @storyName
+When Web user clicks the element storyPanel
+When Web user clicks the element storyDescriptionPanel
+Then Web element storyDescription should have value @storyDescription
+When Web user clicks the element storyMetaPanel
+Then Web element storyMeta1 should have value @storyMeta1
+When Web user clicks the element storyNarrativePanel
+Then Web element storyNarrativeInOrderTo should have value @storyNarrativeInOrderTo
+Then Web element storyNarrativeAsA should have value @storyNarrativeAsA
+Then Web element storyNarrativeIWantTo should have value @storyNarrativeIWantTo
+When Web user clicks the element storyGivenStoriesPanel
+Then Web element storyGivenStory1 should have value @storyGivenStory1
+When Web user clicks the element storyLifecyclePanel
+Then Web element storyLifecycleBeforeStep1 should have value @storyLifecycleBeforeStep1
+When Web user clicks the element scenariosPanel
+
+Scenario: Can revert changes
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+When Web user fills in the existing story form
+When Web user sets value story description to the element storyDescription
+When Web user sets value story meta 1 to the element storyMeta1
+When Web user sets value accomplish something to the element storyNarrativeInOrderTo
+When Web user sets value user to the element storyNarrativeAsA
+When Web user sets value do something to the element storyNarrativeIWantTo
+When Web user clicks the element addStoryGivenStory
+When Web user sets value path/to/my/given/story to the element storyGivenStory1
+When Web user sets value Given this is before step to the element storyLifecycleBeforeStep1
+When Web user sets value Given this is after step to the element storyLifecycleAfterStep1
+When Web user clicks the element revertStory
+Then Web story is reverted to the original version
+Then Web element storyDescription should NOT have value @storyDescription
+Then Web element storyMeta1 should NOT have value @storyMeta1
+Then Web element storyNarrativeInOrderTo should NOT have value @storyNarrativeInOrderTo
+Then Web element storyNarrativeAsA should NOT have value @storyNarrativeAsA
+Then Web element storyNarrativeIWantTo should NOT have value @storyNarrativeIWantTo
+Then Web element storyGivenStory1 should NOT have value @storyGivenStory1
+Then Web element storyLifecycleBeforeStep1 should NOT have value @storyLifecycleBeforeStep1
+
+Scenario: Can delete story
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element deleteStory
+When Web user clicks the element ok
+Then Web story is deleted
+Then File data/stories/testDirectory/testStory.story does NOT exist
+
+Scenario: Can rename story
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+When Web user sets value storyNameRenamed to the element storyName
+When Web user clicks the element saveStory
+Then Web story is renamed
+Then File data/stories/testDirectory/@storyName.story exists
+
+Scenario: Can NOT save story when data is intact
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element saveStory is disabled
+
+Scenario: Can NOT revert changes is data is intact
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element revertStory is disabled
+
+Scenario: Can NOT delete new story before it is saved
+Given File data/stories/testDirectory/testStory.story does NOT exist
+Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+Then Web element deleteStory is disabled
+
+
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

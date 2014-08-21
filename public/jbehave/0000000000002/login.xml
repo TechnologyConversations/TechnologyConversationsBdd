@@ -1,0 +1,57 @@
+<story path="file:data/stories/tcbdd/login/login.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">be able to provide personalized experience</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to identify myself</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web user is in the Login screen</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Should have all fields">
+<step outcome="successful">Given Web user is in the Login screen</step>
+<step outcome="successful">Given Web address <parameter>/page/login</parameter> is opened</step>
+<step outcome="successful">Then Web element <parameter>username</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>password</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>login</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Should have username required">
+<step outcome="successful">Given Web user is in the Login screen</step>
+<step outcome="successful">Given Web address <parameter>/page/login</parameter> is opened</step>
+<step outcome="successful">When Web user sets value <parameter>myPassword</parameter> to the element <parameter>password</parameter></step>
+<step outcome="successful">Then Web element <parameter>login</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Should have password required">
+<step outcome="successful">Given Web user is in the Login screen</step>
+<step outcome="successful">Given Web address <parameter>/page/login</parameter> is opened</step>
+<step outcome="successful">When Web user sets value <parameter>myUsername</parameter> to the element <parameter>username</parameter></step>
+<step outcome="successful">Then Web element <parameter>login</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Should redirect to the confirmation screen">
+<step outcome="successful">Given Web user is in the Login screen</step>
+<step outcome="successful">Given Web address <parameter>/page/login</parameter> is opened</step>
+<step outcome="successful">Given Web user <parameter>myUsername</parameter> with password <parameter>myPassword</parameter> exists</step>
+<step outcome="successful">When Web user sets value <parameter>myUsername</parameter> to the element <parameter>username</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>myPassword</parameter> to the element <parameter>password</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>register</parameter></step>
+<step outcome="successful">When Web user <parameter>myUsername</parameter> logs in with password <parameter>myPassword</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>myUsername</parameter> to the element <parameter>username</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>myPassword</parameter> to the element <parameter>password</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>login</parameter></step>
+<step outcome="successful">Then Web user is in the Welcome screen</step>
+<step outcome="successful">Then Web element <parameter>pageTitle</parameter> should have text <parameter>Welcome</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Should display error message when user does not exist">
+<step outcome="successful">Given Web user is in the Login screen</step>
+<step outcome="successful">Given Web address <parameter>/page/login</parameter> is opened</step>
+<step outcome="successful">Given Web user <parameter>myUsername</parameter> does NOT exists</step>
+<step outcome="successful">When Web user sets value <parameter>myUsername</parameter> to the element <parameter>username</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>delete</parameter></step>
+<step outcome="successful">When Web user <parameter>myUsername</parameter> logs in with password <parameter>myPassword</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>myUsername</parameter> to the element <parameter>username</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>myPassword</parameter> to the element <parameter>password</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>login</parameter></step>
+<step outcome="successful">Then Web element <parameter>message</parameter> should have text <parameter>Specified username and/or password is incorrect</parameter></step>
+</scenario>
+</story>

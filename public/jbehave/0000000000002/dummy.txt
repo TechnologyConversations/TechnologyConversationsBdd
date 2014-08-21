@@ -1,0 +1,12 @@
+
+(file:data/stories/tcbdd/dummy.story)
+Narrative:
+As a 
+I want to 
+So that 
+Lifecycle:
+
+Scenario: Dummy scenario 1
+Given variable myVariable has value My value
+
+

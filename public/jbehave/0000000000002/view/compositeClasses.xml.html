@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>compositeClasses</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<story path="file:data/stories/tcbdd/composites/compositeClasses.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">have more understandable scenarios</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to create composite steps</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web home page is opened</step>
+<step>When Web user clicks the element browseComposites</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Can create new composites class">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>TestComposites</parameter> to the element <parameter>className</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>createNewClass</parameter></step>
+<step outcome="successful">Then Web user is in the New Composites screen</step>
+<step outcome="successful">Then Web element <parameter>saveComposites</parameter> should have text <parameter>Create New Composites</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can open an existing composites class">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:TcBddComposites</parameter></step>
+<step outcome="successful">Then Web user is in the View Composites screen</step>
+<step outcome="successful">Then Web element <parameter>saveComposites</parameter> should have text <parameter>Update Composites</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can filter composites classes">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>TcBddComposites</parameter> to the element <parameter>className</parameter></step>
+<step outcome="successful">Then Web element <parameter>text:TcBddComposites</parameter> is visible</step>
+<step outcome="successful">When Web user sets value <parameter>NonExistentComposites</parameter> to the element <parameter>className</parameter></step>
+<step outcome="successful">Then Web element <parameter>text:TcBddComposites</parameter> is NOT visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can close the composites modal screen">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">Then Web user is in the composites modal screen</step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Browse Composites</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>closeComposites</parameter></step>
+<step outcome="successful">Then Web user is in the home screen</step>
+<step outcome="successful">Then Web element <parameter>pageTitle</parameter> should have text <parameter>Home</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Must have valid composites class name (cannot start with a number, cannot have space character)">
+<examples keyword="Examples:">
+<step>When Web user sets value &lt;className&gt; to the element className</step>
+<step>Then Web element compositeClassError is visible</step>
+<parameters>
+<names><name>className</name></names>
+<values><value>1IsNotAGoodStart</value></values>
+<values><value>space is not allowed</value></values>
+</parameters>
+
+<example keyword="Example:">{className=1IsNotAGoodStart}</example>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>1IsNotAGoodStart</parameter> to the element <parameter>className</parameter></step>
+<step outcome="successful">Then Web element <parameter>compositeClassError</parameter> is visible</step>
+
+<example keyword="Example:">{className=space is not allowed}</example>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>space is not allowed</parameter> to the element <parameter>className</parameter></step>
+<step outcome="successful">Then Web element <parameter>compositeClassError</parameter> is visible</step>
+</examples>
+</scenario>
+</story>
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

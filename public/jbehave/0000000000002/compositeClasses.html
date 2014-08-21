@@ -1,0 +1,79 @@
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/composites/compositeClasses.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> have more understandable scenarios</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to create composite steps</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web home page is opened</div>
+<div class="step">When Web user clicks the element browseComposites</div>
+</div></div><div class="scenario">
+<h2>Scenario: Can create new composites class</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">TestComposites</span> to the element <span class="step parameter">className</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">createNewClass</span></div>
+<div class="step successful">Then Web user is in the New Composites screen</div>
+<div class="step successful">Then Web element <span class="step parameter">saveComposites</span> should have text <span class="step parameter">Create New Composites</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can open an existing composites class</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:TcBddComposites</span></div>
+<div class="step successful">Then Web user is in the View Composites screen</div>
+<div class="step successful">Then Web element <span class="step parameter">saveComposites</span> should have text <span class="step parameter">Update Composites</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can filter composites classes</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">TcBddComposites</span> to the element <span class="step parameter">className</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:TcBddComposites</span> is visible</div>
+<div class="step successful">When Web user sets value <span class="step parameter">NonExistentComposites</span> to the element <span class="step parameter">className</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:TcBddComposites</span> is NOT visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can close the composites modal screen</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">Then Web user is in the composites modal screen</div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Browse Composites</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">closeComposites</span></div>
+<div class="step successful">Then Web user is in the home screen</div>
+<div class="step successful">Then Web element <span class="step parameter">pageTitle</span> should have text <span class="step parameter">Home</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Must have valid composites class name (cannot start with a number, cannot have space character)</h2>
+<div class="examples">
+<h3>Examples:</h3>
+<div class="step">When Web user sets value &lt;className&gt; to the element className</div>
+<div class="step">Then Web element compositeClassError is visible</div>
+<table>
+<thead>
+<tr>
+<th>className</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1IsNotAGoodStart</td></tr>
+<tr>
+<td>space is not allowed</td></tr>
+</tbody>
+</table>
+
+<h3 class="example">Example: {className=1IsNotAGoodStart}</h3>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">1IsNotAGoodStart</span> to the element <span class="step parameter">className</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeClassError</span> is visible</div>
+
+<h3 class="example">Example: {className=space is not allowed}</h3>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">space is not allowed</span> to the element <span class="step parameter">className</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeClassError</span> is visible</div>
+</div>
+</div>
+</div>

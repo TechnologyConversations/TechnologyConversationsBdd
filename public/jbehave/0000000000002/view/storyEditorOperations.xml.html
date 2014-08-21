@@ -1,0 +1,221 @@
+<html>
+<head>
+<title>storyEditorOperations</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<story path="file:data/stories/tcbdd/stories/storyEditorOperations.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="As a"></inOrderTo>
+  <asA keyword="I want to"></asA>
+  <iWantTo keyword="So that"></iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given File data/stories/testDirectory/testStory.story does NOT exist</step>
+<step>Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Can save new story">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user fills in the new story form</step>
+<step outcome="successful">When Web user sets value <parameter>newStory</parameter> to the element <parameter>storyName</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>story description</parameter> to the element <parameter>storyDescription</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryMeta</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>story meta 1</parameter> to the element <parameter>storyMeta1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>accomplish something</parameter> to the element <parameter>storyNarrativeInOrderTo</parameter></step>
+<step outcome="successful">When Web <parameter>user</parameter> sets value <parameter>user</parameter> to the element <parameter>storyNarrativeAsA</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>do something</parameter> to the element <parameter>storyNarrativeIWantTo</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>path/to/my/given/story</parameter> to the element <parameter>storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleBeforeStep</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given this is before step</parameter> to the element <parameter>storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleAfterStep</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given this is after step</parameter> to the element <parameter>storyLifecycleAfterStep1</parameter></step>
+<step outcome="successful">When Web user adds scenario to the story form</step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Scenario 1 Title</parameter> to the element <parameter>scenario1Title</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Meta</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Scenario1Meta1</parameter> to the element <parameter>scenario1Meta1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>When step is written</parameter> to the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Then there is still hope</parameter> to the element <parameter>scenario1Step2</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>saveStory</parameter></step>
+<step outcome="successful">Then Web story is saved</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/@storyName</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>scenariosPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyName</parameter> should have value <parameter>@storyName</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyPanel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyDescriptionPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyDescription</parameter> should have value <parameter>@storyDescription</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyMetaPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta1</parameter> should have value <parameter>@storyMeta1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyNarrativePanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeInOrderTo</parameter> should have value <parameter>@storyNarrativeInOrderTo</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeAsA</parameter> should have value <parameter>@storyNarrativeAsA</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeIWantTo</parameter> should have value <parameter>@storyNarrativeIWantTo</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyGivenStoriesPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory1</parameter> should have value <parameter>@storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyLifecyclePanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep1</parameter> should have value <parameter>@storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenariosPanel</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can update an existing story">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user fills in the existing story form</step>
+<step outcome="successful">When Web user sets value <parameter>story description</parameter> to the element <parameter>storyDescription</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>story meta 1</parameter> to the element <parameter>storyMeta1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>accomplish something</parameter> to the element <parameter>storyNarrativeInOrderTo</parameter></step>
+<step outcome="successful">When Web <parameter>user</parameter> sets value <parameter>user</parameter> to the element <parameter>storyNarrativeAsA</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>do something</parameter> to the element <parameter>storyNarrativeIWantTo</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>path/to/my/given/story</parameter> to the element <parameter>storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given this is before step</parameter> to the element <parameter>storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given this is after step</parameter> to the element <parameter>storyLifecycleAfterStep1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>saveStory</parameter></step>
+<step outcome="successful">Then Web story is saved</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/@storyName</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>scenariosPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyName</parameter> should have value <parameter>@storyName</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyPanel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyDescriptionPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyDescription</parameter> should have value <parameter>@storyDescription</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyMetaPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta1</parameter> should have value <parameter>@storyMeta1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyNarrativePanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeInOrderTo</parameter> should have value <parameter>@storyNarrativeInOrderTo</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeAsA</parameter> should have value <parameter>@storyNarrativeAsA</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeIWantTo</parameter> should have value <parameter>@storyNarrativeIWantTo</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyGivenStoriesPanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory1</parameter> should have value <parameter>@storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>storyLifecyclePanel</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep1</parameter> should have value <parameter>@storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenariosPanel</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can revert changes">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user fills in the existing story form</step>
+<step outcome="successful">When Web user sets value <parameter>story description</parameter> to the element <parameter>storyDescription</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>story meta 1</parameter> to the element <parameter>storyMeta1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>accomplish something</parameter> to the element <parameter>storyNarrativeInOrderTo</parameter></step>
+<step outcome="successful">When Web <parameter>user</parameter> sets value <parameter>user</parameter> to the element <parameter>storyNarrativeAsA</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>do something</parameter> to the element <parameter>storyNarrativeIWantTo</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>path/to/my/given/story</parameter> to the element <parameter>storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given this is before step</parameter> to the element <parameter>storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given this is after step</parameter> to the element <parameter>storyLifecycleAfterStep1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>revertStory</parameter></step>
+<step outcome="successful">Then Web story is reverted to the original version</step>
+<step outcome="successful">Then Web element <parameter>storyDescription</parameter> should NOT have value <parameter>@storyDescription</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta1</parameter> should NOT have value <parameter>@storyMeta1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeInOrderTo</parameter> should NOT have value <parameter>@storyNarrativeInOrderTo</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeAsA</parameter> should NOT have value <parameter>@storyNarrativeAsA</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeIWantTo</parameter> should NOT have value <parameter>@storyNarrativeIWantTo</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory1</parameter> should NOT have value <parameter>@storyGivenStory1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep1</parameter> should NOT have value <parameter>@storyLifecycleBeforeStep1</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can delete story">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>deleteStory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>ok</parameter></step>
+<step outcome="successful">Then Web story is deleted</step>
+<step outcome="successful">Then File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can rename story">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>storyNameRenamed</parameter> to the element <parameter>storyName</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>saveStory</parameter></step>
+<step outcome="successful">Then Web story is renamed</step>
+<step outcome="successful">Then File <parameter>data/stories/testDirectory/@storyName.story</parameter> exists</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT save story when data is intact">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>saveStory</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT revert changes is data is intact">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the View Story page</step>
+<step outcome="successful">Given variable <parameter>storyName</parameter> has value <parameter>testStory</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummy.story</parameter> to <parameter>data/stories/testDirectory/testStory.story</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/stories/view/testDirectory/testStory</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>revertStory</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT delete new story before it is saved">
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/testStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/storyNameRenamed.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">Then Web element <parameter>deleteStory</parameter> is disabled</step>
+</scenario>
+</story>
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

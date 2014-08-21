@@ -1,0 +1,280 @@
+<html>
+<head>
+<title>storyEditorForm</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/stories/storyEditorForm.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> create and modify stories</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to add and modify story information through the form</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web user is in the New Story screen</div>
+<div class="step">When Web user clicks the element expandPanels</div>
+</div></div><div class="scenario">
+<h2>Scenario: Has name field</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyName</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has description field</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyDescription</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has meta fields</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryMeta</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta1</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has narrative fields</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeInOrderTo</span> is visible</div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeAsA</span> is visible</div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeIWantTo</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has given stories</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory1</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has lifecycle fields</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleBeforeStep</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep1</span> is visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleAfterStep</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleAfterStep1</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has scenario title</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Title</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has scenario meta</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Meta</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Meta1</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has scenario steps</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Step1</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has scenario examples</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Examples</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can add, move and remove story elements</h2>
+<div class="examples">
+<h3>Examples:</h3>
+<div class="step">When Web user clicks the element &lt;addButton&gt;</div>
+<div class="step">When Web user clicks the element &lt;addButton&gt;</div>
+<div class="step">When Web user sets value this is value 1 to the element &lt;element1&gt;</div>
+<div class="step">When Web user sets value this is value 2 to the element &lt;element2&gt;</div>
+<div class="step">When Web user drags the element &lt;dragButton2&gt; to the &lt;dragButton1&gt;</div>
+<div class="step">Then Web element &lt;element1&gt; should have value this is value 2</div>
+<div class="step">When Web user clicks the element &lt;removeButton1&gt;</div>
+<div class="step">Then Web element &lt;element2&gt; is NOT visible</div>
+<div class="step">When Web user clicks the element &lt;removeButton1&gt;</div>
+<div class="step">Then Web element &lt;element1&gt; is NOT visible</div>
+<table>
+<thead>
+<tr>
+<th>addButton</th><th>element1</th><th>element2</th><th>dragButton1</th><th>dragButton2</th><th>removeButton1</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>addStoryMeta</td><td>storyMeta1</td><td>storyMeta2</td><td>dragStoryMeta1</td><td>dragStoryMeta2</td><td>removeStoryMeta1</td></tr>
+<tr>
+<td>addStoryGivenStory</td><td>storyGivenStory1</td><td>storyGivenStory2</td><td>dragStoryGivenStory1</td><td>dragStoryGivenStory2</td><td>removeStoryGivenStory1</td></tr>
+<tr>
+<td>addStoryLifecycleBeforeStep</td><td>storyLifecycleBeforeStep1</td><td>storyLifecycleBeforeStep2</td><td>dragStoryLifecycleBeforeStep1</td><td>dragStoryLifecycleBeforeStep2</td><td>removeStoryLifecycleBeforeStep1</td></tr>
+<tr>
+<td>addStoryLifecycleAfterStep</td><td>storyLifecycleAfterStep1</td><td>storyLifecycleAfterStep2</td><td>dragStoryLifecycleAfterStep1</td><td>dragStoryLifecycleAfterStep2</td><td>removeStoryLifecycleAfterStep1</td></tr>
+</tbody>
+</table>
+
+<h3 class="example">Example: {addButton=addStoryMeta, element1=storyMeta1, element2=storyMeta2, dragButton1=dragStoryMeta1, dragButton2=dragStoryMeta2, removeButton1=removeStoryMeta1}</h3>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryMeta</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryMeta</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 1</span> to the element <span class="step parameter">storyMeta1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 2</span> to the element <span class="step parameter">storyMeta2</span></div>
+<div class="step successful">When Web user drags the element <span class="step parameter">dragStoryMeta2</span> to the <span class="step parameter">dragStoryMeta1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta1</span> should have value <span class="step parameter">this is value 2</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryMeta1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta2</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryMeta1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta1</span> is NOT visible</div>
+
+<h3 class="example">Example: {addButton=addStoryGivenStory, element1=storyGivenStory1, element2=storyGivenStory2, dragButton1=dragStoryGivenStory1, dragButton2=dragStoryGivenStory2, removeButton1=removeStoryGivenStory1}</h3>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 1</span> to the element <span class="step parameter">storyGivenStory1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 2</span> to the element <span class="step parameter">storyGivenStory2</span></div>
+<div class="step successful">When Web user drags the element <span class="step parameter">dragStoryGivenStory2</span> to the <span class="step parameter">dragStoryGivenStory1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory1</span> should have value <span class="step parameter">this is value 2</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryGivenStory1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory2</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryGivenStory1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory1</span> is NOT visible</div>
+
+<h3 class="example">Example: {addButton=addStoryLifecycleBeforeStep, element1=storyLifecycleBeforeStep1, element2=storyLifecycleBeforeStep2, dragButton1=dragStoryLifecycleBeforeStep1, dragButton2=dragStoryLifecycleBeforeStep2, removeButton1=removeStoryLifecycleBeforeStep1}</h3>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleBeforeStep</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleBeforeStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 1</span> to the element <span class="step parameter">storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 2</span> to the element <span class="step parameter">storyLifecycleBeforeStep2</span></div>
+<div class="step successful">When Web user drags the element <span class="step parameter">dragStoryLifecycleBeforeStep2</span> to the <span class="step parameter">dragStoryLifecycleBeforeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep1</span> should have value <span class="step parameter">this is value 2</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryLifecycleBeforeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep2</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryLifecycleBeforeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep1</span> is NOT visible</div>
+
+<h3 class="example">Example: {addButton=addStoryLifecycleAfterStep, element1=storyLifecycleAfterStep1, element2=storyLifecycleAfterStep2, dragButton1=dragStoryLifecycleAfterStep1, dragButton2=dragStoryLifecycleAfterStep2, removeButton1=removeStoryLifecycleAfterStep1}</h3>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleAfterStep</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleAfterStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 1</span> to the element <span class="step parameter">storyLifecycleAfterStep1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">this is value 2</span> to the element <span class="step parameter">storyLifecycleAfterStep2</span></div>
+<div class="step successful">When Web user drags the element <span class="step parameter">dragStoryLifecycleAfterStep2</span> to the <span class="step parameter">dragStoryLifecycleAfterStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleAfterStep1</span> should have value <span class="step parameter">this is value 2</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryLifecycleAfterStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleAfterStep2</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeStoryLifecycleAfterStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleAfterStep1</span> is NOT visible</div>
+</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can add, move and remove scenario steps</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">When I drag and drop</span> to the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Then everything is just great</span> to the element <span class="step parameter">scenario1Step2</span></div>
+<div class="step successful">When Web user drags the element <span class="step parameter">dragScenario1Step2</span> to the <span class="step parameter">dragScenario1Step1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Step1</span> should have value <span class="step parameter">Then everything is just great</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeScenario1Step1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Step2</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeScenario1Step1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Step1</span> is NOT visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Steps have auto-complete function</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Then variable</span> to the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">When Web user presses the enter key in the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Step1</span> should have value <span class="step parameter">Then variable $key has value $value</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can add steps using the ENTER key</h2>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user presses the enter key in the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">scenario1Step2</span> is visible</div>
+</div>
+</div>
+
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

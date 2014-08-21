@@ -1,0 +1,43 @@
+
+(file:data/stories/tcbdd/navigation/navigationMenu.story)
+Narrative:
+In order to be able to access all functionalities
+As a application user
+I want to have the navigation menu
+Lifecycle:
+Before:
+Given Web home page is opened
+
+Scenario: Top menu should have navigation links
+Meta:
+@sho 
+
+Given Web home page is opened
+Then Web element browseStories should have text Browse Stories
+Then Web element browseComposites should have text Browse Composites
+Then Web element runner should have text Run Stories
+
+Scenario: Has link to the home screen (New Story)
+Given Web home page is opened
+When Web user clicks the element pageTitle
+Then Web element pageTitle should have text Home
+
+Scenario: Has link to the Browse Stories screen
+Given Web home page is opened
+When Web user clicks the element browseStories
+Then Web user is in the stories modal screen
+Then Web element modalHeader should have text Browse Stories
+
+Scenario: Has link to the Browse Composites screen
+Given Web home page is opened
+When Web user clicks the element browseComposites
+Then Web user is in the composites modal screen
+Then Web element modalHeader should have text Browse Composites
+
+Scenario: Has link to the Run Stories screen
+Given Web home page is opened
+When Web user clicks the element runner
+Then Web user is in the Runner Selector modal screen
+Then Web element modalHeader should have text Runner Selector
+
+

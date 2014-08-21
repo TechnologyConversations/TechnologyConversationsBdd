@@ -1,0 +1,90 @@
+
+(file:data/stories/tcbdd/stories/storiesBrowse.story)
+Meta:
+@dummy 
+
+Narrative:
+In order to open existing and create new stories
+As a application user
+I want to be able to browse files and directories
+Lifecycle:
+Before:
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+After:
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can open dialog
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web home page is opened
+When Web user clicks the element browseStories
+Then Web user is in the stories modal screen
+Then Web element modalHeader should have text Browse Stories
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can navigate through directories
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+Then Web element path should have text testDirectory
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can display stories
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+Then Web element text:testStory exists
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can open story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+When Web user clicks the element text:testStory
+Then Web element pageTitle should have text View Story
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can create new story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element createNewStory
+Then Web element pageTitle should have text New Story
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can delete story
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user clicks the element text:testDirectory
+When Web user clicks the element deletetestStory
+When Web user clicks the element ok
+Then Web element text:testStory disappeared
+Given Directory data/stories/newTestDirectory does NOT exist
+
+Scenario: Can create new directory
+Given Directory data/stories/testDirectory exists
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web user is in the Browse Stories dialog
+Given Web home page is opened
+When Web user clicks the element browseStories
+When Web user sets value newTestDirectory to the element searchStories
+When Web user clicks the element createNewDirectory
+Then Web element text:newTestDirectory appears
+Given Directory data/stories/newTestDirectory does NOT exist
+
+

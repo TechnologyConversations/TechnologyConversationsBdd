@@ -1,0 +1,53 @@
+<xref>
+  <whenMade>1408615629241</whenMade>
+  <createdBy>JBehave</createdBy>
+  <metaFilter></metaFilter>
+  <meta/>
+  <stories>
+    <story>
+      <description></description>
+      <narrative>In order to be able to provide personalized experience
+As a application user
+I want to be able to identify myself
+</narrative>
+      <name>login.story</name>
+      <path>file:data/stories/tcbdd/login/login.story</path>
+      <html>login.html</html>
+      <meta></meta>
+      <scenarios>Scenario:Should have all fields
+Then Web element username is visible
+Then Web element password is visible
+Then Web element login is visible
+
+
+Scenario:Should have username required
+When Web user sets value myPassword to the element password
+Then Web element login is disabled
+
+
+Scenario:Should have password required
+When Web user sets value myUsername to the element username
+Then Web element login is disabled
+
+
+Scenario:Should redirect to the confirmation screen
+Given Web user myUsername with password myPassword exists
+When Web user myUsername logs in with password myPassword
+Then Web user is in the Welcome screen
+
+
+Scenario:Should display error message when user does not exist
+Given Web user myUsername does NOT exists
+When Web user myUsername logs in with password myPassword
+Then Web element message should have text Specified username and/or password is incorrect
+
+
+</scenarios>
+      <passed>true</passed>
+      <pending>false</pending>
+      <started>1408615612354</started>
+      <duration>14366</duration>
+    </story>
+  </stories>
+  <stepMatches/>
+</xref>

@@ -13,5 +13,10 @@
         "displayed": true,
         "enabled": true,
         "description": ""
+    },
+    "runStory": {
+        "displayed": true,
+        "enabled": true,
+        "description": ""
     }
 }

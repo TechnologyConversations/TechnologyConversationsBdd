@@ -119,7 +119,14 @@
         "type": "element",
         "selector": "#runStory",
         "heading": "Run Story",
-        "text": "This button brings up the dialog with parameters required to run the story. More information can be found in the tour available inside the dialog.",
+        "text": "This button brings up the dialog with parameters required to run the story (Single Story Runner). More information can be found in the tour available inside the dialog.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#runStory",
+        "heading": "Single Story Runner",
+        "text": "Single Story Runner is commonly used during the specification and development of some story. After scenarios are written, developers should use the BDD in the TDD fashion: <ul><li>Run scenarios and confirm that at least one has failed or has pending steps</li><li>Implement the first scenario that failed or has pending steps</li><li>Run scenarios and confirm that the previous scenario that failed or had pending steps is working</li><li>Refactor</li><li>Repeat</li></ul>",
         "placement": "top",
         "scroll": true
     }

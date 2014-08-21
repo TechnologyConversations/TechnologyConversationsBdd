@@ -1,0 +1,192 @@
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/stories/storyEditorOperations.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">As a</span> </div>
+<div class="element asA"><span class="keyword asA">I want to</span> </div>
+<div class="element iWantTo"><span class="keyword iWantTo">So that</span> </div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given File data/stories/testDirectory/testStory.story does NOT exist</div>
+<div class="step">Given File data/stories/testDirectory/storyNameRenamed.story does NOT exist</div>
+</div></div><div class="scenario">
+<h2>Scenario: Can save new story</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user fills in the new story form</div>
+<div class="step successful">When Web user sets value <span class="step parameter">newStory</span> to the element <span class="step parameter">storyName</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">story description</span> to the element <span class="step parameter">storyDescription</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryMeta</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">story meta 1</span> to the element <span class="step parameter">storyMeta1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">accomplish something</span> to the element <span class="step parameter">storyNarrativeInOrderTo</span></div>
+<div class="step successful">When Web <span class="step parameter">user</span> sets value <span class="step parameter">user</span> to the element <span class="step parameter">storyNarrativeAsA</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">do something</span> to the element <span class="step parameter">storyNarrativeIWantTo</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">path/to/my/given/story</span> to the element <span class="step parameter">storyGivenStory1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleBeforeStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this is before step</span> to the element <span class="step parameter">storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryLifecycleAfterStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this is after step</span> to the element <span class="step parameter">storyLifecycleAfterStep1</span></div>
+<div class="step successful">When Web user adds scenario to the story form</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenario1Panel</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Scenario 1 Title</span> to the element <span class="step parameter">scenario1Title</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Meta</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Scenario1Meta1</span> to the element <span class="step parameter">scenario1Meta1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">When step is written</span> to the element <span class="step parameter">scenario1Step1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addScenario1Step</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Then there is still hope</span> to the element <span class="step parameter">scenario1Step2</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">saveStory</span></div>
+<div class="step successful">Then Web story is saved</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/@storyName</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenariosPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyName</span> should have value <span class="step parameter">@storyName</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyPanel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyDescriptionPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyDescription</span> should have value <span class="step parameter">@storyDescription</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyMetaPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta1</span> should have value <span class="step parameter">@storyMeta1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyNarrativePanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeInOrderTo</span> should have value <span class="step parameter">@storyNarrativeInOrderTo</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeAsA</span> should have value <span class="step parameter">@storyNarrativeAsA</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeIWantTo</span> should have value <span class="step parameter">@storyNarrativeIWantTo</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyGivenStoriesPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory1</span> should have value <span class="step parameter">@storyGivenStory1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyLifecyclePanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep1</span> should have value <span class="step parameter">@storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenariosPanel</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can update an existing story</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user fills in the existing story form</div>
+<div class="step successful">When Web user sets value <span class="step parameter">story description</span> to the element <span class="step parameter">storyDescription</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">story meta 1</span> to the element <span class="step parameter">storyMeta1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">accomplish something</span> to the element <span class="step parameter">storyNarrativeInOrderTo</span></div>
+<div class="step successful">When Web <span class="step parameter">user</span> sets value <span class="step parameter">user</span> to the element <span class="step parameter">storyNarrativeAsA</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">do something</span> to the element <span class="step parameter">storyNarrativeIWantTo</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">path/to/my/given/story</span> to the element <span class="step parameter">storyGivenStory1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this is before step</span> to the element <span class="step parameter">storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this is after step</span> to the element <span class="step parameter">storyLifecycleAfterStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">saveStory</span></div>
+<div class="step successful">Then Web story is saved</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/@storyName</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenariosPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyName</span> should have value <span class="step parameter">@storyName</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyPanel</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyDescriptionPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyDescription</span> should have value <span class="step parameter">@storyDescription</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyMetaPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta1</span> should have value <span class="step parameter">@storyMeta1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyNarrativePanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeInOrderTo</span> should have value <span class="step parameter">@storyNarrativeInOrderTo</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeAsA</span> should have value <span class="step parameter">@storyNarrativeAsA</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeIWantTo</span> should have value <span class="step parameter">@storyNarrativeIWantTo</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyGivenStoriesPanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory1</span> should have value <span class="step parameter">@storyGivenStory1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">storyLifecyclePanel</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep1</span> should have value <span class="step parameter">@storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">scenariosPanel</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can revert changes</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user fills in the existing story form</div>
+<div class="step successful">When Web user sets value <span class="step parameter">story description</span> to the element <span class="step parameter">storyDescription</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">story meta 1</span> to the element <span class="step parameter">storyMeta1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">accomplish something</span> to the element <span class="step parameter">storyNarrativeInOrderTo</span></div>
+<div class="step successful">When Web <span class="step parameter">user</span> sets value <span class="step parameter">user</span> to the element <span class="step parameter">storyNarrativeAsA</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">do something</span> to the element <span class="step parameter">storyNarrativeIWantTo</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addStoryGivenStory</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">path/to/my/given/story</span> to the element <span class="step parameter">storyGivenStory1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this is before step</span> to the element <span class="step parameter">storyLifecycleBeforeStep1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this is after step</span> to the element <span class="step parameter">storyLifecycleAfterStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">revertStory</span></div>
+<div class="step successful">Then Web story is reverted to the original version</div>
+<div class="step successful">Then Web element <span class="step parameter">storyDescription</span> should NOT have value <span class="step parameter">@storyDescription</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyMeta1</span> should NOT have value <span class="step parameter">@storyMeta1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeInOrderTo</span> should NOT have value <span class="step parameter">@storyNarrativeInOrderTo</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeAsA</span> should NOT have value <span class="step parameter">@storyNarrativeAsA</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyNarrativeIWantTo</span> should NOT have value <span class="step parameter">@storyNarrativeIWantTo</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyGivenStory1</span> should NOT have value <span class="step parameter">@storyGivenStory1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">storyLifecycleBeforeStep1</span> should NOT have value <span class="step parameter">@storyLifecycleBeforeStep1</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can delete story</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">deleteStory</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">ok</span></div>
+<div class="step successful">Then Web story is deleted</div>
+<div class="step successful">Then File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can rename story</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">storyNameRenamed</span> to the element <span class="step parameter">storyName</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">saveStory</span></div>
+<div class="step successful">Then Web story is renamed</div>
+<div class="step successful">Then File <span class="step parameter">data/stories/testDirectory/@storyName.story</span> exists</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can NOT save story when data is intact</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">saveStory</span> is disabled</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can NOT revert changes is data is intact</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the View Story page</div>
+<div class="step successful">Given variable <span class="step parameter">storyName</span> has value <span class="step parameter">testStory</span></div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">Then Web element <span class="step parameter">revertStory</span> is disabled</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can NOT delete new story before it is saved</h2>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/testStory.story</span> does NOT exist</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/storyNameRenamed.story</span> does NOT exist</div>
+<div class="step successful">Given Web user is in the New Story screen</div>
+<div class="step successful">Given File <span class="step parameter">data/stories/testDirectory/newStory.story</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/new/testDirectory/</span> is opened</div>
+<div class="step successful">Then Web element <span class="step parameter">deleteStory</span> is disabled</div>
+</div>
+</div>

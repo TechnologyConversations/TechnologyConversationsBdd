@@ -174,7 +174,7 @@ describe('storiesModule controllers', function() {
             it('should call modal.open function', function() {
                 var showGetApi = true;
                 spyOn(modal, 'open');
-                service.openRunnerParametersModal(showGetApi);
+                service.openRunnerParametersModal(showGetApi, scope);
                 expect(modal.open).toHaveBeenCalled();
             });
         });

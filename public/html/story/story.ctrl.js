@@ -1,6 +1,36 @@
 angular.module('storyModule', [])
     .controller('storyCtrl', function($scope, $http, $modal, $location, $cookieStore, $q, $anchorScroll, $timeout, story, steps, groovyComposites, TcBddService) {
-        $scope.pendingSteps = [];
+        $scope.onLoad = function() {
+            $scope.pendingSteps = [];
+            $scope.story = story;
+            $scope.steps = steps;
+            $scope.groovyComposites = groovyComposites;
+            $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
+            $scope.storyFormClass = 'col-md-12';
+            $scope.storyRunnerVisible = false;
+            $scope.storyRunnerInProgress = false;
+            $scope.storyRunnerSuccess = true;
+            $scope.expandPanels();
+            $scope.originalStory = angular.copy(story);
+            var pathArray = $scope.story.path.split('/');
+            $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
+            if ($scope.dirPath !== '') {
+                $scope.dirPath += '/';
+            }
+            $scope.setAction();
+            if ($location.search().reportsId !== undefined) {
+                $scope.storyFormClass = 'col-md-6';
+                $scope.storyRunnerClass = 'col-md-6';
+                $scope.storyRunnerVisible = true;
+                $scope.getReports($location.search().reportsId);
+            }
+            if ($location.search().openModal !== undefined) {
+                var modal = $location.search().openModal;
+                if (modal === 'openRunStory') {
+                    $scope.openRunnerParams();
+                }
+            }
+        };
         $scope.setAction = function() {
             if ($scope.story.name !== '') {
                 $scope.action = 'PUT';
@@ -26,22 +56,6 @@ angular.module('storyModule', [])
                 scenarios: scenariosExpanded
             };
         };
-        $scope.story = story;
-        $scope.steps = steps;
-        $scope.groovyComposites = groovyComposites;
-        $scope.stepTypes = ['GIVEN', 'WHEN', 'THEN'];
-        $scope.storyFormClass = 'col-md-12';
-        $scope.storyRunnerVisible = false;
-        $scope.storyRunnerInProgress = false;
-        $scope.storyRunnerSuccess = true;
-        $scope.expandPanels();
-        $scope.originalStory = angular.copy(story);
-        var pathArray = $scope.story.path.split('/');
-        $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
-        if ($scope.dirPath !== '') {
-            $scope.dirPath += '/';
-        }
-        $scope.setAction();
         $scope.cssClass = TcBddService.cssClass;
         $scope.buttonCssClass = TcBddService.buttonCssClass;
         $scope.canSaveStory = function() {
@@ -81,46 +95,53 @@ angular.module('storyModule', [])
         $scope.canRunStory = function () {
             return $scope.storyForm.$valid && !$scope.storyRunnerInProgress;
         };
-        // TODO Test
         $scope.runStory = function () {
             if ($scope.canRunStory()) {
                 $scope.saveStory();
-                $scope.openRunnerModal().result.then(function (data) {
-                    var classes = data.classes;
-                    $scope.storyFormClass = 'col-md-6';
-                    $scope.storyRunnerClass = 'col-md-6';
-                    $scope.storyRunnerVisible = true;
-                    $scope.storyRunnerInProgress = true;
-                    classes.forEach(function (classEntry) {
-                        classEntry.params.forEach(function (paramEntry) {
-                            $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
-                        });
+                $scope.openRunnerParams();
+            }
+        };
+        // TODO Test
+        $scope.openRunnerParams = function() {
+            $scope.openRunnerModal().result.then(function (data) {
+                var classes = data.classes;
+                $scope.storyFormClass = 'col-md-6';
+                $scope.storyRunnerClass = 'col-md-6';
+                $scope.storyRunnerVisible = true;
+                $scope.storyRunnerInProgress = true;
+                classes.forEach(function (classEntry) {
+                    classEntry.params.forEach(function (paramEntry) {
+                        $cookieStore.put(classEntry.fullName + "." + paramEntry.key, paramEntry.value);
                     });
-                    var json = {
-                        storyPaths: [{path: $scope.story.path}],
-                        classes: classes,
-                        groovyComposites: $scope.groovyComposites
-                    };
-                    $http.post('/runner/run.json', json).then(function (response) {
-                        $scope.getReports(response.data.id);
-                    }, function (response) {
-                        $scope.storyRunnerSuccess = false;
-                        $scope.storyRunnerInProgress = false;
-                        $scope.openErrorModal(response.data);
-                    });
-                }, function(response) {
+                });
+                var json = {
+                    storyPaths: [{path: $scope.story.path}],
+                    classes: classes,
+                    groovyComposites: $scope.groovyComposites
+                };
+                $http.post('/runner/run.json', json).then(function (response) {
+                    $scope.getReports(response.data.id);
+                }, function (response) {
+                    $scope.storyRunnerSuccess = false;
+                    $scope.storyRunnerInProgress = false;
                     $scope.openErrorModal(response.data);
                 });
-            }
+            }, function(response) {
+                $scope.openErrorModal(response.data);
+            });
         };
         $scope.getReports = function(reportsId) {
             $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
+                console.log(reportsId);
+                console.log(response.data);
                 if (response.data.status !== 'finished') {
+                    console.log('111');
                     $scope.storyRunnerInProgress = true;
                     $timeout(function() {
                         $scope.getReports(reportsId);
                     }, 5000);
                 } else {
+                    console.log('222');
                     var reports = response.data.reports;
                     $scope.reports = reports;
                     $scope.reports.id = reportsId;
@@ -154,7 +175,7 @@ angular.module('storyModule', [])
             return '/api/v1/reporters/get/' + reportsId + '/' + report;
         };
         $scope.openRunnerModal = function() {
-            return TcBddService.openRunnerParametersModal(false);
+            return TcBddService.openRunnerParametersModal(false, $scope);
         };
         $scope.getRunnerProgressCss = function () {
             return TcBddService.getRunnerProgressCss($scope.storyRunnerInProgress);
@@ -176,7 +197,6 @@ angular.module('storyModule', [])
                 });
             });
         };
-
         $scope.hasPendingSteps = function() {
             return $scope.pendingSteps !== undefined && $scope.pendingSteps.length > 0;
         };
@@ -221,6 +241,7 @@ angular.module('storyModule', [])
         };
         // TODO Test
         $scope.openErrorModal = TcBddService.openErrorModal;
+        $scope.onLoad();
     })
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService, features) {
         TcBddService.getStories($scope, '');

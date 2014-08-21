@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>storiesBrowse</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/stories/storiesBrowse.story</div>
+<div class="meta">
+<div class="keyword">Meta:</div>
+<div class="property">@dummy </div>
+</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> open existing and create new stories</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to browse files and directories</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Directory data/stories/testDirectory exists</div>
+<div class="step">When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story</div>
+</div><div class="after"><h3>After:</h3><div class="step">Given Directory data/stories/newTestDirectory does NOT exist</div>
+</div></div><div class="scenario">
+<h2>Scenario: Can open dialog</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">Then Web user is in the stories modal screen</div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Browse Stories</span></div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can navigate through directories</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web user is in the Browse Stories dialog</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:testDirectory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">path</span> should have text <span class="step parameter">testDirectory</span></div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can display stories</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web user is in the Browse Stories dialog</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:testDirectory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:testStory</span> exists</div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can open story</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web user is in the Browse Stories dialog</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:testDirectory</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:testStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">pageTitle</span> should have text <span class="step parameter">View Story</span></div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can create new story</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web user is in the Browse Stories dialog</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">createNewStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">pageTitle</span> should have text <span class="step parameter">New Story</span></div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can delete story</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web user is in the Browse Stories dialog</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:testDirectory</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">deletetestStory</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">ok</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:testStory</span> disappeared</div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can create new directory</h2>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/testDirectory</span> exists</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummy.story</span> to <span class="step parameter">data/stories/testDirectory/testStory.story</span></div>
+<div class="step successful">Given Web user is in the Browse Stories dialog</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">newTestDirectory</span> to the element <span class="step parameter">searchStories</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">createNewDirectory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:newTestDirectory</span> appears</div>
+<div class="step successful">Given Directory <span class="step parameter">data/stories/newTestDirectory</span> does NOT exist</div>
+</div>
+</div>
+
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

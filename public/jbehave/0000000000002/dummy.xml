@@ -1,0 +1,12 @@
+<story path="file:data/stories/tcbdd/dummy.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="As a"></inOrderTo>
+  <asA keyword="I want to"></asA>
+  <iWantTo keyword="So that"></iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+</lifecycle>
+<scenario keyword="Scenario:" title="Dummy scenario 1">
+<step outcome="successful">Given variable <parameter>myVariable</parameter> has value <parameter>My value</parameter></step>
+</scenario>
+</story>

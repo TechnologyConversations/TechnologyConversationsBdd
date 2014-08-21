@@ -1,0 +1,199 @@
+<html>
+<head>
+<title>runnerStories</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<story path="file:data/stories/tcbdd/runners/runnerStories.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">perform regression</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">run all selected stories</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Directory data/stories/testDirectory/testSubDirectory exists</step>
+<step>When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story</step>
+<step>When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story</step>
+<step>Given Web home page is opened</step>
+<step>Given Web page is refreshed</step>
+<step>When Web user clicks the element runner</step>
+<step>When Web user clicks the element text:testDirectory</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Should display directories with selectors">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">Then Web element <parameter>directory1</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>directory1Selector</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Should display stories with selectors">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">Then Web element <parameter>story1</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>story1Selector</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can cancel the dialog">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>cancelRunnerSelector</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> is NOT visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can move to the parameters dialog">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>story1Selector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>okRunnerSelector</parameter></step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Parameters</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can run selected stories">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>story1Selector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>okRunnerSelector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Then stories are running</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> should have text <parameter>Stories run is in progress</parameter></step>
+<step outcome="successful">Then stories are NOT running</step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerStatus</parameter> is hidden</step>
+</scenario>
+<scenario keyword="Scenario:" title="Should display runner reports link">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>story1Selector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>okRunnerSelector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>confirmRunStory</parameter></step>
+<step outcome="successful">Given Web timeout is <parameter>60</parameter> seconds</step>
+<step outcome="successful">Then Web element <parameter>runnerReports</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Should display the current path">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">Then Web element <parameter>path</parameter> should have text <parameter>testDirectory</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can go back to the parent directory">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testSubDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>prevDirectory</parameter></step>
+<step outcome="successful">Then Web element <parameter>path</parameter> should have text <parameter>testDirectory</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT move to parameters dialog without at least one directory or story selected">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">Then Web element <parameter>okRunnerSelector</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Runner Parameters confirm button should have text Run">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>story1Selector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>okRunnerSelector</parameter></step>
+<step outcome="successful">Then Web element <parameter>confirmRunStory</parameter> should have text <parameter>Run</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Multiple runners can be executed one after another">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>cancelRunnerSelector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">Then Web user is in the Runner Selector modal screen</step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Selector</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Parameters dialog should have API info">
+<step outcome="successful">Given Directory <parameter>data/stories/testDirectory/testSubDirectory</parameter> exists</step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummySuccess.story</parameter> to <parameter>data/stories/testDirectory/1dummy.story</parameter></step>
+<step outcome="successful">When File is copied from <parameter>data/stories/test/dummyPending.story</parameter> to <parameter>data/stories/testDirectory/testPendingStory.story</parameter></step>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>text:testDirectory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>story1Selector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>okRunnerSelector</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>getApi</parameter></step>
+<step outcome="successful">Then Web element <parameter>api</parameter> is visible</step>
+</scenario>
+</story>
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

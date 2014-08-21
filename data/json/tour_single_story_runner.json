@@ -1,0 +1,29 @@
+[
+    {
+        "type": "title",
+        "heading": "Story Runner",
+        "text": "This modal can be reached by clicking \"Run Story\" inside the Story screen (Single Story Runner) or by clicking \"Run Stories\" located in the top menu (Multiple Stories Runner)."
+    }, {
+        "type": "element",
+        "selector": "#runnerFormGroup",
+        "heading": "Story Runner Parameters",
+        "text": "Fields in this modal should be used to set parameters needed for the execution of stories.",
+        "placement": "left",
+        "scroll": false
+    },
+    {
+        "type": "element",
+        "selector": "#webStepsBrowserOption",
+        "heading": "Story Runner Parameters",
+        "text": "For example, browser type can be specified with this drop-down list.",
+        "placement": "top",
+        "scroll": false
+    }, {
+        "type": "element",
+        "selector": "#confirmRunStory",
+        "heading": "Story Runner Parameters",
+        "text": "When this button is clicked, all selected stories will be run. The result depends on the context this modal came from. When executed from a single story, result would look like <a href=\"/page/stories/view/tcbdd/login/login?reportsId=0000000000001\" target=\"_blank\">this example</a>. If, on the other hand, it was executed from \"Run Stories\" top menu item, result is similar to <a href=\"/page/runner/?reportsId=0000000000002\" target=\"_blank\">this example</a>.",
+        "placement": "top",
+        "scroll": false
+   }
+]

@@ -1,0 +1,44 @@
+<story path="file:data/stories/tcbdd/navigation/navigationMenu.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">be able to access all functionalities</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">have the navigation menu</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web home page is opened</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Top menu should have navigation links">
+<meta>
+<property keyword="@" name="sho" value=""/>
+</meta>
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">Then Web element <parameter>browseStories</parameter> should have text <parameter>Browse Stories</parameter></step>
+<step outcome="successful">Then Web element <parameter>browseComposites</parameter> should have text <parameter>Browse Composites</parameter></step>
+<step outcome="successful">Then Web element <parameter>runner</parameter> should have text <parameter>Run Stories</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Has link to the home screen (New Story)">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>pageTitle</parameter></step>
+<step outcome="successful">Then Web element <parameter>pageTitle</parameter> should have text <parameter>Home</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Has link to the Browse Stories screen">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseStories</parameter></step>
+<step outcome="successful">Then Web user is in the stories modal screen</step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Browse Stories</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Has link to the Browse Composites screen">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>browseComposites</parameter></step>
+<step outcome="successful">Then Web user is in the composites modal screen</step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Browse Composites</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Has link to the Run Stories screen">
+<step outcome="successful">Given Web home page is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>runner</parameter></step>
+<step outcome="successful">Then Web user is in the Runner Selector modal screen</step>
+<step outcome="successful">Then Web element <parameter>modalHeader</parameter> should have text <parameter>Runner Selector</parameter></step>
+</scenario>
+</story>

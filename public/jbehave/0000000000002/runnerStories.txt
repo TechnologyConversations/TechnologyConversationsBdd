@@ -1,0 +1,163 @@
+
+(file:data/stories/tcbdd/runners/runnerStories.story)
+Narrative:
+In order to perform regression
+As a application user
+I want to run all selected stories
+Lifecycle:
+Before:
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+
+Scenario: Should display directories with selectors
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+Then Web element directory1 is visible
+Then Web element directory1Selector is visible
+
+Scenario: Should display stories with selectors
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+Then Web element story1 is visible
+Then Web element story1Selector is visible
+
+Scenario: Can cancel the dialog
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element cancelRunnerSelector
+Then Web element modalHeader is NOT visible
+
+Scenario: Can move to the parameters dialog
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+Then Web element modalHeader should have text Runner Parameters
+
+Scenario: Can run selected stories
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+When Web user clicks the element confirmRunStory
+Then stories are running
+Then Web element runnerStatus should have text Stories run is in progress
+Then stories are NOT running
+Given Web timeout is 60 seconds
+Then Web element runnerStatus is hidden
+
+Scenario: Should display runner reports link
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+When Web user clicks the element confirmRunStory
+Given Web timeout is 60 seconds
+Then Web element runnerReports is visible
+
+Scenario: Should display the current path
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+Then Web element path should have text testDirectory
+
+Scenario: Can go back to the parent directory
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element text:testSubDirectory
+When Web user clicks the element prevDirectory
+Then Web element path should have text testDirectory
+
+Scenario: Can NOT move to parameters dialog without at least one directory or story selected
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+Then Web element okRunnerSelector is disabled
+
+Scenario: Runner Parameters confirm button should have text Run
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+Then Web element confirmRunStory should have text Run
+
+Scenario: Multiple runners can be executed one after another
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element cancelRunnerSelector
+When Web user clicks the element runner
+Then Web user is in the Runner Selector modal screen
+Then Web element modalHeader should have text Runner Selector
+
+Scenario: Parameters dialog should have API info
+Given Directory data/stories/testDirectory/testSubDirectory exists
+When File is copied from data/stories/test/dummySuccess.story to data/stories/testDirectory/1dummy.story
+When File is copied from data/stories/test/dummyPending.story to data/stories/testDirectory/testPendingStory.story
+Given Web home page is opened
+Given Web page is refreshed
+When Web user clicks the element runner
+When Web user clicks the element text:testDirectory
+When Web user clicks the element story1Selector
+When Web user clicks the element okRunnerSelector
+When Web user clicks the element getApi
+Then Web element api is visible
+
+

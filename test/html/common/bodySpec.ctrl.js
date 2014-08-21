@@ -56,12 +56,12 @@ describe('bodyModule', function() {
                 httpBackend.flush();
                 expect(scope.features).toEqual([]);
             });
-            it('should call openMenu function', function() {
-                spyOn(scope, 'openMenu');
+            it('should call openModal function', function() {
+                spyOn(scope, 'openModal');
                 httpBackend.expectGET(featuresUrl).respond(featuresResponseJson);
                 scope.loadFeatures();
                 httpBackend.flush();
-                expect(scope.openMenu).toHaveBeenCalled();
+                expect(scope.openModal).toHaveBeenCalled();
             });
         });
 
@@ -106,16 +106,16 @@ describe('bodyModule', function() {
             });
         });
 
-        describe('openMenu function', function() {
-            it('should call openStory function when search contains openMenu=openStory', function() {
-                location.search('openMenu', 'openStory');
+        describe('openModal function', function() {
+            it('should call openStory function when search contains openModal=openStory', function() {
+                location.search('openModal', 'openStory');
                 spyOn(scope, 'openStory');
-                scope.openMenu();
+                scope.openModal();
                 expect(scope.openStory).toHaveBeenCalled();
             });
-            it('should not call openStory when search does NOT contain openMenu=openStory', function() {
+            it('should not call openStory when search does NOT contain openModal=openStory', function() {
                 spyOn(scope, 'openStory');
-                scope.openMenu();
+                scope.openModal();
                 expect(scope.openStory).not.toHaveBeenCalled();
             });
         });

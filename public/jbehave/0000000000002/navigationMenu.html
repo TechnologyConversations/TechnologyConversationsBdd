@@ -1,0 +1,48 @@
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/navigation/navigationMenu.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> be able to access all functionalities</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> have the navigation menu</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web home page is opened</div>
+</div></div><div class="scenario">
+<h2>Scenario: Top menu should have navigation links</h2>
+<div class="meta">
+<div class="keyword">Meta:</div>
+<div class="property">@sho </div>
+</div>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">Then Web element <span class="step parameter">browseStories</span> should have text <span class="step parameter">Browse Stories</span></div>
+<div class="step successful">Then Web element <span class="step parameter">browseComposites</span> should have text <span class="step parameter">Browse Composites</span></div>
+<div class="step successful">Then Web element <span class="step parameter">runner</span> should have text <span class="step parameter">Run Stories</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has link to the home screen (New Story)</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">pageTitle</span></div>
+<div class="step successful">Then Web element <span class="step parameter">pageTitle</span> should have text <span class="step parameter">Home</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has link to the Browse Stories screen</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseStories</span></div>
+<div class="step successful">Then Web user is in the stories modal screen</div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Browse Stories</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has link to the Browse Composites screen</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">browseComposites</span></div>
+<div class="step successful">Then Web user is in the composites modal screen</div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Browse Composites</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has link to the Run Stories screen</h2>
+<div class="step successful">Given Web home page is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runner</span></div>
+<div class="step successful">Then Web user is in the Runner Selector modal screen</div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Selector</span></div>
+</div>
+</div>

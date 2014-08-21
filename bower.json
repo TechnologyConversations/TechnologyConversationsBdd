@@ -16,6 +16,6 @@
     "angular-bootstrap": "0.11.x",
     "angular-ui-sortable": "0.12.x",
     "jasmine": "2.0.x",
-    "ng-joyride": "~0.1.4"
+    "ng-joyride": "~0.1.5"
   }
 }

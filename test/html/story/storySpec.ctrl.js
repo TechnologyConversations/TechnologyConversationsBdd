@@ -1,11 +1,18 @@
 describe('storyModule', function() {
 
+    var service, scope;
+
     beforeEach(module('ngCookies', 'storyModule', 'storiesModule'));
+
+    beforeEach(inject(function($rootScope, TcBddService) {
+        service = TcBddService;
+        scope = $rootScope.$new();
+    }));
 
     describe('storyCtrl controller', function() {
 
-        var scope, modal, form, story, httpBackend;
-        var service, timeout;
+        var modal, form, story, httpBackend, location;
+        var timeout;
         var steps = {status: 'OK'};
         var groovyComposites = [{path: 'this/is/path/to/composite.groovy'}];
         var pendingSteps = [
@@ -28,10 +35,9 @@ describe('storyModule', function() {
         ];
 
         beforeEach(
-            inject(function($rootScope, $controller, $httpBackend, $http, $location, $cookieStore, $timeout, $compile, TcBddService) {
-                service = TcBddService;
-                scope = $rootScope.$new();
+            inject(function($controller, $httpBackend, $http, $location, $cookieStore, $timeout, $compile) {
                 timeout = $timeout;
+                location = $location;
                 story = {
                     name: 'this is a story name',
                     path: 'this/is/path'
@@ -55,33 +61,6 @@ describe('storyModule', function() {
                 scope.storyForm = form;
             })
         );
-
-        describe('by default', function() {
-            it('should put steps to the scope', function() {
-                expect(scope.steps).toEqual(steps);
-            });
-            it('should put story to the scope', function() {
-                expect(scope.story).toEqual(story);
-            });
-            it('should put groovyComposites to the scope', function() {
-                expect(scope.groovyComposites).toEqual(groovyComposites);
-            });
-            it('should put stepTypes to the scope', function() {
-                expect(scope.stepTypes).toEqual(['GIVEN', 'WHEN', 'THEN']);
-            });
-            it('should put storyFormClass to the scope', function() {
-                expect(scope.storyFormClass).toEqual('col-md-12');
-            });
-            it('should set storyRunnerVisible to false', function() {
-                expect(scope.storyRunnerVisible).toEqual(false);
-            });
-            it('should set storyRunnerInProgress to false', function() {
-                expect(scope.storyRunnerInProgress).toEqual(false);
-            });
-            it('should set storyRunnerSuccess to false', function() {
-                expect(scope.storyRunnerSuccess).toEqual(true);
-            });
-        });
 
         describe('getPendingSteps function', function() {
             it('should return a list of pending steps', function() {
@@ -147,7 +126,7 @@ describe('storyModule', function() {
             it('should call service function openRunnerParametersModal', function() {
                 spyOn(service, 'openRunnerParametersModal');
                 scope.openRunnerModal();
-                expect(service.openRunnerParametersModal).toHaveBeenCalledWith(false);
+                expect(service.openRunnerParametersModal).toHaveBeenCalledWith(false, scope);
             });
         });
 
@@ -239,6 +218,29 @@ describe('storyModule', function() {
             it('should return true when form is valid and story runner is NOT in progress', function() {
                 scope.storyRunnerInProgress = false;
                 expect(scope.canRunStory()).toEqual(true);
+            });
+        });
+
+        describe('runStory function', function() {
+            beforeEach(function() {
+                spyOn(scope, 'saveStory');
+                spyOn(scope, 'openRunnerParams');
+            });
+            it('should call saveStory', function() {
+                spyOn(scope, 'canRunStory').and.returnValue(true);
+                scope.runStory();
+                expect(scope.saveStory).toHaveBeenCalled();
+            });
+            it('should call openRunnerParams', function() {
+                spyOn(scope, 'canRunStory').and.returnValue(true);
+                scope.runStory();
+                expect(scope.openRunnerParams).toHaveBeenCalled();
+            });
+            it('should NOT call saveStory and openRunnerParams when canRunStory returns false', function() {
+                spyOn(scope, 'canRunStory').and.returnValue(false);
+                scope.runStory();
+                expect(scope.saveStory).not.toHaveBeenCalled();
+                expect(scope.openRunnerParams).not.toHaveBeenCalled();
             });
         });
 
@@ -375,6 +377,83 @@ describe('storyModule', function() {
             });
         });
 
+        describe('onLoad function', function() {
+            var reportsId = 'reportsId';
+            it('should set pendingSteps to an empty array', function() {
+                expect(scope.pendingSteps.length).toEqual(0);
+            });
+            it('should put steps to the scope', function() {
+                expect(scope.steps).toEqual(steps);
+            });
+            it('should put story to the scope', function() {
+                expect(scope.story).toEqual(story);
+            });
+            it('should put groovyComposites to the scope', function() {
+                expect(scope.groovyComposites).toEqual(groovyComposites);
+            });
+            it('should put stepTypes to the scope', function() {
+                expect(scope.stepTypes).toEqual(['GIVEN', 'WHEN', 'THEN']);
+            });
+            it('should put storyFormClass to the scope', function() {
+                expect(scope.storyFormClass).toEqual('col-md-12');
+            });
+            it('should set storyRunnerVisible to false', function() {
+                expect(scope.storyRunnerVisible).toEqual(false);
+            });
+            it('should set storyRunnerInProgress to false', function() {
+                expect(scope.storyRunnerInProgress).toEqual(false);
+            });
+            it('should set storyRunnerSuccess to false', function() {
+                expect(scope.storyRunnerSuccess).toEqual(true);
+            });
+            it('should call expandPanels function', function() {
+                spyOn(scope, 'expandPanels');
+                scope.onLoad();
+                expect(scope.expandPanels).toHaveBeenCalled();
+            });
+            it('should set originalStory to story', function() {
+                expect(scope.originalStory).toEqual(scope.story);
+            });
+            it('should call getReports when location.search contains reportsId', function() {
+                location.search('reportsId', reportsId);
+                spyOn(scope, 'getReports');
+                scope.onLoad();
+                expect(scope.getReports).toHaveBeenCalledWith(reportsId);
+            });
+            it('should NOT call getReports when location.search does NOT contain reportsId', function() {
+                spyOn(scope, 'getReports');
+                scope.onLoad();
+                expect(scope.getReports).not.toHaveBeenCalled();
+            });
+            it('should set storyRunnerVisible to true when location.search contains reportsId', function() {
+                location.search('reportsId', reportsId);
+                scope.onLoad();
+                expect(scope.storyRunnerVisible).toEqual(true);
+            });
+            it('should set storyFormClass to col-md-6 when location.search contains reportsId', function() {
+                location.search('reportsId', reportsId);
+                scope.onLoad();
+                expect(scope.storyFormClass).toEqual('col-md-6');
+            });
+            it('should set storyRunnerClass to col-md-6 when location.search contains reportsId', function() {
+                location.search('reportsId', reportsId);
+                scope.onLoad();
+                expect(scope.storyRunnerClass).toEqual('col-md-6');
+            });
+            it('should call openRunnerParams when location.search contains openModal=openRunStory', function() {
+                spyOn(scope, 'openRunnerParams');
+                location.search('openModal', 'openRunStory');
+                scope.onLoad();
+                expect(scope.openRunnerParams).toHaveBeenCalled();
+            });
+            it('should NOT call openRunnerParams when location.search does NOT contain openModal=openRunStory', function() {
+                spyOn(scope, 'openRunnerParams');
+                location.search('openModal', 'something_else');
+                scope.onLoad();
+                expect(scope.openRunnerParams).not.toHaveBeenCalled();
+            });
+        });
+
         describe('isStoryRunnerSuccess function', function() {
             it('should return true when all statuses are successful, pending or notPerformed', function() {
                 var reports = [
@@ -436,7 +515,7 @@ describe('storyModule', function() {
 
     describe('storiesCtrl controller', function() {
 
-        var httpBackend, location, service, scope, modal, modalInstance;
+        var httpBackend, location, scope, modal, modalInstance;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
         var deleteStory = {
             "display": true,
@@ -445,9 +524,8 @@ describe('storyModule', function() {
         };
 
         beforeEach(
-            inject(function($controller, $httpBackend, TcBddService, $http, $location) {
+            inject(function($controller, $httpBackend, $http, $location) {
                 scope = {};
-                service = TcBddService;
                 location = $location;
                 modalInstance = {
                     close: jasmine.createSpy('modalInstance.close')
@@ -535,6 +613,23 @@ describe('storyModule', function() {
             });
             it('should change path', function() {
                 expect(location.path()).toEqual('/page/stories/view/' + rootPath + name)
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service function', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service function', function() {
+                var id = 'id';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
             });
         });
 

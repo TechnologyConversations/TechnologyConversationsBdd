@@ -1,0 +1,185 @@
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/runners/runnerSingleStory.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> verify behaviours</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to run story and see results</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2></div><div class="scenario">
+<h2>Scenario: Can run story</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then story is running</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerStatus</span> should have text <span class="step parameter">Story run is in progress</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can NOT run multiple stories</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runStory</span> is disabled</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has progress bar</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerStatus</span> should have text <span class="step parameter">Story run is in progress</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Has parameters dialog</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can retrieve values of last parameters used</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">When Web user selects <span class="step parameter">Phantom JS</span> from the dropdown list <span class="step parameter">webStepsBrowserOption</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">http://localhost:9000</span> to the element <span class="step parameter">webStepsUrl</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerStatus</span> should have text <span class="step parameter">Story run was successful</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web dropdown list <span class="step parameter">webStepsBrowserOption</span> has <span class="step parameter">Phantom JS</span> selected</div>
+<div class="step successful">Then Web element <span class="step parameter">webStepsUrl</span> should have value <span class="step parameter">http://localhost:9000</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can display successful status</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerStatus</span> should have text <span class="step parameter">Story run was successful</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can display the list of pending steps</h2>
+<div class="step successful">Given Web user is in the Story screen with pending steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummyPending.story</span> to <span class="step parameter">data/stories/testDirectory/testPendingStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testPendingStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">pendingSteps</span> is visible</div>
+<div class="step successful">Then Web element <span class="step parameter">pendingStep1</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can display runner reports</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerReports</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can cancel story runner from the parameters dialog</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">cancelRunStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> is NOT visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can display failed status</h2>
+<div class="step successful">Given Web user is in the Story page with failed steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummyFailed.story</span> to <span class="step parameter">data/stories/testDirectory/testFailedStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testFailedStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerStatus</span> should have text <span class="step parameter">Story run failed</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can display pending status</h2>
+<div class="step successful">Given Web user is in the Story screen with pending steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummyPending.story</span> to <span class="step parameter">data/stories/testDirectory/testPendingStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testPendingStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">Then Web element <span class="step parameter">runnerStatus</span> should have text <span class="step parameter">Story run was successful with 1 pending steps</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Pending steps are links to composites page</h2>
+<div class="step successful">Given Web user is in the Story screen with pending steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummyPending.story</span> to <span class="step parameter">data/stories/testDirectory/testPendingStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testPendingStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web single story runner is run</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Runner Parameters</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">confirmRunStory</span></div>
+<div class="step successful">Given Web timeout is <span class="step parameter">60</span> seconds</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">pendingStep1</span></div>
+<div class="step successful">Then Web user is in the composites modal screen</div>
+<div class="step successful">Then Web element <span class="step parameter">modalHeader</span> should have text <span class="step parameter">Browse Composites</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can choose which browser to run from a dropdown list</h2>
+<div class="step successful">Given Web user is in the Story page with all successful steps</div>
+<div class="step successful">When File is copied from <span class="step parameter">data/stories/test/dummySuccess.story</span> to <span class="step parameter">data/stories/testDirectory/testSuccessStory.story</span></div>
+<div class="step successful">Given Web address <span class="step parameter">/page/stories/view/testDirectory/testSuccessStory</span> is opened</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">expandPanels</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">runStory</span></div>
+<div class="step successful">When Web user selects <span class="step parameter">Mozilla Firefox</span> from the dropdown list <span class="step parameter">webStepsBrowserOption</span></div>
+<div class="step successful">When Web user selects <span class="step parameter">Phantom JS</span> from the dropdown list <span class="step parameter">webStepsBrowserOption</span></div>
+<div class="step successful">Then Web dropdown list <span class="step parameter">webStepsBrowserOption</span> has <span class="step parameter">Phantom JS</span> selected</div>
+</div>
+</div>

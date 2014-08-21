@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>compositesForm</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/composites/compositesForm.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> have more understandable scenarios</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to create composite steps</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web user is in the New Composites screen</div>
+</div></div><div class="scenario">
+<h2>Scenario: Can display the name of the selected composite class</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">className</span> should have value <span class="step parameter">@className</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can create new composite</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addNewComposite</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given I can create new composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">Then Web element <span class="step parameter">composites</span> should have text <span class="step parameter">Given I can create new composite</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can list composites</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">composites</span> should have text <span class="step parameter">@compositeText</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can filter composites</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this composite does NOT exist</span> to the element <span class="step parameter">compositeTextFilter</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:@compositeText</span> is NOT visible</div>
+<div class="step successful">When Web user sets value <span class="step parameter">@compositeText</span> to the element <span class="step parameter">compositeTextFilter</span></div>
+<div class="step successful">Then Web element <span class="step parameter">text:@compositeText</span> exists</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can edit composite class name</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">ThisIsNewCompositesClass</span> to the element <span class="step parameter">className</span></div>
+<div class="step successful">Then Web element <span class="step parameter">className</span> should have value <span class="step parameter">ThisIsNewCompositesClass</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can edit composite name</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">text:@compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">When composite text is changed</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">Then Web element <span class="step parameter">composites</span> should have text <span class="step parameter">When composite text is changed</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can add, move and remove composite steps</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addNewComposite</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep1</span> exists</div>
+<div class="step successful">When Web user sets value <span class="step parameter">When I set the first composite step</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addNewCompositeStep</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep2</span> exists</div>
+<div class="step successful">When Web user sets value <span class="step parameter">When I set the second composite step</span> to the element <span class="step parameter">compositeStep2</span></div>
+<div class="step successful">When Web user drags the element <span class="step parameter">dragCompositeStep2</span> to the <span class="step parameter">dragCompositeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep1</span> should have value <span class="step parameter">When I set the second composite step</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeCompositeStep2</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep2</span> is NOT visible</div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">removeCompositeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep1</span> is NOT visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can edit composite steps</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">composite1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep1</span> is enabled</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can delete composite</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">deleteComposite1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">composite1</span> is NOT visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Can use code-complete on composite steps</h2>
+<div class="step successful">Given Web user is in the New Composites screen</div>
+<div class="step successful">Given variable <span class="step parameter">className</span> has value <span class="step parameter">TestComposites</span></div>
+<div class="step successful">Given File <span class="step parameter">composites/@className.groovy</span> does NOT exist</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/composites/@className.groovy</span> is opened</div>
+<div class="step successful">Given Web page is refreshed</div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given this class has at least one Composite</span> to the element <span class="step parameter">compositeText</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Given variable $key has value $value</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addNewComposite</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">addNewCompositeStep</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">Then variable</span> to the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">When Web user presses the enter key in the element <span class="step parameter">compositeStep1</span></div>
+<div class="step successful">Then Web element <span class="step parameter">compositeStep1</span> should have value <span class="step parameter">Then variable $key has value $value</span></div>
+</div>
+</div>
+
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

@@ -1,0 +1,123 @@
+
+(file:data/stories/tcbdd/stories/storyEditorValidations.story)
+Narrative:
+In order to have valid stories
+As a application user
+I want to have my entries validated
+Lifecycle:
+Before:
+Given Web user is in the View Story page
+Then Web element invalidForm is NOT visible
+
+Scenario: Name value is required
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clears the element storyName
+Then Web element invalidForm is visible
+
+Scenario: Story meta, given story and lifecycle step values are required
+Examples:
+When Web user clicks the element <addElement>
+When Web user sets value some value to the element <element>
+When Web user clears the element <element>
+Then Web element invalidForm is visible
+
+|addElement|element|
+|addStoryMeta|storyMeta1|
+|addStoryGivenStory|storyGivenStory1|
+|addStoryLifecycleBeforeStep|storyLifecycleBeforeStep1|
+|addStoryLifecycleAfterStep|storyLifecycleAfterStep1|
+
+Example: {addElement=addStoryMeta, element=storyMeta1}
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clicks the element addStoryMeta
+When Web user sets value some value to the element storyMeta1
+When Web user clears the element storyMeta1
+Then Web element invalidForm is visible
+
+Example: {addElement=addStoryGivenStory, element=storyGivenStory1}
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clicks the element addStoryGivenStory
+When Web user sets value some value to the element storyGivenStory1
+When Web user clears the element storyGivenStory1
+Then Web element invalidForm is visible
+
+Example: {addElement=addStoryLifecycleBeforeStep, element=storyLifecycleBeforeStep1}
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clicks the element addStoryLifecycleBeforeStep
+When Web user sets value some value to the element storyLifecycleBeforeStep1
+When Web user clears the element storyLifecycleBeforeStep1
+Then Web element invalidForm is visible
+
+Example: {addElement=addStoryLifecycleAfterStep, element=storyLifecycleAfterStep1}
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clicks the element addStoryLifecycleAfterStep
+When Web user sets value some value to the element storyLifecycleAfterStep1
+When Web user clears the element storyLifecycleAfterStep1
+Then Web element invalidForm is visible
+
+
+Scenario: Scenario meta value is required
+Examples:
+When Web user clicks the element scenario1Panel
+When Web user clicks the element <addElement>
+When Web user sets value <value> to the element <element>
+When Web user clears the element <element>
+Then Web element invalidForm is visible
+
+|addElement|value|element|
+|addScenario1Meta|myMeta|scenario1Meta1|
+|addScenario1Step|Given something|scenario1Step1|
+
+Example: {addElement=addScenario1Meta, value=myMeta, element=scenario1Meta1}
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Meta
+When Web user sets value myMeta to the element scenario1Meta1
+When Web user clears the element scenario1Meta1
+Then Web element invalidForm is visible
+
+Example: {addElement=addScenario1Step, value=Given something, element=scenario1Step1}
+Given Web user is in the View Story page
+Given variable storyName has value testStory
+When File is copied from data/stories/test/dummy.story to data/stories/testDirectory/testStory.story
+Given Web address /page/stories/view/testDirectory/testStory is opened
+When Web user clicks the element expandPanels
+Then Web element invalidForm is NOT visible
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Step
+When Web user sets value Given something to the element scenario1Step1
+When Web user clears the element scenario1Step1
+Then Web element invalidForm is visible
+
+
+

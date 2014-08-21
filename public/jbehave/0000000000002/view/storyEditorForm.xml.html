@@ -1,0 +1,261 @@
+<html>
+<head>
+<title>storyEditorForm</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<story path="file:data/stories/tcbdd/stories/storyEditorForm.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">create and modify stories</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to add and modify story information through the form</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web user is in the New Story screen</step>
+<step>When Web user clicks the element expandPanels</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Has name field">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyName</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has description field">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyDescription</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has meta fields">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryMeta</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta1</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has narrative fields">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeInOrderTo</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeAsA</parameter> is visible</step>
+<step outcome="successful">Then Web element <parameter>storyNarrativeIWantTo</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has given stories">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory1</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has lifecycle fields">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleBeforeStep</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep1</parameter> is visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleAfterStep</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleAfterStep1</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has scenario title">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Title</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has scenario meta">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Meta</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Meta1</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has scenario steps">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Step1</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Has scenario examples">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Examples</parameter> is visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can add, move and remove story elements">
+<examples keyword="Examples:">
+<step>When Web user clicks the element &lt;addButton&gt;</step>
+<step>When Web user clicks the element &lt;addButton&gt;</step>
+<step>When Web user sets value this is value 1 to the element &lt;element1&gt;</step>
+<step>When Web user sets value this is value 2 to the element &lt;element2&gt;</step>
+<step>When Web user drags the element &lt;dragButton2&gt; to the &lt;dragButton1&gt;</step>
+<step>Then Web element &lt;element1&gt; should have value this is value 2</step>
+<step>When Web user clicks the element &lt;removeButton1&gt;</step>
+<step>Then Web element &lt;element2&gt; is NOT visible</step>
+<step>When Web user clicks the element &lt;removeButton1&gt;</step>
+<step>Then Web element &lt;element1&gt; is NOT visible</step>
+<parameters>
+<names><name>addButton</name><name>element1</name><name>element2</name><name>dragButton1</name><name>dragButton2</name><name>removeButton1</name></names>
+<values><value>addStoryMeta</value><value>storyMeta1</value><value>storyMeta2</value><value>dragStoryMeta1</value><value>dragStoryMeta2</value><value>removeStoryMeta1</value></values>
+<values><value>addStoryGivenStory</value><value>storyGivenStory1</value><value>storyGivenStory2</value><value>dragStoryGivenStory1</value><value>dragStoryGivenStory2</value><value>removeStoryGivenStory1</value></values>
+<values><value>addStoryLifecycleBeforeStep</value><value>storyLifecycleBeforeStep1</value><value>storyLifecycleBeforeStep2</value><value>dragStoryLifecycleBeforeStep1</value><value>dragStoryLifecycleBeforeStep2</value><value>removeStoryLifecycleBeforeStep1</value></values>
+<values><value>addStoryLifecycleAfterStep</value><value>storyLifecycleAfterStep1</value><value>storyLifecycleAfterStep2</value><value>dragStoryLifecycleAfterStep1</value><value>dragStoryLifecycleAfterStep2</value><value>removeStoryLifecycleAfterStep1</value></values>
+</parameters>
+
+<example keyword="Example:">{addButton=addStoryMeta, element1=storyMeta1, element2=storyMeta2, dragButton1=dragStoryMeta1, dragButton2=dragStoryMeta2, removeButton1=removeStoryMeta1}</example>
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryMeta</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryMeta</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 1</parameter> to the element <parameter>storyMeta1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 2</parameter> to the element <parameter>storyMeta2</parameter></step>
+<step outcome="successful">When Web user drags the element <parameter>dragStoryMeta2</parameter> to the <parameter>dragStoryMeta1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta1</parameter> should have value <parameter>this is value 2</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryMeta1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta2</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryMeta1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyMeta1</parameter> is NOT visible</step>
+
+<example keyword="Example:">{addButton=addStoryGivenStory, element1=storyGivenStory1, element2=storyGivenStory2, dragButton1=dragStoryGivenStory1, dragButton2=dragStoryGivenStory2, removeButton1=removeStoryGivenStory1}</example>
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryGivenStory</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 1</parameter> to the element <parameter>storyGivenStory1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 2</parameter> to the element <parameter>storyGivenStory2</parameter></step>
+<step outcome="successful">When Web user drags the element <parameter>dragStoryGivenStory2</parameter> to the <parameter>dragStoryGivenStory1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory1</parameter> should have value <parameter>this is value 2</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryGivenStory1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory2</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryGivenStory1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyGivenStory1</parameter> is NOT visible</step>
+
+<example keyword="Example:">{addButton=addStoryLifecycleBeforeStep, element1=storyLifecycleBeforeStep1, element2=storyLifecycleBeforeStep2, dragButton1=dragStoryLifecycleBeforeStep1, dragButton2=dragStoryLifecycleBeforeStep2, removeButton1=removeStoryLifecycleBeforeStep1}</example>
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleBeforeStep</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleBeforeStep</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 1</parameter> to the element <parameter>storyLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 2</parameter> to the element <parameter>storyLifecycleBeforeStep2</parameter></step>
+<step outcome="successful">When Web user drags the element <parameter>dragStoryLifecycleBeforeStep2</parameter> to the <parameter>dragStoryLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep1</parameter> should have value <parameter>this is value 2</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep2</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryLifecycleBeforeStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleBeforeStep1</parameter> is NOT visible</step>
+
+<example keyword="Example:">{addButton=addStoryLifecycleAfterStep, element1=storyLifecycleAfterStep1, element2=storyLifecycleAfterStep2, dragButton1=dragStoryLifecycleAfterStep1, dragButton2=dragStoryLifecycleAfterStep2, removeButton1=removeStoryLifecycleAfterStep1}</example>
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleAfterStep</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addStoryLifecycleAfterStep</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 1</parameter> to the element <parameter>storyLifecycleAfterStep1</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>this is value 2</parameter> to the element <parameter>storyLifecycleAfterStep2</parameter></step>
+<step outcome="successful">When Web user drags the element <parameter>dragStoryLifecycleAfterStep2</parameter> to the <parameter>dragStoryLifecycleAfterStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleAfterStep1</parameter> should have value <parameter>this is value 2</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryLifecycleAfterStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleAfterStep2</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>removeStoryLifecycleAfterStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>storyLifecycleAfterStep1</parameter> is NOT visible</step>
+</examples>
+</scenario>
+<scenario keyword="Scenario:" title="Can add, move and remove scenario steps">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>When I drag and drop</parameter> to the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Then everything is just great</parameter> to the element <parameter>scenario1Step2</parameter></step>
+<step outcome="successful">When Web user drags the element <parameter>dragScenario1Step2</parameter> to the <parameter>dragScenario1Step1</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Step1</parameter> should have value <parameter>Then everything is just great</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>removeScenario1Step1</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Step2</parameter> is NOT visible</step>
+<step outcome="successful">When Web user clicks the element <parameter>removeScenario1Step1</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Step1</parameter> is NOT visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Steps have auto-complete function">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Then variable</parameter> to the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">When Web user presses the enter key in the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Step1</parameter> should have value <parameter>Then variable $key has value $value</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can add steps using the ENTER key">
+<step outcome="successful">Given Web user is in the New Story screen</step>
+<step outcome="successful">Given File <parameter>data/stories/testDirectory/newStory.story</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/stories/new/testDirectory/</parameter> is opened</step>
+<step outcome="successful">When Web user clicks the element <parameter>expandPanels</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>scenario1Panel</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>addScenario1Step</parameter></step>
+<step outcome="successful">When Web user presses the enter key in the element <parameter>scenario1Step1</parameter></step>
+<step outcome="successful">Then Web element <parameter>scenario1Step2</parameter> is visible</step>
+</scenario>
+</story>
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

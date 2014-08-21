@@ -1,0 +1,110 @@
+<story path="file:data/stories/tcbdd/composites/compositesOperations.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="In order to">have more understandable scenarios</inOrderTo>
+  <asA keyword="As a">application user</asA>
+  <iWantTo keyword="I want to">be able to create composite steps</iWantTo>
+</narrative>
+<lifecycle keyword="Lifecycle:">
+<before keyword="Before:">
+<step>Given Web user is in the View Composites screen</step>
+</before>
+</lifecycle>
+<scenario keyword="Scenario:" title="Can create new composites">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Given Web user is in the New Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestComposites</parameter></step>
+<step outcome="successful">Given File <parameter>composites/@className.groovy</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user sets value <parameter>Given this class has at least one Composite</parameter> to the element <parameter>compositeText</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given variable $key has value $value</parameter> to the element <parameter>compositeStep1</parameter></step>
+<step outcome="successful">Then File <parameter>composites/@className.groovy</parameter> does NOT exist</step>
+<step outcome="successful">When Web user clicks the element <parameter>saveComposites</parameter></step>
+<step outcome="successful">Then File <parameter>composites/@className.groovy</parameter> exists</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can revert changes">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user sets value <parameter>Given I can modify the composite</parameter> to the element <parameter>compositeText</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>revertComposites</parameter></step>
+<step outcome="successful">Then Web element <parameter>className</parameter> should NOT have text <parameter>Given I can modify the composite</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can delete composites class">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clicks the element <parameter>deleteComposites</parameter></step>
+<step outcome="successful">When Web user clicks the element <parameter>ok</parameter></step>
+<step outcome="successful">Then File <parameter>composites/@className.groovy</parameter> does NOT exist</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can update existing composites">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user sets value <parameter>Given I can update composites</parameter> to the element <parameter>compositeText</parameter></step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT revert changes when composites are unchanged">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Then Web element <parameter>revertComposites</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT delete new composites class before it is saved for the first time">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Given Web user is in the New Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestComposites</parameter></step>
+<step outcome="successful">Given File <parameter>composites/@className.groovy</parameter> does NOT exist</step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user sets value <parameter>Given this class has at least one Composite</parameter> to the element <parameter>compositeText</parameter></step>
+<step outcome="successful">When Web user sets value <parameter>Given variable $key has value $value</parameter> to the element <parameter>compositeStep1</parameter></step>
+<step outcome="successful">Then Web element <parameter>deleteComposites</parameter> is NOT visible</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT save composites when there are validation errors">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">When Web user clears the element <parameter>compositeText</parameter></step>
+<step outcome="successful">Then Web element <parameter>saveComposites</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can NOT save when composites are unchanged">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Then Web element <parameter>saveComposites</parameter> is disabled</step>
+</scenario>
+<scenario keyword="Scenario:" title="Can not modify the name of an existing composites class">
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Given Web user is in the View Composites screen</step>
+<step outcome="successful">Given variable <parameter>className</parameter> has value <parameter>TestViewComposites</parameter></step>
+<step outcome="successful">When File is copied from <parameter>test/mocks/@className.groovy.tmpl</parameter> to <parameter>composites/@className.groovy</parameter></step>
+<step outcome="successful">Given Web address <parameter>/page/composites/@className.groovy</parameter> is opened</step>
+<step outcome="successful">Given Web page is refreshed</step>
+<step outcome="successful">Then Web element <parameter>className</parameter> is disabled</step>
+</scenario>
+</story>

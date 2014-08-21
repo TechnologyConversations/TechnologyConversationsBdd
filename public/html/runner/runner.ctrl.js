@@ -24,7 +24,7 @@ angular.module('runnerModule', [])
                     data.stories.forEach(function (story) {
                         storyPaths.push({path: story.path});
                     });
-                    TcBddService.openRunnerParametersModal(true).result.then(function (data) {
+                    TcBddService.openRunnerParametersModal(true, $scope).result.then(function (data) {
                         var classes = data.classes;
                         var action = data.action;
                         $http.get('/groovyComposites').then(function (response) {
@@ -107,19 +107,25 @@ angular.module('runnerModule', [])
         $scope.getRunnerProgressCss = function () {
             return TcBddService.getRunnerProgressCss($scope.storyRunnerInProgress);
         };
-        $scope.init = function() {
+        $scope.onLoad = function() {
             $scope.storyRunnerInProgress = false;
             $scope.storyRunnerSuccess = false;
             $scope.showRunnerProgress = false;
             $scope.pendingSteps = [];
             $scope.reportsUrl = '';
-            $scope.openRunner();
+            if ($location.search().reportsId === undefined) {
+                $scope.openRunner();
+            } else {
+                var reportsId = $location.search().reportsId;
+                $scope.reportsUrl = '/api/v1/reporters/get/' + reportsId + '/view/reports.html';
+                $scope.getReports(reportsId);
+            }
             $scope.showApi = false;
         };
         $scope.apiUrl = function() {
             return $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/runner/run.json';
         };
-        $scope.init();
+        $scope.onLoad();
     })
     .controller('runnerSelectorCtrl', function($scope, $http, $modal, $modalInstance, TcBddService) {
         $scope.files = {dirs: [], stories: []};
@@ -164,9 +170,12 @@ angular.module('runnerModule', [])
             return hasSelected;
         };
     })
-    .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi) {
+    .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi, TcBddService, features) {
+        $scope.onLoad = function() {
+            $scope.paramArray = [];
+            $scope.features = features;
+        };
         $scope.classes = data.classes;
-        $scope.paramArray = [];
         $scope.setParams = function() {
             $scope.classes.forEach(function(classEntry) {
                 classEntry.params.forEach(function(paramEntry) {
@@ -212,4 +221,11 @@ angular.module('runnerModule', [])
             return formattedClassName + formattedParamKey;
         };
         $scope.setParams();
+        $scope.onFinishJoyRide = function() {
+            TcBddService.onFinishJoyRide($scope);
+        };
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
+        $scope.onLoad();
     });

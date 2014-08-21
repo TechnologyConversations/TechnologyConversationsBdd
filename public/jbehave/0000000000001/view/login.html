@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>login</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+<div class="story">
+<h1></h1>
+<div class="path">file:data/stories/tcbdd/login/login.story</div>
+<div class="narrative"><h2>Narrative:</h2>
+<div class="element inOrderTo"><span class="keyword inOrderTo">In order to</span> be able to provide personalized experience</div>
+<div class="element asA"><span class="keyword asA">As a</span> application user</div>
+<div class="element iWantTo"><span class="keyword iWantTo">I want to</span> be able to identify myself</div>
+</div>
+<div class="lifecycle"><h2>Lifecycle:</h2><div class="before"><h3>Before:</h3><div class="step">Given Web user is in the Login screen</div>
+</div></div><div class="scenario">
+<h2>Scenario: Should have all fields</h2>
+<div class="step successful">Given Web user is in the Login screen</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/login</span> is opened</div>
+<div class="step successful">Then Web element <span class="step parameter">username</span> is visible</div>
+<div class="step successful">Then Web element <span class="step parameter">password</span> is visible</div>
+<div class="step successful">Then Web element <span class="step parameter">login</span> is visible</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Should have username required</h2>
+<div class="step successful">Given Web user is in the Login screen</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/login</span> is opened</div>
+<div class="step successful">When Web user sets value <span class="step parameter">myPassword</span> to the element <span class="step parameter">password</span></div>
+<div class="step successful">Then Web element <span class="step parameter">login</span> is disabled</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Should have password required</h2>
+<div class="step successful">Given Web user is in the Login screen</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/login</span> is opened</div>
+<div class="step successful">When Web user sets value <span class="step parameter">myUsername</span> to the element <span class="step parameter">username</span></div>
+<div class="step successful">Then Web element <span class="step parameter">login</span> is disabled</div>
+</div>
+<div class="scenario">
+<h2>Scenario: Should redirect to the confirmation screen</h2>
+<div class="step successful">Given Web user is in the Login screen</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/login</span> is opened</div>
+<div class="step successful">Given Web user <span class="step parameter">myUsername</span> with password <span class="step parameter">myPassword</span> exists</div>
+<div class="step successful">When Web user sets value <span class="step parameter">myUsername</span> to the element <span class="step parameter">username</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">myPassword</span> to the element <span class="step parameter">password</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">register</span></div>
+<div class="step successful">When Web user <span class="step parameter">myUsername</span> logs in with password <span class="step parameter">myPassword</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">myUsername</span> to the element <span class="step parameter">username</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">myPassword</span> to the element <span class="step parameter">password</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">login</span></div>
+<div class="step successful">Then Web user is in the Welcome screen</div>
+<div class="step successful">Then Web element <span class="step parameter">pageTitle</span> should have text <span class="step parameter">Welcome</span></div>
+</div>
+<div class="scenario">
+<h2>Scenario: Should display error message when user does not exist</h2>
+<div class="step successful">Given Web user is in the Login screen</div>
+<div class="step successful">Given Web address <span class="step parameter">/page/login</span> is opened</div>
+<div class="step successful">Given Web user <span class="step parameter">myUsername</span> does NOT exists</div>
+<div class="step successful">When Web user sets value <span class="step parameter">myUsername</span> to the element <span class="step parameter">username</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">delete</span></div>
+<div class="step successful">When Web user <span class="step parameter">myUsername</span> logs in with password <span class="step parameter">myPassword</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">myUsername</span> to the element <span class="step parameter">username</span></div>
+<div class="step successful">When Web user sets value <span class="step parameter">myPassword</span> to the element <span class="step parameter">password</span></div>
+<div class="step successful">When Web user clicks the element <span class="step parameter">login</span></div>
+<div class="step successful">Then Web element <span class="step parameter">message</span> should have text <span class="step parameter">Specified username and/or password is incorrect</span></div>
+</div>
+</div>
+
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

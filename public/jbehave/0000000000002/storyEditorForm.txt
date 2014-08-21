@@ -1,0 +1,224 @@
+
+(file:data/stories/tcbdd/stories/storyEditorForm.story)
+Narrative:
+In order to create and modify stories
+As a application user
+I want to be able to add and modify story information through the form
+Lifecycle:
+Before:
+Given Web user is in the New Story screen
+When Web user clicks the element expandPanels
+
+Scenario: Has name field
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+Then Web element storyName is visible
+
+Scenario: Has description field
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+Then Web element storyDescription is visible
+
+Scenario: Has meta fields
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryMeta
+Then Web element storyMeta1 is visible
+
+Scenario: Has narrative fields
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+Then Web element storyNarrativeInOrderTo is visible
+Then Web element storyNarrativeAsA is visible
+Then Web element storyNarrativeIWantTo is visible
+
+Scenario: Has given stories
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryGivenStory
+Then Web element storyGivenStory1 is visible
+
+Scenario: Has lifecycle fields
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryLifecycleBeforeStep
+Then Web element storyLifecycleBeforeStep1 is visible
+When Web user clicks the element addStoryLifecycleAfterStep
+Then Web element storyLifecycleAfterStep1 is visible
+
+Scenario: Has scenario title
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+Then Web element scenario1Title is visible
+
+Scenario: Has scenario meta
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Meta
+Then Web element scenario1Meta1 is visible
+
+Scenario: Has scenario steps
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Step
+Then Web element scenario1Step1 is visible
+
+Scenario: Has scenario examples
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+Then Web element scenario1Examples is visible
+
+Scenario: Can add, move and remove story elements
+Examples:
+When Web user clicks the element <addButton>
+When Web user clicks the element <addButton>
+When Web user sets value this is value 1 to the element <element1>
+When Web user sets value this is value 2 to the element <element2>
+When Web user drags the element <dragButton2> to the <dragButton1>
+Then Web element <element1> should have value this is value 2
+When Web user clicks the element <removeButton1>
+Then Web element <element2> is NOT visible
+When Web user clicks the element <removeButton1>
+Then Web element <element1> is NOT visible
+
+|addButton|element1|element2|dragButton1|dragButton2|removeButton1|
+|addStoryMeta|storyMeta1|storyMeta2|dragStoryMeta1|dragStoryMeta2|removeStoryMeta1|
+|addStoryGivenStory|storyGivenStory1|storyGivenStory2|dragStoryGivenStory1|dragStoryGivenStory2|removeStoryGivenStory1|
+|addStoryLifecycleBeforeStep|storyLifecycleBeforeStep1|storyLifecycleBeforeStep2|dragStoryLifecycleBeforeStep1|dragStoryLifecycleBeforeStep2|removeStoryLifecycleBeforeStep1|
+|addStoryLifecycleAfterStep|storyLifecycleAfterStep1|storyLifecycleAfterStep2|dragStoryLifecycleAfterStep1|dragStoryLifecycleAfterStep2|removeStoryLifecycleAfterStep1|
+
+Example: {addButton=addStoryMeta, element1=storyMeta1, element2=storyMeta2, dragButton1=dragStoryMeta1, dragButton2=dragStoryMeta2, removeButton1=removeStoryMeta1}
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryMeta
+When Web user clicks the element addStoryMeta
+When Web user sets value this is value 1 to the element storyMeta1
+When Web user sets value this is value 2 to the element storyMeta2
+When Web user drags the element dragStoryMeta2 to the dragStoryMeta1
+Then Web element storyMeta1 should have value this is value 2
+When Web user clicks the element removeStoryMeta1
+Then Web element storyMeta2 is NOT visible
+When Web user clicks the element removeStoryMeta1
+Then Web element storyMeta1 is NOT visible
+
+Example: {addButton=addStoryGivenStory, element1=storyGivenStory1, element2=storyGivenStory2, dragButton1=dragStoryGivenStory1, dragButton2=dragStoryGivenStory2, removeButton1=removeStoryGivenStory1}
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryGivenStory
+When Web user clicks the element addStoryGivenStory
+When Web user sets value this is value 1 to the element storyGivenStory1
+When Web user sets value this is value 2 to the element storyGivenStory2
+When Web user drags the element dragStoryGivenStory2 to the dragStoryGivenStory1
+Then Web element storyGivenStory1 should have value this is value 2
+When Web user clicks the element removeStoryGivenStory1
+Then Web element storyGivenStory2 is NOT visible
+When Web user clicks the element removeStoryGivenStory1
+Then Web element storyGivenStory1 is NOT visible
+
+Example: {addButton=addStoryLifecycleBeforeStep, element1=storyLifecycleBeforeStep1, element2=storyLifecycleBeforeStep2, dragButton1=dragStoryLifecycleBeforeStep1, dragButton2=dragStoryLifecycleBeforeStep2, removeButton1=removeStoryLifecycleBeforeStep1}
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryLifecycleBeforeStep
+When Web user clicks the element addStoryLifecycleBeforeStep
+When Web user sets value this is value 1 to the element storyLifecycleBeforeStep1
+When Web user sets value this is value 2 to the element storyLifecycleBeforeStep2
+When Web user drags the element dragStoryLifecycleBeforeStep2 to the dragStoryLifecycleBeforeStep1
+Then Web element storyLifecycleBeforeStep1 should have value this is value 2
+When Web user clicks the element removeStoryLifecycleBeforeStep1
+Then Web element storyLifecycleBeforeStep2 is NOT visible
+When Web user clicks the element removeStoryLifecycleBeforeStep1
+Then Web element storyLifecycleBeforeStep1 is NOT visible
+
+Example: {addButton=addStoryLifecycleAfterStep, element1=storyLifecycleAfterStep1, element2=storyLifecycleAfterStep2, dragButton1=dragStoryLifecycleAfterStep1, dragButton2=dragStoryLifecycleAfterStep2, removeButton1=removeStoryLifecycleAfterStep1}
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addStoryLifecycleAfterStep
+When Web user clicks the element addStoryLifecycleAfterStep
+When Web user sets value this is value 1 to the element storyLifecycleAfterStep1
+When Web user sets value this is value 2 to the element storyLifecycleAfterStep2
+When Web user drags the element dragStoryLifecycleAfterStep2 to the dragStoryLifecycleAfterStep1
+Then Web element storyLifecycleAfterStep1 should have value this is value 2
+When Web user clicks the element removeStoryLifecycleAfterStep1
+Then Web element storyLifecycleAfterStep2 is NOT visible
+When Web user clicks the element removeStoryLifecycleAfterStep1
+Then Web element storyLifecycleAfterStep1 is NOT visible
+
+
+Scenario: Can add, move and remove scenario steps
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Step
+When Web user sets value When I drag and drop to the element scenario1Step1
+When Web user clicks the element addScenario1Step
+When Web user sets value Then everything is just great to the element scenario1Step2
+When Web user drags the element dragScenario1Step2 to the dragScenario1Step1
+Then Web element scenario1Step1 should have value Then everything is just great
+When Web user clicks the element removeScenario1Step1
+Then Web element scenario1Step2 is NOT visible
+When Web user clicks the element removeScenario1Step1
+Then Web element scenario1Step1 is NOT visible
+
+Scenario: Steps have auto-complete function
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Step
+When Web user sets value Then variable to the element scenario1Step1
+When Web user presses the enter key in the element scenario1Step1
+Then Web element scenario1Step1 should have value Then variable $key has value $value
+
+Scenario: Can add steps using the ENTER key
+Given Web user is in the New Story screen
+Given File data/stories/testDirectory/newStory.story does NOT exist
+Given Web address /page/stories/new/testDirectory/ is opened
+When Web user clicks the element expandPanels
+When Web user clicks the element addScenario
+When Web user clicks the element scenario1Panel
+When Web user clicks the element addScenario1Step
+When Web user presses the enter key in the element scenario1Step1
+Then Web element scenario1Step2 is visible
+
+
