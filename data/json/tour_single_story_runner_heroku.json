@@ -2,7 +2,7 @@
     {
         "type": "title",
         "heading": "Story Runner",
-        "text": "This modal can be reached by clicking \"Run Story\" inside the Story screen (Single Story Runner) or by clicking \"Run Stories\" located in the top menu (Multiple Stories Runner)."
+        "text": "This modal can be reached by clicking \"Run Story\" inside the Story screen (Single Story Runner)."
     }, {
         "type": "element",
         "selector": "#runnerFormGroup",

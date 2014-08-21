@@ -169,6 +169,12 @@ angular.module('runnerModule', [])
             }
             return hasSelected;
         };
+        $scope.onFinishJoyRide = function() {
+            TcBddService.onFinishJoyRide($scope);
+        };
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
     })
     .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi, TcBddService, features) {
         $scope.onLoad = function() {

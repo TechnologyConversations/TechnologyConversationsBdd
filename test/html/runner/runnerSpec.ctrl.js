@@ -429,6 +429,23 @@ describe('runnerModule', function() {
             });
         });
 
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service function', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service function', function() {
+                var id = 'id';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+        });
+
     });
 
     describe('runnerParamsCtrl controller', function() {

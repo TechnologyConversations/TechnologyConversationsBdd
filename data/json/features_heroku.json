@@ -2,17 +2,12 @@
     "deleteStory": {
         "displayed": true,
         "enabled": false,
-        "description": "Delete story feature is temporarily disabled in the demo due to our hosting limitations."
+        "description": " Delete story feature is temporarily disabled in the demo due to our hosting limitations."
     },
     "saveStory": {
         "displayed": true,
         "enabled": false,
         "description": " Save story feature is temporarily disabled in the demo due to our hosting limitations."
-    },
-    "deleteStory": {
-        "displayed": true,
-        "enabled": false,
-        "description": " Delete story feature is temporarily disabled in the demo due to our hosting limitations."
     },
     "runStory": {
         "displayed": true,

@@ -1,0 +1,14 @@
+[
+    {
+        "type": "title",
+        "heading": "Multiple Stories Runner",
+        "text": "This modal can be reached by clicking \"Run Stories\" located in the top menu (Multiple Stories Runner)."
+    }, {
+        "type": "element",
+        "selector": "#storiesSelector",
+        "heading": "Story Runner Parameters",
+        "text": "This dialog allows navigation between directories and stories selection. Stories or whole directories with stories can be selected by clicking the checkbox on the right side. After the desired stories are selected, Continue button leads to the Runner Parameters. Please click the Tour <span class=\"glyphicon glyphicon-film\"></span> button",
+        "placement": "left",
+        "scroll": false
+    }
+]

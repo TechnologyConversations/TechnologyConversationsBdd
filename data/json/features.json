@@ -9,11 +9,6 @@
         "enabled": true,
         "description": ""
     },
-    "deleteStory": {
-        "displayed": true,
-        "enabled": true,
-        "description": ""
-    },
     "runStory": {
         "displayed": true,
         "enabled": true,
