@@ -19,6 +19,9 @@ describe('compositeClassesModule', function() {
             inject(function($rootScope, $compile, $injector, $controller, $http, TcBddService) {
                 service = TcBddService;
                 scope = $rootScope.$new();
+                modalInstance = {
+                    close: jasmine.createSpy('modalInstance.close')
+                };
                 $controller("compositeClassesCtrl", {
                     $scope: scope,
                     $http: $http,
@@ -80,6 +83,36 @@ describe('compositeClassesModule', function() {
         describe('classNamePattern function', function() {
             it('should return common function', function() {
                 expect(scope.classNamePattern().toString()).toBe(service.classNamePattern().toString());
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service function', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service function', function() {
+                var id = 'id';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+        });
+
+        describe('cssClass function', function() {
+            it('should be cssClass service', function() {
+                expect(service.cssClass).toBe(service.cssClass);
+            });
+        });
+
+        describe('close function', function() {
+            it('should call the close function of the modal', function() {
+                scope.close();
+                expect(modalInstance.close).toHaveBeenCalled();
             });
         });
 

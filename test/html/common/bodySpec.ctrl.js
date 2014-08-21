@@ -118,6 +118,20 @@ describe('bodyModule', function() {
                 scope.openModal();
                 expect(scope.openStory).not.toHaveBeenCalled();
             });
+            it('should call openStory function when search contains openModal=openCompositeClass', function() {
+                location.search('openModal', 'openCompositeClass');
+                spyOn(scope, 'openCompositeClass');
+                scope.openModal();
+                expect(scope.openCompositeClass).toHaveBeenCalled();
+            });
+        });
+
+        describe('openCompositeClass function', function() {
+            it('should call openCompositeClass service', function() {
+                spyOn(service, 'openCompositeClass');
+                scope.openCompositeClass();
+                expect(service.openCompositeClass).toHaveBeenCalled();
+            });
         });
 
     });

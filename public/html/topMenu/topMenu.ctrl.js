@@ -1,8 +1,5 @@
 angular.module('topMenuModule', [])
-    .controller('topMenuController', function($scope, $location, TcBddService) {
-        $scope.openCompositeClass = function() {
-            TcBddService.openCompositeClass();
-        };
+    .controller('topMenuController', function($scope, $location) {
         $scope.getTitle = function() {
             var path = $location.path();
             if (path.indexOf('/page/stories/view/') === 0) {

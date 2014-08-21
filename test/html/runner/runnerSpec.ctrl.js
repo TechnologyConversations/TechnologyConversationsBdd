@@ -280,6 +280,7 @@ describe('runnerModule', function() {
         var httpBackend, modal, modalInstance, service;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
 
+
         beforeEach(
             inject(function($controller, $httpBackend, $http, TcBddService) {
                 service = TcBddService;

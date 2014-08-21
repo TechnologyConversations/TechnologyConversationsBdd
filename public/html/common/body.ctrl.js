@@ -26,11 +26,16 @@ angular.module('bodyModule', ['ngJoyRide'])
                 }
             });
         };
+        $scope.openCompositeClass = function() {
+            TcBddService.openCompositeClass();
+        };
         $scope.openModal = function() {
             if ($location.search().openModal !== undefined) {
                 var menu = $location.search().openModal;
                 if (menu === 'openStory') {
                     $scope.openStory();
+                } else if (menu === 'openCompositeClass') {
+                    $scope.openCompositeClass();
                 }
             }
         };

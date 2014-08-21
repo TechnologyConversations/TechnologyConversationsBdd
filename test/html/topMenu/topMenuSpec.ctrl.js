@@ -5,11 +5,9 @@ describe('topMenuModule module', function() {
     describe('topMenuController controller', function() {
 
         var scope, location;
-        var service;
 
         beforeEach(
-            inject(function($rootScope, $controller, $location, TcBddService) {
-                service = TcBddService;
+            inject(function($rootScope, $controller, $location) {
                 scope = $rootScope.$new();
                 location = $location;
                 $controller("topMenuController", {
@@ -43,14 +41,6 @@ describe('topMenuModule module', function() {
             it('should return Home when URL is /page/tour/', function() {
                 location.path('/page/tour/');
                 expect(scope.getTitle()).toEqual("Home");
-            });
-        });
-
-        describe('openCompositeClass function', function() {
-            it('should call openCompositeClass service', function() {
-                spyOn(service, 'openCompositeClass');
-                scope.openCompositeClass();
-                expect(service.openCompositeClass).toHaveBeenCalled();
             });
         });
 

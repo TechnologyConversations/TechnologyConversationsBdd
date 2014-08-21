@@ -1,0 +1,21 @@
+[
+    {
+        "type": "title",
+        "heading": "Browse Composites",
+        "text": "Composites are convenient way to define new steps composed of one or more predefined steps. Further on, composites are grouped into composite classes. Browse Composites dialog allows users to create new or open an existing composites class."
+    }, {
+        "type": "element",
+        "selector": "#compositeClasses",
+        "heading": "Composite Classes",
+        "text": "This is the list of existing composite classes. They can be selected by clicking on the links below.",
+        "placement": "left",
+        "scroll": false
+    }, {
+        "type": "element",
+        "selector": "#createNewClassGroup",
+        "heading": "Create New Composites Class",
+        "text": "New composites class can be created by typing the name in the search field and clicking the <strong>Create New Composites Class</strong> (<span class=\"glyphicon glyphicon-plus\"></span>) button.",
+        "placement": "bottom",
+        "scroll": false
+    }
+]

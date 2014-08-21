@@ -2,7 +2,6 @@ angular.module('compositeClassesModule', [])
     .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, compositeClasses, compositeStepText, TcBddService) {
         $scope.compositeClasses = compositeClasses;
         $scope.compositeStepText = compositeStepText;
-        // TODO Test
         $scope.close = function() {
             $modalInstance.close();
         };
@@ -37,7 +36,12 @@ angular.module('compositeClassesModule', [])
             return text;
         };
         $scope.classNamePattern = TcBddService.classNamePattern;
-        // TODO Test
         $scope.cssClass = TcBddService.cssClass;
         $scope.data = {class: ''};
+        $scope.onFinishJoyRide = function() {
+            TcBddService.onFinishJoyRide($scope);
+        };
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
     });

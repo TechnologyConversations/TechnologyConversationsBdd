@@ -1,6 +1,11 @@
-<div class="modal-header"><h3 id="modalHeader">Browse Composites</h3></div>
+<div class="modal-header">
+    <h3 id="modalHeader">
+        Browse Composites
+        <button ng-click="startJoyRide('tour_browse_composites')" type="button" class="btn btn-primary btn-sm pull-right">Tour <span class="glyphicon glyphicon-film"></span></button>
+    </h3>
+</div>
 <div class="modal-body">
-    <form class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm">
+    <form id="createNewClassGroup" class="form-horizontal" role="form" id="compositeClassForm" name="compositeClassForm">
         <div ng-class="cssClass(compositeClassForm.className)">
             <div class="input-group">
                 <span class="input-group-addon">Class</span>
@@ -19,7 +24,7 @@
             </div>
         </div>
     </form>
-    <table class="table table-condensed table-striped">
+    <table id="compositeClasses" class="table table-condensed table-striped">
         <tbody ng-repeat="class in compositeClasses | filter:data.class">
             <tr>
                 <td>
@@ -31,4 +36,7 @@
 </div>
 <div class="modal-footer">
     <button id="closeComposites" class="btn btn-primary" ng-click="close()">Close</button>
+</div>
+<div ng-repeat="tour in tours">
+    <div ng-joy-ride="startJoyRideFlag" config="configJoyRide" on-finish="onFinishJoyRide()" on-skip="onFinishJoyRide()"></div>
 </div>
