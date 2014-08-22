@@ -13,5 +13,15 @@
         "displayed": true,
         "enabled": true,
         "description": ""
+    },
+    "saveComposites": {
+        "displayed": true,
+        "enabled": true,
+        "description": ""
+    },
+    "deleteComposites": {
+        "displayed": true,
+        "enabled": true,
+        "description": ""
     }
 }

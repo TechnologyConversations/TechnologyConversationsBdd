@@ -13,5 +13,15 @@
         "displayed": true,
         "enabled": false,
         "description": "Run story feature is temporarily disabled in the demo due to our hosting limitations."
+    },
+    "saveComposites": {
+        "displayed": true,
+        "enabled": false,
+        "description": " Save composites feature is temporarily disabled in the demo due to our hosting limitations."
+    },
+    "deleteComposites": {
+        "displayed": true,
+        "enabled": false,
+        "description": " Delete composites feature is temporarily disabled in the demo due to our hosting limitations."
     }
 }

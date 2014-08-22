@@ -14,13 +14,13 @@
                         </span>
                     </div>
                 </div>
-                <h3>
+                <h3 id="addNewCompositeGroup">
                     Composites
                     <button id="addNewComposite" type="button" ng-click="addNewComposite()" class="pull-right btn btn-info btn-sm">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </h3>
-                <div>
+                <div id="compositeTextFilterGroup">
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
                         <input id="compositeTextFilter" name="compositeTextFilter" class="form-control" type="text" ng-model="stepText">
@@ -30,7 +30,7 @@
             <table id="composites" class="table table-condensed table-striped">
                 <tbody ng-repeat="composite in compositesClass.composites | filter:stepText">
                     <tr>
-                        <td>
+                        <td id="composite{{$index + 1}}Group">
                             <a id="composite{{$index + 1}}" href="#" ng-click="openComposite(composite)">{{composite.stepText}}</a>
                             <button id="deleteComposite{{$index + 1}}" class="btn btn-xs btn-danger pull-right" ng-click="removeCollectionElement(compositesClass.composites, $index)" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
@@ -41,8 +41,9 @@
             </table>
         </div>
         <div class="col-md-8">
+            <button ng-click="startJoyRide('tour_composites')" type="button" class="btn btn-primary btn-lg pull-right">Tour composites <span class="glyphicon glyphicon-film"></span></button>
             <form class="form-horizontal" role="form" id="compositeForm" name="compositeForm" novalidate="novalidate">
-                <div ng-class="cssClass(compositeForm.compositeText)">
+                <div id="compositeTextGroup" ng-class="cssClass(compositeForm.compositeText)">
                     <div class="input-group">
                         <span class="input-group-addon">Composite</span>
                         <input id="compositeText" name="compositeText" class="form-control input-lg" type="text" ng-model="composite.stepText" ng-pattern="stepTextPattern()" required="true">
@@ -54,39 +55,41 @@
                         </span>
                     </div>
                 </div>
-                <h3>
-                    Composite Steps
-                    <button id="addNewCompositeStep" type="button" ng-click="addNewCompositeStep()" class="pull-right btn btn-info">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                </h3>
-                <div ui-sortable class="steps" ng-model="composite.compositeSteps">
-                    <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
-                        <div class="input-group sortable">
-                            <span id="dragCompositeStep{{$index + 1}}" class="input-group-addon">
-                                <span class="glyphicon glyphicon-move"></span>
-                            </span>
-                            <input id="compositeStep{{$index + 1}}" name="compositeStep" class="form-control" type="text"
-                                   ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)"
-                                   autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25"
-                                   ng-pattern="stepTextPattern()">
-                            <span class="input-group-btn">
-                                <button id="removeCompositeStep{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
+                <div id="compositeStepsGroup">
+                    <h3>
+                        Composite Steps
+                        <button id="addNewCompositeStep" type="button" ng-click="addNewCompositeStep()" class="pull-right btn btn-info">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </h3>
+                    <div ui-sortable class="steps" ng-model="composite.compositeSteps">
+                        <div ng-form="compositeStepForm" ng-repeat="compositeStep in composite.compositeSteps" ng-class="cssClass(compositeStepForm.compositeStep)">
+                            <div class="input-group sortable">
+                                <span id="dragCompositeStep{{$index + 1}}" class="input-group-addon">
+                                    <span class="glyphicon glyphicon-move"></span>
+                                </span>
+                                <input id="compositeStep{{$index + 1}}" name="compositeStep" class="form-control" type="text"
+                                       ng-model="compositeStep.step" required="true" ng-keypress="newCollectionItem($event, composite.compositeSteps)"
+                                       autofocus  typeahead="step.step as step.step for step in steps.steps | filter:{step:$viewValue} | limitTo:25"
+                                       ng-pattern="stepTextPattern()">
+                                <span class="input-group-btn">
+                                    <button id="removeCompositeStep{{$index + 1}}" class="btn btn-danger" ng-click="removeCollectionElement(composite.compositeSteps, $index)" type="button">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="compositeStepsError" class="help-block" ng-show="!compositesAreValid(compositeForm)">
-                    At least one step must be defined. All steps must start with Given, When or Then words.
+                    <div id="compositeStepsError" class="help-block" ng-show="!compositesAreValid(compositeForm)">
+                        At least one step must be defined. All steps must start with Given, When or Then words.
+                    </div>
                 </div>
             </form>
             <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-                <div>
-                    <button id="saveComposites" class="btn btn-primary" ng-class="buttonCssClass(compositeClassForm, compositeForm)" ng-disabled="!canSaveCompositesClass(compositeClassForm) || !compositesAreValid(compositeForm)" ng-click="saveCompositesClass()" type="button">{{saveCompositesText()}}</button>
+                <div tooltip="{{features.saveComposites.description}}{{features.deleteComposites.description}}" tooltip-trigger="mouseenter" tooltip-placement="top">
+                    <button id="saveComposites" class="btn btn-primary" ng-class="buttonCssClass(compositeClassForm, compositeForm)" ng-disabled="!features.saveComposites.enabled || !canSaveCompositesClass(compositeClassForm) || !compositesAreValid(compositeForm)" ng-click="saveCompositesClass()" type="button">{{saveCompositesText()}}</button>
                     <button id="revertComposites" class="btn btn-info" ng-click="revertCompositesClass()" ng-disabled="!canRevertCompositesClass()" type="button">Revert Changes</button>
-                    <button id="deleteComposites" class="btn btn-danger" ng-click="deleteCompositesClass()" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
+                    <button id="deleteComposites" class="btn btn-danger" ng-click="deleteCompositesClass()" ng-disabled="!features.deleteComposites.enabled" ng-hide="!canDeleteCompositesClass()" type="button">Delete Composites</button>
                 </div>
             </nav>
         </div>

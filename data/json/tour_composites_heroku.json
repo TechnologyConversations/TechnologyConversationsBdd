@@ -1,0 +1,84 @@
+[
+    {
+        "type": "title",
+        "heading": "Composites Form and Operations",
+        "text": "Composites are convenient way to define new steps composed of one or more predefined steps. Further on, composites are grouped into composite classes. Browse Composites dialog allows users to create new or open an existing composites class. Composites Form is a representation of a composites class. It is divided into 3 parts: Class Name, Composites and Composite Steps."
+    }, {
+        "type": "element",
+        "selector": "#className",
+        "heading": "Class Name",
+        "text": "Class Name is the unique identifier of a set of composites.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#composite1Group",
+        "heading": "Composites",
+        "text": "All composites are listed on the left-hand side of the screen.",
+        "placement": "bottom",
+        "scroll": false
+    }, {
+        "type": "element",
+        "selector": "#addNewCompositeGroup",
+        "heading": "Add New Composite",
+        "text": "New Composite can be added by clicking the <span class=\"glyphicon glyphicon-plus\"></span> button.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#compositeTextFilterGroup",
+        "heading": "Filter Composites",
+        "text": "The search field can be used to filter composites.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#composite1Group",
+        "heading": "Composite Form",
+        "text": "Click on the desired composite (or create a new one) to open the composite form.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#compositeTextGroup",
+        "heading": "Composite Name",
+        "text": "Composite form consists of the composite name ...",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#compositeStepsGroup",
+        "heading": "Composite Steps",
+        "text": "... and steps. There must be at least one step in each composite. Steps can be added (<span class=\"glyphicon glyphicon-plus\"></span>), moved (<span class=\"glyphicon glyphicon-move\"></span>) and removed (<span class=\"glyphicon glyphicon-remove\"></span>).",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#compositeStepsGroup",
+        "heading": "Composite Steps",
+        "text": "Steps support the auto-complete feature. Start writing the word that identifies some step and the GUI will display the list of candidates. Once the desired step is found, space of enter key will add it to the corresponding field.",
+        "placement": "bottom",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#saveComposites",
+        "heading": "Create New or Update Existing Composites",
+        "text": "If specified composites class does not exist, this button text would be \"Create New Composites\". Otherwise, this button should be used to update composites. This function is temporarily disabled in the demo due to our hosting limitations.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#revertComposites",
+        "heading": "Revert Composites",
+        "text": "Any change made to composites can be reverted to the version created on the last save. To revert composites, click the \"Revert Changes\" button. This operation cannot be undone. If there were no changes in composites, the button is disabled.",
+        "placement": "top",
+        "scroll": true
+    }, {
+        "type": "element",
+        "selector": "#deleteComposites",
+        "heading": "Delete Composites",
+        "text": "Any composites class can be deleted. This operation cannot be undone. If the composites class was not previously saved in the server, the button is disabled. This function is temporarily disabled in the demo due to our hosting limitations.",
+        "placement": "top",
+        "scroll": true
+    }
+]
