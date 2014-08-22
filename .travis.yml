@@ -13,3 +13,8 @@ script:
   - sbt ++2.10.3 test
   - npm test
   - sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path data/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy"
+
+deploy:
+  provider: heroku
+  api_key: 5a228e77-5def-4704-8a99-f6f29f23af3a
+  app: bddassistantdemo
