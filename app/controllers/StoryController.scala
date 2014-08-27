@@ -1,5 +1,6 @@
 package controllers
 
+import play.api.mvc.Results._
 import play.api.mvc._
 import models.{Story, StoryList}
 import play.api.libs.json.{JsValue, Json}
@@ -58,7 +59,8 @@ object StoryController extends Controller {
 
   def deleteStoryJson(path: String): Action[AnyContent] = Action { implicit request =>
     Story(storiesDir, path).delete(s"$storiesDir/$path")
-    okJson(s"Story $storiesDir/$path has been deleted")
+    val json = toJson(message = Option(s"Story $storiesDir/$path has been deleted"))
+    Ok(json)
   }
 
   private def renameStoryJson(jsonOption: Option[JsValue]) = {

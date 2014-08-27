@@ -13,7 +13,7 @@ package object controllers {
   def toJson(error: Option[String] = Option.empty, message: Option[String] = Option.empty, data: Option[JsValue] = Option.empty) = {
     val meta = Map(
       "error" -> error.getOrElse(""),
-      "messaage" -> message.getOrElse("")
+      "message" -> message.getOrElse("")
     )
     val map = Map(
       "meta" -> Json.toJson(meta),

@@ -148,7 +148,7 @@ angular.module('storiesModule', [
                     $location.path('/page/stories/new/');
                     deferred.resolve('OK');
                 }, function(response) {
-                    self.openErrorModal(response.data);
+                    self.openErrorModal(response.data.meta);
                     deferred.reject('NOK');
                 });
             }, function() {
