@@ -112,9 +112,10 @@ Front-end dependencies can be installed by running following
 
 ```bash
 npm install
+bower install
 ```
 
-npm install adds two directories:
+npm and bower will add two directories:
 
 * public/node_modules
 * public/bower_components
