@@ -161,12 +161,12 @@
                     <div id="storyScenariosPanelBody" class="panel-body" ng-show="panels.scenarios">
                         <div id="scenario{{scenarioIndex + 1}}PanelGroup" class="panel panel-info" ng-repeat="(scenarioIndex, scenario) in story.scenarios" ng-form="storyScenarioForm" ng-class="cssClass(storyScenarioForm.scenarioTitle)">
                             <div class="input-group">
-                                <span class="input-group-addon" ng-click="toggleScenario = !toggleScenario">
+                                <span class="input-group-addon" ng-click="changeScenarioToggle(scenarioIndex)">
                                     Scenario
                                 </span>
-                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true" ng-focus="toggleScenario = true">
+                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true">
                                 <span class="input-group-btn">
-                                    <button id="scenario{{scenarioIndex + 1}}Panel" class="btn btn-info" ng-click="toggleScenario = !toggleScenario" type="button">
+                                    <button id="scenario{{scenarioIndex + 1}}Panel" class="btn btn-info" ng-click="changeScenarioToggle(scenarioIndex)" type="button">
                                         <span class="glyphicon glyphicon-chevron-down"></span>
                                     </button>
                                     <button id="scenario{{scenarioIndex + 1}}Remove" class="btn btn-danger" ng-click="removeCollectionElement(story.scenarios, $index)" type="button">
@@ -174,7 +174,7 @@
                                     </button>
                                 </span>
                             </div>
-                            <div ng-show="toggleScenario" class="panel-body">
+                            <div ng-show="getScenarioToggle(scenarioIndex)" class="panel-body">
                                 <!--Scenario meta-->
                                 <div>
                                     <h4 id="storyScenarioMetaHeader">
@@ -268,4 +268,7 @@
             </div>
         </div>
     </div>
+</div>
+<div ng-repeat="tour in tours">
+    <div ng-joy-ride="startJoyRideFlag" config="configJoyRide" on-finish="onFinishJoyRide()" on-skip="onFinishJoyRide()"></div>
 </div>

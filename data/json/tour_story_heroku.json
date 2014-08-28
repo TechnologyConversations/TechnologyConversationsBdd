@@ -11,12 +11,8 @@
         "placement": "bottom",
         "scroll": true
     }, {
-        "type": "element",
-        "selector": "#storyNameGroup",
-        "heading": "Expand Panels",
-        "text": "<mark>Click the <span class=\"glyphicon glyphicon-chevron-down\"></span> button to expand panels. Click next when finished to continue with the tour.</mark>",
-        "placement": "bottom",
-        "scroll": true
+        "type": "function",
+        "fn": "expandPanelsTour"
     }, {
         "type": "element",
         "selector": "#storyPanel",
@@ -46,12 +42,8 @@
         "placement": "bottom",
         "scroll": true
     }, {
-        "type": "element",
-        "selector": "#scenario4PanelGroup",
-        "heading": "Scenarios",
-        "text": "<mark>Click the <span class=\"glyphicon glyphicon-chevron-down\"></span> button to expand this scenario. Click next when finished to continue with the tour.</mark>",
-        "placement": "bottom",
-        "scroll": true
+        "type": "function",
+        "fn": "changeScenarioToggleTour"
     }, {
         "type": "element",
         "selector": "#scenario4PanelGroup",

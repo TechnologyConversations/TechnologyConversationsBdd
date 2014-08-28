@@ -188,6 +188,11 @@ angular.module('storiesModule', [
             scope.startJoyRideFlag = false;
             scope.tours = [];
         };
+        this.startJoyRideOnLoad = function(location, scope) {
+            if (location.search().tour !== undefined) {
+                this.startJoyRide('tour_' + location.search().tour, scope);
+            }
+        };
     })
     .controller('modalCtrl', function($scope, $modalInstance, data) {
         $scope.data = data;

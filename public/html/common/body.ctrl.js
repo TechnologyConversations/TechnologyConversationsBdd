@@ -48,5 +48,5 @@ angular.module('bodyModule', ['ngJoyRide'])
             });
         };
         $scope.loadFeatures();
-        $scope.startJoyRideOnLoad();
+//        $scope.startJoyRideOnLoad();
     });

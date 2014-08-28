@@ -371,6 +371,21 @@ describe('storiesModule controllers', function() {
             });
         });
 
+        describe('startJoyRideOnLoad function', function() {
+            it('should call startJoyRide when search contains tour', function() {
+                var id = 'navigation';
+                location.search('tour', 'navigation');
+                spyOn(service, 'startJoyRide');
+                service.startJoyRideOnLoad(location, scope);
+                expect(service.startJoyRide).toHaveBeenCalledWith('tour_' + id, scope);
+            });
+            it('should not call startJoyRide when search does NOT contain tour', function() {
+                spyOn(service, 'startJoyRide');
+                service.startJoyRideOnLoad(location, scope);
+                expect(service.startJoyRide).not.toHaveBeenCalled();
+            });
+        });
+
     });
 
     describe('modalCtrl controller', function() {

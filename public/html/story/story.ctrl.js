@@ -12,6 +12,7 @@ angular.module('storyModule', [])
             $scope.storyRunnerSuccess = true;
             $scope.expandPanels();
             $scope.originalStory = angular.copy(story);
+            $scope.scenarioToggles = [];
             var pathArray = $scope.story.path.split('/');
             $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
             if ($scope.dirPath !== '') {
@@ -30,6 +31,7 @@ angular.module('storyModule', [])
                     $scope.openRunnerParams();
                 }
             }
+            TcBddService.startJoyRideOnLoad($location, $scope);
         };
         $scope.setAction = function() {
             if ($scope.story.name !== '') {
@@ -239,8 +241,42 @@ angular.module('storyModule', [])
                 return $location.search('stepText', stepText).path('/page/composites/' + compositeClass + '.groovy');
             }
         };
-        // TODO Test
-        $scope.openErrorModal = TcBddService.openErrorModal;
+        $scope.openErrorModal = function() {
+            TcBddService.openErrorModal();
+        };
+        $scope.changeScenarioToggle = function(scenario) {
+            var found = false;
+            $scope.scenarioToggles.forEach(function(toggle) {
+                if (toggle.scenario === scenario) {
+                    toggle.expanded = !toggle.expanded;
+                    found = true;
+                }
+            });
+            if (!found) {
+                $scope.scenarioToggles.push({scenario: scenario, expanded: true});
+            }
+        };
+        $scope.getScenarioToggle = function(scenario) {
+            var expanded = false;
+            $scope.scenarioToggles.forEach(function(toggle) {
+                if (toggle.scenario === scenario) {
+                    expanded = toggle.expanded;
+                }
+            });
+            return expanded;
+        };
+        $scope.onFinishJoyRide = function() {
+            TcBddService.onFinishJoyRide($scope);
+        };
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
+        $scope.expandPanelsTour = function(flag) {
+            $scope.expandPanels();
+        };
+        $scope.changeScenarioToggleTour = function(flag) {
+            $scope.changeScenarioToggle(3);
+        };
         $scope.onLoad();
     })
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService, features) {

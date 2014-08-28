@@ -452,6 +452,11 @@ describe('storyModule', function() {
                 scope.onLoad();
                 expect(scope.openRunnerParams).not.toHaveBeenCalled();
             });
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
+            });
         });
 
         describe('isStoryRunnerSuccess function', function() {
@@ -470,6 +475,9 @@ describe('storyModule', function() {
                 ];
                 var result = scope.isStoryRunnerSuccess(reports);
                 expect(result).toEqual(false);
+            });
+            it('should set scenarioToggles to an empty array', function() {
+                expect(scope.scenarioToggles.length).toEqual(0);
             });
         });
 
@@ -508,6 +516,96 @@ describe('storyModule', function() {
                 scope.story = {value: 'something'};
                 scope.originalStory = {value: 'something'};
                 expect(scope.canRevertStory()).toBe(false);
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            var id = 'ID';
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+        });
+
+        describe('expandPanelsTour function', function() {
+            it('should call expandPanels function', function() {
+                spyOn(scope, 'expandPanels');
+                scope.expandPanelsTour(true);
+                expect(scope.expandPanels).toHaveBeenCalled();
+            });
+        });
+
+        describe('changeScenarioToggleTour function', function() {
+            it('should call changeScenarioToggle', function() {
+                spyOn(scope, 'changeScenarioToggle');
+                scope.changeScenarioToggleTour(true);
+                expect(scope.changeScenarioToggle).toHaveBeenCalledWith(3);
+            });
+        });
+
+        describe('toggleScenario function', function() {
+            it('should add true to scenarioToggles when it does not exist', function() {
+                scope.changeScenarioToggle(3);
+                expect(scope.scenarioToggles).toEqual([{scenario: 3, expanded: true}]);
+            });
+            it('should change scenarioToggles to false when it is set to true', function() {
+                scope.scenarioToggles = [
+                    {scenario: 1, expanded: true},
+                    {scenario: 2, expanded: true}
+                ];
+                scope.changeScenarioToggle(2);
+                expect(scope.scenarioToggles.length).toEqual(2);
+                expect(scope.scenarioToggles).toEqual([
+                    {scenario: 1, expanded: true},
+                    {scenario: 2, expanded: false}
+                ]);
+            });
+            it('should change scenarioToggles to true when it is set to false', function() {
+                scope.scenarioToggles = [{scenario: 3, expanded: false}];
+                scope.changeScenarioToggle(3);
+                expect(scope.scenarioToggles.length).toEqual(1);
+                expect(scope.scenarioToggles).toEqual([{scenario: 3, expanded: true}]);
+            });
+        });
+
+        describe('getScenarioToggle function', function() {
+            it('should return false when expanded is false', function() {
+                scope.scenarioToggles = [
+                    {scenario: 1, expanded: true},
+                    {scenario: 2, expanded: false}
+                ];
+                expect(scope.getScenarioToggle(2)).toEqual(false);
+            });
+            it('should return true when expanded is true', function() {
+                scope.scenarioToggles = [
+                    {scenario: 1, expanded: true},
+                    {scenario: 2, expanded: false}
+                ];
+                expect(scope.getScenarioToggle(1)).toEqual(true);
+            });
+            it('should return false when scenario does NOT exist', function() {
+                scope.scenarioToggles = [
+                    {scenario: 1, expanded: true},
+                    {scenario: 2, expanded: false}
+                ];
+                expect(scope.getScenarioToggle(3)).toEqual(false);
+            });
+        });
+
+        describe('openErrorModal function', function() {
+            it('should call openErrorModal service', function() {
+                spyOn(service, 'openErrorModal');
+                scope.openErrorModal();
+                expect(service.openErrorModal).toHaveBeenCalled();
             });
         });
 
