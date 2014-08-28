@@ -5,20 +5,18 @@ module.exports = function(grunt) {
         jasmine: {
             test: {
                 src: [
-                    'public/bower_components/jasmine/lib/jasmine-core/jasmine.js',
-                    'public/bower_components/jasmine/lib/jasmine-core/jasmine-html.js',
-                    'public/bower_components/jasmine/lib/jasmine-core/boot.js',
-                    'public/bower_components/jquery/dist/jquery.min.js',
-                    'public/bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
-                    'public/bower_components/angular/angular.min.js',
-                    'public/bower_components/angular-resource/angular-resource.min.js',
-                    'public/bower_components/angular-route/angular-route.min.js',
-                    'public/bower_components/angular-cookies/angular-cookies.min.js',
-                    'public/bower_components/bootstrap/docs/assets/js/bootstrap.min.js',
-                    'public/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-                    'public/bower_components/angular-ui-sortable/sortable.min.js',
-                    'public/bower_components/angular-mocks/angular-mocks.js',
-                    'public/bower_components/ng-joyride/ng-joyride.js',
+                    'bower_components/jasmine/lib/jasmine-core/jasmine.js',
+                    'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
+                    'bower_components/angular/angular.min.js',
+                    'bower_components/angular-resource/angular-resource.min.js',
+                    'bower_components/angular-route/angular-route.min.js',
+                    'bower_components/angular-cookies/angular-cookies.min.js',
+                    'bower_components/bootstrap/docs/assets/js/bootstrap.min.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+                    'bower_components/angular-ui-sortable/sortable.min.js',
+                    'bower_components/angular-mocks/angular-mocks.js',
+                    'bower_components/ng-joyride/ng-joyride.js',
                     'public/html/**/*.js'
                 ],
                 options: {
