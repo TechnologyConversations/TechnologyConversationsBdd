@@ -13,15 +13,24 @@ require('gulp-grunt')(gulp);
 gulp.task('default', ['test', 'js']);
 
 gulp.task('js', function() {
-   gulp.src(['public/html/index.js', 'public/html/**/*.js'])
-       .pipe(jshint())
-       .pipe(jshint.reporter('jshint-stylish'))
-       .pipe(sourcemaps.init())
-       .pipe(concat('app.js'))
-       .pipe(ngAnnotate())
-       .pipe(uglify())
-       .pipe(sourcemaps.write())
-       .pipe(gulp.dest('public'));
+    gulp.src(['public/html/index.js', 'public/html/**/*.js'])
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+//        .pipe(sourcemaps.init())
+        .pipe(concat('app.js'))
+        .pipe(ngAnnotate())
+        .pipe(uglify())
+//        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('public'));
+});
+
+gulp.task('libs', function() {
+    gulp.src(['bower_components/ng-joyride/ng-joyride.js'])
+//        .pipe(sourcemaps.init())
+        .pipe(concat('libs.js'))
+        .pipe(uglify())
+//        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('public'));
 });
 
 gulp.task('less', function() {
