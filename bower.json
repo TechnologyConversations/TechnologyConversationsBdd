@@ -17,5 +17,8 @@
     "angular-ui-sortable": "0.12.x",
     "jasmine": "2.0.x",
     "ng-joyride": "~0.1.7"
+  },
+  "resolutions": {
+    "jquery": "2.1.x"
   }
 }
