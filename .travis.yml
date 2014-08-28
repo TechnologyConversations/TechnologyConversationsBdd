@@ -9,6 +9,10 @@ notifications:
 
 before_install: npm install -g grunt-cli
 
+before_script:
+  - npm install -g bower
+  - bower install
+
 script:
   - sbt ++2.10.3 test
   - npm test
