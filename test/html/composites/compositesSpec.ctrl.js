@@ -299,7 +299,7 @@ describe('compositesModule', function() {
 
     describe('compositeClassesCtrl controller', function() {
 
-        var scope, modalInstance, form, service;
+        var scope, modalInstance, form, service, location;
         var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
         var className = 'WebStepsComposites';
         var compositeClasses = [
@@ -311,7 +311,8 @@ describe('compositesModule', function() {
         var compositeStepText = 'Given this is my composite';
 
         beforeEach(
-            inject(function($rootScope, $compile, $injector, $controller, $http, TcBddService) {
+            inject(function($rootScope, $compile, $injector, $controller, $http, $location, TcBddService) {
+                location = $location;
                 service = TcBddService;
                 scope = $rootScope.$new();
                 modalInstance = {
@@ -321,20 +322,12 @@ describe('compositesModule', function() {
                     $scope: scope,
                     $http: $http,
                     $modalInstance: modalInstance,
+                    $location: location,
                     compositeClasses: compositeClasses,
                     compositeStepText: compositeStepText});
                 form = $compile('<form>')(scope);
             })
         );
-
-        describe('by default', function() {
-            it('should put compositeClasses data to the scope', function() {
-                expect(scope.compositeClasses).toBe(compositeClasses);
-            });
-            it('should put compositeStepText data to the scope', function() {
-                expect(scope.compositeStepText).toBe(compositeStepText);
-            });
-        });
 
         describe('compositeClassUrl function', function() {
             it('should return composites URL', function() {
@@ -381,23 +374,6 @@ describe('compositesModule', function() {
             });
         });
 
-        describe('onFinishJoyRide function', function() {
-            it('should call onFinishJoyRide service function', function() {
-                spyOn(service, 'onFinishJoyRide');
-                scope.onFinishJoyRide();
-                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
-            });
-        });
-
-        describe('startJoyRide function', function() {
-            it('should call startJoyRide service function', function() {
-                var id = 'id';
-                spyOn(service, 'startJoyRide');
-                scope.startJoyRide(id);
-                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
-            });
-        });
-
         describe('cssClass function', function() {
             it('should be cssClass service', function() {
                 expect(service.cssClass).toBe(service.cssClass);
@@ -408,6 +384,37 @@ describe('compositesModule', function() {
             it('should call the close function of the modal', function() {
                 scope.close();
                 expect(modalInstance.close).toHaveBeenCalled();
+            });
+        });
+
+         describe('onLoad function', function() {
+            it('should put compositeClasses data to the scope', function() {
+                expect(scope.compositeClasses).toBe(compositeClasses);
+            });
+            it('should put compositeStepText data to the scope', function() {
+                expect(scope.compositeStepText).toBe(compositeStepText);
+            });
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
+            });
+         });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service', function() {
+                var id = 'ID';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
             });
         });
 

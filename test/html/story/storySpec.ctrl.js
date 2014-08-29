@@ -528,8 +528,8 @@ describe('storyModule', function() {
         });
 
         describe('startJoyRide function', function() {
-            var id = 'ID';
             it('should call startJoyRide service', function() {
+                var id = 'ID';
                 spyOn(service, 'startJoyRide');
                 scope.startJoyRide(id);
                 expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);

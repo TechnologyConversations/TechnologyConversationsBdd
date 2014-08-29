@@ -112,9 +112,13 @@ angular.module('compositesModule', [])
             }
         };
     })
-    .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, compositeClasses, compositeStepText, TcBddService) {
-        $scope.compositeClasses = compositeClasses;
-        $scope.compositeStepText = compositeStepText;
+    .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, $location, compositeClasses, compositeStepText, TcBddService) {
+        $scope.onLoad = function() {
+            $scope.compositeClasses = compositeClasses;
+            $scope.compositeStepText = compositeStepText;
+            $scope.data = {class: ''};
+            TcBddService.startJoyRideOnLoad($location, $scope);
+        };
         $scope.close = function() {
             $modalInstance.close();
         };
@@ -150,11 +154,11 @@ angular.module('compositesModule', [])
         };
         $scope.classNamePattern = TcBddService.classNamePattern;
         $scope.cssClass = TcBddService.cssClass;
-        $scope.data = {class: ''};
         $scope.onFinishJoyRide = function() {
             TcBddService.onFinishJoyRide($scope);
         };
         $scope.startJoyRide = function(id) {
             TcBddService.startJoyRide(id, $scope);
         };
+        $scope.onLoad();
     });
