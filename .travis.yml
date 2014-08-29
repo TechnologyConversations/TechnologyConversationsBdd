@@ -22,3 +22,4 @@ deploy:
   provider: heroku
   api_key: 5a228e77-5def-4704-8a99-f6f29f23af3a
   app: bddassistantdemo
+  strategy: git
