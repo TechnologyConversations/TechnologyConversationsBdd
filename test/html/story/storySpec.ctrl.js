@@ -759,8 +759,7 @@ describe('storyModule', function() {
             it('should call openDir with tcbdd and login', function() {
                 spyOn(scope, 'openDir');
                 scope.openDirsTour(true);
-                expect(scope.openDir).toHaveBeenCalledWith('tcbdd');
-                expect(scope.openDir).toHaveBeenCalledWith('login');
+                expect(scope.openDir).toHaveBeenCalledWith('tcbdd/login');
             });
         });
 
