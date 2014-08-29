@@ -21,7 +21,7 @@ trait BddFile {
       ""
     }
     else {
-      val fileSource = Source.fromFile(fullPath)
+      val fileSource = Source.fromFile(fullPath, "UTF-8")
       val stringSource = fileSource.mkString
       fileSource.close()
       stringSource
