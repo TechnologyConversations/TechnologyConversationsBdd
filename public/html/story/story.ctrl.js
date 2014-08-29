@@ -244,11 +244,12 @@ angular.module('storyModule', [])
         $scope.openErrorModal = function() {
             TcBddService.openErrorModal();
         };
-        $scope.changeScenarioToggle = function(scenario) {
+        $scope.changeScenarioToggle = function(scenario, expanded) {
             var found = false;
             $scope.scenarioToggles.forEach(function(toggle) {
                 if (toggle.scenario === scenario) {
-                    toggle.expanded = !toggle.expanded;
+                    var newExpanded = (expanded === undefined) ? !toggle.expanded : expanded;
+                    toggle.expanded = newExpanded;
                     found = true;
                 }
             });

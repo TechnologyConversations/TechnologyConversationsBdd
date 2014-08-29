@@ -164,7 +164,7 @@
                                 <span class="input-group-addon" ng-click="changeScenarioToggle(scenarioIndex)">
                                     Scenario
                                 </span>
-                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true">
+                                <input id="scenario{{scenarioIndex + 1}}Title" name="scenarioTitle" class="form-control" type="text" ng-model="scenario.title" required="true" ng-focus="changeScenarioToggle(scenarioIndex, true)">
                                 <span class="input-group-btn">
                                     <button id="scenario{{scenarioIndex + 1}}Panel" class="btn btn-info" ng-click="changeScenarioToggle(scenarioIndex)" type="button">
                                         <span class="glyphicon glyphicon-chevron-down"></span>

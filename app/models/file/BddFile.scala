@@ -1,6 +1,8 @@
 package models.file
 
 import java.io.{PrintWriter, File}
+import org.apache.commons.io.FileUtils
+
 import scala.io.Source
 import scalax.file.Path
 
@@ -19,7 +21,7 @@ trait BddFile {
       ""
     }
     else {
-      val fileSource = Source.fromFile(fullPath)
+      val fileSource = Source.fromFile(fullPath, "UTF-8")
       val stringSource = fileSource.mkString
       fileSource.close()
       stringSource
@@ -39,9 +41,10 @@ trait BddFile {
       if (parentDir != null) {
         parentDir.mkdirs()
       }
-      val writer = new PrintWriter(file)
-      writer.write(content)
-      writer.close()
+      FileUtils.writeStringToFile(file, content, "UTF-8")
+//      val writer = new PrintWriter(file)
+//      writer.write(content)
+//      writer.close()
       true
     }
   }

@@ -528,8 +528,8 @@ describe('storyModule', function() {
         });
 
         describe('startJoyRide function', function() {
-            var id = 'ID';
             it('should call startJoyRide service', function() {
+                var id = 'ID';
                 spyOn(service, 'startJoyRide');
                 scope.startJoyRide(id);
                 expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
@@ -574,6 +574,11 @@ describe('storyModule', function() {
                 scope.changeScenarioToggle(3);
                 expect(scope.scenarioToggles.length).toEqual(1);
                 expect(scope.scenarioToggles).toEqual([{scenario: 3, expanded: true}]);
+            });
+            it('should set expanded to the value of the second argument if defined', function() {
+                scope.scenarioToggles = [{scenario: 3, expanded: false}];
+                scope.changeScenarioToggle(3, false);
+                expect(scope.scenarioToggles).toEqual([{scenario: 3, expanded: false}]);
             });
         });
 

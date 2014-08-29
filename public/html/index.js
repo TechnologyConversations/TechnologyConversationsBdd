@@ -7,7 +7,6 @@ angular.module('storiesModule', [
     'bodyModule',
     'topMenuModule',
     'storyModule',
-    'compositeClassesModule',
     'compositesModule',
     'runnerModule',
     'loginModule',
@@ -17,7 +16,7 @@ angular.module('storiesModule', [
         this.openCompositeClass = function(compositeStepText) {
             var self = this;
             $modal.open({
-                templateUrl: '/assets/html/compositeClasses/compositeClasses.tmpl.html',
+                templateUrl: '/assets/html/composites/compositeClasses.tmpl.html',
                 controller: 'compositeClassesCtrl',
                 resolve: {
                     compositeClasses: function($route, $http, $modal) {

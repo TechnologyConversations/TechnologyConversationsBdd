@@ -1,8 +1,10 @@
 describe('compositesModule', function() {
 
-    beforeEach(module('ngCookies', 'compositesModule', 'storiesModule'));
+    beforeEach(module('compositesModule', 'storiesModule'));
 
     describe('compositesCtrl controller', function() {
+
+        beforeEach(module('ngCookies'));
 
         var scope, form, httpBackend, modal, location, cookieStore, composite, anotherComposite;
         var service;
@@ -290,6 +292,129 @@ describe('compositesModule', function() {
             it('should return Update Composites when composites class exists', function() {
                 scope.compositesClass.isNew = false;
                 expect(scope.saveCompositesText()).toEqual('Update Composites');
+            });
+        });
+
+    });
+
+    describe('compositeClassesCtrl controller', function() {
+
+        var scope, modalInstance, form, service, location;
+        var packageName = 'compositesClass.com.technologyconversations.bdd.steps';
+        var className = 'WebStepsComposites';
+        var compositeClasses = [
+            {
+                package: packageName,
+                class: className
+            }
+        ];
+        var compositeStepText = 'Given this is my composite';
+
+        beforeEach(
+            inject(function($rootScope, $compile, $injector, $controller, $http, $location, TcBddService) {
+                location = $location;
+                service = TcBddService;
+                scope = $rootScope.$new();
+                modalInstance = {
+                    close: jasmine.createSpy('modalInstance.close')
+                };
+                $controller("compositeClassesCtrl", {
+                    $scope: scope,
+                    $http: $http,
+                    $modalInstance: modalInstance,
+                    $location: location,
+                    compositeClasses: compositeClasses,
+                    compositeStepText: compositeStepText});
+                form = $compile('<form>')(scope);
+            })
+        );
+
+        describe('compositeClassUrl function', function() {
+            it('should return composites URL', function() {
+                scope.compositeStepText = undefined;
+                var url = scope.compositeClassUrl(packageName, className);
+                expect(url).toEqual('/page/composites/' + packageName + '.' + className);
+            });
+            it('should add compositeStepText to the URL', function() {
+                var url = scope.compositeClassUrl(packageName, className);
+                expect(url).toEqual('/page/composites/' + packageName + '.' + className + '?stepText=' + compositeStepText);
+            });
+            it('should ignore package if empty', function() {
+                var url = scope.compositeClassUrl('', className);
+                expect(url).toEqual('/page/composites/' + className + '?stepText=' + compositeStepText);
+            });
+            it('should remove directory', function() {
+                var url = scope.compositeClassUrl('', 'composites/something.groovy');
+                expect(url).toEqual('/page/composites/something.groovy?stepText=' + compositeStepText);
+            });
+            it('should remove windows directory', function() {
+                var url = scope.compositeClassUrl('', 'composites\\something.groovy');
+                expect(url).toEqual('/page/composites/something.groovy?stepText=' + compositeStepText);
+            });
+        });
+
+        describe('compositeClassText function', function() {
+            it('should remove extension', function() {
+                var text = scope.compositeClassText('something.groovy');
+                expect(text).toEqual('something');
+            });
+            it('should remove directory', function() {
+                var text = scope.compositeClassText('composites/something');
+                expect(text).toEqual('something');
+            });
+            it('should remove windows directory', function() {
+                var text = scope.compositeClassText('composites\\something');
+                expect(text).toEqual('something');
+            });
+        });
+
+        describe('classNamePattern function', function() {
+            it('should return common function', function() {
+                expect(scope.classNamePattern().toString()).toBe(service.classNamePattern().toString());
+            });
+        });
+
+        describe('cssClass function', function() {
+            it('should be cssClass service', function() {
+                expect(service.cssClass).toBe(service.cssClass);
+            });
+        });
+
+        describe('close function', function() {
+            it('should call the close function of the modal', function() {
+                scope.close();
+                expect(modalInstance.close).toHaveBeenCalled();
+            });
+        });
+
+         describe('onLoad function', function() {
+            it('should put compositeClasses data to the scope', function() {
+                expect(scope.compositeClasses).toBe(compositeClasses);
+            });
+            it('should put compositeStepText data to the scope', function() {
+                expect(scope.compositeStepText).toBe(compositeStepText);
+            });
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
+            });
+         });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service', function() {
+                var id = 'ID';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
             });
         });
 
