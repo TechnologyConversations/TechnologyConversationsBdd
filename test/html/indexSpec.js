@@ -372,9 +372,9 @@ describe('storiesModule controllers', function() {
         });
 
         describe('startJoyRideOnLoad function', function() {
+            var id = 'navigation';
             it('should call startJoyRide when search contains tour', function() {
-                var id = 'navigation';
-                location.search('tour', 'navigation');
+                location.search('tour', id);
                 spyOn(service, 'startJoyRide');
                 service.startJoyRideOnLoad(location, scope);
                 expect(service.startJoyRide).toHaveBeenCalledWith('tour_' + id, scope);
@@ -383,6 +383,12 @@ describe('storiesModule controllers', function() {
                 spyOn(service, 'startJoyRide');
                 service.startJoyRideOnLoad(location, scope);
                 expect(service.startJoyRide).not.toHaveBeenCalled();
+            });
+            it('should remove tour from the search', function() {
+                location.search('tour', id);
+                spyOn(service, 'startJoyRide');
+                service.startJoyRideOnLoad(location, scope);
+                expect(location.search().tour).toEqual(undefined);
             });
         });
 

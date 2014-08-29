@@ -190,6 +190,7 @@ angular.module('storiesModule', [
         this.startJoyRideOnLoad = function(location, scope) {
             if (location.search().tour !== undefined) {
                 this.startJoyRide('tour_' + location.search().tour, scope);
+                location.search('tour', undefined);
             }
         };
     })
