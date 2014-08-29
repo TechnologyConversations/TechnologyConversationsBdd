@@ -127,8 +127,11 @@ angular.module('runnerModule', [])
         };
         $scope.onLoad();
     })
-    .controller('runnerSelectorCtrl', function($scope, $http, $modal, $modalInstance, TcBddService) {
-        $scope.files = {dirs: [], stories: []};
+    .controller('runnerSelectorCtrl', function($scope, $http, $modal, $modalInstance, $location, TcBddService) {
+        $scope.onLoad = function() {
+            $scope.files = {dirs: [], stories: []};
+            TcBddService.startJoyRideOnLoad($location, $scope);
+        };
         TcBddService.getStories($scope, '');
         $scope.openDir = function(path) {
             TcBddService.openDir($scope, path);
@@ -175,6 +178,7 @@ angular.module('runnerModule', [])
         $scope.startJoyRide = function(id) {
             TcBddService.startJoyRide(id, $scope);
         };
+        $scope.onLoad();
     })
     .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi, TcBddService, features) {
         $scope.onLoad = function() {

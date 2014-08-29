@@ -277,13 +277,14 @@ describe('runnerModule', function() {
 
     describe('runnerSelectorCtrl controller', function() {
 
-        var httpBackend, modal, modalInstance, service;
+        var httpBackend, modal, modalInstance, service, location;
         var filesWithoutPath = {status: 'OK', files: 'filesWithoutPath'};
 
 
         beforeEach(
-            inject(function($controller, $httpBackend, $http, TcBddService) {
+            inject(function($controller, $httpBackend, $http, $location, TcBddService) {
                 service = TcBddService;
+                location = $location;
                 modalInstance = {
                     dismiss: jasmine.createSpy('modalInstance.dismiss'),
                     close: jasmine.createSpy('modalInstance.close')
@@ -292,19 +293,25 @@ describe('runnerModule', function() {
                     $scope: scope,
                     $http: $http,
                     $modal: modal,
-                    $modalInstance: modalInstance
+                    $modalInstance: modalInstance,
+                    $location: location
                 });
                 httpBackend = $httpBackend;
                 httpBackend.expectGET('/stories/list.json?path=').respond(filesWithoutPath);
             })
         );
 
-        describe('by default', function() {
-            it('dirs should be set to an empty array', function() {
+        describe('onLoad function', function() {
+            it('should set dirs to an empty array', function() {
                 expect(scope.files.dirs.length).toEqual(0);
             });
-            it('stories should be set to an empty array', function() {
+            it('should set stories to an empty array', function() {
                 expect(scope.files.stories.length).toEqual(0);
+            });
+            it('should call startJoyRideOnLoad service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
             });
         });
 
@@ -431,7 +438,7 @@ describe('runnerModule', function() {
         });
 
         describe('onFinishJoyRide function', function() {
-            it('should call onFinishJoyRide service function', function() {
+            it('should call onFinishJoyRide service', function() {
                 spyOn(service, 'onFinishJoyRide');
                 scope.onFinishJoyRide();
                 expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
@@ -439,8 +446,8 @@ describe('runnerModule', function() {
         });
 
         describe('startJoyRide function', function() {
-            it('should call startJoyRide service function', function() {
-                var id = 'id';
+            it('should call startJoyRide service', function() {
+                var id = 'ID';
                 spyOn(service, 'startJoyRide');
                 scope.startJoyRide(id);
                 expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);

@@ -71,6 +71,9 @@ describe('configModule controllers', function() {
             it('should use the controller runnerCtrl', function() {
                 expect(route.routes[path].controller).toBe('runnerCtrl');
             });
+            it('should set reloadOnSearch to false', function() {
+                expect(route.routes[path].reloadOnSearch).toBe(false);
+            });
         });
 
         describe('/page/login page', function() {

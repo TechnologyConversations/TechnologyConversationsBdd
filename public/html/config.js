@@ -82,6 +82,7 @@ angular.module('configModule', [])
             .when('/page/runner/', {
                 templateUrl: '/assets/html/runner/runner.tmpl.html',
                 controller: 'runnerCtrl',
+                reloadOnSearch: false,
                 // TODO Test
                 resolve: {
                     data: function($route) {

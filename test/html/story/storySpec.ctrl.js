@@ -452,7 +452,7 @@ describe('storyModule', function() {
                 scope.onLoad();
                 expect(scope.openRunnerParams).not.toHaveBeenCalled();
             });
-            it('should call startJoyRide service', function() {
+            it('should call startJoyRideOnLoad service', function() {
                 spyOn(service, 'startJoyRideOnLoad');
                 scope.onLoad();
                 expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
