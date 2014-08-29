@@ -575,6 +575,11 @@ describe('storyModule', function() {
                 expect(scope.scenarioToggles.length).toEqual(1);
                 expect(scope.scenarioToggles).toEqual([{scenario: 3, expanded: true}]);
             });
+            it('should set expanded to the value of the second argument if defined', function() {
+                scope.scenarioToggles = [{scenario: 3, expanded: false}];
+                scope.changeScenarioToggle(3, false);
+                expect(scope.scenarioToggles).toEqual([{scenario: 3, expanded: false}]);
+            });
         });
 
         describe('getScenarioToggle function', function() {
