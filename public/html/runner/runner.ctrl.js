@@ -180,10 +180,11 @@ angular.module('runnerModule', [])
         };
         $scope.onLoad();
     })
-    .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, data, showGetApi, TcBddService, features) {
+    .controller('runnerParamsCtrl', function ($scope, $modalInstance, $cookieStore, $location, data, showGetApi, TcBddService, features) {
         $scope.onLoad = function() {
             $scope.paramArray = [];
             $scope.features = features;
+            TcBddService.startJoyRideOnLoad($location, $scope);
         };
         $scope.classes = data.classes;
         $scope.setParams = function() {

@@ -458,7 +458,7 @@ describe('runnerModule', function() {
 
     describe('runnerParamsCtrl controller', function() {
 
-        var modalInstance, data, cookieStore, scope, clazz, classes, value;
+        var modalInstance, data, cookieStore, scope, clazz, classes, value, location;
         var paramWithValue, paramWithoutValue;
         var runStoryFeature = {
             displayed: true,
@@ -468,9 +468,10 @@ describe('runnerModule', function() {
         var features = {runStory: runStoryFeature};
 
         beforeEach(
-            inject(function($rootScope, $injector, $controller) {
+            inject(function($rootScope, $injector, $controller, $location) {
                 scope = $rootScope.$new();
                 value = 'myValue';
+                location = $location;
                 paramWithValue = {key: 'key1', value: value};
                 paramWithoutValue = {key: 'key2', value: ''};
                 clazz = {
@@ -488,6 +489,7 @@ describe('runnerModule', function() {
                     $scope: scope ,
                     $modalInstance: modalInstance,
                     $cookieStore: cookieStore,
+                    $location: location,
                     data: data,
                     showGetApi: true,
                     features: features
@@ -501,6 +503,11 @@ describe('runnerModule', function() {
             });
             it('should set features to the controller argument', function() {
                 expect(scope.features).toEqual(features);;
+            });
+            it('should call startJoyRideOnLoad service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
             });
         });
 
@@ -595,7 +602,7 @@ describe('runnerModule', function() {
         });
 
         describe('onFinishJoyRide function', function() {
-            it('should call onFinishJoyRide service function', function() {
+            it('should call onFinishJoyRide service', function() {
                 spyOn(service, 'onFinishJoyRide');
                 scope.onFinishJoyRide();
                 expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
@@ -603,8 +610,8 @@ describe('runnerModule', function() {
         });
 
         describe('startJoyRide function', function() {
-            it('should call startJoyRide service function', function() {
-                var id = 'id';
+            it('should call startJoyRide service', function() {
+                var id = 'ID';
                 spyOn(service, 'startJoyRide');
                 scope.startJoyRide(id);
                 expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
