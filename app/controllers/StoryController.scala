@@ -84,7 +84,7 @@ object StoryController extends Controller {
     if (jsonOption.isEmpty) {
       noJsonResult
     } else if (pathOption.isEmpty) {
-      noResult("path")
+      BadRequest(toJson(error = Option("Path was not found"), message = Option("Path can not be empty")))
     } else {
       val path = pathOption.get
       val story = Story(storiesDir, path)
