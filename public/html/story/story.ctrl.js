@@ -280,8 +280,11 @@ angular.module('storyModule', [])
         $scope.onLoad();
     })
     .controller('storiesCtrl', function($scope, $http, $modal, $modalInstance, $location, $q, TcBddService, features) {
-        TcBddService.getStories($scope, '');
-        $scope.features = features;
+        $scope.onLoad = function() {
+            $scope.features = features;
+            TcBddService.getStories($scope, '');
+            TcBddService.startJoyRideOnLoad($location, $scope);
+        };
         $scope.openDir = function(path) {
             TcBddService.openDir($scope, path);
         };
@@ -318,4 +321,8 @@ angular.module('storyModule', [])
         $scope.startJoyRide = function(id) {
             TcBddService.startJoyRide(id, $scope);
         };
+        $scope.openDirsTour = function(flag) {
+            $scope.openDir('tcbdd/login');
+        };
+        $scope.onLoad();
     });
