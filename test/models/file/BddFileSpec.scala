@@ -47,21 +47,21 @@ class BddFileSpec extends Specification with PathMatchers {
   "BddFile#save" should {
 
     "save content of the story to the new file" in new BddFileMock {
-      save(fullPath, expected, overwrite = false) must beTrue
+      saveFile(fullPath, expected, overwrite = false) must beTrue
       fullPath must beAnExistingPath
       fullPath must beAFilePath
       Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
     "NOT overwrite old content of the file" in new BddFileMock {
-      save(fullPath, expected, overwrite = false) must beTrue
-      save(fullPath, "something else", overwrite = false) must beFalse
+      saveFile(fullPath, expected, overwrite = false) must beTrue
+      saveFile(fullPath, "something else", overwrite = false) must beFalse
       Source.fromFile(fullPath).mkString must be equalTo expected
     }
 
     "overwrite old content of the file" in new BddFileMock {
-      save(fullPath, "something else", overwrite = false) must beTrue
-      save(fullPath, expected, overwrite = true) must beTrue
+      saveFile(fullPath, "something else", overwrite = false) must beTrue
+      saveFile(fullPath, expected, overwrite = true) must beTrue
       Source.fromFile(fullPath).mkString must be equalTo expected
     }
 

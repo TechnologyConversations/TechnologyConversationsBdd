@@ -1,9 +1,8 @@
 package controllers
 
-import play.api.mvc.Results._
-import play.api.mvc._
 import models.{Story, StoryList}
 import play.api.libs.json.{JsValue, Json}
+import play.api.mvc._
 
 import scala.io.Source
 
@@ -88,7 +87,8 @@ object StoryController extends Controller {
     } else {
       val path = pathOption.get
       val story = Story(storiesDir, path)
-      val success = story.save(s"$storiesDir/$path", story.toText(json), put)
+      // TODO Switch to Story#saveStory
+      val success = story.saveFile(s"$storiesDir/$path", story.toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {

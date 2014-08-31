@@ -32,7 +32,7 @@ trait BddFile {
     new File(s"$dir/$originalPath").renameTo(new File(fullPath))
   }
 
-  def save(filePath: String, content: String, overwrite: Boolean): Boolean = {
+  def saveFile(filePath: String, content: String, overwrite: Boolean): Boolean = {
     val file = new File(filePath)
     if (file.exists && !overwrite) {
       false
