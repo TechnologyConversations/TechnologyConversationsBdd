@@ -1,5 +1,6 @@
 package controllers
 
+import models.file.BddFile
 import models.{Story, StoryList}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
@@ -86,7 +87,7 @@ object StoryController extends Controller {
       BadRequest(toJson(error = Option("Path was not found"), message = Option("Path can not be empty")))
     } else {
       val path = pathOption.get
-      val story = Story(storiesDir, path)
+      val story = Story(dir = storiesDir, path = path, bddFile = Option(BddFile()))
       // TODO Switch to Story#saveStory
       val success = story.saveFile(s"$storiesDir/$path", story.toText(json), put)
       if (success) {

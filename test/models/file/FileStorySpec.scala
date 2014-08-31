@@ -7,10 +7,10 @@ class FileStorySpec extends Specification {
   "FileStory" should {
 
     "extend BddStory" in {
-      new FileStory {
+      new FileTraitStory {
         override val path: String = ""
         override val dir: String = ""
-      } must beAnInstanceOf[BddFile]
+      } must beAnInstanceOf[BddFileTrait]
     }
 
   }

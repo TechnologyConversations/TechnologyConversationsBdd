@@ -1,181 +1,66 @@
 package models.file
 
-import org.specs2.mutable.{After, Specification}
 import org.specs2.matcher.PathMatchers
-import scala.io.Source
-import java.io.{PrintWriter, File}
+import org.specs2.mock._
+import org.specs2.mutable.Specification
+import java.io.File
 
-class BddFileSpec extends Specification with PathMatchers {
+class BddFileSpec extends Specification with PathMatchers with Mockito {
 
-  var storyCounter = 0
+  "BddFile#saveFile" should {
 
-  "BddFile#content" should {
+    val content = "SOME CONTENT"
+    val file = mock[File]
 
-    "return content of the story" in new BddFileMock() {
-      val writer = new PrintWriter(new File(fullPath))
-      writer.write("This is mock content")
-      writer.close()
-      content must be equalTo "This is mock content"
+    "return false if file exists and should not be overridden" in {
+      val bddFile = spy(BddFile())
+      file.exists() returns true
+      val actual = bddFile.saveFile(file, content, overwrite = false)
+      actual must beFalse
     }
 
-    "return empty content if path is empty" in {
-      val bddFile = new BddFile {
-        override val dir: String = ""
-        override val path: String = ""
-      }
-      bddFile.content must be equalTo ""
+    "create parent dir if specified" in {
+      val bddFile = spy(BddFile())
+      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      val parentDir = mock[File]
+      file.exists() returns false
+      file.getParentFile returns parentDir
+      bddFile.saveFile(file, content, overwrite = false)
+      there was one(parentDir).mkdirs()
     }
 
-    "return empty content if path points to a file that does not exist" in {
-      val bddFile = new BddFile {
-        override val dir: String = "test"
-        override val path: String = "this_story_does_not_exist.story"
-      }
-      bddFile.content must be equalTo ""
+    "NOT create parent dir if NOT specified" in {
+      val bddFile = spy(BddFile())
+      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      val parentDir = mock[File]
+      file.exists() returns false
+      file.getParentFile returns null
+      bddFile.saveFile(file, content, overwrite = false)
+      there was no(parentDir).mkdirs()
     }
 
-    "return empty content if path points to a directory" in {
-      val bddFile = new BddFile {
-        override val dir: String = "test"
-        override val path: String = "stories"
-      }
-      bddFile.content must be equalTo ""
+    "return true when file does not exist" in {
+      val bddFile = spy(BddFile())
+      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      file.exists() returns false
+      val actual = bddFile.saveFile(file, content, overwrite = false)
+      actual must beTrue
     }
 
-  }
-
-  "BddFile#save" should {
-
-    "save content of the story to the new file" in new BddFileMock {
-      saveFile(fullPath, expected, overwrite = false) must beTrue
-      fullPath must beAnExistingPath
-      fullPath must beAFilePath
-      Source.fromFile(fullPath).mkString must be equalTo expected
+    "return true when file exist but should be overwritten" in {
+      val bddFile = spy(BddFile())
+      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      file.exists() returns true
+      val actual = bddFile.saveFile(file, content, overwrite = true)
+      actual must beTrue
     }
 
-    "NOT overwrite old content of the file" in new BddFileMock {
-      saveFile(fullPath, expected, overwrite = false) must beTrue
-      saveFile(fullPath, "something else", overwrite = false) must beFalse
-      Source.fromFile(fullPath).mkString must be equalTo expected
-    }
-
-    "overwrite old content of the file" in new BddFileMock {
-      saveFile(fullPath, "something else", overwrite = false) must beTrue
-      saveFile(fullPath, expected, overwrite = true) must beTrue
-      Source.fromFile(fullPath).mkString must be equalTo expected
-    }
-
-  }
-
-  "BddFile#createDirectory" should {
-
-    "create new directory" in new BddFileDirMock {
-      new File(fullPath).exists must beFalse
-      createDirectory()
-      fullPath must beAnExistingPath
-      fullPath must beADirectoryPath
-    }
-
-    "do nothing if directory already exists" in new BddFileDirMock {
-      new File(fullPath).exists must beFalse
-      for(i <- 1 to 3) {
-        createDirectory()
-        fullPath must beAnExistingPath
-        fullPath must beADirectoryPath
-      }
-    }
-
-  }
-
-  "BddFile#delete" should {
-
-    "delete the file" in new BddFileMock {
-      new File(fullPath).createNewFile()
-      fullPath must beAnExistingPath
-      fullPath must beAFilePath
-      delete(fullPath)
-      new File(fullPath).exists must beFalse
-    }
-
-    "delete the empty directory" in {
-      val story = new BddFile {
-        storyCounter += 1
-        override val dir = "test"
-        val path = s"stories/myTestDir$storyCounter"
-      }
-      val path = story.dir + "/" + story.path
-      new File(path).mkdir()
-
-      path must beAnExistingPath
-      path must beADirectoryPath
-      story.delete(story.fullPath)
-      new File(path).exists must beFalse
-    }
-
-    "delete the directory with files and sub directories" in {
-      val story = new BddFile {
-        storyCounter += 1
-        val dir = "test"
-        val path = s"stories/myTestDir$storyCounter"
-      }
-      val path = story.dir + "/" + story.path
-      new File(path).mkdir()
-      new File(s"$path/subDir").mkdir()
-      new File(s"$path/file1").createNewFile
-      new File(s"$path/file2").createNewFile
-      path must beAnExistingPath
-      path must beADirectoryPath
-      story.delete(story.fullPath)
-      new File(path).exists must beFalse
-    }
-
-  }
-
-  "BddFile#list" should {
-
-    val bddFile = new BddFile {
-      override val path: String = "jbehave/1394658780515"
-      override val dir: String = "test"
-    }
-
-    "return List instance" in {
-      bddFile.list() must beAnInstanceOf[List[String]]
-    }
-
-    "list all files recursively" in {
-      val path = bddFile.dir + "/" + bddFile.path
-      val expected = new File(path).listFiles.filter(_.isFile).length + new File(s"$path/view").listFiles.length
-      bddFile.list() must have size expected
-    }
-
-  }
-
-  trait BddFileMock extends BddFile with After {
-
-    storyCounter += 1
-    val dir = "test"
-    lazy val path = s"stories/temp_story$storyCounter.story"
-    val expected = "Some invented content"
-
-    delete(fullPath)
-
-    override def after = {
-      delete(fullPath)
-    }
-
-  }
-
-  trait BddFileDirMock extends BddFile with After {
-
-    storyCounter += 1
-    val dir = "test"
-    lazy val path = s"stories/temp_dir$storyCounter"
-    val expected = "Some invented content"
-
-    delete(fullPath)
-
-    override def after = {
-      delete(fullPath)
+    "call writeStringToFile" in {
+      val bddFile = spy(BddFile())
+      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      file.exists() returns true
+      bddFile.saveFile(file, content, overwrite = true)
+      there was one(bddFile).writeStringToFile(file, content)
     }
 
   }
