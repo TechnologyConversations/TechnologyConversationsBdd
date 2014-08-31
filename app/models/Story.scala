@@ -1,7 +1,5 @@
 package models
 
-import com.mongodb.casbah.MongoDB
-import com.mongodb.casbah.commons.MongoDBObject
 import models.db.BddDb
 import models.jbehave.JBehaveStory
 import models.file.{BddFile, FileTraitStory}
@@ -29,6 +27,7 @@ class Story(val dir: String = "",
 
 }
 
+// TODO Remove dir and path
 object Story {
 
   def apply(dir: String = "",

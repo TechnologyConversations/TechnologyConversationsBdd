@@ -4,6 +4,7 @@ import org.specs2.matcher.PathMatchers
 import org.specs2.mock._
 import org.specs2.mutable.Specification
 import java.io.File
+import org.mockito.Mockito.doNothing
 
 class BddFileSpec extends Specification with PathMatchers with Mockito {
 
@@ -21,7 +22,7 @@ class BddFileSpec extends Specification with PathMatchers with Mockito {
 
     "create parent dir if specified" in {
       val bddFile = spy(BddFile())
-      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      doNothing().when(bddFile).writeStringToFile(any[File], anyString)
       val parentDir = mock[File]
       file.exists() returns false
       file.getParentFile returns parentDir
@@ -31,7 +32,7 @@ class BddFileSpec extends Specification with PathMatchers with Mockito {
 
     "NOT create parent dir if NOT specified" in {
       val bddFile = spy(BddFile())
-      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      doNothing().when(bddFile).writeStringToFile(any[File], anyString)
       val parentDir = mock[File]
       file.exists() returns false
       file.getParentFile returns null
@@ -41,7 +42,7 @@ class BddFileSpec extends Specification with PathMatchers with Mockito {
 
     "return true when file does not exist" in {
       val bddFile = spy(BddFile())
-      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      doNothing().when(bddFile).writeStringToFile(any[File], anyString)
       file.exists() returns false
       val actual = bddFile.saveFile(file, content, overwrite = false)
       actual must beTrue
@@ -49,7 +50,7 @@ class BddFileSpec extends Specification with PathMatchers with Mockito {
 
     "return true when file exist but should be overwritten" in {
       val bddFile = spy(BddFile())
-      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      doNothing().when(bddFile).writeStringToFile(any[File], anyString)
       file.exists() returns true
       val actual = bddFile.saveFile(file, content, overwrite = true)
       actual must beTrue
@@ -57,7 +58,7 @@ class BddFileSpec extends Specification with PathMatchers with Mockito {
 
     "call writeStringToFile" in {
       val bddFile = spy(BddFile())
-      org.mockito.Mockito.doNothing().when(bddFile).writeStringToFile(any[File], anyString)
+      doNothing().when(bddFile).writeStringToFile(any[File], anyString)
       file.exists() returns true
       bddFile.saveFile(file, content, overwrite = true)
       there was one(bddFile).writeStringToFile(file, content)
