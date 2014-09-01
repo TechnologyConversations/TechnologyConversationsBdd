@@ -13,7 +13,6 @@ class Story(val dir: String = "",
             val bddDb: Option[BddDb] = Option.empty)
   extends JBehaveStory with FileTraitStory {
 
-  // TODO Add BddFile#saveFile from StoryController
   def saveStory(file: File, content: String, overwrite: Boolean): Boolean = {
     var dbSuccess = true
     var fileSuccess = true
