@@ -1,7 +1,5 @@
 package models
 
-import java.util.NoSuchElementException
-
 import models.db.BddDb
 import models.file.BddFile
 import org.specs2.mutable.Specification
@@ -11,6 +9,7 @@ import org.jbehave.core.model.{Narrative, Lifecycle}
 import models.jbehave.JBehaveStoryMock
 import org.specs2.mock._
 import java.io.File
+import com.mongodb.casbah.Imports._
 
 class StorySpec extends Specification with Mockito {
 
@@ -65,7 +64,7 @@ class StorySpec extends Specification with Mockito {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
       story.saveStory(file, content, overwrite)
-      there was one(bddDb).upsertStory()
+      there was one(bddDb).upsertStory(any[MongoDBObject], any[MongoDBObject])
     }
 
     "NOT call bddDb when empty" in {
@@ -77,7 +76,7 @@ class StorySpec extends Specification with Mockito {
     "should return false when upsertStory is false" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
-      bddDb.upsertStory() returns false
+      bddDb.upsertStory(any[MongoDBObject], any[MongoDBObject]) returns false
       story.saveStory(file, content, overwrite) must beFalse
     }
 
@@ -105,7 +104,7 @@ class StorySpec extends Specification with Mockito {
       val bddDb = mock[BddDb]
       val bddFile = mock[BddFile]
       val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
-      bddDb.upsertStory() returns true
+      bddDb.upsertStory(any[MongoDBObject], any[MongoDBObject]) returns true
       bddFile.saveFile(file, content, overwrite) returns true
       story.saveStory(file, content, overwrite) must beTrue
     }

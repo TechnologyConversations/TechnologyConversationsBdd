@@ -8,6 +8,7 @@ import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.io.CodeLocations;
+import org.jbehave.core.io.LoadFromRelativeFile;
 import org.jbehave.core.io.LoadFromURL;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
@@ -96,6 +97,8 @@ public class JBehaveRunner extends JUnitStories {
                         .withCrossReference(new CrossReference()))
                 .useStepMonitor(new SilentStepMonitor())
                 .useStoryLoader(new LoadFromURL())
+//                .useStoryLoader(new LoadFromRelativeFile())
+//                .useStoryLoader(new LoadFromClasspath(embeddableClass))
                 .useParameterControls(new ParameterControls().useDelimiterNamedParameters(true));
         EmbedderControls embedderControls = configuredEmbedder().embedderControls();
         embedderControls.useStoryTimeoutInSecs(storyTimeoutMinutes * secondsInMinute);

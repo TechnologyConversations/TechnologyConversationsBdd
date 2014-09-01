@@ -4,6 +4,7 @@ import models.db.BddDb
 import models.jbehave.JBehaveStory
 import models.file.{BddFile, FileTraitStory}
 import java.io.File
+import com.mongodb.casbah.Imports._
 
 // TODO Move methods from extended classes to objects set as constructor arguments
 // TODO Remove dir and path
@@ -17,7 +18,10 @@ class Story(val dir: String = "",
     var dbSuccess = true
     var fileSuccess = true
     if (bddDb.isDefined) {
-      dbSuccess = bddDb.get.upsertStory()
+      // Change to real objects
+      val query = MongoDBObject("_id" -> "MY_ID")
+      val update = MongoDBObject("key" -> "VALUE")
+      dbSuccess = bddDb.get.upsertStory(query, update)
     }
     if (bddFile.isDefined) {
       fileSuccess = bddFile.get.saveFile(file, content, overwrite)
