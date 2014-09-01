@@ -3,12 +3,14 @@ package models
 import java.util.NoSuchElementException
 
 import models.db.BddDb
+import models.file.BddFile
 import org.specs2.mutable.Specification
 import scala.Predef._
 import play.api.libs.json.Json
 import org.jbehave.core.model.{Narrative, Lifecycle}
 import models.jbehave.JBehaveStoryMock
 import org.specs2.mock._
+import java.io.File
 
 class StorySpec extends Specification with Mockito {
 
@@ -55,30 +57,57 @@ class StorySpec extends Specification with Mockito {
 
   "Story#saveStory" should {
 
+    val file = mock[File]
+    val content = "THIS IS CONTENT"
+    val overwrite = true
+
     "call upsertStory" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
-      story.saveStory()
+      story.saveStory(file, content, overwrite)
       there was one(bddDb).upsertStory()
     }
 
-    "NOT throw exception when bddDb is empty" in {
-      val story = new Story(bddDb = Option.empty)
-      story.saveStory() must not(throwA[NoSuchElementException])
+    "NOT call bddDb when empty" in {
+      val bddDb = mock[Option[BddDb]]
+      new Story(bddDb = bddDb)
+      there was no(bddDb).get
     }
 
     "should return false when upsertStory is false" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
       bddDb.upsertStory() returns false
-      story.saveStory() must beFalse
+      story.saveStory(file, content, overwrite) must beFalse
     }
 
-    "should return true when upsertStory is true" in {
+    "call saveFile" in {
+      val bddFile = mock[BddFile]
+      val story = new Story(bddFile = Option(bddFile))
+      story.saveStory(file, content, overwrite)
+      there was one(bddFile).saveFile(file, content, overwrite = true)
+    }
+
+    "NOT call bddFile when empty" in {
+      val bddFile = mock[Option[BddFile]]
+      new Story(bddFile = bddFile)
+      there was no(bddFile).get
+    }
+
+    "should return false when saveFile is false" in {
+      val bddFile = mock[BddFile]
+      val story = new Story(bddFile = Option(bddFile))
+      bddFile.saveFile(file, content, overwrite) returns false
+      story.saveStory(file, content, overwrite) must beFalse
+    }
+
+    "should return true when upsertStory and saveFile are true" in {
       val bddDb = mock[BddDb]
-      val story = new Story(bddDb = Option(bddDb))
+      val bddFile = mock[BddFile]
+      val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
       bddDb.upsertStory() returns true
-      story.saveStory() must beTrue
+      bddFile.saveFile(file, content, overwrite) returns true
+      story.saveStory(file, content, overwrite) must beTrue
     }
 
   }

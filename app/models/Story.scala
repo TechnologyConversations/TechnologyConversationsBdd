@@ -3,6 +3,7 @@ package models
 import models.db.BddDb
 import models.jbehave.JBehaveStory
 import models.file.{BddFile, FileTraitStory}
+import java.io.File
 
 // TODO Move extended classes to constructor arguments
 // TODO Remove dir and path
@@ -13,16 +14,16 @@ class Story(val dir: String = "",
   extends JBehaveStory with FileTraitStory {
 
   // TODO Add BddFile#saveFile from StoryController
-  def saveStory(): Boolean = {
+  def saveStory(file: File, content: String, overwrite: Boolean): Boolean = {
     var dbSuccess = true
-//    var fileSuccess = true
+    var fileSuccess = true
     if (bddDb.isDefined) {
       dbSuccess = bddDb.get.upsertStory()
     }
-//    if (bddFile.isDefined) {
-//      fileSuccess = bddFile.get.saveFile()
-//    }
-    dbSuccess
+    if (bddFile.isDefined) {
+      fileSuccess = bddFile.get.saveFile(file, content, overwrite)
+    }
+    dbSuccess && fileSuccess
   }
 
 }
