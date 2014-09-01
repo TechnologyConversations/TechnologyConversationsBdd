@@ -65,40 +65,6 @@ describe('bodyModule', function() {
             });
         });
 
-        describe('startJoyRide function', function() {
-            var id = 'ID';
-            it('should call startJoyRide service', function() {
-                spyOn(service, 'startJoyRide');
-                scope.startJoyRide(id);
-                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
-            });
-
-        });
-
-        describe('onFinishJoyRide function', function() {
-            it('should call onFinishJoyRide service', function() {
-                spyOn(service, 'onFinishJoyRide');
-                scope.onFinishJoyRide();
-                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
-            });
-
-        });
-
-        describe('startJoyRideOnLoad function', function() {
-            it('should call startJoyRide when search contains tour', function() {
-                var id = 'navigation';
-                location.search('tour', 'navigation');
-                spyOn(scope, 'startJoyRide');
-                scope.startJoyRideOnLoad();
-                expect(scope.startJoyRide).toHaveBeenCalledWith('tour_' + id);
-            });
-            it('should not call startJoyRide when search does NOT contain tour', function() {
-                spyOn(scope, 'startJoyRide');
-                scope.startJoyRideOnLoad();
-                expect(scope.startJoyRide).not.toHaveBeenCalled();
-            });
-        });
-
         describe('openStory function', function() {
             it('should call open on modal', function() {
                 scope.openStory();

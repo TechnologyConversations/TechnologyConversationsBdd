@@ -1,16 +1,5 @@
 angular.module('bodyModule', ['ngJoyRide'])
     .controller('bodyCtrl', function ($scope, $http, $modal, $location, TcBddService, $rootScope) {
-        $scope.onFinishJoyRide = function() {
-            TcBddService.onFinishJoyRide($scope);
-        };
-        $scope.startJoyRide = function(id) {
-            TcBddService.startJoyRide(id, $scope);
-        };
-        $scope.startJoyRideOnLoad = function() {
-            if ($location.search().tour !== undefined) {
-                $scope.startJoyRide('tour_' + $location.search().tour);
-            }
-        };
         // TODO Test more than checking whether $modal.open was called
         $scope.openStory = function() {
             $modal.open({
@@ -48,5 +37,4 @@ angular.module('bodyModule', ['ngJoyRide'])
             });
         };
         $scope.loadFeatures();
-//        $scope.startJoyRideOnLoad();
     });

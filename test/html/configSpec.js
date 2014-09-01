@@ -21,6 +21,9 @@ describe('configModule controllers', function() {
             it('should use the controller tourCtrl', function() {
                 expect(route.routes[path].controller).toEqual('tourCtrl');
             });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
+            });
         });
 
         describe('/page/stories/new/ path', function() {
@@ -30,6 +33,9 @@ describe('configModule controllers', function() {
             });
             it('should use the controller storyCtrl', function() {
                 expect(route.routes[path].controller).toEqual('storyCtrl');
+            });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
             });
         });
 
@@ -41,6 +47,9 @@ describe('configModule controllers', function() {
             it('should use the controller storyCtrl', function() {
                 expect(route.routes[path].controller).toBe('storyCtrl');
             });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
+            });
         });
 
         describe('/page/stories/view/:path* path', function() {
@@ -50,6 +59,9 @@ describe('configModule controllers', function() {
             });
             it('should use the controller storyCtrl', function() {
                 expect(route.routes[path].controller).toBe('storyCtrl');
+            });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
             });
         });
 
@@ -61,6 +73,9 @@ describe('configModule controllers', function() {
             it('should use the controller storyCtrl', function() {
                 expect(route.routes[path].controller).toBe('compositesCtrl');
             });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
+            });
         });
 
         describe('/page/runner path', function() {
@@ -70,6 +85,9 @@ describe('configModule controllers', function() {
             });
             it('should use the controller runnerCtrl', function() {
                 expect(route.routes[path].controller).toBe('runnerCtrl');
+            });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
             });
         });
 
@@ -81,6 +99,9 @@ describe('configModule controllers', function() {
             it('should use the controller loginCtrl', function() {
                 expect(route.routes[path].controller).toBe('loginCtrl');
             });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
+            });
         });
 
         describe('/page/loginWelcome page', function() {
@@ -90,6 +111,9 @@ describe('configModule controllers', function() {
             });
             it('should use the controller loginWelcomeCtrl', function() {
                 expect(route.routes[path].controller).toBe('loginWelcomeCtrl');
+            });
+            it('should not reload on search', function() {
+                expect(route.routes[path].reloadOnSearch).toEqual(false);
             });
         });
 

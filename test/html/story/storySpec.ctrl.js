@@ -452,7 +452,7 @@ describe('storyModule', function() {
                 scope.onLoad();
                 expect(scope.openRunnerParams).not.toHaveBeenCalled();
             });
-            it('should call startJoyRide service', function() {
+            it('should call startJoyRideOnLoad service', function() {
                 spyOn(service, 'startJoyRideOnLoad');
                 scope.onLoad();
                 expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
@@ -650,20 +650,22 @@ describe('storyModule', function() {
             it('deleteStory should be added to the scope', function() {
                 expect(scope.features.deleteStory).toEqual(deleteStory);
             });
+            it('should be called by the controller with the empty path', function() {
+                spyOn(service, 'getStories');
+                scope.onLoad();
+                expect(service.getStories).toHaveBeenCalledWith(scope, '');
+            });
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
+            });
         });
 
         describe('close function', function() {
             it('should call the close function of the modal', function() {
                 scope.close();
                 expect(modalInstance.close).toHaveBeenCalled();
-            });
-        });
-
-        describe('getStories function', function() {
-            it('should be called by the controller with the empty path', function() {
-                expect(scope.files).toBeUndefined();
-                httpBackend.flush();
-                expect(scope.files).toEqual(filesWithoutPath);
             });
         });
 
@@ -733,6 +735,31 @@ describe('storyModule', function() {
                 spyOn(service, 'startJoyRide');
                 scope.startJoyRide(id);
                 expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            var id = 'ID';
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+        });
+
+        describe('openDirsTour function', function() {
+            it('should call openDir with tcbdd and login', function() {
+                spyOn(scope, 'openDir');
+                scope.openDirsTour(true);
+                expect(scope.openDir).toHaveBeenCalledWith('tcbdd/login');
             });
         });
 

@@ -4,11 +4,13 @@ angular.module('configModule', [])
         $routeProvider
             .when('/page/tour/', {
                 templateUrl: '/assets/html/tour/tour.tmpl.html',
-                controller: 'tourCtrl'
+                controller: 'tourCtrl',
+                reloadOnSearch: false
             })
             .when('/page/stories/new/', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
+                reloadOnSearch: false,
                 // TODO Test
                 resolve: {
                     story: function($http, $modal, TcBddService) {
@@ -25,6 +27,7 @@ angular.module('configModule', [])
             .when('/page/stories/new/:path*', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
+                reloadOnSearch: false,
                 // TODO Test
                 resolve: {
                     story: function($route, $http, $modal, TcBddService) {
@@ -41,6 +44,7 @@ angular.module('configModule', [])
             .when('/page/stories/view/:path*', {
                 templateUrl: '/assets/html/story/story.tmpl.html',
                 controller: 'storyCtrl',
+                reloadOnSearch: false,
                 // TODO Test
                 resolve: {
                     story: function($route, $http, $modal, TcBddService) {
@@ -52,12 +56,12 @@ angular.module('configModule', [])
                     groovyComposites: function($http, $modal, TcBddService) {
                         return TcBddService.getJson('/groovyComposites', true);
                     }
-                },
-                reloadOnSearch: false
+                }
             })
         .when('/page/composites/:className*', {
                 templateUrl: '/assets/html/composites/composites.tmpl.html',
                 controller: 'compositesCtrl',
+                reloadOnSearch: false,
                 // TODO Test
                 resolve: {
                     compositesClass: function($route, $http) {
@@ -82,6 +86,7 @@ angular.module('configModule', [])
             .when('/page/runner/', {
                 templateUrl: '/assets/html/runner/runner.tmpl.html',
                 controller: 'runnerCtrl',
+                reloadOnSearch: false,
                 // TODO Test
                 resolve: {
                     data: function($route) {
@@ -91,11 +96,13 @@ angular.module('configModule', [])
             })
             .when('/page/login/', {
                 templateUrl: '/assets/html/login/login.tmpl.html',
-                controller: 'loginCtrl'
+                controller: 'loginCtrl',
+                reloadOnSearch: false
             })
             .when('/page/loginWelcome/', {
                 templateUrl: '/assets/html/login/loginWelcome.tmpl.html',
-                controller: 'loginWelcomeCtrl'
+                controller: 'loginWelcomeCtrl',
+                reloadOnSearch: false
             })
             .otherwise({
                 redirectTo: '/page/tour'

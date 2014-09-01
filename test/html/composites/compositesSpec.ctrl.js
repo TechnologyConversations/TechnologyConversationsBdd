@@ -54,7 +54,7 @@ describe('compositesModule', function() {
             })
         );
 
-        describe('by default', function() {
+        describe('onLoad function', function() {
             it('should default composite to the last element of compositesClass.composites', function() {
                 var expected = scope.compositesClass.composites[scope.compositesClass.composites.length - 1];
                 expect(scope.composite).toEqual(expected);
@@ -68,8 +68,20 @@ describe('compositesModule', function() {
             it('should put steps to the scope variable steps', function () {
                 expect(scope.steps).toEqual(steps);
             });
-            it('should return common function from classNamePattern', function() {
-                expect(scope.classNamePattern().toString()).toBe(service.classNamePattern().toString());
+            it('should call addStepTextParam function', function() {
+                spyOn(scope, 'addStepTextParam');
+                scope.onLoad();
+                expect(scope.addStepTextParam).toHaveBeenCalled();
+            });
+            it('should call setLastComposite function', function() {
+                spyOn(scope, 'setLastComposite');
+                scope.onLoad();
+                expect(scope.setLastComposite).toHaveBeenCalled();
+            });
+            it('should call startJoyRide service', function() {
+                spyOn(service, 'startJoyRideOnLoad');
+                scope.onLoad();
+                expect(service.startJoyRideOnLoad).toHaveBeenCalledWith(location, scope);
             });
         });
 
@@ -295,6 +307,31 @@ describe('compositesModule', function() {
             });
         });
 
+        describe('classNamePattern function', function() {
+            it('should call service function', function() {
+                var expected = 'className';
+                spyOn(service, 'classNamePattern').and.returnValue(expected);
+                expect(scope.classNamePattern()).toEqual(expected);
+            });
+        });
+
+        describe('onFinishJoyRide function', function() {
+            it('should call onFinishJoyRide service', function() {
+                spyOn(service, 'onFinishJoyRide');
+                scope.onFinishJoyRide();
+                expect(service.onFinishJoyRide).toHaveBeenCalledWith(scope);
+            });
+        });
+
+        describe('startJoyRide function', function() {
+            it('should call startJoyRide service', function() {
+                var id = 'ID';
+                spyOn(service, 'startJoyRide');
+                scope.startJoyRide(id);
+                expect(service.startJoyRide).toHaveBeenCalledWith(id, scope);
+            });
+        });
+
     });
 
     describe('compositeClassesCtrl controller', function() {
@@ -369,8 +406,10 @@ describe('compositesModule', function() {
         });
 
         describe('classNamePattern function', function() {
-            it('should return common function', function() {
-                expect(scope.classNamePattern().toString()).toBe(service.classNamePattern().toString());
+            it('should call service function', function() {
+                var expected = 'className';
+                spyOn(service, 'classNamePattern').and.returnValue(expected);
+                expect(scope.classNamePattern()).toEqual(expected);
             });
         });
 

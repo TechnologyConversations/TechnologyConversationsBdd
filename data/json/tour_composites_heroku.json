@@ -2,7 +2,7 @@
     {
         "type": "title",
         "heading": "Composites Form and Operations",
-        "text": "Composites are convenient way to define new steps composed of one or more predefined steps. Further on, composites are grouped into composite classes. Browse Composites dialog allows users to create new or open an existing composites class. Composites Form is a representation of a composites class. It is divided into 3 parts: Class Name, Composites and Composite Steps."
+        "text": "Composites are a convenient way to define new steps composed of one or more predefined steps. Further on, composites are grouped into composite classes. Browse Composites dialog allows users to create new or open an existing composites class. Composites Form is a representation of a composites class. It is divided into 3 parts: Class Name, Composites and Composite Steps."
     }, {
         "type": "element",
         "selector": "#className",

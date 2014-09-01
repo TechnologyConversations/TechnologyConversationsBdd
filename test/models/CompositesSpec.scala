@@ -3,7 +3,7 @@ package models
 import org.specs2.mutable.Specification
 
 import models.jbehave.JBehaveComposites
-import models.file.FileComposites
+import models.file.FileTraitComposites
 
 class CompositesSpec extends Specification {
 
@@ -16,7 +16,7 @@ class CompositesSpec extends Specification {
     }
 
     "extend FileComposites" in {
-      composites must beAnInstanceOf[FileComposites]
+      composites must beAnInstanceOf[FileTraitComposites]
     }
 
   }

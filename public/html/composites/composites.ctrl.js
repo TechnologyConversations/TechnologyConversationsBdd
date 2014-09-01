@@ -1,5 +1,18 @@
 angular.module('compositesModule', [])
     .controller('compositesCtrl', function($scope, $http, $modal, $location, $cookieStore, compositesClass, steps, TcBddService) {
+        $scope.onLoad = function() {
+            $scope.compositesClass = compositesClass;
+            $scope.addStepTextParam();
+            $scope.originalCompositesClass = angular.copy(compositesClass);
+            $scope.setLastComposite();
+            $scope.steps = steps;
+            $scope.stepTextPattern = TcBddService.stepTextPattern;
+            $scope.cssClass = TcBddService.cssClass;
+            TcBddService.startJoyRideOnLoad($location, $scope);
+        };
+        $scope.classNamePattern = function() {
+            return TcBddService.classNamePattern();
+        };
         $scope.addNewComposite = function() {
             $scope.composite = {stepText: '', compositeSteps: [{}]};
             $scope.compositesClass.composites.push($scope.composite);
@@ -20,14 +33,6 @@ angular.module('compositesModule', [])
                 $scope.composite = {};
             }
         };
-        $scope.compositesClass = compositesClass;
-        $scope.addStepTextParam();
-        $scope.originalCompositesClass = angular.copy(compositesClass);
-        $scope.setLastComposite();
-        $scope.steps = steps;
-        $scope.classNamePattern = TcBddService.classNamePattern;
-        $scope.stepTextPattern = TcBddService.stepTextPattern;
-        $scope.cssClass = TcBddService.cssClass;
         $scope.buttonCssClass = function(compositeClassForm, compositeForm) {
             if (!compositeClassForm.$valid) {
                 return TcBddService.buttonCssClass(compositeClassForm);
@@ -111,6 +116,13 @@ angular.module('compositesModule', [])
                 return 'Update Composites';
             }
         };
+        $scope.onFinishJoyRide = function() {
+            TcBddService.onFinishJoyRide($scope);
+        };
+        $scope.startJoyRide = function(id) {
+            TcBddService.startJoyRide(id, $scope);
+        };
+        $scope.onLoad();
     })
     .controller('compositeClassesCtrl', function($scope, $http, $modalInstance, $location, compositeClasses, compositeStepText, TcBddService) {
         $scope.onLoad = function() {
@@ -152,7 +164,9 @@ angular.module('compositesModule', [])
             }
             return text;
         };
-        $scope.classNamePattern = TcBddService.classNamePattern;
+        $scope.classNamePattern = function() {
+            return TcBddService.classNamePattern();
+        };
         $scope.cssClass = TcBddService.cssClass;
         $scope.onFinishJoyRide = function() {
             TcBddService.onFinishJoyRide($scope);

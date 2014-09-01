@@ -1,9 +1,9 @@
 package models
 
 import models.jbehave.JBehaveComposites
-import models.file.FileComposites
+import models.file.FileTraitComposites
 
-class Composites(val dir: String, val path: String) extends JBehaveComposites with FileComposites {
+class Composites(val dir: String, val path: String) extends JBehaveComposites with FileTraitComposites {
 }
 
 object Composites {

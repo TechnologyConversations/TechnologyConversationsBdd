@@ -7,10 +7,10 @@ class FileCompositesSpec extends Specification {
   "FileComposite" should {
 
     "extend BddStory" in {
-      new FileComposites {
+      new FileTraitComposites {
         override val path: String = ""
         override val dir: String = ""
-      } must beAnInstanceOf[BddFile]
+      } must beAnInstanceOf[BddFileTrait]
     }
 
   }

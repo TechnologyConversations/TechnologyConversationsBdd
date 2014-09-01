@@ -47,7 +47,7 @@ object CompositesController extends Controller {
         val packageName = (json \ "package").as[String]
         val className = (json \ "class").as[String]
         val path = fullClassPath(s"$packageName.$className")
-        composites.save(path, classText, overwrite = true)
+        composites.saveFile(path, classText, overwrite = true)
         okJson("Class was saved successfully")
       } catch {
         case e: Exception => errorJson(e.getMessage)
@@ -66,7 +66,7 @@ object CompositesController extends Controller {
         val classText = composites.groovyClassToText(json)
         val className = (json \ "class").as[String]
         val path = s"$compositesDir/$className.groovy"
-        composites.save(path, classText, overwrite = true)
+        composites.saveFile(path, classText, overwrite = true)
         okJson("Class was saved successfully")
       } catch {
         case e: Exception => errorJson(e.getMessage)

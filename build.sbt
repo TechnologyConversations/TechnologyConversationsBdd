@@ -20,7 +20,8 @@ libraryDependencies ++= Seq(
   "commons-io" % "commons-io" % "2.4",
   "commons-cli" % "commons-cli" % "1.2",
   "net.sourceforge.findbugs" % "annotations" % "1.3.2",
-  "org.specs2" %% "specs2" % "2.3.7" % "test"
+  "org.specs2" %% "specs2" % "2.3.7" % "test",
+  "org.mongodb" %% "casbah" % "2.7.3"
 )
 
 play.Project.playScalaSettings

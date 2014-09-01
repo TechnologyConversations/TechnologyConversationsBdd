@@ -1,9 +1,9 @@
 package controllers
 
-import play.api.mvc.Results._
-import play.api.mvc._
+import models.file.BddFile
 import models.{Story, StoryList}
 import play.api.libs.json.{JsValue, Json}
+import play.api.mvc._
 
 import scala.io.Source
 
@@ -84,11 +84,12 @@ object StoryController extends Controller {
     if (jsonOption.isEmpty) {
       noJsonResult
     } else if (pathOption.isEmpty) {
-      noResult("path")
+      BadRequest(toJson(error = Option("Path was not found"), message = Option("Path can not be empty")))
     } else {
       val path = pathOption.get
-      val story = Story(storiesDir, path)
-      val success = story.save(s"$storiesDir/$path", story.toText(json), put)
+      val story = Story(dir = storiesDir, path = path, bddFile = Option(BddFile()))
+      // TODO Switch to Story#saveStory
+      val success = story.saveFile(s"$storiesDir/$path", story.toText(json), put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {

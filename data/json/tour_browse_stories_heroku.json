@@ -4,12 +4,8 @@
         "heading": "Browse Stories",
         "text": "Browse Stories dialog allows users to navigate directories and stories, create new directories, create new stories, open or delete an existing story."
     }, {
-        "type": "element",
-        "selector": "#storiesList",
-        "heading": "Browse Stories",
-        "text": "Stories (marked with <span class=\"glyphicon glyphicon-file\"></span>) are organized inside directories (marked with <span class=\"glyphicon glyphicon-book\"></span>). <mark>Open the tcbdd and login directories. Click next when finished to continue with the tour.</mark>",
-        "placement": "bottom",
-        "scroll": true
+        "type": "function",
+        "fn": "openDirsTour"
     }, {
         "type": "element",
         "selector": "#searchStoriesGroup",
