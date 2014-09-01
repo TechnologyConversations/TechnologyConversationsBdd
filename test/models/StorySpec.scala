@@ -57,13 +57,13 @@ class StorySpec extends Specification with Mockito {
   "Story#saveStory" should {
 
     val file = mock[File]
-    val content = "THIS IS CONTENT"
     val overwrite = true
+    val json = Json.parse(storyJsonString)
 
     "call upsertStory" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
-      story.saveStory(file, content, overwrite)
+      story.saveStory(file, json, overwrite)
       there was one(bddDb).upsertStory(any[MongoDBObject], any[MongoDBObject])
     }
 
@@ -77,14 +77,14 @@ class StorySpec extends Specification with Mockito {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
       bddDb.upsertStory(any[MongoDBObject], any[MongoDBObject]) returns false
-      story.saveStory(file, content, overwrite) must beFalse
+      story.saveStory(file, json, overwrite) must beFalse
     }
 
     "call saveFile" in {
       val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
-      story.saveStory(file, content, overwrite)
-      there was one(bddFile).saveFile(file, content, overwrite = true)
+      story.saveStory(file, json, overwrite)
+      there was one(bddFile).saveFile(file, story.toText(json), overwrite = true)
     }
 
     "NOT call bddFile when empty" in {
@@ -96,8 +96,8 @@ class StorySpec extends Specification with Mockito {
     "should return false when saveFile is false" in {
       val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
-      bddFile.saveFile(file, content, overwrite) returns false
-      story.saveStory(file, content, overwrite) must beFalse
+      bddFile.saveFile(file, story.toText(json), overwrite) returns false
+      story.saveStory(file, json, overwrite) must beFalse
     }
 
     "should return true when upsertStory and saveFile are true" in {
@@ -105,10 +105,40 @@ class StorySpec extends Specification with Mockito {
       val bddFile = mock[BddFile]
       val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
       bddDb.upsertStory(any[MongoDBObject], any[MongoDBObject]) returns true
-      bddFile.saveFile(file, content, overwrite) returns true
-      story.saveStory(file, content, overwrite) must beTrue
+      bddFile.saveFile(file, story.toText(json), overwrite) returns true
+      story.saveStory(file, json, overwrite) must beTrue
     }
 
   }
+
+  lazy val storyJsonString =
+    """
+{
+  "path": "my_test_story.story",
+  "name": "my_test_story",
+  "description": "This is description of this story",
+  "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],
+  "narrative":
+  {
+    "inOrderTo": "communicate effectively to the business some functionality",
+    "asA": "development team",
+    "iWantTo": "use Behaviour-Driven Development"
+  },
+  "givenStories": [ { "story": "story.story" } ],
+  "lifecycle":
+  {
+    "before": [ { "step": "Given a step that is executed before each scenario" } ],
+    "after": [ { "step": "Given a step that is executed after each scenario" } ]
+  },
+  "scenarios":
+  [
+    {
+      "title": "A scenario is a collection of executable steps of different type",
+      "meta": [ { "element": "live" }, { "element": "product shopping cart" } ],
+      "steps": [ { "step": "Given step represents a precondition to an event" } ],
+      "examplesTable": "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|"
+    }
+  ]
+}""".stripMargin
 
 }
