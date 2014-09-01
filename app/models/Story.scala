@@ -5,7 +5,7 @@ import models.jbehave.JBehaveStory
 import models.file.{BddFile, FileTraitStory}
 import java.io.File
 
-// TODO Move extended classes to constructor arguments
+// TODO Move methods from extended classes to objects set as constructor arguments
 // TODO Remove dir and path
 class Story(val dir: String = "",
             val path: String = "",
