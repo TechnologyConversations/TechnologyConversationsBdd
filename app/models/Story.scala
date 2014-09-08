@@ -1,5 +1,6 @@
 package models
 
+import com.mongodb.util.JSON
 import models.db.BddDb
 import models.jbehave.JBehaveStory
 import models.file.{BddFile, FileTraitStory}
@@ -22,7 +23,7 @@ class Story(val dir: String = "",
       // Change to real objects
       val query = MongoDBObject("_id" -> "MY_ID")
       val update = MongoDBObject("key" -> "VALUE")
-//      JSON.parse(json.toString()).asInstanceOf[MongoDBObject]
+//      val update = JSON.parse(json.toString()).asInstanceOf[MongoDBObject]
       dbSuccess = bddDb.get.upsertStory(query, update)
     }
     if (bddFile.isDefined) {

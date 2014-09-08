@@ -1,5 +1,6 @@
 package models
 
+import com.mongodb.util.JSON
 import models.db.BddDb
 import models.file.BddFile
 import org.specs2.mutable.Specification
@@ -63,8 +64,11 @@ class StorySpec extends Specification with Mockito {
     "call upsertStory" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
+      val query = MongoDBObject("_id" -> "MY_ID")
+      val update = MongoDBObject("key" -> "VALUE")
+//      val update = JSON.parse(storyJsonString).asInstanceOf[BasicDBObject]
       story.saveStory(file, json, overwrite)
-      there was one(bddDb).upsertStory(any[MongoDBObject], any[MongoDBObject])
+      there was one(bddDb).upsertStory(query, update)
     }
 
     "NOT call bddDb when empty" in {
