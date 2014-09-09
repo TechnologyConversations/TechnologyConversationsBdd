@@ -23,5 +23,10 @@
         "displayed": true,
         "enabled": true,
         "description": ""
+    },
+    "mongoDb": {
+        "displayed": true,
+        "enabled": false,
+        "description": ""
     }
 }

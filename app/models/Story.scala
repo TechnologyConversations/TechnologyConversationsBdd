@@ -1,12 +1,12 @@
 package models
 
-import com.mongodb.util.JSON
 import models.db.BddDb
 import models.jbehave.JBehaveStory
 import models.file.{BddFile, FileTraitStory}
 import java.io.File
-import com.mongodb.casbah.Imports._
 import play.api.libs.json.JsValue
+import util.Imports._
+
 
 // TODO Move methods from extended classes to objects set as constructor arguments
 // TODO Remove dir and path
@@ -19,12 +19,9 @@ class Story(val dir: String = "",
   def saveStory(file: File, json: JsValue, overwrite: Boolean): Boolean = {
     var dbSuccess = true
     var fileSuccess = true
-    if (bddDb.isDefined) {
-      // Change to real objects
-      val query = MongoDBObject("_id" -> "MY_ID")
-      val update = MongoDBObject("key" -> "VALUE")
-//      val update = JSON.parse(json.toString()).asInstanceOf[MongoDBObject]
-      dbSuccess = bddDb.get.upsertStory(query, update)
+    if (bddDb.isDefined && featureIsEnabled("mongoDb")) {
+      val storyPath = (json \ "path").as[String]
+      dbSuccess = bddDb.get.upsertStory(storyPath, json)
     }
     if (bddFile.isDefined) {
       fileSuccess = bddFile.get.saveFile(file, toText(json), overwrite)

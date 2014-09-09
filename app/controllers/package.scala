@@ -5,6 +5,8 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import play.api.mvc.Results._
 
+import scala.io.Source
+
 package object controllers {
 
   val noJsonResultMessage = "JSON was not found in the request body"
@@ -113,5 +115,10 @@ package object controllers {
     if (new File(dirAbsolutePath).exists()) dirAbsolutePath
     else dirAbsolutePath.replace(stageDir, "")
   }
+
+  lazy val mongoEnabled = Play.current.configuration.getBoolean("db.mongodb.enabled").getOrElse(true)
+  lazy val mongoIp = Play.current.configuration.getString("db.mongodb.ip").getOrElse("localhost")
+  lazy val mongoPort = Play.current.configuration.getInt("db.mongodb.port").getOrElse(27017)
+  lazy val mongoDb = Play.current.configuration.getString("db.mongodb.db").getOrElse("tcbdd")
 
 }

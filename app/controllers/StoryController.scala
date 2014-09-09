@@ -1,9 +1,11 @@
 package controllers
 
+import models.db.BddDb
 import models.file.BddFile
 import models.{Story, StoryList}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
+import java.io.File
 
 import scala.io.Source
 
@@ -82,14 +84,14 @@ object StoryController extends Controller {
     lazy val json = jsonOption.get
     lazy val pathOption = (json \ "path").asOpt[String]
     if (jsonOption.isEmpty) {
-      noJsonResult
+      BadRequest(toJson(error = Option("JSON was not found"), message = Option("JSON was not found in the request body")))
     } else if (pathOption.isEmpty) {
       BadRequest(toJson(error = Option("Path was not found"), message = Option("Path can not be empty")))
     } else {
       val path = pathOption.get
-      val story = Story(dir = storiesDir, path = path, bddFile = Option(BddFile()))
-      // TODO Switch to Story#saveStory
-      val success = story.saveFile(s"$storiesDir/$path", story.toText(json), put)
+      val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
+      val story = Story(dir = storiesDir, path = path, bddFile = Option(BddFile()), bddDb = bddDb)
+      val success = story.saveStory(new File(s"$storiesDir/$path"), json, put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))
       } else {
@@ -99,3 +101,5 @@ object StoryController extends Controller {
   }
 
 }
+
+

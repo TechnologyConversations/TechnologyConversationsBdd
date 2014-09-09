@@ -1,18 +1,24 @@
 package models.db
 
 import com.mongodb.casbah.Imports._
+import play.api.libs.json.JsValue
+import com.mongodb.util.JSON
 
 class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 
   val storiesCollection = "stories"
-//  val mongoIp = Play.current.configuration.getString("db.mongodb.ip").getOrElse("localhost")
-//  val mongoPort = Play.current.configuration.getInt("db.mongodb.port").getOrElse(27017)
-//  val mongoDb = Play.current.configuration.getString("db.mongodb.db").getOrElse("tcbdd")
 
-  def upsertStory(query: MongoDBObject, update: MongoDBObject): Boolean = {
+  def upsertStory(storyPath: String, story: JsValue): Boolean = {
     val coll = collection(storiesCollection)
-    val result = coll.update(query, update, upsert = true)
+    val result = coll.update(
+      DBObject("_id" -> storyPath),
+      jsValueToMongoDbObject(story),
+      upsert = true)
     if (result == null) false else result.getN > 0
+  }
+
+  private[db] def jsValueToMongoDbObject(json: JsValue): MongoDBObject = {
+    JSON.parse(json.toString()).asInstanceOf[BasicDBObject]
   }
 
   private[db] def collection(mongoCollection: String): MongoCollection = {

@@ -11,6 +11,11 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
   val storiesPath = "data/stories"
+  val disabledMongo: Map[String, String] = {
+    Map(
+      ("db.mongodb.enabled" -> "false")
+    )
+  }
 
   "StoryController" should {
 
@@ -77,9 +82,9 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
   }
   
   "PUT /stories/story.json route" should {
-    
+
     "return BAD_REQUEST if body is NOT JSON" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(PUT, url))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
@@ -88,7 +93,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "return BAD_REQUEST if JSON does not contain path" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
@@ -96,7 +101,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "return OK if story already exists" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
         val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson)) // Update the existing story
@@ -149,7 +154,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
         }
       }
 
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         new File(originalStoryPath).createNewFile()
         val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
@@ -164,7 +169,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
   "POST /stories/story.json route" should {
 
     "return BAD_REQUEST if body is NOT JSON" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(POST, url))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
@@ -172,7 +177,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "return BAD_REQUEST if JSON does not contain path" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
@@ -180,7 +185,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "return BAD_REQUEST if story already exists" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(firstResult) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Create the story
         status(firstResult) must equalTo(OK)
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson)) // Try to overwrite existing story
@@ -190,7 +195,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "return OK if JSON contains name" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
@@ -198,7 +203,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "save story as a file" in new MockStory {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, mockJson))
         status(result) must equalTo(OK)
         contentType(result) must beSome("application/json")
@@ -215,7 +220,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     val fullPath = s"$storiesPath/$path"
 
     "return BAD_REQUEST if body is NOT JSON" in {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(POST, url))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
@@ -223,7 +228,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "return BAD_REQUEST if JSON does not contain path" in {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, Json.parse("""{"path_does_not_exist": "true"}""")))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
@@ -231,7 +236,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
     "create directory" in new AfterStoryControllerSpec(fullPath) {
-      running(FakeApplication()) {
+      running(FakeApplication(additionalConfiguration = disabledMongo)) {
         val json = Json.parse(s"""{"path": "$path"}""")
         val Some(result) = route(FakeRequest(POST, url, fakeJsonHeaders, json))
         status(result) must equalTo(OK)

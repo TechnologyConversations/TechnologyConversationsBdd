@@ -1,18 +1,18 @@
 package models
 
-import com.mongodb.util.JSON
 import models.db.BddDb
 import models.file.BddFile
 import org.specs2.mutable.Specification
 import scala.Predef._
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import org.jbehave.core.model.{Narrative, Lifecycle}
 import models.jbehave.JBehaveStoryMock
 import org.specs2.mock._
 import java.io.File
-import com.mongodb.casbah.Imports._
 
 class StorySpec extends Specification with Mockito {
+
+  val storyPath = "path/to/my.story"
 
   "Story#rootCollection" should {
 
@@ -59,16 +59,13 @@ class StorySpec extends Specification with Mockito {
 
     val file = mock[File]
     val overwrite = true
-    val json = Json.parse(storyJsonString)
+    val storyJson = Json.parse(storyJsonString)
 
     "call upsertStory" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
-      val query = MongoDBObject("_id" -> "MY_ID")
-      val update = MongoDBObject("key" -> "VALUE")
-//      val update = JSON.parse(storyJsonString).asInstanceOf[BasicDBObject]
-      story.saveStory(file, json, overwrite)
-      there was one(bddDb).upsertStory(query, update)
+      story.saveStory(file, storyJson, overwrite)
+      there was one(bddDb).upsertStory(storyPath, storyJson)
     }
 
     "NOT call bddDb when empty" in {
@@ -80,15 +77,15 @@ class StorySpec extends Specification with Mockito {
     "should return false when upsertStory is false" in {
       val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
-      bddDb.upsertStory(any[MongoDBObject], any[MongoDBObject]) returns false
-      story.saveStory(file, json, overwrite) must beFalse
+      bddDb.upsertStory(any[String], any[JsValue]) returns false
+      story.saveStory(file, storyJson, overwrite) must beFalse
     }
 
     "call saveFile" in {
       val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
-      story.saveStory(file, json, overwrite)
-      there was one(bddFile).saveFile(file, story.toText(json), overwrite = true)
+      story.saveStory(file, storyJson, overwrite)
+      there was one(bddFile).saveFile(file, story.toText(storyJson), overwrite = true)
     }
 
     "NOT call bddFile when empty" in {
@@ -100,17 +97,17 @@ class StorySpec extends Specification with Mockito {
     "should return false when saveFile is false" in {
       val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
-      bddFile.saveFile(file, story.toText(json), overwrite) returns false
-      story.saveStory(file, json, overwrite) must beFalse
+      bddFile.saveFile(file, story.toText(storyJson), overwrite) returns false
+      story.saveStory(file, storyJson, overwrite) must beFalse
     }
 
     "should return true when upsertStory and saveFile are true" in {
       val bddDb = mock[BddDb]
       val bddFile = mock[BddFile]
       val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
-      bddDb.upsertStory(any[MongoDBObject], any[MongoDBObject]) returns true
-      bddFile.saveFile(file, story.toText(json), overwrite) returns true
-      story.saveStory(file, json, overwrite) must beTrue
+      bddDb.upsertStory(any[String], any[JsValue]) returns true
+      bddFile.saveFile(file, story.toText(storyJson), overwrite) returns true
+      story.saveStory(file, storyJson, overwrite) must beTrue
     }
 
   }
@@ -118,7 +115,7 @@ class StorySpec extends Specification with Mockito {
   lazy val storyJsonString =
     """
 {
-  "path": "my_test_story.story",
+  "path": "path/to/my.story",
   "name": "my_test_story",
   "description": "This is description of this story",
   "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],

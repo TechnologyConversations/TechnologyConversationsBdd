@@ -23,5 +23,10 @@
         "displayed": true,
         "enabled": false,
         "description": " Delete composites feature is temporarily disabled in the demo due to our hosting limitations."
+    },
+    "mongoDb": {
+        "displayed": true,
+        "enabled": false,
+        "description": ""
     }
 }
