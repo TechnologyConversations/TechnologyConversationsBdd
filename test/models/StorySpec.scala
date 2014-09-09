@@ -3,6 +3,7 @@ package models
 import models.db.BddDb
 import models.file.BddFile
 import org.specs2.mutable.Specification
+import util.Imports._
 import scala.Predef._
 import play.api.libs.json.{JsValue, Json}
 import org.jbehave.core.model.{Narrative, Lifecycle}
@@ -58,31 +59,41 @@ class StorySpec extends Specification with Mockito {
   "Story#saveStory" should {
 
     val file = mock[File]
+    val bddDb = mock[BddDb]
+    val bddFile = mock[BddFile]
     val overwrite = true
     val storyJson = Json.parse(storyJsonString)
 
-    "call upsertStory" in {
-      val bddDb = mock[BddDb]
+    // TODO Remove
+    "have upsertStory disabled by feature toggles" in {
       val story = new Story(bddDb = Option(bddDb))
+      story.saveStory(file, storyJson, overwrite)
+      there was no(bddDb).upsertStory(any[String], any[JsValue])
+    }
+
+    "call upsertStory" in {
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
       story.saveStory(file, storyJson, overwrite)
       there was one(bddDb).upsertStory(storyPath, storyJson)
     }
 
     "NOT call bddDb when empty" in {
-      val bddDb = mock[Option[BddDb]]
-      new Story(bddDb = bddDb)
-      there was no(bddDb).get
+      val bddDbOption = mock[Option[BddDb]]
+      new Story(bddDb = bddDbOption)
+      there was no(bddDbOption).get
     }
 
     "should return false when upsertStory is false" in {
-      val bddDb = mock[BddDb]
-      val story = new Story(bddDb = Option(bddDb))
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
       bddDb.upsertStory(any[String], any[JsValue]) returns false
       story.saveStory(file, storyJson, overwrite) must beFalse
     }
 
     "call saveFile" in {
-      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
       story.saveStory(file, storyJson, overwrite)
       there was one(bddFile).saveFile(file, story.toText(storyJson), overwrite = true)
@@ -95,15 +106,12 @@ class StorySpec extends Specification with Mockito {
     }
 
     "should return false when saveFile is false" in {
-      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns false
       story.saveStory(file, storyJson, overwrite) must beFalse
     }
 
     "should return true when upsertStory and saveFile are true" in {
-      val bddDb = mock[BddDb]
-      val bddFile = mock[BddFile]
       val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
       bddDb.upsertStory(any[String], any[JsValue]) returns true
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns true

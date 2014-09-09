@@ -16,10 +16,13 @@ class Story(val dir: String = "",
             val bddDb: Option[BddDb] = Option.empty)
   extends JBehaveStory with FileTraitStory {
 
+  // TODO Remove
+  val mongoDbIsEnabled = featureIsEnabled("mongoDb")
+
   def saveStory(file: File, json: JsValue, overwrite: Boolean): Boolean = {
     var dbSuccess = true
     var fileSuccess = true
-    if (bddDb.isDefined && featureIsEnabled("mongoDb")) {
+    if (bddDb.isDefined && mongoDbIsEnabled) {
       val storyPath = (json \ "path").as[String]
       dbSuccess = bddDb.get.upsertStory(storyPath, json)
     }
