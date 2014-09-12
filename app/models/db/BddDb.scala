@@ -8,12 +8,19 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 
   val storiesCollection = "stories"
 
-  def upsertStory(storyPath: String, story: JsValue): Boolean = {
+  def upsertStory(story: JsValue): Boolean = {
     val coll = collection(storiesCollection)
+    val storyPath = (story \ "path").as[String]
     val result = coll.update(
       DBObject("_id" -> storyPath),
       jsValueToMongoDbObject(story),
       upsert = true)
+    if (result == null) false else result.getN > 0
+  }
+
+  def removeStory(storyPath: String): Boolean = {
+    val coll = collection(storiesCollection)
+    val result = coll.remove(DBObject("_id" -> storyPath))
     if (result == null) false else result.getN > 0
   }
 

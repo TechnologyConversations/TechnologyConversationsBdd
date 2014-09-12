@@ -19,6 +19,10 @@ class BddFile {
     }
   }
 
+  def deleteFile(file: File): Boolean = {
+    file.delete()
+  }
+
   private[file] def writeStringToFile(file: File, content: String): Unit = {
     FileUtils.writeStringToFile(file, content, "UTF-8")
   }

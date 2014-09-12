@@ -61,8 +61,7 @@ object StoryController extends Controller {
 
   def deleteStoryJson(path: String): Action[AnyContent] = Action { implicit request =>
     Story(storiesDir, path).delete(s"$storiesDir/$path")
-    val json = toJson(message = Option(s"Story $storiesDir/$path has been deleted"))
-    Ok(json)
+    Ok(toJson(message = Option(s"Story $storiesDir/$path has been deleted")))
   }
 
   private def renameStoryJson(jsonOption: Option[JsValue]) = {

@@ -23,13 +23,24 @@ class Story(val dir: String = "",
     var dbSuccess = true
     var fileSuccess = true
     if (bddDb.isDefined && mongoDbIsEnabled) {
-      val storyPath = (json \ "path").as[String]
-      dbSuccess = bddDb.get.upsertStory(storyPath, json)
+      dbSuccess = bddDb.get.upsertStory(json)
     }
     if (bddFile.isDefined) {
       fileSuccess = bddFile.get.saveFile(file, toText(json), overwrite)
     }
     dbSuccess && fileSuccess
+  }
+
+  def removeStory(file: File, storyPath: String): Boolean = {
+    var dbSuccess = false
+    var fileDeleted = false
+    if (bddDb.isDefined) {
+      dbSuccess = bddDb.get.removeStory(storyPath)
+    }
+    if (bddFile.isDefined) {
+      fileDeleted = bddFile.get.deleteFile(file)
+    }
+    dbSuccess && fileDeleted
   }
 
 }

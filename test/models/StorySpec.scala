@@ -3,7 +3,6 @@ package models
 import models.db.BddDb
 import models.file.BddFile
 import org.specs2.mutable.Specification
-import util.Imports._
 import scala.Predef._
 import play.api.libs.json.{JsValue, Json}
 import org.jbehave.core.model.{Narrative, Lifecycle}
@@ -13,7 +12,9 @@ import java.io.File
 
 class StorySpec extends Specification with Mockito {
 
-  val storyPath = "path/to/my.story"
+  val file = mock[File]
+  val bddDb = mock[BddDb]
+  val bddFile = mock[BddFile]
 
   "Story#rootCollection" should {
 
@@ -58,9 +59,6 @@ class StorySpec extends Specification with Mockito {
 
   "Story#saveStory" should {
 
-    val file = mock[File]
-    val bddDb = mock[BddDb]
-    val bddFile = mock[BddFile]
     val overwrite = true
     val storyJson = Json.parse(storyJsonString)
 
@@ -68,7 +66,7 @@ class StorySpec extends Specification with Mockito {
     "have upsertStory disabled by feature toggles" in {
       val story = new Story(bddDb = Option(bddDb))
       story.saveStory(file, storyJson, overwrite)
-      there was no(bddDb).upsertStory(any[String], any[JsValue])
+      there was no(bddDb).upsertStory(any[JsValue])
     }
 
     "call upsertStory" in {
@@ -76,7 +74,7 @@ class StorySpec extends Specification with Mockito {
         override val mongoDbIsEnabled = true
       }
       story.saveStory(file, storyJson, overwrite)
-      there was one(bddDb).upsertStory(storyPath, storyJson)
+      there was one(bddDb).upsertStory(storyJson)
     }
 
     "NOT call bddDb when empty" in {
@@ -89,7 +87,7 @@ class StorySpec extends Specification with Mockito {
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
-      bddDb.upsertStory(any[String], any[JsValue]) returns false
+      bddDb.upsertStory(any[JsValue]) returns false
       story.saveStory(file, storyJson, overwrite) must beFalse
     }
 
@@ -113,12 +111,65 @@ class StorySpec extends Specification with Mockito {
 
     "should return true when upsertStory and saveFile are true" in {
       val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
-      bddDb.upsertStory(any[String], any[JsValue]) returns true
+      bddDb.upsertStory(any[JsValue]) returns true
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns true
       story.saveStory(file, storyJson, overwrite) must beTrue
     }
 
   }
+
+  "Story#deleteStory" should {
+
+    val storyPath = "PATH/TO/MY.STORY"
+
+    "call BddFile#deleteFile" in {
+      val story = new Story(bddFile = Option(bddFile))
+      story.removeStory(file, storyPath)
+      there was one(bddFile).deleteFile(file)
+    }
+
+    "NOT call BddFile#deleteFile when option is empty" in {
+      val bddFileOption = mock[Option[BddFile]]
+      val story = new Story(bddFile = bddFileOption)
+      story.removeStory(file, storyPath)
+      there was no(bddFileOption).get
+    }
+
+    "return false when file was NOT deleted" in {
+      val story = new Story(bddFile = Option(bddFile))
+      bddFile.deleteFile(file) returns false
+      story.removeStory(file, storyPath) must beFalse
+    }
+
+    "call BddDb#removeStory" in {
+      val story = new Story(bddDb = Option(bddDb))
+      story.removeStory(file, storyPath)
+      there was one (bddDb).removeStory(storyPath)
+    }
+
+    "NOT call BddDb#removeStory when option is empty" in {
+      val bddDbOption = mock[Option[BddDb]]
+      val story = new Story(bddDb = Option(bddDb))
+      story.removeStory(file, storyPath)
+      there was no(bddDbOption).get
+    }
+
+    "return false when story was NOT removed from the DB" in {
+      val story = new Story(bddDb = Option(bddDb))
+      bddDb.removeStory(storyPath) returns false
+      story.removeStory(file, storyPath) must beFalse
+    }
+
+    "return true when file was deleted and removed from the DB" in {
+      val story = new Story(bddFile = Option(bddFile), bddDb = Option(bddDb))
+      bddDb.removeStory(storyPath) returns true
+      bddFile.deleteFile(file) returns true
+      story.removeStory(file, storyPath) must beTrue
+    }
+
+  }
+
+
 
   lazy val storyJsonString =
     """
