@@ -38,11 +38,6 @@ package object controllers {
   def noJsonResultMap = errorMap(noJsonResultMessage)
 
   @deprecated("Use toJson instead")
-  def noResult(node: String): Result = {
-    BadRequest(Json.toJson(noResultMap(node)))
-  }
-
-  @deprecated("Use toJson instead")
   def noResultMap(node: String) = errorMap(noResultMessage(node))
 
   @deprecated("Use toJson instead")

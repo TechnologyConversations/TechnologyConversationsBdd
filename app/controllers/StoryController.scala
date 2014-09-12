@@ -11,6 +11,10 @@ import scala.io.Source
 
 object StoryController extends Controller {
 
+  val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
+  val bddFile = Option(BddFile())
+  val story = Story(bddFile = bddFile, bddDb = bddDb)
+
   def index(path: String): Action[AnyContent] = Action {
     Ok(Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
@@ -32,9 +36,9 @@ object StoryController extends Controller {
     lazy val json = jsonOption.get
     lazy val pathOption = (json \ "path").asOpt[String]
     if (jsonOption.isEmpty) {
-      noJsonResult
+      BadRequest(toJson(message = Option("JSON was not found in the request body")))
     } else if (pathOption.isEmpty) {
-      noResult("path")
+      BadRequest(toJson(message = Option("path was not found")))
     } else {
       val path = pathOption.get
       Story(storiesDir, path).createDirectory()
@@ -51,16 +55,16 @@ object StoryController extends Controller {
     val overwrite = true
     val jsonOption = request.body.asJson
     if (jsonOption.isEmpty) {
-      noJsonResult
+      BadRequest(toJson(message = Option("JSON was not found in the request body")))
     } else if (renameStoryJson(jsonOption)) {
       saveStoryJson(jsonOption, overwrite)
     } else {
-      BadRequest(Json.parse("""{"status": "ERROR", "message": "Story could not be renamed"}"""))
+      BadRequest(toJson(message = Option("Story could not be renamed")))
     }
   }
 
   def deleteStoryJson(path: String): Action[AnyContent] = Action { implicit request =>
-    Story(storiesDir, path).delete(s"$storiesDir/$path")
+    story.removeStory(new File(s"$storiesDir/$path"), path)
     Ok(toJson(message = Option(s"Story $storiesDir/$path has been deleted")))
   }
 
@@ -88,8 +92,6 @@ object StoryController extends Controller {
       BadRequest(toJson(error = Option("Path was not found"), message = Option("Path can not be empty")))
     } else {
       val path = pathOption.get
-      val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
-      val story = Story(dir = storiesDir, path = path, bddFile = Option(BddFile()), bddDb = bddDb)
       val success = story.saveStory(new File(s"$storiesDir/$path"), json, put)
       if (success) {
         Ok(Json.toJson("{status: 'OK'}"))

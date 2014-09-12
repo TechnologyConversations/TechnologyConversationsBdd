@@ -88,7 +88,6 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
         val Some(result) = route(FakeRequest(PUT, url))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
-        contentAsString(result) must /("message" -> noJsonResultMessage)
       }
     }
 

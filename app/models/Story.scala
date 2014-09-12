@@ -34,7 +34,7 @@ class Story(val dir: String = "",
   def removeStory(file: File, storyPath: String): Boolean = {
     var dbSuccess = false
     var fileDeleted = false
-    if (bddDb.isDefined) {
+    if (bddDb.isDefined && mongoDbIsEnabled) {
       dbSuccess = bddDb.get.removeStory(storyPath)
     }
     if (bddFile.isDefined) {

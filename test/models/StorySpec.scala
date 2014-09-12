@@ -122,6 +122,13 @@ class StorySpec extends Specification with Mockito {
 
     val storyPath = "PATH/TO/MY.STORY"
 
+    // TODO Remove
+    "have BddDb#removeStory disabled by feature toggles" in {
+      val story = new Story(bddDb = Option(bddDb))
+      story.removeStory(file, storyPath)
+      there was no(bddDb).removeStory(storyPath)
+    }
+
     "call BddFile#deleteFile" in {
       val story = new Story(bddFile = Option(bddFile))
       story.removeStory(file, storyPath)
@@ -142,26 +149,34 @@ class StorySpec extends Specification with Mockito {
     }
 
     "call BddDb#removeStory" in {
-      val story = new Story(bddDb = Option(bddDb))
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
       story.removeStory(file, storyPath)
       there was one (bddDb).removeStory(storyPath)
     }
 
     "NOT call BddDb#removeStory when option is empty" in {
       val bddDbOption = mock[Option[BddDb]]
-      val story = new Story(bddDb = Option(bddDb))
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
       story.removeStory(file, storyPath)
       there was no(bddDbOption).get
     }
 
     "return false when story was NOT removed from the DB" in {
-      val story = new Story(bddDb = Option(bddDb))
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
       bddDb.removeStory(storyPath) returns false
       story.removeStory(file, storyPath) must beFalse
     }
 
     "return true when file was deleted and removed from the DB" in {
-      val story = new Story(bddFile = Option(bddFile), bddDb = Option(bddDb))
+      val story = new Story(bddFile = Option(bddFile), bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
       bddDb.removeStory(storyPath) returns true
       bddFile.deleteFile(file) returns true
       story.removeStory(file, storyPath) must beTrue
