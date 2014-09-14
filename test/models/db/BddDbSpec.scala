@@ -5,6 +5,7 @@ import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import com.mongodb.casbah.Imports._
 import play.api.libs.json.Json
+import org.mockito.Mockito.doReturn
 
 class BddDbSpec extends Specification with Mockito with JsonMatchers {
 
@@ -51,13 +52,29 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#deleteStory" should {
 
     val query = MongoDBObject("_id" -> storyPath)
-    val collection = mock[MongoCollection]
 
     "call remove on the stories collection" in {
+      val collection = mock[MongoCollection]
       val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns collection
       bddDb.removeStory(storyPath)
       there was one(collection).remove(query)
+    }
+
+  }
+
+  "BddDb#findStory" should {
+
+    val query = MongoDBObject("_id" -> storyPath)
+
+    "return result of findOneToJsValue" in {
+      val collection = mock[MongoCollection]
+      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+      bddDb.collection(bddDb.storiesCollection) returns collection
+      val expected = Option(Json.parse("""{"key": "value"}"""))
+      doReturn(expected).when(bddDb).findOneToJsValue(collection, query)
+//      bddDb.findOneToJsValue(collection, query) returns expected
+      bddDb.findStory(storyPath) must equalTo(expected)
     }
 
   }
