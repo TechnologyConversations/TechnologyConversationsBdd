@@ -14,10 +14,6 @@ angular.module('storyModule', [])
             $scope.originalStory = angular.copy(story);
             $scope.scenarioToggles = [];
             var pathArray = $scope.story.path.split('/');
-            $scope.dirPath = pathArray.slice(0, pathArray.length - 1).join('/');
-            if ($scope.dirPath !== '') {
-                $scope.dirPath += '/';
-            }
             $scope.setAction();
             if ($location.search().reportsId !== undefined) {
                 $scope.storyFormClass = 'col-md-6';
@@ -69,9 +65,9 @@ angular.module('storyModule', [])
         // TODO Test
         $scope.saveStory = function() {
             if ($scope.canSaveStory()) {
-                $scope.story.path = $scope.dirPath + $scope.story.name + ".story";
+                $scope.story.path = $scope.story.dirPath + $scope.story.name + ".story";
                 if ('POST' === $scope.action) {
-                    var strippedPathArray = $scope.dirPath.split('/');
+                    var strippedPathArray = $scope.story.dirPath.split('/');
                     var strippedPath = strippedPathArray.slice(0, strippedPathArray.length - 1).join('/');
                     if (strippedPath !== '') {
                         strippedPath += '/';
@@ -228,7 +224,7 @@ angular.module('storyModule', [])
         };
         // TODO Test
         $scope.deleteStory = function () {
-            var path = $scope.dirPath + $scope.story.name + '.story';
+            var path = $scope.story.dirPath + $scope.story.name + '.story';
             TcBddService.deleteStory(path);
         };
         $scope.stepEnterKey = TcBddService.newCollectionItem;

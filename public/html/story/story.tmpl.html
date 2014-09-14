@@ -4,7 +4,7 @@
             <button ng-click="startJoyRide('tour_story')" type="button" class="btn btn-primary btn-lg pull-right">Tour the story <span class="glyphicon glyphicon-film"></span></button>
             <form class="form-horizontal" role="form" id="storyForm" name="storyForm" novalidate="novalidate">
                 <div id="storyNameGroup" class="input-group input-group-lg" ng-class="cssClass(storyForm.storyName)">
-                    <span class="input-group-addon">{{dirPath}}</span>
+                    <span class="input-group-addon">{{story.dirPath}}</span>
                     <input id="storyName" name="storyName" class="form-control" type="text" ng-model="story.name" placeholder="story name" required="true">
                     <span class="input-group-btn">
                         <button id="expandPanels" class="btn btn-info" type="button" ng-click="expandPanels()">

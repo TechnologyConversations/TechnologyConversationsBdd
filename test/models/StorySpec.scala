@@ -12,10 +12,6 @@ import java.io.File
 
 class StorySpec extends Specification with Mockito {
 
-  val file = mock[File]
-  val bddDb = mock[BddDb]
-  val bddFile = mock[BddFile]
-
   "Story#rootCollection" should {
 
     "have empty name when path is an empty string" in {
@@ -64,12 +60,16 @@ class StorySpec extends Specification with Mockito {
 
     // TODO Remove
     "have upsertStory disabled by feature toggles" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
       story.saveStory(file, storyJson, overwrite)
       there was no(bddDb).upsertStory(any[JsValue])
     }
 
     "call upsertStory" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
@@ -84,6 +84,8 @@ class StorySpec extends Specification with Mockito {
     }
 
     "should return false when upsertStory is false" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
@@ -92,6 +94,8 @@ class StorySpec extends Specification with Mockito {
     }
 
     "call saveFile" in {
+      val file = mock[File]
+      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
       story.saveStory(file, storyJson, overwrite)
       there was one(bddFile).saveFile(file, story.toText(storyJson), overwrite = true)
@@ -104,12 +108,17 @@ class StorySpec extends Specification with Mockito {
     }
 
     "should return false when saveFile is false" in {
+      val file = mock[File]
+      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns false
       story.saveStory(file, storyJson, overwrite) must beFalse
     }
 
     "should return true when upsertStory and saveFile are true" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
+      val bddFile = mock[BddFile]
       val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
       bddDb.upsertStory(any[JsValue]) returns true
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns true
@@ -124,18 +133,23 @@ class StorySpec extends Specification with Mockito {
 
     // TODO Remove
     "have BddDb#removeStory disabled by feature toggles" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb))
       story.removeStory(file, storyPath)
       there was no(bddDb).removeStory(storyPath)
     }
 
     "call BddFile#deleteFile" in {
+      val file = mock[File]
+      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
       story.removeStory(file, storyPath)
       there was one(bddFile).deleteFile(file)
     }
 
     "NOT call BddFile#deleteFile when option is empty" in {
+      val file = mock[File]
       val bddFileOption = mock[Option[BddFile]]
       val story = new Story(bddFile = bddFileOption)
       story.removeStory(file, storyPath)
@@ -143,12 +157,16 @@ class StorySpec extends Specification with Mockito {
     }
 
     "return false when file was NOT deleted" in {
+      val file = mock[File]
+      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile))
       bddFile.deleteFile(file) returns false
       story.removeStory(file, storyPath) must beFalse
     }
 
     "call BddDb#removeStory" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
@@ -157,6 +175,8 @@ class StorySpec extends Specification with Mockito {
     }
 
     "NOT call BddDb#removeStory when option is empty" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val bddDbOption = mock[Option[BddDb]]
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
@@ -166,6 +186,8 @@ class StorySpec extends Specification with Mockito {
     }
 
     "return false when story was NOT removed from the DB" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
@@ -174,6 +196,9 @@ class StorySpec extends Specification with Mockito {
     }
 
     "return true when file was deleted and removed from the DB" in {
+      val file = mock[File]
+      val bddDb = mock[BddDb]
+      val bddFile = mock[BddFile]
       val story = new Story(bddFile = Option(bddFile), bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }

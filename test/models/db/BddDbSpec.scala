@@ -11,9 +11,10 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   val mongoIp = "MONGO_IP"
   val mongoPort = 1234
   val mongoDb = "MONGO_DB"
-  val collection = mock[MongoCollection]
   val storyPath = "PATH/TO/MY.STORY"
-  val query = MongoDBObject("_id" -> storyPath)
+  val storyDirectoryPath = "PATH/TO/MY/DIRECTORY"
+  val updateJson = Json.parse("""{"path": "path/to/my.story", "key": "VALUE"}""")
+
 
   "BddDb#jsValueToMongoDbObject" should {
 
@@ -34,8 +35,9 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
 
   "BddDb#upsertStory" should {
 
+    val query = MongoDBObject("_id" -> storyPath)
     val update = DBObject("key" -> "VALUE")
-    val updateJson = Json.parse("""{"path": "path/to/my.story", "key": "VALUE"}""")
+    val collection = mock[MongoCollection]
 
     "call update on the stories collection" in {
       val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
@@ -47,6 +49,9 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   }
 
   "BddDb#deleteStory" should {
+
+    val query = MongoDBObject("_id" -> storyPath)
+    val collection = mock[MongoCollection]
 
     "call remove on the stories collection" in {
       val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))

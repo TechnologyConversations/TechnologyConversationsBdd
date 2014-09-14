@@ -7,6 +7,7 @@ import com.mongodb.util.JSON
 class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 
   val storiesCollection = "stories"
+  val storyDirectoriesCollection = "storyDirectories"
 
   def upsertStory(story: JsValue): Boolean = {
     val coll = collection(storiesCollection)

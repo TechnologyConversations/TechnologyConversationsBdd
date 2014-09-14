@@ -177,6 +177,10 @@ class JBehaveStorySpec extends Specification {
       rootCollection must havePair("name" -> Json.toJson("myStory"))
     }
 
+    "have dirPath" in {
+      rootCollection must havePair("dirPath" -> Json.toJson(JBehaveStoryMock.dirPath))
+    }
+
     "have path" in {
       rootCollection must havePair("path" -> Json.toJson(JBehaveStoryMock.path))
     }
@@ -514,6 +518,7 @@ class JBehaveStorySpec extends Specification {
 object JBehaveStoryMock extends JBehaveStory {
 
   override val path = "myDir/myStory.story"
+  val dirPath = "myDir/"
   override def content = """
 This is description of this story
 

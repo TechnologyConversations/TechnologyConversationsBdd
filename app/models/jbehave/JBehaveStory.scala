@@ -152,8 +152,10 @@ $examples
 
   private[models] def rootCollection = {
     val story = parseStory(content)
+    val dirPath = if (path.indexOf("/") > 0) path.substring(0, path.lastIndexOf("/") + 1) else ""
     Map(
       "name" -> Json.toJson(name),
+      "dirPath" -> Json.toJson(dirPath),
       "path" -> Json.toJson(path),
       "description" -> Json.toJson(story.getDescription.asString),
       "meta" -> Json.toJson(metaCollection(story.getMeta)),
