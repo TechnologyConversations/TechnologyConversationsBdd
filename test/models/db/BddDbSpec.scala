@@ -73,7 +73,6 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
       bddDb.collection(bddDb.storiesCollection) returns collection
       val expected = Option(Json.parse("""{"key": "value"}"""))
       doReturn(expected).when(bddDb).findOneToJsValue(collection, query)
-//      bddDb.findOneToJsValue(collection, query) returns expected
       bddDb.findStory(storyPath) must equalTo(expected)
     }
 
