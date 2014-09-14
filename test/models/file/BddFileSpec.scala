@@ -1,10 +1,11 @@
 package models.file
 
-import org.specs2.matcher.PathMatchers
 import org.specs2.mock._
 import org.specs2.mutable.Specification
 import java.io.File
 import org.mockito.Mockito.doNothing
+import scala.io.BufferedSource
+import org.mockito.Mockito._
 
 class BddFileSpec extends Specification with Mockito {
 
@@ -85,6 +86,42 @@ class BddFileSpec extends Specification with Mockito {
       val bddFile = BddFile()
       file.delete() returns false
       bddFile.deleteFile(file) must beFalse
+    }
+
+  }
+
+  "BddFile#fileToString" should {
+
+    val content = "THIS IS CONTENT"
+
+    "return content of the file" in {
+      val bddFile = spy(BddFile())
+      val source = mock[BufferedSource]
+      source.mkString returns content
+      doReturn(source).when(bddFile).sourceFromFile(file)
+      bddFile.fileToString(file) must equalTo(Option(content))
+    }
+
+    "close the source" in {
+      val bddFile = spy(BddFile())
+      val source = mock[BufferedSource]
+      source.mkString returns content
+      doReturn(source).when(bddFile).sourceFromFile(file)
+      bddFile.fileToString(file)
+      there was one(source).close()
+    }
+
+    "return empty option when file does not exist" in {
+      val bddFile = BddFile()
+      file.exists() returns false
+      bddFile.fileToString(file) must equalTo(Option.empty)
+    }
+
+    "return empty option when file is directory" in {
+      val bddFile = BddFile()
+      file.exists() returns true
+      file.isDirectory() returns true
+      bddFile.fileToString(file) must equalTo(Option.empty)
     }
 
   }

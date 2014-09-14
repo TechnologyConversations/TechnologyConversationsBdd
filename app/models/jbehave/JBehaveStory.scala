@@ -25,7 +25,9 @@ $scenarios
 """.toString
   }
 
-  def toJson: JsValue = Json.toJson(rootCollection)
+  def storyToJson(storyName: String, storyPath: String, storyContent: String): JsValue = {
+    Json.toJson(rootCollection(storyName, storyPath, storyContent))
+  }
 
   private[models] def toTextBeforeScenarios(story: org.jbehave.core.model.Story) = {
     val description = story.getDescription.asString
@@ -150,13 +152,15 @@ $examples
     new RegexStoryParser().parseStory(content)
   }
 
-  private[models] def rootCollection = {
-    val story = parseStory(content)
-    val dirPath = if (path.indexOf("/") > 0) path.substring(0, path.lastIndexOf("/") + 1) else ""
+  private[models] def rootCollection(storyName: String,
+                                     storyPath: String,
+                                     storyContent: String): Map[String, JsValue] = {
+    val story = parseStory(storyContent)
+    val dirPath = if (storyPath.indexOf("/") > 0) storyPath.substring(0, storyPath.lastIndexOf("/") + 1) else ""
     Map(
-      "name" -> Json.toJson(name),
+      "name" -> Json.toJson(storyName),
       "dirPath" -> Json.toJson(dirPath),
-      "path" -> Json.toJson(path),
+      "path" -> Json.toJson(storyPath),
       "description" -> Json.toJson(story.getDescription.asString),
       "meta" -> Json.toJson(metaCollection(story.getMeta)),
       "narrative" -> Json.toJson(narrativeCollection(story.getNarrative)),
@@ -195,7 +199,7 @@ $examples
         "title" -> Json.toJson(scenario.getTitle.trim),
         "meta" -> Json.toJson(metaCollection(scenario.getMeta)),
         "steps" -> Json.toJson(stepsCollection(scenario.getSteps.toList)),
-        "examplesTable" -> Json.toJson(scenario.getExamplesTable.asString)
+        "examplesTable" -> Json.toJson(scenario.getExamplesTable.asString.trim)
       )
     )
   }

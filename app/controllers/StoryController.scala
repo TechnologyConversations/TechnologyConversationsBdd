@@ -24,10 +24,12 @@ object StoryController extends Controller {
   }
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {
-    if (storyPath.isEmpty) {
-      Ok(Story(storiesDir, "").toJson)
+    val fullStoryPath = s"$storiesDir/$storyPath"
+    val json = story.findStory(new File(fullStoryPath), storyPath)
+    if (json.isDefined) {
+      Ok(json.get)
     } else {
-      Ok(Story(storiesDir, storyPath).toJson)
+      BadRequest(toJson(message = Option(s"Could not load $storyPath")))
     }
   }
 

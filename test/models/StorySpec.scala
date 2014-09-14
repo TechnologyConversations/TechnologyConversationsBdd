@@ -2,6 +2,7 @@ package models
 
 import models.db.BddDb
 import models.file.BddFile
+import org.specs2.matcher.JsonMatchers
 import org.specs2.mutable.Specification
 import scala.Predef._
 import play.api.libs.json.{JsValue, Json}
@@ -10,37 +11,45 @@ import models.jbehave.JBehaveStoryMock
 import org.specs2.mock._
 import java.io.File
 
-class StorySpec extends Specification with Mockito {
+class StorySpec extends Specification with Mockito with JsonMatchers {
+
+  val storyName = "my_fancy"
+  val storyDirPath = "path/to/"
+  val storyPath = s"$storyDirPath$storyName.story"
+  val storyJson = Json.parse(storyJsonString)
 
   "Story#rootCollection" should {
 
+    val storyName = "my.story"
+    val rootCollection = Story().rootCollection(storyName, "path/to/my.story", "")
+
     "have empty name when path is an empty string" in {
-      new Story("", "").rootCollection must havePair("name" -> Json.toJson(""))
+      rootCollection must havePair("name" -> Json.toJson(storyName))
     }
 
     "have empty description when path is an empty string" in {
-      new Story("", "").rootCollection must havePair("description" -> Json.toJson(""))
+      rootCollection must havePair("description" -> Json.toJson(""))
     }
 
     "have empty meta when path is an empty string" in {
-      new Story("", "").rootCollection must havePair("meta" -> Json.arr())
+      rootCollection must havePair("meta" -> Json.arr())
     }
 
     "have empty givenStories when path is an empty string" in {
-      new Story("", "").rootCollection must havePair("givenStories" -> Json.arr())
+      rootCollection  must havePair("givenStories" -> Json.arr())
     }
 
     "have empty scenarios when path is an empty string" in {
-      new Story("", "").rootCollection must havePair("scenarios" -> Json.arr())
+      rootCollection  must havePair("scenarios" -> Json.arr())
     }
 
     "have lifecycle with empty before and after when path is an empty string" in {
-      new Story("", "").rootCollection must havePair("lifecycle" -> Json.toJson(JBehaveStoryMock.lifecycleCollection(new Lifecycle())))
+      rootCollection  must havePair("lifecycle" -> Json.toJson(JBehaveStoryMock.lifecycleCollection(new Lifecycle())))
     }
 
     "have narrative with empty inOrderTo, asA and iWantTo when path is an empty string" in {
       val narrative = new Narrative("", "", "")
-      new Story("", "").rootCollection must havePair("narrative" -> Json.toJson(JBehaveStoryMock.narrativeCollection(narrative)))
+      rootCollection  must havePair("narrative" -> Json.toJson(JBehaveStoryMock.narrativeCollection(narrative)))
     }
 
   }
@@ -56,7 +65,6 @@ class StorySpec extends Specification with Mockito {
   "Story#saveStory" should {
 
     val overwrite = true
-    val storyJson = Json.parse(storyJsonString)
 
     // TODO Remove
     "have upsertStory disabled by feature toggles" in {
@@ -128,8 +136,6 @@ class StorySpec extends Specification with Mockito {
   }
 
   "Story#deleteStory" should {
-
-    val storyPath = "PATH/TO/MY.STORY"
 
     // TODO Remove
     "have BddDb#removeStory disabled by feature toggles" in {
@@ -209,13 +215,96 @@ class StorySpec extends Specification with Mockito {
 
   }
 
+  "Story#findStory" should {
+
+    val file = mock[File]
+
+    // TODO Remove
+    "have BddDb#findStory disabled by feature toggles" in {
+      val bddDb = mock[BddDb]
+      val story = new Story(bddDb = Option(bddDb))
+      story.findStory(file, storyPath)
+      there was no(bddDb).findStory(storyPath)
+    }
+
+    "not call BddDb#findStory when option is empty" in {
+      val bddDbOption = mock[Option[BddDb]]
+      val story = new Story(bddDb = bddDbOption) {
+        override val mongoDbIsEnabled = true
+      }
+      story.findStory(file, storyPath)
+      there was no(bddDbOption).get
+    }
+
+    "return JSON from DB when BddDb is defined" in {
+      val bddDb = mock[BddDb]
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
+      bddDb.findStory(storyPath) returns Option(storyJson)
+      story.findStory(file, storyPath) must beEqualTo(Option(storyJson))
+    }
+
+    "return JSON from file when BddDb is empty" in {
+      val bddFile = mock[BddFile]
+      val story = new Story(bddFile = Option(bddFile))
+      file.getName returns s"$storyName.story"
+      bddFile.fileToString(file) returns Option(storyString)
+      story.findStory(file, storyPath)
+      story.findStory(file, storyPath).get must beEqualTo(storyJson)
+    }
+
+    "return empty when both BddDb and BddFile are empty" in {
+      val story = new Story()
+      val emptyStory = Option(story.storyToJson("", storyPath, ""))
+      story.findStory(file, storyPath) must beEqualTo(emptyStory)
+    }
+
+  }
 
 
+  val storyString =
+    """
+This is description of this story
+
+Meta:
+@integration
+@product dashboard
+
+Narrative:
+In order to communicate effectively to the business some functionality
+As a development team
+I want to use Behaviour-Driven Development
+
+GivenStories: story.story
+
+Lifecycle:
+
+Before:
+Given a step that is executed before each scenario
+
+After:
+Given a step that is executed after each scenario
+
+Scenario: A scenario is a collection of executable steps of different type
+
+Meta:
+@live
+@product shopping cart
+
+Given step represents a precondition to an event
+
+Examples:
+|precondition|be-captured|
+|abc|be captured|
+|xyz|not be captured|
+""".stripMargin
   lazy val storyJsonString =
     """
 {
-  "path": "path/to/my.story",
-  "name": "my_test_story",
+  "dirPath": "path/to/",
+  "path": "path/to/my_fancy.story",
+  "name": "my_fancy",
   "description": "This is description of this story",
   "meta": [ { "element": "integration" }, { "element": "product dashboard" } ],
   "narrative":

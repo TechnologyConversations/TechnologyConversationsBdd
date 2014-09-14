@@ -2,7 +2,7 @@ package models
 
 import models.db.BddDb
 import models.jbehave.JBehaveStory
-import models.file.{BddFile, FileTraitStory}
+import models.file.{BddFileTrait, BddFile}
 import java.io.File
 import play.api.libs.json.JsValue
 import util.Imports._
@@ -14,7 +14,9 @@ class Story(val dir: String = "",
             val path: String = "",
             val bddFile: Option[BddFile] = Option.empty,
             val bddDb: Option[BddDb] = Option.empty)
-  extends JBehaveStory with FileTraitStory {
+  extends JBehaveStory with BddFileTrait {
+
+  override val name = ""
 
   // TODO Remove
   val mongoDbIsEnabled = featureIsEnabled("mongoDb")
@@ -41,6 +43,23 @@ class Story(val dir: String = "",
       fileDeleted = bddFile.get.deleteFile(file)
     }
     dbSuccess && fileDeleted
+  }
+
+  def findStory(file: File, storyPath: String): Option[JsValue] = {
+    var story: Option[JsValue] = Option.empty
+    if (bddDb.isDefined && mongoDbIsEnabled) {
+      story = bddDb.get.findStory(storyPath)
+    } else if (bddFile.isDefined) {
+      val storyString = bddFile.get.fileToString(file)
+      if (storyString.isDefined) {
+        val storyName = file.getName.split('.').init.mkString(".")
+        story = Option(storyToJson(storyName, storyPath, storyString.get))
+      }
+    }
+    if (story.isEmpty) {
+      story = Option(storyToJson("", storyPath, ""))
+    }
+    story
   }
 
 }

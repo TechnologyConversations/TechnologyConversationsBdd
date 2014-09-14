@@ -4,6 +4,8 @@ import java.io.File
 
 import org.apache.commons.io.FileUtils
 
+import scala.io.Source
+
 class BddFile {
 
   def saveFile(file: File, content: String, overwrite: Boolean): Boolean = {
@@ -23,7 +25,22 @@ class BddFile {
     file.delete()
   }
 
-  private[file] def writeStringToFile(file: File, content: String): Unit = {
+  def fileToString(file: File): Option[String] = {
+    if (!file.exists || file.isDirectory) {
+      Option.empty
+    } else {
+      val fileSource = sourceFromFile(file)
+      val stringSource = fileSource.mkString
+      fileSource.close()
+      Option(stringSource)
+    }
+  }
+
+  private[file] def sourceFromFile(file: File) = {
+    Source.fromFile(file, "UTF-8")
+  }
+
+  private[file] def writeStringToFile(file: File, content: String) {
     FileUtils.writeStringToFile(file, content, "UTF-8")
   }
 

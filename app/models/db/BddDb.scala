@@ -6,8 +6,9 @@ import com.mongodb.util.JSON
 
 class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 
+  lazy val client = MongoClient(mongoIp, mongoPort)
+  lazy val db = client(mongoDb)
   val storiesCollection = "stories"
-  val storyDirectoriesCollection = "storyDirectories"
 
   def findStory(storyPath: String): Option[JsValue] = {
     val coll = collection(storiesCollection)
@@ -35,13 +36,11 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   }
 
   private[db] def findOneToJsValue(collection: MongoCollection, query: MongoDBObject): Option[JsValue] = {
-    val result = collection.findOne(DBObject("_id" -> query))
+    val result = collection.findOne(query)
     if (result.isDefined) Option(Json.parse(result.get.toString)) else Option.empty
   }
 
   private[db] def collection(mongoCollection: String): MongoCollection = {
-    val client = MongoClient(mongoIp, mongoPort)
-    val db = client(mongoDb)
     db(mongoCollection)
   }
 

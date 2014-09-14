@@ -2,13 +2,14 @@ package models.jbehave
 
 import java.util.Properties
 import org.jbehave.core.model._
+import org.specs2.mock.Mockito
 import play.api.libs.json.Json
 import org.specs2.mutable.Specification
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
 import scala.collection.JavaConversions._
 
-class JBehaveStorySpec extends Specification {
+class JBehaveStorySpec extends Specification with Mockito {
 
   "JBehaveStory#stepCollection" should {
 
@@ -137,7 +138,7 @@ class JBehaveStorySpec extends Specification {
     properties.put("key2", "")
     val meta = new Meta(properties)
     val steps = List("Given condition", "When action", "Then validation")
-    val examplesTable = "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|\n"
+    val examplesTable = "|precondition|be-captured|\n|abc|be captured|\n|xyz|not be captured|"
     val scenario = new Scenario(
       "myTitle",
       meta,
@@ -171,18 +172,21 @@ class JBehaveStorySpec extends Specification {
 
   "JBehaveStory#rootCollection" should {
 
-    val rootCollection = JBehaveStoryMock.rootCollection
+    val storyName = "my_fancy"
+    val storyDirPath = "path/to/"
+    val storyPath = s"${storyDirPath}${storyName}.story"
+    val rootCollection = JBehaveStoryMock.rootCollection(storyName, storyPath, storyContent)
 
     "have name" in {
-      rootCollection must havePair("name" -> Json.toJson("myStory"))
+      rootCollection must havePair("name" -> Json.toJson(storyName))
     }
 
     "have dirPath" in {
-      rootCollection must havePair("dirPath" -> Json.toJson(JBehaveStoryMock.dirPath))
+      rootCollection must havePair("dirPath" -> Json.toJson(storyDirPath))
     }
 
     "have path" in {
-      rootCollection must havePair("path" -> Json.toJson(JBehaveStoryMock.path))
+      rootCollection must havePair("path" -> Json.toJson(storyPath))
     }
 
     "have description" in {
@@ -233,10 +237,13 @@ class JBehaveStorySpec extends Specification {
 
   }
 
-  "JBehaveStory#toJson" should {
+  "JBehaveStory#storyToJson" should {
 
-    "return json representation of rootCollection" in {
-      JBehaveStoryMock.toJson must be equalTo Json.toJson(JBehaveStoryMock.rootCollection)
+    "return rootCollection" in {
+      val storyName = "my.story"
+      val storyPath = "path/to/my.story"
+      val storyContent = ""
+      JBehaveStoryMock.storyToJson(storyName, storyPath, storyContent) must be equalTo Json.toJson(JBehaveStoryMock.rootCollection(storyName, storyPath, storyContent))
     }
 
   }
@@ -513,13 +520,7 @@ class JBehaveStorySpec extends Specification {
 }""".stripMargin
   val mockJson = Json.parse(mockJsonString)
 
-}
-
-object JBehaveStoryMock extends JBehaveStory {
-
-  override val path = "myDir/myStory.story"
-  val dirPath = "myDir/"
-  override def content = """
+  val storyContent = """
 This is description of this story
 
 Meta:
@@ -546,6 +547,13 @@ When a negative event occurs
 Then a the outcome should be-captured
 """
 
+}
+
+object JBehaveStoryMock extends JBehaveStory {
+
+  override val path = "myDir/myStory.story"
+  val dirPath = "myDir/"
   override def name = "myStory"
+  override val content = ""
 
 }
