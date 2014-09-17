@@ -18,7 +18,7 @@ Running the application
 ### To compile and run the application from the release
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
-Download the release from [https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases](https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases).
+Download the release from the [GitHub releases page](https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases).
 
 ```bash
 sbt clean stage
@@ -154,6 +154,12 @@ Deployment to development environment
 ```bash
 sbt run
 ```
+
+Custom Steps
+------------
+
+To add custom steps to the application copy the steps JAR to the **steps** directory.
+If you think that your steps might be useful to others, please fork the [steps repo](https://github.com/TechnologyConversations/TechnologyConversationsBddSteps), add your steps and create a pull request.
 
 
 Unit Tests
