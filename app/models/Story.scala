@@ -66,7 +66,7 @@ class Story(val dir: String = "",
     var stories: Option[JsValue] = Option.empty
     if (bddFile.isDefined) {
       val dirs = bddFile.get.listDirs(dir).map(dir => Json.toJson(Map("name" -> Json.toJson(dir))))
-      val files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(file => Json.toJson(Map("name" -> Json.toJson(file))))
+      val files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(file => Json.toJson(Map("name" -> Json.toJson(file.replace(".story", "")))))
       stories = Option(Json.toJson(Map("stories" -> Json.toJson(files), "dirs" -> Json.toJson(dirs))))
     }
 

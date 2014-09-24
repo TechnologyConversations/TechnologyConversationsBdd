@@ -266,12 +266,12 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
     val dir1Name = "myDir1"
     val dir2Name = "myDir2"
-    val story1Name = "myStory1.story"
-    val story2Name = "myStory2.story"
+    val story1Name = "myStory1"
+    val story2Name = "myStory2"
     val dir = mock[File]
     val bddFile = mock[BddFile]
     bddFile.listDirs(dir) returns List(dir1Name, dir2Name)
-    bddFile.listFiles(dir) returns List(story1Name, story2Name)
+    bddFile.listFiles(dir) returns List(s"$story1Name.story", s"$story2Name.story")
 
     "return empty option when both BddFile and BddDb are empty" in {
       val file = mock[File]

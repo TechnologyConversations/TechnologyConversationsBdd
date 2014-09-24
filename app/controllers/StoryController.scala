@@ -27,7 +27,6 @@ object StoryController extends Controller {
     } else {
       BadRequest(toJson(message = Option(s"Could not load directories and stories from $storyPath")))
     }
-//    Ok(StoryList(s"$storiesDir/$storyPath").json)
   }
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {
