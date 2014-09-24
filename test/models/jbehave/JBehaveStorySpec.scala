@@ -30,14 +30,6 @@ class JBehaveStorySpec extends Specification with Mockito {
 
   }
 
-  "JBehaveStory#name" should {
-
-    "return story name without extension" in {
-      JBehaveStoryMock.name must be equalTo "myStory"
-    }
-
-  }
-
   "JBehaveStory#metaCollection" should {
 
     val properties = new Properties
@@ -174,7 +166,7 @@ class JBehaveStorySpec extends Specification with Mockito {
 
     val storyName = "my_fancy"
     val storyDirPath = "path/to/"
-    val storyPath = s"${storyDirPath}${storyName}.story"
+    val storyPath = s"${storyDirPath}$storyName.story"
     val rootCollection = JBehaveStoryMock.rootCollection(storyName, storyPath, storyContent)
 
     "have name" in {
@@ -551,9 +543,6 @@ Then a the outcome should be-captured
 
 object JBehaveStoryMock extends JBehaveStory {
 
-  override val path = "myDir/myStory.story"
   val dirPath = "myDir/"
-  override def name = "myStory"
-  override val content = ""
 
 }

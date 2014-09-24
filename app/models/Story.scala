@@ -16,8 +16,6 @@ class Story(val dir: String = "",
             val bddDb: Option[BddDb] = Option.empty)
   extends JBehaveStory with BddFileTrait {
 
-  override val name = ""
-
   // TODO Remove
   val mongoDbIsEnabled = featureIsEnabled("mongoDb")
 

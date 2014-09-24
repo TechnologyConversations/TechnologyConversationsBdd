@@ -8,12 +8,6 @@ import java.util.Properties
 
 trait JBehaveStory {
 
-  val path: String
-
-  def name: String
-
-  def content: String
-
   def toText(json: JsValue): String = {
     val story = toJBehaveStory(json)
     val beforeScenarios = toTextBeforeScenarios(story)
