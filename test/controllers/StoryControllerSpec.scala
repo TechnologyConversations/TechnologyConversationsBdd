@@ -13,7 +13,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
   val storiesPath = "data/stories"
   val disabledMongo: Map[String, String] = {
     Map(
-      ("db.mongodb.enabled" -> "false")
+      "db.mongodb.enabled" -> "false"
     )
   }
 
