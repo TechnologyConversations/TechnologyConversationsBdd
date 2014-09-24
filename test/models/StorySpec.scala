@@ -262,6 +262,40 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
   }
 
+  "Story#findStories" should {
+
+    val dir1Name = "myDir1"
+    val dir2Name = "myDir2"
+    val story1Name = "myStory1.story"
+    val story2Name = "myStory2.story"
+    val dir = mock[File]
+    val bddFile = mock[BddFile]
+    bddFile.listDirs(dir) returns List(dir1Name, dir2Name)
+    bddFile.listFiles(dir) returns List(story1Name, story2Name)
+
+    "return empty option when both BddFile and BddDb are empty" in {
+      val file = mock[File]
+      val story = new Story()
+      story.findStories(file, "PATH") must equalTo(Option.empty)
+    }
+
+    "return JSON with all directories from FS" in {
+      val story = new Story(bddFile = Option(bddFile))
+      val json = story.findStories(dir, "PATH").get.toString()
+      json must /("dirs") */("name" -> dir1Name)
+      json must /("dirs") */("name" -> dir2Name)
+    }
+
+    "return JSON with all story files from FS" in {
+      val story = new Story(bddFile = Option(bddFile))
+      val json = story.findStories(dir, "PATH").get.toString()
+      println(json)
+      json must /("stories") */("name" -> story1Name)
+      json must /("stories") */("name" -> story2Name)
+    }
+
+  }
+
 
   val storyString =
     """

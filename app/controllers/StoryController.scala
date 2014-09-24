@@ -2,7 +2,7 @@ package controllers
 
 import models.db.BddDb
 import models.file.BddFile
-import models.{Story, StoryList}
+import models.Story
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import java.io.File
@@ -19,8 +19,15 @@ object StoryController extends Controller {
     Ok(Source.fromFile("public/html/index.html").mkString).as("text/html")
   }
 
-  def listJson(path: String): Action[AnyContent] = Action {
-    Ok(StoryList(s"$storiesDir/$path").json)
+  def listJson(storyPath: String): Action[AnyContent] = Action {
+    val fullStoryPath = s"$storiesDir/$storyPath"
+    val json = story.findStories(new File(fullStoryPath), storyPath)
+    if (json.isDefined) {
+      Ok(json.get)
+    } else {
+      BadRequest(toJson(message = Option(s"Could not load directories and stories from $storyPath")))
+    }
+//    Ok(StoryList(s"$storiesDir/$storyPath").json)
   }
 
   def storyJson(storyPath: String): Action[AnyContent] = Action {

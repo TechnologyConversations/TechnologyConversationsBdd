@@ -36,6 +36,14 @@ class BddFile {
     }
   }
 
+  def listDirs(directory: File): List[String] = {
+    directory.listFiles.filter(_.isDirectory).map( file => file.getName).toList
+  }
+
+  def listFiles(directory: File): List[String] = {
+    directory.listFiles.filter(_.isFile).map( file => file.getName).toList
+  }
+
   private[file] def sourceFromFile(file: File) = {
     Source.fromFile(file, "UTF-8")
   }

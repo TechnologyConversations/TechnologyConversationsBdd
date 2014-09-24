@@ -4,7 +4,7 @@ import models.db.BddDb
 import models.jbehave.JBehaveStory
 import models.file.{BddFileTrait, BddFile}
 import java.io.File
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsValue, Json}
 import util.Imports._
 
 
@@ -60,6 +60,17 @@ class Story(val dir: String = "",
       story = Option(storyToJson("", storyPath, ""))
     }
     story
+  }
+
+  def findStories(dir: File, directoryPath: String): Option[JsValue] = {
+    var stories: Option[JsValue] = Option.empty
+    if (bddFile.isDefined) {
+      val dirs = bddFile.get.listDirs(dir).map(dir => Json.toJson(Map("name" -> Json.toJson(dir))))
+      val files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(file => Json.toJson(Map("name" -> Json.toJson(file))))
+      stories = Option(Json.toJson(Map("stories" -> Json.toJson(files), "dirs" -> Json.toJson(dirs))))
+    }
+
+    stories
   }
 
 }

@@ -10,6 +10,16 @@ import org.mockito.Mockito._
 class BddFileSpec extends Specification with Mockito {
 
   val file = mock[File]
+  val dir1 = mock[File]
+  dir1.isDirectory returns true
+  dir1.getName returns "dir1"
+  val dir2 = mock[File]
+  dir2.isDirectory returns true
+  dir2.getName returns "dir2"
+  val file1 = mock[File]
+  file1.isFile returns true
+  val file2 = mock[File]
+  file2.isFile returns true
 
   "BddFile#saveFile" should {
 
@@ -122,6 +132,30 @@ class BddFileSpec extends Specification with Mockito {
       file.exists() returns true
       file.isDirectory() returns true
       bddFile.fileToString(file) must equalTo(Option.empty)
+    }
+
+  }
+
+  "BddFile#listDirs" should {
+
+    "return the list of all directories" in {
+      val bddFile = BddFile()
+      file.listFiles() returns Array(dir1, dir2, file1, file1)
+      val actual = bddFile.listDirs(file)
+      actual must have size 2
+      actual must containTheSameElementsAs(Seq(dir1.getName, dir2.getName))
+    }
+
+  }
+
+  "BddFile#listFiles" should {
+
+    "return the list of all files" in {
+      val bddFile = BddFile()
+      file.listFiles() returns Array(dir1, dir2, file1, file1)
+      val actual = bddFile.listFiles(file)
+      actual must have size 2
+      actual must containTheSameElementsAs(Seq(file1.getName, file2.getName))
     }
 
   }
