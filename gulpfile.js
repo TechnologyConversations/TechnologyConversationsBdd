@@ -3,7 +3,6 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
-var jasmine = require('gulp-jasmine');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var minifyCss = require('gulp-minify-css');
