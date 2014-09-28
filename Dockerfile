@@ -30,7 +30,3 @@ WORKDIR /opt/TechnologyConversationsBdd/
 RUN sbt stage
 EXPOSE 9000
 CMD ["target/universal/stage/bin/tcbdd"]
-
-# sudo docker build -t="vfarcic/technologyconversationsbdd" .
-# sudo docker run -t -i -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
-# sudo docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
