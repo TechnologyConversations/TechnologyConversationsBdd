@@ -23,6 +23,7 @@ Install [Docker](https://www.docker.com/).
 sudo docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
 ```
 
+Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
 ### To compile and run the application from the release
 
