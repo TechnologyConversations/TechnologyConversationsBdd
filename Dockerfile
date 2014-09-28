@@ -28,13 +28,9 @@ RUN git clone https://github.com/TechnologyConversations/TechnologyConversations
 ENV REFRESHED_AT 2014-09-28
 WORKDIR /opt/TechnologyConversationsBdd/
 RUN sbt stage
-# RUN echo "#!/bin/bash\ncd /opt/TechnologyConversationsBdd/\ntarget/universal/stage/bin/tcbdd" >start_bdd_assistant.sh
-# RUN chmod 777 start_bdd_assistant.sh
-# ENV PATH $PATH:/opt/TechnologyConversationsBdd/
 EXPOSE 9000
 CMD ["target/universal/stage/bin/tcbdd"]
 
 # sudo docker build -t="vfarcic/technologyconversationsbdd" .
-# sudo docker run -t -i -p 9000:9000 --name bdd_assistant vfarcic/bdd_assistant
-# sudo docker run -d -p 9000:9000 --name bdd_assistant vfarcic/bdd_assistant
-# Remove NodeJS & NPM
+# sudo docker run -t -i -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
+# sudo docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd

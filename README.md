@@ -15,6 +15,15 @@ If you are interested in trying it out, please send an email to [viktor@farcic.c
 Running the application
 -----------------------
 
+### To run the application from [Docker](https://www.docker.com/) container
+
+Install [Docker](https://www.docker.com/).
+
+```bash
+sudo docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
+```
+
+
 ### To compile and run the application from the release
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
@@ -27,7 +36,7 @@ target/universal/stage/bin/tcbdd
 
 Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
-### To compile and run the application in production mode
+### To compile and run the application from the latest code
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
 
