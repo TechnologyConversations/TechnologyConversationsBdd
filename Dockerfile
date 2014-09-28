@@ -20,7 +20,7 @@ RUN dpkg -i sbt-0.13.6.deb
 RUN rm sbt-0.13.6.deb
 
 # GIT
-WORKDIR /opt/e
+WORKDIR /opt/
 RUN apt-get -y install git
 RUN git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
 
@@ -34,7 +34,7 @@ RUN sbt stage
 EXPOSE 9000
 CMD ["target/universal/stage/bin/tcbdd"]
 
-# sudo docker build -t="vfarcic/bdd_assistant" .
+# sudo docker build -t="vfarcic/technologyconversationsbdd" .
 # sudo docker run -t -i -p 9000:9000 --name bdd_assistant vfarcic/bdd_assistant
 # sudo docker run -d -p 9000:9000 --name bdd_assistant vfarcic/bdd_assistant
 # Remove NodeJS & NPM
