@@ -9,7 +9,7 @@ import java.io.File
 
 import scala.io.Source
 
-object StoryController extends Controller {
+class StoryController extends Controller {
 
   val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
   val bddFile = Option(BddFile())
@@ -76,6 +76,12 @@ object StoryController extends Controller {
     Ok(toJson(message = Option(s"Story $storiesDir/$path has been deleted")))
   }
 
+  def storiesFromFileToMongoDb(): Action[AnyContent] = Action { implicit request =>
+    val result = story.storiesFromFileToMongoDb(new File(storiesDir))
+    if (result) Ok(toJson(message = Option("OK")))
+    else BadRequest(toJson(message = Option("Failed to read story files or access MongoDB")))
+  }
+
   private def renameStoryJson(jsonOption: Option[JsValue]) = {
     if (jsonOption.isEmpty) {
       false
@@ -111,4 +117,4 @@ object StoryController extends Controller {
 
 }
 
-
+object StoryController extends controllers.StoryController

@@ -1,5 +1,9 @@
 package controllers
 
+import models.Story
+import models.db.BddDb
+import models.file.BddFile
+import org.specs2.mock.Mockito
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest, FakeApplication}
 import org.specs2.mutable.{After, Specification}
@@ -7,7 +11,7 @@ import play.api.libs.json._
 import org.specs2.matcher.{JsonMatchers, PathMatchers}
 import java.io.File
 
-class StoryControllerSpec extends Specification with PathMatchers with JsonMatchers {
+class StoryControllerSpec extends Specification with PathMatchers with JsonMatchers with Mockito {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
   val storiesPath = "data/stories"
@@ -17,6 +21,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     )
   }
 
+  // TODO Refactor and remove route
   "StoryController" should {
 
     "respond to GET / route" in {
@@ -44,6 +49,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   }
 
+  // TODO Refactor and remove route
   "GET /stories/list.json" should {
 
     "return JSON" in {
@@ -80,7 +86,8 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
     }
 
   }
-  
+
+  // TODO Refactor and remove route
   "PUT /stories/story.json route" should {
 
     "return BAD_REQUEST if body is NOT JSON" in new MockStory {
@@ -165,6 +172,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   }
 
+  // TODO Refactor and remove route
   "POST /stories/story.json route" should {
 
     "return BAD_REQUEST if body is NOT JSON" in new MockStory {
@@ -212,6 +220,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   }
 
+  // TODO Refactor and remove route
   "POST /stories/dir.json route" should {
 
     val path = "testDir"
@@ -247,6 +256,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   }
 
+  // TODO Refactor and remove route
   "DELETE /stories/story.json route" should {
 
     "delete story from the specified path" in new MockStory {
@@ -257,6 +267,46 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
         contentType(result) must beSome("application/json")
         new File(storyPath).exists must beFalse
       }
+    }
+
+  }
+
+  "StoryControlller#storiesFromFileToMongoDb" should {
+
+    lazy val controller = new StoryController() {
+      override val story = mock[Story]
+      story.storiesFromFileToMongoDb(any[File]) returns true
+    }
+    val path = "path/to/stories"
+
+    "return OK" in {
+      val result = controller.storiesFromFileToMongoDb()(FakeRequest())
+      status(result) must equalTo(OK)
+    }
+
+    "return JSON" in {
+      val result = controller.storiesFromFileToMongoDb()(FakeRequest())
+      contentType(result) must beSome("application/json")
+      contentAsString(result) must /("meta") */("message" -> "OK")
+    }
+
+    "call Story#storiesFromFileToMongoDb" in {
+      val mockedStory = mock[Story]
+      lazy val controller = new StoryController() {
+        override val story = mockedStory
+      }
+      controller.storiesFromFileToMongoDb()(FakeRequest())
+      there was one(mockedStory).storiesFromFileToMongoDb(any[File])
+    }
+
+    "return BadRequest when storiesFromFileToMongoDb failed" in {
+      val mockedStory = mock[Story]
+      lazy val controller = new StoryController() {
+        override val story = mockedStory
+        story.storiesFromFileToMongoDb(any[File]) returns false
+      }
+      val result = controller.storiesFromFileToMongoDb()(FakeRequest())
+      status(result) must equalTo(BAD_REQUEST)
     }
 
   }
