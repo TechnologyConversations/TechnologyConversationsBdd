@@ -60,13 +60,6 @@ trait BddFileTrait {
     }
   }
 
-  def createDirectory() {
-    val file = new File(fullPath)
-    if (!file.exists) {
-      file.mkdir
-    }
-  }
-
   def list(): List[String] = {
     list(fullPath)
   }

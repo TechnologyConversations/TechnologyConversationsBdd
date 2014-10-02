@@ -37,11 +37,24 @@ class BddFile {
   }
 
   def listDirs(directory: File): List[String] = {
-    directory.listFiles.filter(_.isDirectory).map( file => file.getName).toList
+    directory.listFiles.filter(_.isDirectory).map(_.getName).toList
   }
 
-  def listFiles(directory: File): List[String] = {
-    directory.listFiles.filter(_.isFile).map( file => file.getName).toList
+  def listFiles(directory: File,
+                recursive: Boolean = false,
+                extension: Option[String] = Option.empty): List[String] = {
+    if (directory.exists()) {
+      val files = directory.listFiles()
+      val filesInCurrentDir = files.filter(_.isFile).map(file => file.getName)
+      val filesInSubDirs = files.filter(recursive && _.isDirectory).flatMap(listFiles(_, recursive))
+      (filesInCurrentDir ++ filesInSubDirs).toList.filter(extension.isEmpty || _.endsWith(extension.get))
+    } else {
+      List()
+    }
+  }
+
+  def createDirectory(directory: File): Unit = {
+    if (!directory.exists) directory.mkdir()
   }
 
   private[file] def sourceFromFile(file: File) = {

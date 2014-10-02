@@ -67,26 +67,6 @@ class BddFileTraitSpec extends Specification with PathMatchers {
 
   }
 
-  "BddFile#createDirectory" should {
-
-    "create new directory" in new BddFileTraitDirMock {
-      new File(fullPath).exists must beFalse
-      createDirectory()
-      fullPath must beAnExistingPath
-      fullPath must beADirectoryPath
-    }
-
-    "do nothing if directory already exists" in new BddFileTraitDirMock {
-      new File(fullPath).exists must beFalse
-      for(i <- 1 to 3) {
-        createDirectory()
-        fullPath must beAnExistingPath
-        fullPath must beADirectoryPath
-      }
-    }
-
-  }
-
   "BddFile#delete" should {
 
     "delete the file" in new BddFileTraitMock {

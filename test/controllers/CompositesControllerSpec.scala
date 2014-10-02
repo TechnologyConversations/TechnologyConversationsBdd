@@ -129,7 +129,7 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
         val Some(result) = route(FakeRequest(PUT, url))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
-        contentAsString(result) must /("message" -> noJsonResultMessage)
+        contentAsString(result) must /("meta") */("message" -> "JSON was not found in the request body")
       }
     }
 
@@ -139,25 +139,20 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
         val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, json))
         status(result) must equalTo(BAD_REQUEST)
         contentType(result) must beSome("application/json")
-        contentAsString(result) must /("message" -> noResultMessage("package"))
+        contentAsString(result) must /("message" -> "package was not found")
       }
     }
 
     "PUT /groovyComposites" should {
 
       val url = "/groovyComposites"
-      val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
-      val jsonMap = Map(
-        "class" -> Json.toJson(className),
-        "composites" -> Json.toJson(List[String]())
-      )
 
       "return BAD_REQUEST if body is NOT JSON" in {
         running(FakeApplication()) {
           val Some(result) = route(FakeRequest(PUT, url))
           status(result) must equalTo(BAD_REQUEST)
           contentType(result) must beSome("application/json")
-          contentAsString(result) must /("message" -> noJsonResultMessage)
+          contentAsString(result) must /("meta") */("message" -> "JSON was not found in the request body")
         }
       }
 
@@ -166,6 +161,11 @@ class CompositesControllerSpec extends Specification with JsonMatchers with Path
       // TODO Figure out why this spec fails in Travis
 //    "save file" in new AfterStoryControllerSpec(fullPath) {
 //      running(FakeApplication()) {
+//        val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
+//        val jsonMap = Map(
+//          "class" -> Json.toJson(className),
+//          "composites" -> Json.toJson(List[String]())
+//        )
 //        val json = Json.toJson(jsonMap)
 //        val Some(result) = route(FakeRequest(PUT, url, fakeJsonHeaders, json))
 //        fullPath must beAnExistingPath

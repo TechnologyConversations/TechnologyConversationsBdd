@@ -4,8 +4,6 @@ name := "tcbdd"
 
 version := "0.3.0-SNAPSHOT"
 
-unmanagedBase := baseDirectory.value / "composites"
-
 unmanagedBase := baseDirectory.value / "steps"
 
 libraryDependencies ++= Seq(

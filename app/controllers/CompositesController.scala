@@ -3,7 +3,6 @@ package controllers
 import play.api.mvc.{AnyContent, Action, Controller}
 import models.Composites
 import play.api.Play
-import play.api.libs.json.Json
 import java.io.File
 
 object CompositesController extends Controller {
@@ -23,13 +22,13 @@ object CompositesController extends Controller {
     try {
       Ok(Composites(javaCompositesDir).classToJson(fullClassName))
     } catch {
-      case _: ClassNotFoundException => paramIncorrect("fullClassName")
+      case _: ClassNotFoundException => BadRequest(toJson(message = Option("fullClassName is NOT correct")))
     }
   }
 
   def groovyClassToJson(className: String): Action[AnyContent] = Action {
     if (!new File(s"$compositesDir/$className").exists()) {
-      paramIncorrect("className")
+      BadRequest(toJson(message = Option("className is NOT correct")))
     } else {
       Ok(Composites(compositesDir).groovyClassToJson(compositesDir, className))
     }
@@ -38,7 +37,7 @@ object CompositesController extends Controller {
   def putClass: Action[AnyContent] = Action { implicit request =>
     val jsonOption = request.body.asJson
     if (jsonOption.isEmpty) {
-      noJsonResult
+      BadRequest(toJson(message = Option("JSON was not found in the request body")))
     } else {
       try {
         val composites = Composites(javaCompositesDir)
@@ -58,7 +57,7 @@ object CompositesController extends Controller {
   def putGroovyClass: Action[AnyContent] = Action { implicit request =>
     val jsonOption = request.body.asJson
     if (jsonOption.isEmpty) {
-      noJsonResult
+      BadRequest(toJson(message = Option("JSON was not found in the request body")))
     } else {
       try {
         val composites = Composites(compositesDir)

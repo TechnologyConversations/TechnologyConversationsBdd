@@ -47,17 +47,14 @@ class Story(val dir: String = "",
     var story: Option[JsValue] = Option.empty
     if (bddDb.isDefined && mongoDbIsEnabled) {
       story = bddDb.get.findStory(storyPath)
-    } else if (bddFile.isDefined) {
-      val storyString = bddFile.get.fileToString(file)
-      if (storyString.isDefined) {
-        val storyName = file.getName.split('.').init.mkString(".")
-        story = Option(storyToJson(storyName, storyPath, storyString.get))
-      }
+    } else {
+      story = findStoryFromFile(file, storyPath)
     }
     if (story.isEmpty) {
-      story = Option(storyToJson("", storyPath, ""))
+      Option(storyToJson("", storyPath, ""))
+    } else {
+      story
     }
-    story
   }
 
   def findStories(dir: File, directoryPath: String): Option[JsValue] = {
@@ -67,8 +64,30 @@ class Story(val dir: String = "",
       val files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(file => Json.toJson(Map("name" -> Json.toJson(file.replace(".story", "")))))
       stories = Option(Json.toJson(Map("stories" -> Json.toJson(files), "dirs" -> Json.toJson(dirs))))
     }
-
     stories
+  }
+
+  def storiesFromFileToMongoDb(dir: File): Boolean = {
+    if (bddFile.isDefined && bddDb.isDefined) {
+      val storyPaths = bddFile.get.listFiles(dir, recursive = true, extension = Option(".story"))
+      val storyJsons = storyPaths.map(storyPath => findStoryFromFile(new File(storyPath), storyPath))
+      storyJsons.filter(_.isDefined).map(json => bddDb.get.upsertStory(json.get))
+      true
+    } else {
+      false
+    }
+  }
+
+  private[models] def findStoryFromFile(file: File, storyPath: String): Option[JsValue] = {
+    var story: Option[JsValue] = Option.empty
+    if (bddFile.isDefined) {
+      val storyString = bddFile.get.fileToString(file)
+      if (storyString.isDefined) {
+        val storyName = file.getName.split('.').init.mkString(".")
+        story = Option(storyToJson(storyName, storyPath, storyString.get))
+      }
+    }
+    story
   }
 
 }

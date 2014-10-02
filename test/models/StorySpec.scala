@@ -10,6 +10,7 @@ import org.jbehave.core.model.{Narrative, Lifecycle}
 import models.jbehave.JBehaveStoryMock
 import org.specs2.mock._
 import java.io.File
+import org.mockito.Mockito.doReturn
 
 class StorySpec extends Specification with Mockito with JsonMatchers {
 
@@ -70,7 +71,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "have upsertStory disabled by feature toggles" in {
       val file = mock[File]
       val bddDb = mock[BddDb]
-      val story = new Story(bddDb = Option(bddDb))
+      val story = Story(bddDb = Option(bddDb))
       story.saveStory(file, storyJson, overwrite)
       there was no(bddDb).upsertStory(any[JsValue])
     }
@@ -87,7 +88,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
     "NOT call bddDb when empty" in {
       val bddDbOption = mock[Option[BddDb]]
-      new Story(bddDb = bddDbOption)
+      Story(bddDb = bddDbOption)
       there was no(bddDbOption).get
     }
 
@@ -104,21 +105,21 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "call saveFile" in {
       val file = mock[File]
       val bddFile = mock[BddFile]
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       story.saveStory(file, storyJson, overwrite)
       there was one(bddFile).saveFile(file, story.toText(storyJson), overwrite = true)
     }
 
     "NOT call bddFile when empty" in {
       val bddFile = mock[Option[BddFile]]
-      new Story(bddFile = bddFile)
+      Story(bddFile = bddFile)
       there was no(bddFile).get
     }
 
     "should return false when saveFile is false" in {
       val file = mock[File]
       val bddFile = mock[BddFile]
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns false
       story.saveStory(file, storyJson, overwrite) must beFalse
     }
@@ -127,7 +128,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
       val file = mock[File]
       val bddDb = mock[BddDb]
       val bddFile = mock[BddFile]
-      val story = new Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
+      val story = Story(bddDb = Option(bddDb), bddFile = Option(bddFile))
       bddDb.upsertStory(any[JsValue]) returns true
       bddFile.saveFile(file, story.toText(storyJson), overwrite) returns true
       story.saveStory(file, storyJson, overwrite) must beTrue
@@ -141,7 +142,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "have BddDb#removeStory disabled by feature toggles" in {
       val file = mock[File]
       val bddDb = mock[BddDb]
-      val story = new Story(bddDb = Option(bddDb))
+      val story = Story(bddDb = Option(bddDb))
       story.removeStory(file, storyPath)
       there was no(bddDb).removeStory(storyPath)
     }
@@ -149,7 +150,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "call BddFile#deleteFile" in {
       val file = mock[File]
       val bddFile = mock[BddFile]
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       story.removeStory(file, storyPath)
       there was one(bddFile).deleteFile(file)
     }
@@ -157,7 +158,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "NOT call BddFile#deleteFile when option is empty" in {
       val file = mock[File]
       val bddFileOption = mock[Option[BddFile]]
-      val story = new Story(bddFile = bddFileOption)
+      val story = Story(bddFile = bddFileOption)
       story.removeStory(file, storyPath)
       there was no(bddFileOption).get
     }
@@ -165,7 +166,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "return false when file was NOT deleted" in {
       val file = mock[File]
       val bddFile = mock[BddFile]
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       bddFile.deleteFile(file) returns false
       story.removeStory(file, storyPath) must beFalse
     }
@@ -222,7 +223,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     // TODO Remove
     "have BddDb#findStory disabled by feature toggles" in {
       val bddDb = mock[BddDb]
-      val story = new Story(bddDb = Option(bddDb))
+      val story = Story(bddDb = Option(bddDb))
       story.findStory(file, storyPath)
       there was no(bddDb).findStory(storyPath)
     }
@@ -247,17 +248,35 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
     "return JSON from file when BddDb is empty" in {
       val bddFile = mock[BddFile]
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       file.getName returns s"$storyName.story"
       bddFile.fileToString(file) returns Option(storyString)
-      story.findStory(file, storyPath)
       story.findStory(file, storyPath).get must beEqualTo(storyJson)
     }
 
     "return empty when both BddDb and BddFile are empty" in {
-      val story = new Story()
+      val story = Story()
       val emptyStory = Option(story.storyToJson("", storyPath, ""))
       story.findStory(file, storyPath) must beEqualTo(emptyStory)
+    }
+
+  }
+
+  "Story#findStoryFromFile" should {
+
+    val file = mock[File]
+
+    "return JSON from file" in {
+      val bddFile = mock[BddFile]
+      val story = Story(bddFile = Option(bddFile))
+      file.getName returns s"$storyName.story"
+      bddFile.fileToString(file) returns Option(storyString)
+      story.findStoryFromFile(file, storyPath).get must beEqualTo(storyJson)
+    }
+
+    "return empty option when bddFile is not defined" in {
+      val story = Story()
+      story.findStoryFromFile(file, storyPath) must beEqualTo(Option.empty)
     }
 
   }
@@ -275,27 +294,79 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
     "return empty option when both BddFile and BddDb are empty" in {
       val file = mock[File]
-      val story = new Story()
+      val story = Story()
       story.findStories(file, "PATH") must equalTo(Option.empty)
     }
 
     "return JSON with all directories from FS" in {
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       val json = story.findStories(dir, "PATH").get.toString()
       json must /("dirs") */("name" -> dir1Name)
       json must /("dirs") */("name" -> dir2Name)
     }
 
     "return JSON with all story files from FS" in {
-      val story = new Story(bddFile = Option(bddFile))
+      val story = Story(bddFile = Option(bddFile))
       val json = story.findStories(dir, "PATH").get.toString()
-      println(json)
       json must /("stories") */("name" -> story1Name)
       json must /("stories") */("name" -> story2Name)
     }
 
   }
 
+  "Story#storiesFromFileToMongoDb" should {
+
+    val dir = mock[File]
+    val bddFile = mock[BddFile]
+    val bddDb = mock[BddDb]
+    val path1 = "path/to/my.story"
+    val path2 = "path/to/another.story"
+    bddFile.listFiles(any[File], any[Boolean], any[Option[String]]) returns List(path1, path2)
+
+    "get the recursive list of story files" in {
+      val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
+      doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
+      story.storiesFromFileToMongoDb(dir)
+      there was one(bddFile).listFiles(dir, recursive = true, extension = Option(".story"))
+    }
+
+    "return false when BddFile is NOT defined" in {
+      val story = Story(bddDb = Option(bddDb))
+      story.storiesFromFileToMongoDb(dir) must beFalse
+    }
+
+    "return false when BddDb is NOT defined" in {
+      val story = Story(bddFile = Option(bddFile))
+      story.storiesFromFileToMongoDb(dir) must beFalse
+    }
+
+    "get story for each file" in {
+      val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
+      doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
+      bddFile.listFiles(dir, recursive = true, extension = Option(".story")) returns List("a.story", "b.story")
+      story.storiesFromFileToMongoDb(dir)
+      there were two(story).findStoryFromFile(any[File], any[String])
+    }
+
+    "call upsertStory for each Json" in {
+      val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
+      doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
+      val storyJson1 = mock[JsValue]
+      val storyJson2 = mock[JsValue]
+      story.findStoryFromFile(any[File], any[String]) returns Option(storyJson1) thenReturns Option(storyJson2)
+      bddFile.listFiles(dir, recursive = true, extension = Option(".story")) returns List("a.story", "b.story")
+      story.storiesFromFileToMongoDb(dir)
+      there was one(bddDb).upsertStory(storyJson1)
+      there was one(bddDb).upsertStory(storyJson2)
+    }
+
+    "return true when operation was successful" in {
+      val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
+      doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
+      story.storiesFromFileToMongoDb(dir) must beTrue
+    }
+
+  }
 
   val storyString =
     """

@@ -49,7 +49,7 @@ object StoryController extends Controller {
       BadRequest(toJson(message = Option("path was not found")))
     } else {
       val path = pathOption.get
-      Story(storiesDir, path).createDirectory()
+      bddFile.get.createDirectory(new File(s"$storiesDir/$path"))
       Ok(Json.toJson("""{"status": "OK"}"""))
     }
   }

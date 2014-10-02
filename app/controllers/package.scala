@@ -30,20 +30,10 @@ package object controllers {
   }
 
   @deprecated("Use toJson instead")
-  def noJsonResult: Result = {
-    BadRequest(Json.toJson(noJsonResultMap))
-  }
-
-  @deprecated("Use toJson instead")
   def noJsonResultMap = errorMap(noJsonResultMessage)
 
   @deprecated("Use toJson instead")
   def noResultMap(node: String) = errorMap(noResultMessage(node))
-
-  @deprecated("Use toJson instead")
-  def paramIncorrect(param: String): Result = {
-    BadRequest(Json.toJson(paramIncorrectMap(param)))
-  }
 
   @deprecated("Use toJson instead")
   def paramIncorrectMap(param: String) = errorMap(s"$param is NOT correct")

@@ -20,15 +20,24 @@ Running the application
 Install [Docker](https://www.docker.com/).
 
 To run the container:
+
 ```bash
 docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
 ```
 
 To run the container with stories and composites directories mapped outside the container:
+
 ```bash
 STORIES_PATH=/var/lib/bdd_assistant/data/stories
 COMPOSITES_PATH=/var/lib/bdd_assistant/composites
 docker run -d -p 9000:9000 --name bdd_assistant -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites vfarcic/technologyconversationsbdd
+```
+
+To run the connect the application with MongoDB (still under development):
+
+```bash
+MONGODB_DATA_PATH=/var/lib/bdd_assistant/data/mongodb
+docker run -d -p 27017:27017 -v $MONGODB_DATA_PATH:/data/db --name bdd_assistant_mongodb vfarcic/bdd_assistant_mongodb
 ```
 
 Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.

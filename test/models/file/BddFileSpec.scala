@@ -10,6 +10,9 @@ import org.mockito.Mockito._
 class BddFileSpec extends Specification with Mockito {
 
   val file = mock[File]
+  file.getName returns "file"
+  val dir = mock[File]
+  dir.getName returns "dir"
   val dir1 = mock[File]
   dir1.isDirectory returns true
   dir1.getName returns "dir1"
@@ -18,8 +21,10 @@ class BddFileSpec extends Specification with Mockito {
   dir2.getName returns "dir2"
   val file1 = mock[File]
   file1.isFile returns true
+  file1.getName returns "file1"
   val file2 = mock[File]
   file2.isFile returns true
+  file2.getName returns "file2"
 
   "BddFile#saveFile" should {
 
@@ -123,14 +128,14 @@ class BddFileSpec extends Specification with Mockito {
 
     "return empty option when file does not exist" in {
       val bddFile = BddFile()
-      file.exists() returns false
+      file.exists returns false
       bddFile.fileToString(file) must equalTo(Option.empty)
     }
 
     "return empty option when file is directory" in {
       val bddFile = BddFile()
-      file.exists() returns true
-      file.isDirectory() returns true
+      file.exists returns true
+      file.isDirectory returns true
       bddFile.fileToString(file) must equalTo(Option.empty)
     }
 
@@ -140,7 +145,7 @@ class BddFileSpec extends Specification with Mockito {
 
     "return the list of all directories" in {
       val bddFile = BddFile()
-      file.listFiles() returns Array(dir1, dir2, file1, file1)
+      file.listFiles() returns Array(dir1, dir2, file1, file2)
       val actual = bddFile.listDirs(file)
       actual must have size 2
       actual must containTheSameElementsAs(Seq(dir1.getName, dir2.getName))
@@ -150,14 +155,80 @@ class BddFileSpec extends Specification with Mockito {
 
   "BddFile#listFiles" should {
 
+    val bddFile = BddFile()
+    dir.exists() returns true
+    dir1.exists() returns true
+    dir2.exists() returns true
+
     "return the list of all files" in {
-      val bddFile = BddFile()
-      file.listFiles() returns Array(dir1, dir2, file1, file1)
-      val actual = bddFile.listFiles(file)
+      dir1.listFiles() returns Array()
+      dir2.listFiles() returns Array(file2)
+      dir.listFiles() returns Array(dir1, dir2, file1)
+      val actual = bddFile.listFiles(dir)
+      actual must have size 1
+      actual must containTheSameElementsAs(Seq(file1.getName))
+    }
+
+    "return the list with files including sub directories" in {
+      dir1.listFiles() returns Array()
+      dir2.listFiles() returns Array(file2)
+      dir.listFiles() returns Array(dir1, dir2, file1)
+      val actual = bddFile.listFiles(dir, recursive = true)
       actual must have size 2
       actual must containTheSameElementsAs(Seq(file1.getName, file2.getName))
     }
 
+    "return empty collection when directory does not exist" in {
+      val nonExistentDir = mock[File]
+      nonExistentDir.exists() returns false
+      bddFile.listFiles(nonExistentDir) must have size 0
+    }
+
+    "return only files with specified extension" in {
+      val storyFile = mock[File]
+      storyFile.isFile returns true
+      storyFile.getName returns "this_is_my.story"
+      dir.listFiles() returns Array(file1, storyFile)
+      val actual = bddFile.listFiles(dir, extension = Option(".story"))
+      actual must have size 1
+      actual must containTheSameElementsAs(Seq(storyFile.getName))
+    }
+
+  }
+
+  "BddFile#createDirectory" should {
+
+    val bddFile = BddFile()
+
+    "create new directory" in {
+      val file = mock[File]
+      file.exists returns false
+      bddFile.createDirectory(file)
+      there was one(file).mkdir()
+    }
+
+    "NOT create new directory if one already exists" in {
+      val file = mock[File]
+      file.exists returns true
+      bddFile.createDirectory(file)
+      there was no(file).mkdir()
+    }
+
+    //    "create new directory" {
+    //      new File(fullPath).exists must beFalse
+    //      createDirectory()
+    //      fullPath must beAnExistingPath
+    //      fullPath must beADirectoryPath
+    //    }
+    //
+    //    "do nothing if directory already exists" in new BddFileTraitDirMock {
+    //      new File(fullPath).exists must beFalse
+    //      for(i <- 1 to 3) {
+    //        createDirectory()
+    //        fullPath must beAnExistingPath
+    //        fullPath must beADirectoryPath
+    //      }
+    //    }
   }
 
 }
