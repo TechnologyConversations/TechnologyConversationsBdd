@@ -67,9 +67,11 @@ class Story(val dir: String = "",
     stories
   }
 
-  def storiesFromFileToMongoDb(dir: File): Boolean = {
+  def storiesFromFileToMongoDb(dir: String): Boolean = {
     if (bddFile.isDefined && bddDb.isDefined) {
-      val storyPaths = bddFile.get.listFiles(dir, recursive = true, extension = Option(".story"))
+      val storyPaths = bddFile.get.
+        listFiles(new File(dir), recursive = true, extension = Option(".story"))
+        .map(dir + "/" + _)
       val storyJsons = storyPaths.map(storyPath => findStoryFromFile(new File(storyPath), storyPath))
       storyJsons.filter(_.isDefined).map(json => bddDb.get.upsertStory(json.get))
       true

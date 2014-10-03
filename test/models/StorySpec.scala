@@ -316,46 +316,47 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
   "Story#storiesFromFileToMongoDb" should {
 
+    val dirPath = "path/to/stories"
     val dir = mock[File]
     val bddFile = mock[BddFile]
     val bddDb = mock[BddDb]
     val path1 = "path/to/my.story"
     val path2 = "path/to/another.story"
-    bddFile.listFiles(any[File], any[Boolean], any[Option[String]]) returns List(path1, path2)
+    bddFile.listFiles(any[File], any[String], any[Boolean], any[Option[String]]) returns List(path1, path2)
 
     "get the recursive list of story files" in {
       val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
       doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
-      story.storiesFromFileToMongoDb(dir)
+      story.storiesFromFileToMongoDb(dirPath)
       there was one(bddFile).listFiles(dir, recursive = true, extension = Option(".story"))
     }
 
     "return false when BddFile is NOT defined" in {
       val story = Story(bddDb = Option(bddDb))
-      story.storiesFromFileToMongoDb(dir) must beFalse
+      story.storiesFromFileToMongoDb(dirPath) must beFalse
     }
 
     "return false when BddDb is NOT defined" in {
       val story = Story(bddFile = Option(bddFile))
-      story.storiesFromFileToMongoDb(dir) must beFalse
+      story.storiesFromFileToMongoDb(dirPath) must beFalse
     }
 
     "get story for each file" in {
       val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
       doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
       bddFile.listFiles(dir, recursive = true, extension = Option(".story")) returns List("a.story", "b.story")
-      story.storiesFromFileToMongoDb(dir)
+      story.storiesFromFileToMongoDb(dirPath)
       there were two(story).findStoryFromFile(any[File], any[String])
     }
 
-    "call upsertStory for each Json" in {
+    "call upsertStory for each JSON" in {
       val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
       doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
       val storyJson1 = mock[JsValue]
       val storyJson2 = mock[JsValue]
       story.findStoryFromFile(any[File], any[String]) returns Option(storyJson1) thenReturns Option(storyJson2)
       bddFile.listFiles(dir, recursive = true, extension = Option(".story")) returns List("a.story", "b.story")
-      story.storiesFromFileToMongoDb(dir)
+      story.storiesFromFileToMongoDb(dirPath)
       there was one(bddDb).upsertStory(storyJson1)
       there was one(bddDb).upsertStory(storyJson2)
     }
@@ -363,7 +364,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "return true when operation was successful" in {
       val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
       doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
-      story.storiesFromFileToMongoDb(dir) must beTrue
+      story.storiesFromFileToMongoDb(dirPath) must beTrue
     }
 
   }

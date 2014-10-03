@@ -175,7 +175,7 @@ class BddFileSpec extends Specification with Mockito {
       dir.listFiles() returns Array(dir1, dir2, file1)
       val actual = bddFile.listFiles(dir, recursive = true)
       actual must have size 2
-      actual must containTheSameElementsAs(Seq(file1.getName, file2.getName))
+      actual must containTheSameElementsAs(Seq(file1.getName, dir2.getName + "/" + file2.getName))
     }
 
     "return empty collection when directory does not exist" in {

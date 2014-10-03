@@ -275,7 +275,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
     lazy val controller = new StoryController() {
       override val story = mock[Story]
-      story.storiesFromFileToMongoDb(any[File]) returns true
+      story.storiesFromFileToMongoDb(any[String]) returns true
     }
     val path = "path/to/stories"
 
@@ -296,14 +296,14 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
         override val story = mockedStory
       }
       controller.storiesFromFileToMongoDb()(FakeRequest())
-      there was one(mockedStory).storiesFromFileToMongoDb(any[File])
+      there was one(mockedStory).storiesFromFileToMongoDb(any[String])
     }
 
     "return BadRequest when storiesFromFileToMongoDb failed" in {
       val mockedStory = mock[Story]
       lazy val controller = new StoryController() {
         override val story = mockedStory
-        story.storiesFromFileToMongoDb(any[File]) returns false
+        story.storiesFromFileToMongoDb(any[String]) returns false
       }
       val result = controller.storiesFromFileToMongoDb()(FakeRequest())
       status(result) must equalTo(BAD_REQUEST)

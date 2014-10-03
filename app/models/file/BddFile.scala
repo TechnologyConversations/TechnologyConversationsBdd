@@ -41,12 +41,15 @@ class BddFile {
   }
 
   def listFiles(directory: File,
+                subDirectory: String = "",
                 recursive: Boolean = false,
                 extension: Option[String] = Option.empty): List[String] = {
     if (directory.exists()) {
       val files = directory.listFiles()
-      val filesInCurrentDir = files.filter(_.isFile).map(file => file.getName)
-      val filesInSubDirs = files.filter(recursive && _.isDirectory).flatMap(listFiles(_, recursive))
+      val filesInCurrentDir = files.filter(_.isFile).map(file => subDirectory + file.getName)
+      val filesInSubDirs = files.
+        filter(recursive && _.isDirectory)
+        .flatMap(dir => listFiles(dir, subDirectory = subDirectory + dir.getName + "/", recursive = recursive))
       (filesInCurrentDir ++ filesInSubDirs).toList.filter(extension.isEmpty || _.endsWith(extension.get))
     } else {
       List()

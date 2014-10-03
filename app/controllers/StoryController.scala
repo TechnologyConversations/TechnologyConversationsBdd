@@ -76,8 +76,9 @@ class StoryController extends Controller {
     Ok(toJson(message = Option(s"Story $storiesDir/$path has been deleted")))
   }
 
+
   def storiesFromFileToMongoDb(): Action[AnyContent] = Action { implicit request =>
-    val result = story.storiesFromFileToMongoDb(new File(storiesDir))
+    val result = story.storiesFromFileToMongoDb(storiesRelativeDir)
     if (result) Ok(toJson(message = Option("OK")))
     else BadRequest(toJson(message = Option("Failed to read story files or access MongoDB")))
   }
