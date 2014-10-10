@@ -3,6 +3,9 @@ language: scala
 scala:
   - 2.10.3
 
+jdk:
+  - oraclejdk7
+
 notifications:
   email:
   - viktor@farcic.com
