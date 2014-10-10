@@ -20,6 +20,6 @@ script: sbt ++2.10.3 test && npm test && sbt "test:run-main models.jbehave.JBeha
 
 deploy:
   provider: heroku
-  api_key: 5a228e77-5def-4704-8a99-f6f29f23af3a
+  api_key: 16d908f9-4c16-447e-94ed-3d390a6890c5
   app: bddassistantdemo
   strategy: git
