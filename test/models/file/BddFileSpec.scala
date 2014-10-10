@@ -83,6 +83,31 @@ class BddFileSpec extends Specification with Mockito {
 
   }
 
+  "BddFile#renameFile" should {
+
+    val source = mock[File]
+    val destination = mock[File]
+
+    "rename the file" in {
+      val bddFile = BddFile()
+      bddFile.renameFile(source, destination)
+      there was one(source).renameTo(destination)
+    }
+
+    "return true when file was renamed" in {
+      val bddFile = BddFile()
+      source.renameTo(destination) returns true
+      bddFile.renameFile(source, destination) must beTrue
+    }
+
+    "return true when file was NOT renamed" in {
+      val bddFile = BddFile()
+      source.renameTo(destination) returns false
+      bddFile.renameFile(source, destination) must beFalse
+    }
+
+  }
+
   "BddFile#deleteFile" should {
 
     "delete the file" in {

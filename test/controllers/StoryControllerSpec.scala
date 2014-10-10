@@ -49,40 +49,30 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   }
 
-  // TODO Refactor and remove route
   "GET /stories/list.json" should {
 
-    "return JSON" in {
-      running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
-        status(result) must equalTo(OK)
-        contentType(result) must beSome("application/json")
+    "return results of findStories" in {
+      val mockedStory = mock[Story]
+      val expected = Json.parse("""{"key": "value"}""")
+      lazy val controller = new StoryController() {
+        override val story = mockedStory
+        story.findStories(any[File], any[String], any[String]) returns Option(expected)
       }
+      val result = controller.listJson("path/to/some/dir/")(FakeRequest())
+      status(result) must equalTo(OK)
+      contentType(result) must beSome("application/json")
+      contentAsJson(result) must equalTo(expected)
     }
 
-    "return all story files and directories" in {
-      running(FakeApplication()) {
-        val Some(result) = route(FakeRequest(GET, "/stories/list.json"))
-        val files = new File(storiesPath).list.map(_.replace(".story", ""))
-        val json = contentAsJson(result)
-        val stories = (json \ "stories" \\ "name").map(_.as[String])
-        val dirs = (json \ "dirs" \\ "name").map(_.as[String])
-        (stories ++ dirs) must haveSize(files.length)
-        (stories ++ dirs) must containTheSameElementsAs(files)
+    "return BAD_REQUEST when findStories returns an empty option" in {
+      val mockedStory = mock[Story]
+      lazy val controller = new StoryController() {
+        override val story = mockedStory
+        story.findStories(any[File], any[String], any[String]) returns Option.empty
       }
-    }
-
-    "return all story files and directories inside specified directory" in {
-      running(FakeApplication()) {
-        val storiesSubDir = new File(storiesPath).listFiles().filter(_.isDirectory)(0)
-        val Some(result) = route(FakeRequest(GET, "/stories/list.json?path=" + storiesSubDir.getName))
-        val files = storiesSubDir.list.map(_.replace(".story", ""))
-        val json = contentAsJson(result)
-        val stories = (json \ "stories" \\ "name").map(_.as[String])
-        val dirs = (json \ "dirs" \\ "name").map(_.as[String])
-        (stories ++ dirs) must haveSize(files.length)
-        (stories ++ dirs) must containTheSameElementsAs(files)
-      }
+      val result = controller.listJson("path/to/some/dir/")(FakeRequest())
+      status(result) must equalTo(BAD_REQUEST)
+      contentType(result) must beSome("application/json")
     }
 
   }
@@ -277,7 +267,6 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
       override val story = mock[Story]
       story.storiesFromFileToMongoDb(any[String]) returns true
     }
-    val path = "path/to/stories"
 
     "return OK" in {
       val result = controller.storiesFromFileToMongoDb()(FakeRequest())

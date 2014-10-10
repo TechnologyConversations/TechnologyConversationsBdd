@@ -25,6 +25,10 @@ class BddFile {
     file.delete()
   }
 
+  def renameFile(sourcePath: File, destinationPath: File): Boolean = {
+    sourcePath.renameTo(destinationPath)
+  }
+
   def fileToString(file: File): Option[String] = {
     if (!file.exists || file.isDirectory) {
       Option.empty

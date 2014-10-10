@@ -289,25 +289,43 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     val story2Name = "myStory2"
     val dir = mock[File]
     val bddFile = mock[BddFile]
+    val bddDb = mock[BddDb]
+    val storiesRootDir = "path/to/stories/root"
+    val storiesPath = "path/to/some/dir"
     bddFile.listDirs(dir) returns List(dir1Name, dir2Name)
     bddFile.listFiles(dir) returns List(s"$story1Name.story", s"$story2Name.story")
+    bddDb.findStoryDirPaths(s"$storiesRootDir/$storiesPath/") returns Seq(
+      s"$storiesRootDir/$storiesPath/$dir1Name",
+      s"$storiesRootDir/$storiesPath/$dir2Name"
+    )
 
-    "return empty option when both BddFile and BddDb are empty" in {
-      val file = mock[File]
-      val story = Story()
-      story.findStories(file, "PATH") must equalTo(Option.empty)
+    // TODO Remove
+    "have BddDb#findStoryDirPaths disabled by feature toggles" in {
+      val bddDb = mock[BddDb]
+      val story = Story(bddDb = Option(bddDb))
+      story.findStories(dir, storiesRootDir, storiesPath)
+      there was no(bddDb).findStoryDirPaths(any[String])
     }
 
-    "return JSON with all directories from FS" in {
-      val story = Story(bddFile = Option(bddFile))
-      val json = story.findStories(dir, "PATH").get.toString()
+    "return JSON with the list of directories from DB" in {
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
+      val json = story.findStories(dir, storiesRootDir, storiesPath).get.toString()
       json must /("dirs") */("name" -> dir1Name)
       json must /("dirs") */("name" -> dir2Name)
     }
 
-    "return JSON with all story files from FS" in {
+    "return JSON with the list of directories from FS" in {
       val story = Story(bddFile = Option(bddFile))
-      val json = story.findStories(dir, "PATH").get.toString()
+      val json = story.findStories(dir, storiesRootDir, storiesPath).get.toString()
+      json must /("dirs") */("name" -> dir1Name)
+      json must /("dirs") */("name" -> dir2Name)
+    }
+
+    "return JSON with the list of story files from FS" in {
+      val story = Story(bddFile = Option(bddFile))
+      val json = story.findStories(dir, storiesRootDir, storiesPath).get.toString()
       json must /("stories") */("name" -> story1Name)
       json must /("stories") */("name" -> story2Name)
     }

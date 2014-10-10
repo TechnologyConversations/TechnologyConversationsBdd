@@ -2,7 +2,7 @@ package models
 
 import models.db.BddDb
 import models.jbehave.JBehaveStory
-import models.file.{BddFileTrait, BddFile}
+import models.file.BddFile
 import java.io.File
 import play.api.libs.json.{JsValue, Json}
 import util.Imports._
@@ -14,7 +14,7 @@ class Story(val dir: String = "",
             val path: String = "",
             val bddFile: Option[BddFile] = Option.empty,
             val bddDb: Option[BddDb] = Option.empty)
-  extends JBehaveStory with BddFileTrait {
+  extends JBehaveStory {
 
   // TODO Remove
   val mongoDbIsEnabled = featureIsEnabled("mongoDb")
@@ -57,20 +57,31 @@ class Story(val dir: String = "",
     }
   }
 
-  def findStories(dir: File, directoryPath: String): Option[JsValue] = {
-    var stories: Option[JsValue] = Option.empty
-    if (bddFile.isDefined) {
-      val dirs = bddFile.get.listDirs(dir).map(dir => Json.toJson(Map("name" -> Json.toJson(dir))))
-      val files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(file => Json.toJson(Map("name" -> Json.toJson(file.replace(".story", "")))))
-      stories = Option(Json.toJson(Map("stories" -> Json.toJson(files), "dirs" -> Json.toJson(dirs))))
+  def findStories(dir: File, storiesRootDir: String, storiesPath: String): Option[JsValue] = {
+    val fullPath = s"$storiesRootDir/$storiesPath"
+    val formattedPath = if (fullPath.endsWith("/")) fullPath else s"$fullPath/"
+    var dirs = Seq[String]()
+    var files = Seq[String]()
+    if (bddDb.isDefined && mongoDbIsEnabled) {
+      dirs = bddDb.get.findStoryDirPaths(formattedPath)
+        .map(_.replace(formattedPath, ""))
+    } else if (bddFile.isDefined) {
+      dirs = bddFile.get.listDirs(dir)
+      files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(_.replace(".story", ""))
     }
-    stories
+    Option(Json.toJson(Map(
+      "stories" -> Json.toJson(files.map(file => Json.toJson(Map("name" -> Json.toJson(file))))),
+      "dirs" -> Json.toJson(dirs
+        .map(path => if (path.endsWith("/")) path.dropRight(1) else path)
+        .map(dir => Json.toJson(Map("name" -> Json.toJson(dir))))
+      ))
+    ))
   }
 
   def storiesFromFileToMongoDb(dir: String): Boolean = {
     if (bddFile.isDefined && bddDb.isDefined) {
-      val storyPaths = bddFile.get.
-        listFiles(new File(dir), recursive = true, extension = Option(".story"))
+      val storyPaths = bddFile.get
+        .listFiles(new File(dir), recursive = true, extension = Option(".story"))
         .map(dir + "/" + _)
       val storyJsons = storyPaths.map(storyPath => findStoryFromFile(new File(storyPath), storyPath))
       storyJsons.filter(_.isDefined).map(json => bddDb.get.upsertStory(json.get))

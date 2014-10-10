@@ -27,11 +27,6 @@ trait BddFileTrait {
     }
   }
 
-  def renameFrom(originalPath: String): Boolean = {
-    new File(s"$dir/$originalPath").renameTo(new File(fullPath))
-  }
-
-  @deprecated("Use saveFile from BddFile instead")
   def saveFile(filePath: String, content: String, overwrite: Boolean): Boolean = {
     val file = new File(filePath)
     if (file.exists && !overwrite) {

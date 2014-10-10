@@ -20,8 +20,11 @@ class StoryController extends Controller {
   }
 
   def listJson(storyPath: String): Action[AnyContent] = Action {
-    val fullStoryPath = s"$storiesDir/$storyPath"
-    val json = story.findStories(new File(fullStoryPath), storyPath)
+    val json = story.findStories(
+      new File(s"$storiesDir/$storyPath"),
+      storiesRelativeDir,
+      storyPath
+    )
     if (json.isDefined) {
       Ok(json.get)
     } else {
@@ -90,8 +93,10 @@ class StoryController extends Controller {
       val json = jsonOption.get
       val path = (json \ "path").asOpt[String].getOrElse("")
       val originalPath = (json \ "originalPath").asOpt[String].getOrElse("")
-      if (originalPath != "" && originalPath != path) {
-        Story(storiesDir, path).renameFrom(originalPath)
+      if (originalPath != "" && originalPath != path && bddFile.isDefined) {
+        val source = new File(s"$storiesDir/$originalPath")
+        val destination = new File(s"$storiesDir/$path")
+        bddFile.get.renameFile(source, destination)
       } else {
         true
       }
