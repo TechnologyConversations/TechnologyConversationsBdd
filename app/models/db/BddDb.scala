@@ -28,7 +28,7 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   def upsertStory(story: JsValue): Boolean = {
     val storyPath = (story \ "path").as[String]
     val result = storiesMongoCollection.update(
-      DBObject("path" -> storyPath),
+      DBObject("_id" -> storyPath),
       jsValueToMongoDbObject(story),
       upsert = true)
     if (result == null) false else result.getN > 0
