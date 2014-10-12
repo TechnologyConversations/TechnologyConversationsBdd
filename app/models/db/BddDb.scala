@@ -12,6 +12,7 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   lazy val storiesMongoCollection = collection(storiesCollection)
 
   def findStory(storyPath: String): Option[JsValue] = {
+    println(storyPath)
     findOneToJsValue(storiesMongoCollection, DBObject("_id" -> storyPath))
   }
 
