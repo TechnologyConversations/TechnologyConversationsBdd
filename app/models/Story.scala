@@ -63,8 +63,8 @@ class Story(val dir: String = "",
     var dirs = Seq[String]()
     var files = Seq[String]()
     if (bddDb.isDefined && mongoDbIsEnabled) {
-      dirs = bddDb.get.findStoryDirPaths(formattedPath)
-        .map(_.replace(formattedPath, ""))
+      dirs = bddDb.get.findStoryDirPaths(formattedPath).map(_.replace(formattedPath, ""))
+      files = bddDb.get.findStories(formattedPath)
     } else if (bddFile.isDefined) {
       dirs = bddFile.get.listDirs(dir)
       files = bddFile.get.listFiles(dir).filter(_.endsWith(".story")).map(_.replace(".story", ""))

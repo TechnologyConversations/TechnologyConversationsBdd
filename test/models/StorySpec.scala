@@ -292,12 +292,11 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     val bddDb = mock[BddDb]
     val storiesRootDir = "path/to/stories/root"
     val storiesPath = "path/to/some/dir"
+    val formattedPath = s"$storiesRootDir/$storiesPath/"
     bddFile.listDirs(dir) returns List(dir1Name, dir2Name)
     bddFile.listFiles(dir) returns List(s"$story1Name.story", s"$story2Name.story")
-    bddDb.findStoryDirPaths(s"$storiesRootDir/$storiesPath/") returns Seq(
-      s"$storiesRootDir/$storiesPath/$dir1Name",
-      s"$storiesRootDir/$storiesPath/$dir2Name"
-    )
+    bddDb.findStoryDirPaths(formattedPath) returns Seq(s"$formattedPath$dir1Name", s"$formattedPath$dir2Name")
+    bddDb.findStories(formattedPath) returns Seq(story1Name, story2Name)
 
     // TODO Remove
     "have BddDb#findStoryDirPaths disabled by feature toggles" in {
@@ -314,6 +313,15 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
       val json = story.findStories(dir, storiesRootDir, storiesPath).get.toString()
       json must /("dirs") */("name" -> dir1Name)
       json must /("dirs") */("name" -> dir2Name)
+    }
+
+    "return JSON with the list of stories from DB" in {
+      val story = new Story(bddDb = Option(bddDb)) {
+        override val mongoDbIsEnabled = true
+      }
+      val json = story.findStories(dir, storiesRootDir, storiesPath).get.toString()
+      json must /("stories") */("name" -> story1Name)
+      json must /("stories") */("name" -> story2Name)
     }
 
     "return JSON with the list of directories from FS" in {

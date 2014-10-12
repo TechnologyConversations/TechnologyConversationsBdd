@@ -15,6 +15,10 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
     findOneToJsValue(storiesMongoCollection, DBObject("_id" -> storyPath))
   }
 
+  def findStories(directoryPath: String): Seq[String] = {
+    distinct(storiesMongoCollection, "name", MongoDBObject("dirPath" -> directoryPath))
+  }
+
   def findStoryDirPaths(directoryPath: String): Seq[String] = {
     val regex = directoryPath + """[^\/]+/$"""
     distinct(storiesMongoCollection, "dirPath", "dirPath" $regex regex)
