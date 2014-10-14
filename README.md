@@ -33,7 +33,7 @@ COMPOSITES_PATH=/var/lib/bdd_assistant/composites
 docker run -d -p 9000:9000 --name bdd_assistant -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites vfarcic/technologyconversationsbdd
 ```
 
-To run the connect the application with MongoDB (still under development):
+To run the application with MongoDB (still under development):
 
 ```bash
 MONGODB_DATA_PATH=/var/lib/bdd_assistant/data/mongodb
