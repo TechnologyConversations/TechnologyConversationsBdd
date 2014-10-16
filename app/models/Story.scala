@@ -41,7 +41,7 @@ class Story(val bddFile: Option[BddFile] = Option.empty, val bddDb: Option[BddDb
     }
   }
 
-  def findStories(dir: File, storiesPath: String): Option[JsValue] = {
+  def findStoryPaths(dir: File, storiesPath: String): Option[JsValue] = {
     val (dirs, files) = {
       if (bddDb.isDefined && mongoDbIsEnabled) {
         (bddDb.get.findStoryDirPaths(storiesPath), bddDb.get.findStoryNames(storiesPath))
@@ -54,8 +54,10 @@ class Story(val bddFile: Option[BddFile] = Option.empty, val bddDb: Option[BddDb
     Option(Json.toJson(Map(
       "stories" -> Json.toJson(files.map(file => Json.toJson(Map("name" -> Json.toJson(file))))),
       "dirs" -> Json.toJson(dirs
-        .map(path => if (path.endsWith("/")) path.dropRight(1) else path)
-        .map(dir => Json.toJson(Map("name" -> Json.toJson(dir))))
+        .map(path => {
+          val dir = if (path.endsWith("/")) path.dropRight(1) else path
+          Json.toJson(Map("name" -> Json.toJson(dir)))
+        })
       ))
     ))
   }
@@ -64,10 +66,8 @@ class Story(val bddFile: Option[BddFile] = Option.empty, val bddDb: Option[BddDb
     if (bddFile.isDefined && bddDb.isDefined) {
       bddFile.get
         .listFiles(new File(storiesPath), recursive = true, extension = Option(".story"))
-        .map(storiesPath + "/" + _)
         .map(storyPath => {
-          val path = storyPath.replace(storiesPath, "")
-          val formattedPath = if (path.startsWith("/")) path.drop(1) else path
+          val formattedPath = if (storyPath.startsWith("/")) storyPath.drop(1) else storyPath
           findStoryFromFile(new File(storyPath), formattedPath)
         })
         .filter(_.isDefined)

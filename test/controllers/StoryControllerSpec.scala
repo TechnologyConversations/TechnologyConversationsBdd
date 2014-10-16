@@ -56,7 +56,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
       val expected = Json.parse("""{"key": "value"}""")
       lazy val controller = new StoryController() {
         override val story = mockedStory
-        story.findStories(any[File], any[String]) returns Option(expected)
+        story.findStoryPaths(any[File], any[String]) returns Option(expected)
       }
       val result = controller.listJson("path/to/some/dir/")(FakeRequest())
       status(result) must equalTo(OK)
@@ -68,7 +68,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
       val mockedStory = mock[Story]
       lazy val controller = new StoryController() {
         override val story = mockedStory
-        story.findStories(any[File], any[String]) returns Option.empty
+        story.findStoryPaths(any[File], any[String]) returns Option.empty
       }
       val result = controller.listJson("path/to/some/dir/")(FakeRequest())
       status(result) must equalTo(BAD_REQUEST)

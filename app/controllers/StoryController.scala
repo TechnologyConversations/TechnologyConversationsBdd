@@ -20,7 +20,7 @@ class StoryController extends Controller {
   }
 
   def listJson(storyPath: String): Action[AnyContent] = Action {
-    val json = story.findStories(new File(s"$storiesDir/$storyPath"), storyPath)
+    val json = story.findStoryPaths(new File(s"$storiesDir/$storyPath"), storyPath)
     if (json.isDefined) {
       Ok(json.get)
     } else {

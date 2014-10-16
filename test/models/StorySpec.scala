@@ -273,7 +273,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
   }
 
-  "Story#findStories" should {
+  "Story#findStoryPaths" should {
 
     val dir1Name = "myDir1"
     val dir2Name = "myDir2"
@@ -292,7 +292,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     "have BddDb#findStoryDirPaths disabled by feature toggles" in {
       val bddDb = mock[BddDb]
       val story = Story(bddDb = Option(bddDb))
-      story.findStories(dir, storiesPath)
+      story.findStoryPaths(dir, storiesPath)
       there was no(bddDb).findStoryDirPaths(any[String])
     }
 
@@ -300,7 +300,7 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
-      val json = story.findStories(dir, storiesPath).get.toString()
+      val json = story.findStoryPaths(dir, storiesPath).get.toString()
       json must /("dirs") */("name" -> dir1Name)
       json must /("dirs") */("name" -> dir2Name)
     }
@@ -309,21 +309,21 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
       val story = new Story(bddDb = Option(bddDb)) {
         override val mongoDbIsEnabled = true
       }
-      val json = story.findStories(dir, storiesPath).get.toString()
+      val json = story.findStoryPaths(dir, storiesPath).get.toString()
       json must /("stories") */("name" -> story1Name)
       json must /("stories") */("name" -> story2Name)
     }
 
     "return JSON with the list of directories from FS" in {
       val story = Story(bddFile = Option(bddFile))
-      val json = story.findStories(dir, storiesPath).get.toString()
+      val json = story.findStoryPaths(dir, storiesPath).get.toString()
       json must /("dirs") */("name" -> dir1Name)
       json must /("dirs") */("name" -> dir2Name)
     }
 
     "return JSON with the list of story files from FS" in {
       val story = Story(bddFile = Option(bddFile))
-      val json = story.findStories(dir, storiesPath).get.toString()
+      val json = story.findStoryPaths(dir, storiesPath).get.toString()
       json must /("stories") */("name" -> story1Name)
       json must /("stories") */("name" -> story2Name)
     }
