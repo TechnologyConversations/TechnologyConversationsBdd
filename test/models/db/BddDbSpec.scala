@@ -73,13 +73,25 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
 
   "BddDb#findStories" should {
 
+    "return result of findToJsValueSeq" in {
+      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+      bddDb.collection(bddDb.storiesCollection) returns storiesCollection
+      val expected = Seq(Json.parse("""{"key": "value"}"""))
+      doReturn(expected).when(bddDb).findToJsValueSeq(storiesCollection)
+      bddDb.findStories() must equalTo(expected)
+    }
+
+  }
+
+  "BddDb#findStoryNames" should {
+
     "return result of distinct" in {
       val directoryPath = "path/to/my/dir"
       val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       val expected = Seq("value1", "value2")
       doReturn(expected).when(bddDb).distinct(storiesCollection, "name", MongoDBObject("dirPath" -> directoryPath))
-      bddDb.findStories(directoryPath) must equalTo(expected)
+      bddDb.findStoryNames(directoryPath) must equalTo(expected)
 
     }
 

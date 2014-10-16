@@ -55,14 +55,6 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
 
   }
 
-  "Story object" should {
-
-    "return Story instance when apply is called" in {
-      Story("test", "stories/story1.story") must beAnInstanceOf[Story]
-    }
-
-  }
-
   "Story#saveStory" should {
 
     val overwrite = true
@@ -291,10 +283,10 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
     val bddFile = mock[BddFile]
     val bddDb = mock[BddDb]
     val storiesPath = "path/to/some/dir"
-    bddFile.listDirs(dir) returns List(dir1Name, dir2Name)
-    bddFile.listFiles(dir) returns List(s"$story1Name.story", s"$story2Name.story")
+    bddFile.listDirs(dir) returns Seq(dir1Name, dir2Name)
+    bddFile.listFiles(dir) returns Seq(s"$story1Name.story", s"$story2Name.story")
     bddDb.findStoryDirPaths(storiesPath) returns Seq(dir1Name, dir2Name)
-    bddDb.findStories(storiesPath) returns Seq(story1Name, story2Name)
+    bddDb.findStoryNames(storiesPath) returns Seq(story1Name, story2Name)
 
     // TODO Remove
     "have BddDb#findStoryDirPaths disabled by feature toggles" in {

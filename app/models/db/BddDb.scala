@@ -12,11 +12,14 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   lazy val storiesMongoCollection = collection(storiesCollection)
 
   def findStory(storyPath: String): Option[JsValue] = {
-    println(storyPath)
     findOneToJsValue(storiesMongoCollection, DBObject("_id" -> storyPath))
   }
 
-  def findStories(directoryPath: String): Seq[String] = {
+  def findStories(): Seq[JsValue] = {
+    findToJsValueSeq(storiesMongoCollection)
+  }
+
+  def findStoryNames(directoryPath: String): Seq[String] = {
     distinct(storiesMongoCollection, "name", MongoDBObject("dirPath" -> directoryPath))
   }
 
@@ -46,6 +49,10 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   private[db] def findOneToJsValue(collection: MongoCollection, query: MongoDBObject): Option[JsValue] = {
     val result = collection.findOne(query)
     if (result.isDefined) Option(Json.parse(result.get.toString)) else Option.empty
+  }
+
+  private[db] def findToJsValueSeq(collection: MongoCollection): Seq[JsValue] = {
+    collection.find().map(result => Json.parse(result.toString)).toSeq
   }
 
   private[db] def distinct(collection: MongoCollection, key: String, query: MongoDBObject): Seq[String] = {

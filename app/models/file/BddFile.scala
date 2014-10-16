@@ -40,14 +40,14 @@ class BddFile {
     }
   }
 
-  def listDirs(directory: File): List[String] = {
+  def listDirs(directory: File): Seq[String] = {
     directory.listFiles.filter(_.isDirectory).map(_.getName).toList
   }
 
   def listFiles(directory: File,
                 subDirectory: String = "",
                 recursive: Boolean = false,
-                extension: Option[String] = Option.empty): List[String] = {
+                extension: Option[String] = Option.empty): Seq[String] = {
     if (directory.exists()) {
       val files = directory.listFiles()
       val filesInCurrentDir = files.filter(_.isFile).map(file => subDirectory + file.getName)
