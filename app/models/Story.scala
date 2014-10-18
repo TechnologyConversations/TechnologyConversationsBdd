@@ -15,15 +15,23 @@ class Story(val bddFile: Option[BddFile] = Option.empty,
   val mongoDbIsEnabled = featureIsEnabled("mongoDb")
 
   def saveStory(file: File, json: JsValue, overwrite: Boolean): Boolean = {
-    val dbSuccess = !bddDb.isDefined || !mongoDbIsEnabled || bddDb.get.upsertStory(json)
-    val fileSuccess = !bddFile.isDefined || bddFile.get.saveFile(file, toText(json), overwrite)
-    dbSuccess && fileSuccess
+    if (bddDb.isDefined && mongoDbIsEnabled) {
+      bddDb.get.upsertStory(json)
+    } else if (bddFile.isDefined) {
+      bddFile.get.saveFile(file, toText(json), overwrite)
+    } else {
+      false
+    }
   }
 
   def removeStory(file: File, storyPath: String): Boolean = {
-    val fileDeleted = !bddFile.isDefined || bddFile.get.deleteFile(file)
-    val dbSuccess = !bddDb.isDefined || !mongoDbIsEnabled || bddDb.get.removeStory(storyPath)
-    dbSuccess && fileDeleted
+    if (bddDb.isDefined && mongoDbIsEnabled) {
+      bddDb.get.removeStory(storyPath)
+    } else if (bddFile.isDefined) {
+      bddFile.get.deleteFile(file)
+    } else {
+      false
+    }
   }
 
   def findStory(file: File, storyPath: String): Option[JsValue] = {
@@ -78,12 +86,12 @@ class Story(val bddFile: Option[BddFile] = Option.empty,
     }
   }
 
-  def storiesFromMongoDbToFiles(storiesPath: String): Boolean = {
+  def storiesFromMongoDbToFiles(exportDirPath: String): Boolean = {
     if (bddFile.isDefined && bddDb.isDefined) {
       bddDb.get.findStories()
         .foreach(json => {
           val path = (json \ "path").as[String]
-          bddFile.get.saveFile(new File(s"$storiesPath/$path"), toText(json), overwrite = true)
+          bddFile.get.saveFile(new File(s"$exportDirPath/$path"), toText(json), overwrite = true)
         })
       true
     } else {
