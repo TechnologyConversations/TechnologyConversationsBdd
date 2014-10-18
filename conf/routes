@@ -11,6 +11,7 @@ PUT     /stories/story.json                         controllers.StoryController.
 DELETE  /stories/story/*path                        controllers.StoryController.deleteStoryJson(path: String)
 POST    /stories/dir.json                           controllers.StoryController.createDirectoryJson
 PUT     /api/v1/stories/storiesFromFileToMongoDb    controllers.StoryController.storiesFromFileToMongoDb
+PUT     /api/v1/stories/storiesFromMongoDbToFiles   controllers.StoryController.storiesFromMongoDbToFiles(exportDirPath: String)
 
 # Steps
 GET     /steps/list.json                            controllers.StepsController.listJson

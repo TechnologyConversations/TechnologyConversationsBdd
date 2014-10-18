@@ -264,10 +264,47 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
       contentAsString(result) must /("meta") */("message" -> s"Story $storiesDir/$path has been deleted")
     }
 
-    "call Story#storiesFromFileToMongoDb" in {
+    "call Story#deleteStoryJson" in {
       reset(controller.story)
       controller.deleteStoryJson(path)(FakeRequest())
       there was one(controller.story).removeStory(new File(s"$storiesDir/$path"), path)
+    }
+
+  }
+
+  "StoryControlller#storiesFromMongoDbToFiles" should {
+
+    val exportDirPath = "path/to/export/stories"
+    lazy val controller = new StoryController() {
+      override val story = mock[Story]
+    }
+
+    "return OK" in {
+      controller.story.storiesFromMongoDbToFiles(any[String]) returns true
+      val result = controller.storiesFromMongoDbToFiles(exportDirPath)(FakeRequest())
+      status(result) must equalTo(OK)
+    }
+
+    "return JSON" in {
+      controller.story.storiesFromMongoDbToFiles(any[String]) returns true
+      val result = controller.storiesFromMongoDbToFiles(exportDirPath)(FakeRequest())
+      contentType(result) must beSome("application/json")
+      contentAsString(result) must /("meta") */ ("message" -> "OK")
+    }
+
+    "call Story#storiesFromMongoDbToFiles" in {
+      reset(controller.story)
+      controller.story.storiesFromMongoDbToFiles(any[String]) returns true
+      controller.storiesFromMongoDbToFiles(exportDirPath)(FakeRequest())
+      there was one(controller.story).storiesFromMongoDbToFiles(
+        s"$storiesRelativeDir/$exportDirPath"
+      )
+    }
+
+    "return BadRequest when storiesFromMongoDbToFiles failed" in {
+      controller.story.storiesFromMongoDbToFiles(any[String]) returns false
+      val result = controller.storiesFromMongoDbToFiles(exportDirPath)(FakeRequest())
+      status(result) must equalTo(BAD_REQUEST)
     }
 
   }
@@ -276,35 +313,30 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
     lazy val controller = new StoryController() {
       override val story = mock[Story]
-      story.storiesFromFileToMongoDb(any[String]) returns true
     }
 
     "return OK" in {
+      controller.story.storiesFromFileToMongoDb(any[String]) returns true
       val result = controller.storiesFromFileToMongoDb()(FakeRequest())
       status(result) must equalTo(OK)
     }
 
     "return JSON" in {
+      controller.story.storiesFromFileToMongoDb(any[String]) returns true
       val result = controller.storiesFromFileToMongoDb()(FakeRequest())
       contentType(result) must beSome("application/json")
-      contentAsString(result) must /("meta") */("message" -> "OK")
+      contentAsString(result) must /("meta") */ ("message" -> "OK")
     }
 
     "call Story#storiesFromFileToMongoDb" in {
-      val mockedStory = mock[Story]
-      lazy val controller = new StoryController() {
-        override val story = mockedStory
-      }
+      reset(controller.story)
+      controller.story.storiesFromFileToMongoDb(any[String]) returns true
       controller.storiesFromFileToMongoDb()(FakeRequest())
-      there was one(mockedStory).storiesFromFileToMongoDb(any[String])
+      there was one(controller.story).storiesFromFileToMongoDb(any[String])
     }
 
     "return BadRequest when storiesFromFileToMongoDb failed" in {
-      val mockedStory = mock[Story]
-      lazy val controller = new StoryController() {
-        override val story = mockedStory
-        story.storiesFromFileToMongoDb(any[String]) returns false
-      }
+      controller.story.storiesFromFileToMongoDb(any[String]) returns false
       val result = controller.storiesFromFileToMongoDb()(FakeRequest())
       status(result) must equalTo(BAD_REQUEST)
     }
