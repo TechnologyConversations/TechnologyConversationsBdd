@@ -10,7 +10,7 @@ import org.jbehave.core.model.{Narrative, Lifecycle}
 import models.jbehave.JBehaveStoryMock
 import org.specs2.mock._
 import java.io.File
-import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.{doReturn, reset}
 
 class StorySpec extends Specification with Mockito with JsonMatchers {
 
@@ -381,6 +381,56 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
       val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
       doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
       story.storiesFromFileToMongoDb(dirPath) must beTrue
+    }
+
+  }
+
+  "Story#storiesFromMongoDbToFiles" >> {
+
+    val storiesPath = "path/to/stories"
+    val bddFile = mock[BddFile]
+    val bddDb = mock[BddDb]
+    val storyPath1 = s"$storiesPath/story1.story"
+    val storyPath2 = s"$storiesPath/story2.story"
+    val storyJson1 = Json.parse(s"""{"path": "$storyPath1"}""")
+    val storyJson2 = Json.parse(s"""{"path": "$storyPath2"}""")
+    val storyAsText = "THIS IS STORY IN TEXT FORMAT"
+    val story = new Story(bddFile = Option(bddFile), bddDb = Option(bddDb)) {
+      override def toText(json: JsValue) = storyAsText
+    }
+    bddDb.findStories() returns Seq(storyJson1, storyJson2)
+
+    "return false when BddFile is not defined" >> {
+      val story = Story(bddDb = Option(bddDb))
+      story.storiesFromMongoDbToFiles(storiesPath) must beFalse
+    }
+
+    "return false when BddDb is not defined" >> {
+      val story = Story(bddFile = Option(bddFile))
+      story.storiesFromMongoDbToFiles(storiesPath) must beFalse
+    }
+
+    "retrieve stories from the DB" >> {
+      reset(bddDb)
+      bddDb.findStories() returns Seq(storyJson1, storyJson2)
+      story.storiesFromMongoDbToFiles(storiesPath)
+      there was one(bddDb).findStories()
+    }
+
+    "call saveFile for each story" >> {
+      reset(bddFile)
+      story.storiesFromMongoDbToFiles(storiesPath)
+      there were two(bddFile).saveFile(any[File], any[String], any[Boolean])
+    }
+
+    "call saveFile with correct params" >> {
+      reset(bddFile)
+      story.storiesFromMongoDbToFiles(storiesPath)
+      there was one(bddFile).saveFile(
+        new File(s"$storiesPath/$storyPath1"),
+        storyAsText,
+        overwrite = true
+      )
     }
 
   }

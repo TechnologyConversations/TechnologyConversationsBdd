@@ -8,8 +8,8 @@ import play.api.libs.json.{JsValue, Json}
 import util.Imports._
 
 
-class Story(val bddFile: Option[BddFile] = Option.empty, val bddDb: Option[BddDb] = Option.empty)
-  extends JBehaveStory {
+class Story(val bddFile: Option[BddFile] = Option.empty,
+            val bddDb: Option[BddDb] = Option.empty) extends JBehaveStory {
 
   // TODO Remove
   val mongoDbIsEnabled = featureIsEnabled("mongoDb")
@@ -71,7 +71,20 @@ class Story(val bddFile: Option[BddFile] = Option.empty, val bddDb: Option[BddDb
           findStoryFromFile(new File(storyPath), formattedPath)
         })
         .filter(_.isDefined)
-        .map(json => bddDb.get.upsertStory(json.get))
+        .foreach(json => bddDb.get.upsertStory(json.get))
+      true
+    } else {
+      false
+    }
+  }
+
+  def storiesFromMongoDbToFiles(storiesPath: String): Boolean = {
+    if (bddFile.isDefined && bddDb.isDefined) {
+      bddDb.get.findStories()
+        .foreach(json => {
+          val path = (json \ "path").as[String]
+          bddFile.get.saveFile(new File(s"$storiesPath/$path"), toText(json), overwrite = true)
+        })
       true
     } else {
       false
