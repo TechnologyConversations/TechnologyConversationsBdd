@@ -1,15 +1,14 @@
 package controllers
 
 import models.Story
-import models.db.BddDb
-import models.file.BddFile
-import org.specs2.mock.Mockito
+import org.specs2.mock._
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest, FakeApplication}
 import org.specs2.mutable.{After, Specification}
 import play.api.libs.json._
 import org.specs2.matcher.{JsonMatchers, PathMatchers}
 import java.io.File
+import org.mockito.Mockito.reset
 
 class StoryControllerSpec extends Specification with PathMatchers with JsonMatchers with Mockito {
 
@@ -246,17 +245,29 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
 
   }
 
-  // TODO Refactor and remove route
   "DELETE /stories/story.json route" should {
 
-    "delete story from the specified path" in new MockStory {
-      running(FakeApplication()) {
-        new File(storyPath).createNewFile
-        val Some(result) = route(FakeRequest(DELETE, s"/stories/story/$story"))
-        status(result) must equalTo(OK)
-        contentType(result) must beSome("application/json")
-        new File(storyPath).exists must beFalse
-      }
+    lazy val controller = new StoryController() {
+      override val story = mock[Story]
+      story.removeStory(any[File], any[String]) returns true
+    }
+    val path = "path/to/my.story"
+
+    "return OK" in {
+      val result = controller.deleteStoryJson(path)(FakeRequest())
+      status(result) must equalTo(OK)
+    }
+
+    "return JSON" in {
+      val result = controller.deleteStoryJson(path)(FakeRequest())
+      contentType(result) must beSome("application/json")
+      contentAsString(result) must /("meta") */("message" -> s"Story $storiesDir/$path has been deleted")
+    }
+
+    "call Story#storiesFromFileToMongoDb" in {
+      reset(controller.story)
+      controller.deleteStoryJson(path)(FakeRequest())
+      there was one(controller.story).removeStory(new File(s"$storiesDir/$path"), path)
     }
 
   }
