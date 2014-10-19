@@ -3,43 +3,43 @@
 # ~~~~
 
 # Stories
-GET     /page/*path                                 controllers.StoryController.index(path: String)
-GET     /stories/list.json                          controllers.StoryController.listJson(path: String ?= "")
-GET     /stories/story.json                         controllers.StoryController.storyJson(path: String ?= "")
-POST    /stories/story.json                         controllers.StoryController.postStoryJson
-PUT     /stories/story.json                         controllers.StoryController.putStoryJson
-DELETE  /stories/story/*path                        controllers.StoryController.deleteStoryJson(path: String)
-POST    /stories/dir.json                           controllers.StoryController.createDirectoryJson
-PUT     /api/v1/stories/storiesFromFileToMongoDb    controllers.StoryController.storiesFromFileToMongoDb
-PUT     /api/v1/stories/storiesFromMongoDbToFiles   controllers.StoryController.storiesFromMongoDbToFiles(exportDirPath: String)
+GET     /page/*path                                     controllers.StoryController.index(path: String)
+GET     /stories/list.json                              controllers.StoryController.listJson(path: String ?= "")
+GET     /stories/story.json                             controllers.StoryController.storyJson(path: String ?= "")
+POST    /stories/story.json                             controllers.StoryController.postStoryJson
+PUT     /stories/story.json                             controllers.StoryController.putStoryJson
+DELETE  /stories/story/*path                            controllers.StoryController.deleteStoryJson(path: String)
+POST    /stories/dir.json                               controllers.StoryController.createDirectoryJson
+PUT     /api/v1/stories/storiesFromFileToMongoDb        controllers.StoryController.storiesFromFileToMongoDb
+PUT     /api/v1/stories/storiesFromMongoDbToFiles/*path controllers.StoryController.storiesFromMongoDbToFiles(path: String)
 
 # Steps
-GET     /steps/list.json                            controllers.StepsController.listJson
-GET     /steps/classes.json                         controllers.StepsController.classesJson
+GET     /steps/list.json                                controllers.StepsController.listJson
+GET     /steps/classes.json                             controllers.StepsController.classesJson
 
 # Runners
-POST    /runner/run.json                            controllers.RunnerController.run
+POST    /runner/run.json                                controllers.RunnerController.run
 
 # Reporters
-GET     /api/v1/reporters/list/*id                  controllers.ReporterController.list(id: String)
-GET     /api/v1/reporters/get/*id/*report           controllers.ReporterController.get(id: String, report: String)
+GET     /api/v1/reporters/list/*id                      controllers.ReporterController.list(id: String)
+GET     /api/v1/reporters/get/*id/*report               controllers.ReporterController.get(id: String, report: String)
 
 # Composites
-GET     /composites                                 controllers.CompositesController.classesToJson
-GET     /groovyComposites                           controllers.CompositesController.groovyClassesToJson
-GET     /composites/*fullClassName                  controllers.CompositesController.classToJson(fullClassName: String)
-GET     /groovyComposites/*className                controllers.CompositesController.groovyClassToJson(className: String)
-PUT     /composites                                 controllers.CompositesController.putClass
-PUT     /groovyComposites                           controllers.CompositesController.putGroovyClass
-DELETE  /composites/*fullClassName                  controllers.CompositesController.deleteClass(fullClassName: String)
-DELETE  /groovyComposites/*className                controllers.CompositesController.deleteGroovyClass(className: String)
+GET     /composites                                     controllers.CompositesController.classesToJson
+GET     /groovyComposites                               controllers.CompositesController.groovyClassesToJson
+GET     /composites/*fullClassName                      controllers.CompositesController.classToJson(fullClassName: String)
+GET     /groovyComposites/*className                    controllers.CompositesController.groovyClassToJson(className: String)
+PUT     /composites                                     controllers.CompositesController.putClass
+PUT     /groovyComposites                               controllers.CompositesController.putGroovyClass
+DELETE  /composites/*fullClassName                      controllers.CompositesController.deleteClass(fullClassName: String)
+DELETE  /groovyComposites/*className                    controllers.CompositesController.deleteGroovyClass(className: String)
 
 # Data
 
-GET     /api/v1/data/*id                            controllers.DataController.get(id: String)
+GET     /api/v1/data/*id                                controllers.DataController.get(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                   controllers.Assets.at(path="/public", file)
 
 # Catch all
-GET     /                                           controllers.StoryController.index(path: String ?= "")
+GET     /                                               controllers.StoryController.index(path: String ?= "")

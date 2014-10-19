@@ -60,19 +60,6 @@ package object controllers {
     )
   }
 
-  @deprecated("Use toJson instead")
-  def okJson(message: String): Result = {
-    Ok(Json.toJson(okMap(message)))
-  }
-
-  @deprecated("Use toJson instead")
-  def okMap(message: String) = {
-    Map(
-      "status" -> "OK",
-      "message" -> message
-    )
-  }
-
   val compositesDir: String = {
     val dirPath = Play.current.configuration.getString("composites.root.dir").getOrElse("composites")
     absolutePath(dirPath)
@@ -87,7 +74,11 @@ package object controllers {
   }
 
   val storiesRelativeDir: String = {
-    Play.current.configuration.getString("stories.root.dir").getOrElse("stories")
+    Play.current.configuration.getString("stories.root.dir").getOrElse("data/stories")
+  }
+
+  val tempStoriesRelativeDir: String = {
+    Play.current.configuration.getString("stories.temp.dir").getOrElse("data/temp_stories")
   }
 
   val storiesDir: String = {

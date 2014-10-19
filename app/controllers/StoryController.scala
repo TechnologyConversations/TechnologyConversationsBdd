@@ -83,7 +83,7 @@ class StoryController extends Controller {
   }
 
   def storiesFromMongoDbToFiles(exportDirPath: String): Action[AnyContent] = Action { implicit request =>
-    val result = story.storiesFromMongoDbToFiles(s"$storiesRelativeDir/$exportDirPath")
+    val result = story.storiesFromMongoDbToFiles(s"$tempStoriesRelativeDir/$exportDirPath")
     if (result) Ok(toJson(message = Option("OK")))
     else BadRequest(toJson(message = Option("Failed to access MongoDB or write story files")))
   }

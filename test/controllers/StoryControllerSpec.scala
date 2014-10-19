@@ -297,7 +297,7 @@ class StoryControllerSpec extends Specification with PathMatchers with JsonMatch
       controller.story.storiesFromMongoDbToFiles(any[String]) returns true
       controller.storiesFromMongoDbToFiles(exportDirPath)(FakeRequest())
       there was one(controller.story).storiesFromMongoDbToFiles(
-        s"$storiesRelativeDir/$exportDirPath"
+        s"$tempStoriesRelativeDir/$exportDirPath"
       )
     }
 

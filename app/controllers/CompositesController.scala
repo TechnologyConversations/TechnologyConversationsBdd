@@ -47,7 +47,7 @@ object CompositesController extends Controller {
         val className = (json \ "class").as[String]
         val path = fullClassPath(s"$packageName.$className")
         composites.saveFile(path, classText, overwrite = true)
-        okJson("Class was saved successfully")
+        Ok(toJson(message = Option("Class was saved successfully")))
       } catch {
         case e: Exception => errorJson(e.getMessage)
       }
@@ -66,7 +66,7 @@ object CompositesController extends Controller {
         val className = (json \ "class").as[String]
         val path = s"$compositesDir/$className.groovy"
         composites.saveFile(path, classText, overwrite = true)
-        okJson("Class was saved successfully")
+        Ok(toJson(message = Option("Class was saved successfully")))
       } catch {
         case e: Exception => errorJson(e.getMessage)
       }
@@ -75,13 +75,13 @@ object CompositesController extends Controller {
 
   def deleteClass(fullClassName: String): Action[AnyContent] = Action { implicit request =>
     Composites(compositesDir).delete(fullClassPath(fullClassName))
-    okJson(s"Class $fullClassName has been deleted")
+    Ok(toJson(message = Option(s"Class $fullClassName has been deleted")))
   }
 
   def deleteGroovyClass(className: String): Action[AnyContent] = Action { implicit request =>
     val path = s"$compositesDir/$className.groovy"
     Composites(javaCompositesDir).delete(path)
-    okJson(s"Class $className has been deleted")
+    Ok(toJson(message = Option(s"Class $className has been deleted")))
   }
 
   private def fullClassPath(fullClassName: String) = {
