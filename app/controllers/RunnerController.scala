@@ -7,6 +7,7 @@ import models.{Story, RunnerClass, Runner}
 import play.api.libs.json.JsValue
 import play.api.Play
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import util.Imports._
 import scala.concurrent.Future
 
 class RunnerController extends Controller {
@@ -16,13 +17,15 @@ class RunnerController extends Controller {
   lazy val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
   lazy val bddFile = Option(BddFile())
   lazy val story = Story(bddFile, bddDb)
+  // TODO Remove
+  val mongoDbIsEnabled = featureIsEnabled("mongoDb")
 
   def run: Action[AnyContent] = Action { implicit request =>
     val reportsId = System.currentTimeMillis()
     val json = request.body.asJson
     val resultMap = validate(json, reportsId)
     if (resultMap("status") == "OK") {
-      if (bddDb.isDefined) {
+      if (bddDb.isDefined && mongoDbIsEnabled) {
         Future(runStoriesFromDb(json, reportsId))
       } else {
         Future(runStoriesFromFile(json, reportsId))
