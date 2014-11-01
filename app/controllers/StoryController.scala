@@ -125,4 +125,4 @@ class StoryController extends Controller {
 
 }
 
-object StoryController extends controllers.StoryController
+object StoryController extends StoryController

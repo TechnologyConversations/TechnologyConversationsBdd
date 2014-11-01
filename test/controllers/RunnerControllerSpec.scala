@@ -1,15 +1,19 @@
 package controllers
 
 
+import org.specs2.mock.Mockito
 import org.specs2.mutable.{After, Specification}
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest, FakeApplication}
 import org.specs2.matcher.JsonMatchers
 import play.api.libs.json._
 import java.io.File
+import org.mockito.Mockito.{doNothing, doReturn, reset}
+import models.Story
+
 import scalax.file.Path
 
-class RunnerControllerSpec extends Specification with JsonMatchers {
+class RunnerControllerSpec extends Specification with JsonMatchers with Mockito {
 
   val fakeJsonHeaders = FakeHeaders(Seq("Content-type" -> Seq("application/json")))
   val reportsPath = "public/jbehave"
@@ -91,6 +95,52 @@ class RunnerControllerSpec extends Specification with JsonMatchers {
 //        jsonString must /("reportsPath" -> s"$reportsPath/.*/view/reports.html".r)
 //      }
 //    }
+
+  }
+
+  "RunnerController#runStoriesFromFile" should {
+
+    val jsonOption = Option(Json.parse( """{"key": "value"}"""))
+    val reportsId = 123
+    val storiesDir = "PATH/TO/RUNNER/STORIES/DIR"
+    val controller = spy(new RunnerController())
+    doReturn(storiesDir).when(controller).storiesDir
+    doNothing().when(controller).runStories(any[Option[JsValue]], any[Long], any[String])
+
+    "call runStories method" in {
+      controller.runStoriesFromFile(jsonOption, reportsId)
+      there was one(controller).runStories(jsonOption, reportsId, storiesDir)
+    }
+
+  }
+
+  "RunnerController#runStoriesFromDb" should {
+
+    val jsonOption = Option(Json.parse("""{"key": "value"}"""))
+    val reportsId = 123
+    val runnerStoriesDir = "PATH/TO/RUNNER/STORIES/DIR"
+    val storiesDir = s"$runnerStoriesDir/$reportsId"
+    val story = mock[Story]
+
+    "call Story#storiesFromMongoDbToFiles method" in {
+      val controller = spy(new RunnerController())
+      doReturn(runnerStoriesDir).when(controller).runnerStoriesDir
+      doNothing().when(controller).runStories(any[Option[JsValue]], any[Long], any[String])
+      doReturn(story).when(controller).story
+
+      controller.runStoriesFromDb(jsonOption, reportsId)
+      there was one(story).storiesFromMongoDbToFiles(storiesDir)
+    }
+
+    "call runStories method" in {
+      val controller = spy(new RunnerController())
+      doReturn(runnerStoriesDir).when(controller).runnerStoriesDir
+      doNothing().when(controller).runStories(any[Option[JsValue]], any[Long], any[String])
+      doReturn(story).when(controller).story
+
+      controller.runStoriesFromDb(jsonOption, reportsId)
+      there was one(controller).runStories(jsonOption, reportsId, storiesDir)
+    }
 
   }
 
