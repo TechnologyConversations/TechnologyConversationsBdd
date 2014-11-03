@@ -86,28 +86,38 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#findStoryNames" should {
 
     "return result of distinct" in {
-      val directoryPath = "path/to/my/dir"
+      val directoryPath = "path/to/my/dir/"
       val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       val expected = Seq("value1", "value2")
       doReturn(expected).when(bddDb).distinct(storiesCollection, "name", MongoDBObject("dirPath" -> directoryPath))
       bddDb.findStoryNames(directoryPath) must equalTo(expected)
-
     }
 
   }
 
   "BddDb#findStoryDirPaths" should {
 
-    "return result of distinct" in {
-      val directoryPath = "path/to/my/dir"
-      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
-      bddDb.collection(bddDb.storiesCollection) returns storiesCollection
-      val expected = Seq("value1", "value2")
-      val regex = directoryPath + """.+/$"""
+    val expected = Seq("value1", "value2")
+    val directoryPath = "path/to/my/dir"
+    val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+    bddDb.collection(bddDb.storiesCollection) returns storiesCollection
+    val regex = directoryPath + """\/.+/$"""
+
+    "return result of distinct with query" in {
       doReturn(expected).when(bddDb).distinct(storiesCollection, "dirPath", "dirPath" $regex regex)
       bddDb.findStoryDirPaths(directoryPath) must equalTo(expected)
+    }
 
+    "return result of distinct when path is empty" in {
+      doReturn(expected).when(bddDb).distinct(storiesCollection, "dirPath", MongoDBObject.empty)
+      bddDb.findStoryDirPaths("") must equalTo(expected)
+    }
+
+    "trim directory path from results" in {
+      val mongoResult = Seq(s"$directoryPath/value1", s"$directoryPath/value2")
+      doReturn(mongoResult).when(bddDb).distinct(storiesCollection, "dirPath", "dirPath" $regex regex)
+      bddDb.findStoryDirPaths(directoryPath) must equalTo(expected)
     }
 
   }

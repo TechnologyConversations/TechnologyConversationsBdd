@@ -20,14 +20,23 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   }
 
   def findStoryNames(directoryPath: String): Seq[String] = {
-    distinct(storiesMongoCollection, "name", MongoDBObject("dirPath" -> directoryPath))
+    val query = MongoDBObject("dirPath" -> formatDirectory(directoryPath))
+    distinct(storiesMongoCollection, "name", query)
   }
 
   def findStoryDirPaths(directoryPath: String): Seq[String] = {
-    val regex = if (directoryPath.isEmpty) """.+/$""" else directoryPath + """\/.+/$"""
-//    val regex = directoryPath + """.+/$"""
-    distinct(storiesMongoCollection, "dirPath", "dirPath" $regex regex)
-//    distinct(storiesMongoCollection, "dirPath")
+    if (directoryPath.isEmpty) {
+      distinct(storiesMongoCollection, "dirPath", MongoDBObject.empty)
+    } else {
+      val formattedPath = formatDirectory(directoryPath)
+      val regex = formattedPath + """.+/$"""
+      val prefixLength = formattedPath.length
+      distinct(storiesMongoCollection, "dirPath", "dirPath" $regex regex)
+        .map { result =>
+          if (result.startsWith(formattedPath)) result.drop(prefixLength)
+          else result
+      }
+    }
   }
 
   def upsertStory(story: JsValue): Boolean = {
@@ -57,17 +66,17 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
     collection.find().map(result => Json.parse(result.toString)).toSeq
   }
 
-  private[db] def distinct(collection: MongoCollection, key: String): Seq[String] = {
-    collection.distinct(key).toSeq.map(_.toString)
-  }
-
-  private[db] def distinct(collection: MongoCollection, key: String, query: MongoDBObject): Seq[String] = {
+  private[db] def distinct(collection: MongoCollection, key: String, query: MongoDBObject = MongoDBObject.empty): Seq[String] = {
     val results = collection.distinct(key, query)
     results.toSeq.map(_.toString)
   }
 
   private[db] def collection(mongoCollection: String): MongoCollection = {
     db(mongoCollection)
+  }
+
+  private [db] def formatDirectory(path: String) = {
+    if (path.endsWith("/")) path else s"$path/"
   }
 
 }
