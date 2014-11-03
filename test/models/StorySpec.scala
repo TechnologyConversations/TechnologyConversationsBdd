@@ -365,6 +365,14 @@ class StorySpec extends Specification with Mockito with JsonMatchers {
       there were two(story).findStoryFromFile(any[File], any[String])
     }
 
+    "call findStoryFromFile correct parameters" in {
+      val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
+      doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])
+      bddFile.listFiles(dir, recursive = true, extension = Option(".story")) returns List("a.story", "b.story")
+      story.storiesFromFileToMongoDb(dirPath)
+      there was one(story).findStoryFromFile(new File(s"$dirPath/$path1"), path1)
+    }
+
     "call upsertStory for each JSON" in {
       val story = spy(Story(bddFile = Option(bddFile), bddDb = Option(bddDb)))
       doReturn(Option(mock[JsValue])).when(story).findStoryFromFile(any[File], any[String])

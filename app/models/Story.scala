@@ -76,7 +76,7 @@ class Story(val bddFile: Option[BddFile] = Option.empty,
         .listFiles(new File(storiesPath), recursive = true, extension = Option(".story"))
         .map(storyPath => {
           val formattedPath = if (storyPath.startsWith("/")) storyPath.drop(1) else storyPath
-          findStoryFromFile(new File(storyPath), formattedPath)
+          findStoryFromFile(new File(s"$storiesPath/$storyPath"), formattedPath)
         })
         .filter(_.isDefined)
         .foreach(json => bddDb.get.upsertStory(json.get))
