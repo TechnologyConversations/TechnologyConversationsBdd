@@ -24,8 +24,10 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
   }
 
   def findStoryDirPaths(directoryPath: String): Seq[String] = {
-    val regex = directoryPath + """[^\/]+/$"""
+    val regex = if (directoryPath.isEmpty) """.+/$""" else directoryPath + """\/.+/$"""
+//    val regex = directoryPath + """.+/$"""
     distinct(storiesMongoCollection, "dirPath", "dirPath" $regex regex)
+//    distinct(storiesMongoCollection, "dirPath")
   }
 
   def upsertStory(story: JsValue): Boolean = {
@@ -53,6 +55,10 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 
   private[db] def findToJsValueSeq(collection: MongoCollection): Seq[JsValue] = {
     collection.find().map(result => Json.parse(result.toString)).toSeq
+  }
+
+  private[db] def distinct(collection: MongoCollection, key: String): Seq[String] = {
+    collection.distinct(key).toSeq.map(_.toString)
   }
 
   private[db] def distinct(collection: MongoCollection, key: String, query: MongoDBObject): Seq[String] = {

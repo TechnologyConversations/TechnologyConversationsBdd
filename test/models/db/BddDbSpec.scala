@@ -104,7 +104,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
       val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       val expected = Seq("value1", "value2")
-      val regex = directoryPath + """[^\/]+/$"""
+      val regex = directoryPath + """.+/$"""
       doReturn(expected).when(bddDb).distinct(storiesCollection, "dirPath", "dirPath" $regex regex)
       bddDb.findStoryDirPaths(directoryPath) must equalTo(expected)
 
