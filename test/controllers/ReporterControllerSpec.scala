@@ -15,8 +15,7 @@ class ReporterControllerSpec extends Specification with JsonMatchers {
         val Some(result) = route(FakeRequest(GET, "/api/v1/reporters/list/NON_EXISTING_ID"))
         status(result) must equalTo(BAD_REQUEST)
         val json = contentAsJson(result).toString()
-        json must /("status" -> "ERROR")
-        json must /("message" -> "ID is NOT correct")
+        json must /("meta") /("message" -> "ID is NOT correct")
       }
     }
 
@@ -29,8 +28,7 @@ class ReporterControllerSpec extends Specification with JsonMatchers {
         val Some(result) = route(FakeRequest(GET, "/api/v1/reporters/get/NON_EXISTING_ID/NON_EXISTING_REPORT"))
         status(result) must equalTo(BAD_REQUEST)
         val json = contentAsJson(result).toString()
-        json must /("status" -> "ERROR")
-        json must /("message" -> "ID and/or report is NOT correct")
+        json must /("meta") /("message" -> "ID or report is NOT correct")
       }
     }
 
