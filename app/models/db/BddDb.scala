@@ -21,11 +21,11 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 
   def findStoryNames(directoryPath: String): Seq[String] = {
     val query = MongoDBObject("dirPath" -> formatDirectory(directoryPath))
-    distinct(storiesMongoCollection, "name", query)
+    distinct(storiesMongoCollection, "name", query).sorted
   }
 
   def findStoryDirPaths(directoryPath: String): Seq[String] = {
-    if (directoryPath.isEmpty) {
+    val paths = if (directoryPath.isEmpty) {
       distinct(storiesMongoCollection, "dirPath", MongoDBObject.empty)
     } else {
       val formattedPath = formatDirectory(directoryPath)
@@ -37,6 +37,7 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
           else result
       }
     }
+    paths.sorted
   }
 
   def upsertStory(story: JsValue): Boolean = {
