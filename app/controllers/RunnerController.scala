@@ -14,7 +14,7 @@ class RunnerController extends Controller {
 
   lazy val storiesDir = Play.current.configuration.getString("stories.root.dir").getOrElse("data/stories")
   lazy val runnerStoriesDir = Play.current.configuration.getString("stories.runner.dir").getOrElse("data/runner_stories")
-  lazy val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
+  lazy val bddDb = if (mongoEnabled) Option(BddDb(mongoUri, mongoDb)) else Option.empty
   lazy val bddFile = Option(BddFile())
   lazy val story = Story(bddFile, bddDb)
   // TODO Remove

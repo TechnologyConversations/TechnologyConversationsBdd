@@ -93,8 +93,7 @@ package object controllers {
   }
 
   lazy val mongoEnabled = Play.current.configuration.getBoolean("db.mongodb.enabled").getOrElse(true)
-  lazy val mongoIp = Play.current.configuration.getString("db.mongodb.ip").getOrElse("localhost")
-  lazy val mongoPort = Play.current.configuration.getInt("db.mongodb.port").getOrElse(27017)
+  lazy val mongoUri = Play.current.configuration.getString("db.mongodb.uri").getOrElse("mongodb://localhost:27017")
   lazy val mongoDb = Play.current.configuration.getString("db.mongodb.db").getOrElse("tcbdd")
 
 }

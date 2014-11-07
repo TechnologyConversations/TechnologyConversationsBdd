@@ -11,7 +11,7 @@ import scala.io.Source
 
 class StoryController extends Controller {
 
-  val bddDb = if (mongoEnabled) Option(BddDb(mongoIp, mongoPort, mongoDb)) else Option.empty
+  val bddDb = if (mongoEnabled) Option(BddDb(mongoUri, mongoDb)) else Option.empty
   val bddFile = Option(BddFile())
   val story = Story(bddFile = bddFile, bddDb = bddDb)
 

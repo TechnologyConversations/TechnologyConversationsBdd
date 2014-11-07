@@ -4,9 +4,9 @@ import com.mongodb.casbah.Imports._
 import play.api.libs.json._
 import com.mongodb.util.JSON
 
-class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
+class BddDb(val mongoUri: String, val mongoDb: String) {
 
-  lazy val client = MongoClient(mongoIp, mongoPort)
+  lazy val client = MongoClient(MongoClientURI("mongodb://localhost:27017"))
   lazy val db = client(mongoDb)
   val storiesCollection = "stories"
   lazy val storiesMongoCollection = collection(storiesCollection)
@@ -83,5 +83,5 @@ class BddDb(val mongoIp: String, val mongoPort: Integer, val mongoDb: String) {
 }
 
 object BddDb {
-  def apply(mongoIp: String, mongoPort: Integer, mongoDb: String) = new BddDb(mongoIp, mongoPort, mongoDb)
+  def apply(mongoUri: String, mongoDb: String) = new BddDb(mongoUri, mongoDb)
 }
