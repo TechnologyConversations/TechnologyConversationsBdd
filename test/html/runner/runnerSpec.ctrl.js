@@ -176,6 +176,7 @@ describe('runnerModule', function() {
             beforeEach(function() {
                 spyOn(service, 'openErrorModal');
                 responseJson = {
+                    meta: {},
                     status: 'finished'
                 };
             });
@@ -226,7 +227,7 @@ describe('runnerModule', function() {
                 timeout.flush();
             });
             it('should repeat the request when the response is an error and the message is ID is NOT correct', function() {
-                responseJson.message = 'ID is NOT correct';
+                responseJson.meta.message = 'ID is NOT correct';
                 httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
@@ -502,7 +503,7 @@ describe('runnerModule', function() {
                 expect(scope.paramArray.length).toEqual(0);
             });
             it('should set features to the controller argument', function() {
-                expect(scope.features).toEqual(features);;
+                expect(scope.features).toEqual(features);
             });
             it('should call startJoyRideOnLoad service', function() {
                 spyOn(service, 'startJoyRideOnLoad');

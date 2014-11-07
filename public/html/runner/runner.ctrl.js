@@ -80,7 +80,7 @@ angular.module('runnerModule', [])
                     $scope.showRunnerProgress = false;
                 }
             }, function (response) {
-                if (response.data.message === 'ID is NOT correct') {
+                if (response.data.meta !== undefined && response.data.meta.message === 'ID is NOT correct') {
                     $timeout(function() {
                         $scope.getReports(reportsId);
                     }, 15000);

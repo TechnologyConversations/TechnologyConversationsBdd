@@ -13,7 +13,6 @@ angular.module('storyModule', [])
             $scope.expandPanels();
             $scope.originalStory = angular.copy(story);
             $scope.scenarioToggles = [];
-            var pathArray = $scope.story.path.split('/');
             $scope.setAction();
             if ($location.search().reportsId !== undefined) {
                 $scope.storyFormClass = 'col-md-6';
@@ -130,16 +129,12 @@ angular.module('storyModule', [])
         };
         $scope.getReports = function(reportsId) {
             $http.get('/api/v1/reporters/list/' + reportsId).then(function (response) {
-                console.log(reportsId);
-                console.log(response.data);
                 if (response.data.status !== 'finished') {
-                    console.log('111');
                     $scope.storyRunnerInProgress = true;
                     $timeout(function() {
                         $scope.getReports(reportsId);
                     }, 5000);
                 } else {
-                    console.log('222');
                     var reports = response.data.reports;
                     $scope.reports = reports;
                     $scope.reports.id = reportsId;
@@ -148,7 +143,7 @@ angular.module('storyModule', [])
                     $scope.storyRunnerSuccess = $scope.isStoryRunnerSuccess(reports);
                 }
             }, function (response) {
-                if (response.data.message === 'ID is NOT correct') {
+                if (response.data.meta !== undefined && response.data.meta.message === 'ID is NOT correct') {
                     $timeout(function() {
                         $scope.getReports(reportsId);
                     }, 5000);
@@ -244,8 +239,7 @@ angular.module('storyModule', [])
             var found = false;
             $scope.scenarioToggles.forEach(function(toggle) {
                 if (toggle.scenario === scenario) {
-                    var newExpanded = (expanded === undefined) ? !toggle.expanded : expanded;
-                    toggle.expanded = newExpanded;
+                    toggle.expanded = (expanded === undefined) ? !toggle.expanded : expanded;
                     found = true;
                 }
             });

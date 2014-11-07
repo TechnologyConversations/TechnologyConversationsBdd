@@ -294,6 +294,7 @@ describe('storyModule', function() {
                 spyOn(scope, 'isStoryRunnerSuccess');
                 responseJson = {
                     status: 'finished',
+                    meta: {},
                     reports: [
                         {path: 'report1', steps: [{status: 'successful'}, {status: 'pending'}]},
                         {path: 'report2', steps: [{status: 'notPerformed'}]}
@@ -360,7 +361,7 @@ describe('storyModule', function() {
                 timeout.flush();
             });
             it('should repeat the request when the response is an error and the message is ID is NOT correct', function() {
-                responseJson.message = 'ID is NOT correct';
+                responseJson.meta.message = 'ID is NOT correct';
                 httpBackend.expectGET('/api/v1/reporters/list/' + reportsId).respond(400, responseJson);
                 scope.getReports(reportsId);
                 httpBackend.flush();
