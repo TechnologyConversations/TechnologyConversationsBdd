@@ -7,13 +7,13 @@ object ReporterController extends Controller {
 
   def list(id: String): Action[AnyContent] = Action {
     val json = new Reporter().listJson(reportsRelativeDir, id)
-    if (json.isEmpty) result(paramIncorrectMap("ID"))
+    if (json.isEmpty) BadRequest(toJson(message = Option("ID is NOT correct")))
     else Ok(json.get)
   }
 
   def get(id: String, report: String): Action[AnyContent] = Action {
     val reportContent = new Reporter().reportContent(reportsDir, id, report)
-    if (reportContent.isEmpty) result(paramIncorrectMap("ID and/or report"))
+    if (reportContent.isEmpty) BadRequest(toJson(message = Option("ID and/or report is NOT correct")))
     else Ok(reportContent.get).as("text/html")
   }
 

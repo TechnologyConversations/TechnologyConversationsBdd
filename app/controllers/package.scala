@@ -36,9 +36,6 @@ package object controllers {
   def noResultMap(node: String) = errorMap(noResultMessage(node))
 
   @deprecated("Use toJson instead")
-  def paramIncorrectMap(param: String) = errorMap(s"$param is NOT correct")
-
-  @deprecated("Use toJson instead")
   def result(map: Map[String, String]): SimpleResult = {
     if (map.contains("status") && !map("status").equals("OK") && !map("status").equals("FAILED")) {
       BadRequest(Json.toJson(map))
