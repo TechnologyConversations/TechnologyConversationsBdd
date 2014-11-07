@@ -10,8 +10,7 @@ import org.mockito.Mockito.doReturn
 class BddDbSpec extends Specification with Mockito with JsonMatchers {
 
   val storiesCollection = mock[MongoCollection]
-  val mongoIp = "MONGO_IP"
-  val mongoPort = 1234
+  val mongoUri = "MONGO_URI"
   val mongoDb = "MONGO_DB"
   val storyPath = "PATH/TO/MY.STORY"
   val storyDirectoryPath = "PATH/TO/MY/DIRECTORY"
@@ -21,7 +20,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#jsValueToMongoDbObject" should {
 
     val json = Json.parse("""{"key": "value", "another_key": true}""")
-    val bddDb = BddDb("", 0, "")
+    val bddDb = BddDb("", "")
 
     "return MongoDbObject" in {
       bddDb.jsValueToMongoDbObject(json) must beAnInstanceOf[MongoDBObject]
@@ -40,7 +39,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
     val update = DBObject("key" -> "VALUE")
 
     "call update on the stories collection" in {
-      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+      val bddDb = spy(BddDb(mongoUri, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       bddDb.upsertStory(updateJson)
       there was one(storiesCollection).update(query, update, upsert = false)
@@ -51,7 +50,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#deleteStory" should {
 
     "call remove on the stories collection" in {
-      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+      val bddDb = spy(BddDb(mongoUri, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       bddDb.removeStory(storyPath)
       there was one(storiesCollection).remove(query)
@@ -62,7 +61,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#findStory" should {
 
     "return result of findOneToJsValue" in {
-      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+      val bddDb = spy(BddDb(mongoUri, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       val expected = Option(Json.parse("""{"key": "value"}"""))
       doReturn(expected).when(bddDb).findOneToJsValue(storiesCollection, query)
@@ -74,7 +73,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#findStories" should {
 
     "return result of findToJsValueSeq" in {
-      val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+      val bddDb = spy(BddDb(mongoUri, mongoDb))
       bddDb.collection(bddDb.storiesCollection) returns storiesCollection
       val expected = Seq(Json.parse("""{"key": "value"}"""))
       doReturn(expected).when(bddDb).findToJsValueSeq(storiesCollection)
@@ -86,7 +85,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
   "BddDb#findStoryNames" should {
 
     val directoryPath = "path/to/my/dir/"
-    val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+    val bddDb = spy(BddDb(mongoUri, mongoDb))
     bddDb.collection(bddDb.storiesCollection) returns storiesCollection
     val expected = Seq("value1", "value2")
 
@@ -106,7 +105,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
 
     val expected = Seq("value1", "value2")
     val directoryPath = "path/to/my/dir"
-    val bddDb = spy(BddDb(mongoIp, mongoPort, mongoDb))
+    val bddDb = spy(BddDb(mongoUri, mongoDb))
     bddDb.collection(bddDb.storiesCollection) returns storiesCollection
     val regex = directoryPath + """\/.+/$"""
 
