@@ -25,7 +25,6 @@ Scenario: Top menu should have navigation links
 Meta:
 
 
-sho
 Then Web element browseStories should have text Browse Stories
 Then Web element browseComposites should have text Browse Composites
 Then Web element runner should have text Run Stories

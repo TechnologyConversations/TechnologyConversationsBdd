@@ -1,5 +1,5 @@
-TC Build Assistant
-=====================================
+BDD Assistant
+=============
 
 What is BDD Assistant?
 ----------------------

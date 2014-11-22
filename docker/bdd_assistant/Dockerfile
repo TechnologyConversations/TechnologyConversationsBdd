@@ -22,11 +22,17 @@ RUN rm sbt-0.13.6.deb
 # GIT
 WORKDIR /opt/
 RUN apt-get -y install git
-RUN git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
 
 # Compile
 ENV REFRESHED_AT 2014-09-28
+RUN git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
 WORKDIR /opt/TechnologyConversationsBdd/
 RUN sbt stage
+
+# Clean
+rm -rf app docker less project test
+rm -f .git .gitignore .travis.yml bower.json Gruntfile.js gulpfile.js package.json Procfile scalastyle-config.xml
+
+# Run
 EXPOSE 9000
 CMD ["target/universal/stage/bin/tcbdd"]
