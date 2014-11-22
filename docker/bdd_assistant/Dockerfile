@@ -33,6 +33,7 @@ RUN sbt stage
 dpkg -r wget
 dpkg -r scala
 dpkg -r git
+dpkg -r sbt
 
 # Run
 EXPOSE 9000
