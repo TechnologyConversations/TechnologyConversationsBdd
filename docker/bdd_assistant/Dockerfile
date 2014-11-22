@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get -y install wget
 
 # Java
-#RUN apt-get -y install --no-install-recommends openjdk-7-jdk
+RUN apt-get -y install --no-install-recommends openjdk-7-jdk
 
 # Scala
 RUN wget www.scala-lang.org/files/archive/scala-2.11.2.deb
