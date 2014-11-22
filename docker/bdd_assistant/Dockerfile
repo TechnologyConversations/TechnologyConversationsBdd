@@ -3,7 +3,7 @@ FROM ubuntu:14.04
 MAINTAINER Viktor Farcic "viktor@farcic.com"
 
 # General
-#RUN apt-get update
+RUN apt-get update
 RUN apt-get -y install wget
 
 # Java
