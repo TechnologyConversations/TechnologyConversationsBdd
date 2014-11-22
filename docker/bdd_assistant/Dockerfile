@@ -24,14 +24,15 @@ WORKDIR /opt/
 RUN apt-get -y install git
 
 # Compile
-ENV REFRESHED_AT 2014-09-28
 RUN git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git
 WORKDIR /opt/TechnologyConversationsBdd/
 RUN sbt stage
 
-# Clean
-RUN rm -rf app docker less project test
-RUN rm -f .git .gitignore .travis.yml bower.json Gruntfile.js gulpfile.js package.json Procfile scalastyle-config.xml
+# Cleanup
+
+dpkg -r wget
+dpkg -r scala
+dpkg -r git
 
 # Run
 EXPOSE 9000
