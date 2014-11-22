@@ -30,8 +30,8 @@ WORKDIR /opt/TechnologyConversationsBdd/
 RUN sbt stage
 
 # Clean
-rm -rf app docker less project test
-rm -f .git .gitignore .travis.yml bower.json Gruntfile.js gulpfile.js package.json Procfile scalastyle-config.xml
+RUN rm -rf app docker less project test
+RUN rm -f .git .gitignore .travis.yml bower.json Gruntfile.js gulpfile.js package.json Procfile scalastyle-config.xml
 
 # Run
 EXPOSE 9000
