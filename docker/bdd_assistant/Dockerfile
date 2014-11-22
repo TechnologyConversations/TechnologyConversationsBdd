@@ -30,10 +30,10 @@ RUN sbt stage
 
 # Cleanup
 
-dpkg -r wget
-dpkg -r scala
-dpkg -r git
-dpkg -r sbt
+RUN dpkg -r wget
+RUN dpkg -r scala
+RUN dpkg -r git
+RUN dpkg -r sbt
 
 # Run
 EXPOSE 9000
