@@ -5,7 +5,7 @@ MAINTAINER Viktor Farcic "viktor@farcic.com"
 # General
 RUN apt-get update
 
-RUN apt-get -y install wget
+RUN apt-get -y install wget && \
     apt-get -y install --no-install-recommends openjdk-7-jdk && \
     wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     dpkg -i scala-2.11.2.deb && \
@@ -21,7 +21,7 @@ RUN apt-get -y install wget
     dpkg -r wget && \
     dpkg -r scala && \
     dpkg -r git && \
-    dpkg -r sbt && \
+    dpkg -r sbt
 
 # Run
 WORKDIR /opt/TechnologyConversationsBdd/
