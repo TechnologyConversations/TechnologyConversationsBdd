@@ -88,6 +88,7 @@ public class JBehaveRunner extends JUnitStories {
         setStepsInstances(stepsClasses);
         setCompositePaths(compositePaths);
         setReportsPath(reportsPathValue);
+
         configuration = new MostUsefulConfiguration()
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withPathResolver(new FilePrintStreamFactory.ResolveToSimpleName())
@@ -106,7 +107,7 @@ public class JBehaveRunner extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        String searchIn = CodeLocations.codeLocationFromPath("").getFile().replace("target/universal/stage/", "../../../");
+        String searchIn = CodeLocations.codeLocationFromPath("").getFile().replace("target/universal/stage/", "");
         return new StoryFinder().findPaths(searchIn, getStoryPaths(), new ArrayList<String>(), "file:");
     }
 
