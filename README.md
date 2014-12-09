@@ -15,33 +15,6 @@ If you are interested in trying it out, please send an email to [viktor@farcic.c
 Running the application
 -----------------------
 
-### To run the application from [Docker](https://www.docker.com/) container
-
-Install [Docker](https://www.docker.com/).
-
-To run the container:
-
-```bash
-docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
-```
-
-To run the container with stories and composites directories mapped outside the container:
-
-```bash
-STORIES_PATH=/var/lib/bdd_assistant/data/stories
-COMPOSITES_PATH=/var/lib/bdd_assistant/composites
-docker run -d -p 9000:9000 --name bdd_assistant -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites vfarcic/technologyconversationsbdd
-```
-
-To run the application with MongoDB (still under development):
-
-```bash
-MONGODB_DATA_PATH=/var/lib/bdd_assistant/data/mongodb
-docker run -d -p 27017:27017 -v $MONGODB_DATA_PATH:/data/db --name bdd_assistant_mongodb vfarcic/bdd_assistant_mongodb
-```
-
-Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
-
 ### To compile and run the application from the release
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
@@ -76,6 +49,35 @@ sbt run
 ```
 
 Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
+
+### To run the application from [Docker](https://www.docker.com/) container (experimental)
+
+Install [Docker](https://www.docker.com/).
+
+To run the container:
+
+```bash
+docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsbdd
+```
+
+To run the container with stories and composites directories mapped outside the container:
+
+```bash
+STORIES_PATH=/var/lib/bdd_assistant/data/stories
+COMPOSITES_PATH=/var/lib/bdd_assistant/composites
+docker run -d -p 9000:9000 --name bdd_assistant -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites vfarcic/technologyconversationsbdd
+```
+
+To run the application with MongoDB (still under development):
+
+```bash
+MONGODB_DATA_PATH=/var/lib/bdd_assistant/data/mongodb
+docker run -d -p 27017:27017 -v $MONGODB_DATA_PATH:/data/db --name bdd_assistant_mongodb vfarcic/bdd_assistant_mongodb
+```
+
+Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
+
+At the moment Docker container supports only PhantomJS browser
 
 
 Running the stories

@@ -5,6 +5,10 @@ MAINTAINER Viktor Farcic "viktor@farcic.com"
 # General
 RUN apt-get update
 
+# Browsers
+RUN apt-get -y install phantomjs
+
+# BDD Assistant
 RUN apt-get -y install wget && \
     apt-get -y install --no-install-recommends openjdk-7-jdk && \
     wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
