@@ -28,6 +28,7 @@ RUN apt-get -y install wget && \
     dpkg -r sbt
 
 # Run
+RUN mkdir -p /opt/TechnologyConversationsBdd/target/universal/stage/build/reports/tests/
 WORKDIR /opt/TechnologyConversationsBdd/
 EXPOSE 9000
 CMD ["target/universal/stage/bin/tcbdd"]

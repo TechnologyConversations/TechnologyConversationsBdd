@@ -65,7 +65,13 @@ To run the container with stories and composites directories mapped outside the 
 ```bash
 STORIES_PATH=/var/lib/bdd_assistant/data/stories
 COMPOSITES_PATH=/var/lib/bdd_assistant/composites
-docker run -d -p 9000:9000 --name bdd_assistant -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites vfarcic/technologyconversationsbdd
+SCREENSHOTS_PATH=/var/lib/bdd_assistant/screenshots
+docker run -d -p 9000:9000 --name bdd_assistant \
+  -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories \
+  -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites \
+  -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites \
+  -v $SCREENSHOTS_PATH:/opt/TechnologyConversationsBdd/build/reports/tests \
+  vfarcic/technologyconversationsbdd
 ```
 
 To run the application with MongoDB (still under development):
