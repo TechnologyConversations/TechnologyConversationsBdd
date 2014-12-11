@@ -1,7 +1,7 @@
 #!/bin/bash
 
-rm -rf release
-mkdir release
-cp -R composites conf data LICENCE.txt public steps target release/.
+mkdir -p release/bdd-assistant
+cp -R composites conf data LICENCE.txt public steps target release//bdd-assistant/.
 cd release
-tar -czf relese.tar.gz *
+rm -rf release/bdd-assistant
+tar -czf relese.tar.gz bdd-assistant
