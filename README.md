@@ -15,9 +15,23 @@ If you are interested in trying it out, please send an email to [viktor@farcic.c
 Running the application
 -----------------------
 
+### To run the application from the compressed release (bdd-assistant-X.X.X.tar.gz)
+ 
+Download the bdd-assistant-X.X.X.tar.gz from the releases and uncompress. Run:
+
+```bash
+wget https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases/download/0.5.0/bdd-assistant-0.5.0.tar.gz
+tar -xzf bdd-assistant-0.5.0.tar.gz
+cd bdd-assistant
+target/universal/stage/bin/tcbdd
+```
+
+Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
+
 ### To compile and run the application from the release
 
 Install **[Scala](http://www.scala-lang.org/download/)**, **[Play/Activator](http://www.playframework.com/download)** and **[SBT](http://www.scala-sbt.org/download.html)**
+
 Download the release from the [GitHub releases page](https://github.com/TechnologyConversations/TechnologyConversationsBdd/releases).
 
 ```bash
