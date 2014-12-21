@@ -4,16 +4,15 @@ MAINTAINER Viktor Farcic "viktor@farcic.com"
 
 # General
 RUN apt-get update
+RUN apt-get -y install wget
 
 # Browsers
-RUN apt-get -y install wget && \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list && \
     apt-get update && \
     apt-get -y install phantomjs && \
     apt-get -y install firefox && \
     apt-get -y install google-chrome-stable && \
-    dpkg -r wget && \
     apt-get -y autoremove && \
     apt-get clean all
 
@@ -31,7 +30,6 @@ RUN apt-get -y install wget && \
     git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git && \
     cd /opt/TechnologyConversationsBdd/ && \
     sbt stage && \
-    dpkg -r wget && \
     dpkg -r scala && \
     dpkg -r git && \
     dpkg -r sbt && \
