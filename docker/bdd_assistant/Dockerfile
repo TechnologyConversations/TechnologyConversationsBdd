@@ -12,8 +12,7 @@ RUN apt-get -y install phantomjs && \
     apt-get clean all
 
 # BDD Assistant
-RUN apt-get -y install wget && \
-    apt-get -y install --no-install-recommends openjdk-7-jdk && \
+RUN apt-get -y install --no-install-recommends openjdk-7-jdk && \
     wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     dpkg -i scala-2.11.2.deb && \
     rm scala-2.11.2.deb && \
