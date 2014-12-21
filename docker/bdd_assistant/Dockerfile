@@ -14,7 +14,6 @@ RUN apt-get -y install wget && \
     apt-get -y install firefox && \
     apt-get -y install google-chrome-stable && \
     sudo dpkg -i google-chrome*.deb && \
-    rm google-chrome*.deb && \
     deb http://deb.opera.com/opera/ stable non-free && \
     dpkg -r wget && \
     apt-get -y autoremove && \
