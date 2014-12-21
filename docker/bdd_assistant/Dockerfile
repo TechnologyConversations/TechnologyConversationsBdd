@@ -13,7 +13,7 @@ RUN apt-get -y install wget && \
     apt-get -y install phantomjs && \
     apt-get -y install firefox && \
     apt-get -y install google-chrome-stable && \
-    deb http://deb.opera.com/opera/ stable non-free && \
+    apt-get -y install opera && \
     dpkg -r wget && \
     apt-get -y autoremove && \
     apt-get clean all
