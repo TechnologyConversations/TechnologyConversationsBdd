@@ -7,12 +7,7 @@ RUN apt-get update
 RUN apt-get -y install wget
 
 # Browsers
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get -y install phantomjs && \
-    apt-get -y install firefox && \
-    apt-get -y install google-chrome-stable && \
+RUN apt-get -y install phantomjs && \
     apt-get -y autoremove && \
     apt-get clean all
 
