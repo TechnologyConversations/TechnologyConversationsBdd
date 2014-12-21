@@ -6,12 +6,14 @@ MAINTAINER Viktor Farcic "viktor@farcic.com"
 RUN apt-get update
 
 # Browsers
-RUN apt-get -y install phantomjs && \
+RUN apt-get -y install wget && \
+    apt-get -y install phantomjs && \
     apt-get -y install firefox && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     sudo dpkg -i google-chrome*.deb && \
     rm google-chrome*.deb && \
     deb http://deb.opera.com/opera/ stable non-free && \
+    dpkg -r wget && \
     apt-get -y autoremove && \
     apt-get clean all
 
