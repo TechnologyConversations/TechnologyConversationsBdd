@@ -7,9 +7,12 @@ RUN apt-get update
 
 # Browsers
 RUN apt-get -y install wget && \
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list && \
+    apt-get update && \
     apt-get -y install phantomjs && \
     apt-get -y install firefox && \
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt-get -y install google-chrome-stable && \
     sudo dpkg -i google-chrome*.deb && \
     rm google-chrome*.deb && \
     deb http://deb.opera.com/opera/ stable non-free && \
