@@ -33,6 +33,7 @@ RUN apt-get -y install wget && \
 
 # Run
 RUN mkdir -p /opt/TechnologyConversationsBdd/target/universal/stage/build/reports/tests/
+RUN mkdir -p /opt/TechnologyConversationsBdd/build/reports/tests/
 WORKDIR /opt/TechnologyConversationsBdd/
 EXPOSE 9000
-CMD ["target/universal/stage/bin/tcbdd"]
+CMD ["target/universal/stage/bin/tcbdd -Dcom.technologyconversations.bdd.steps.WebSteps.browser=phantomjs"]

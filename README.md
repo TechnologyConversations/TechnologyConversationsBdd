@@ -77,12 +77,12 @@ docker run -d -p 9000:9000 --name bdd_assistant vfarcic/technologyconversationsb
 To run the container with stories and composites directories mapped outside the container:
 
 ```bash
-STORIES_PATH=/var/lib/bdd_assistant/data/stories
-COMPOSITES_PATH=/var/lib/bdd_assistant/composites
-SCREENSHOTS_PATH=/var/lib/bdd_assistant/screenshots
+STORIES_PATH=/data/bdd_assistant/data/stories
+COMPOSITES_PATH=/data/bdd_assistant/composites
+SCREENSHOTS_PATH=/data/bdd_assistant/screenshots
+mkdir -p $STORIES_PATH $COMPOSITES_PATH $SCREENSHOTS_PATH
 docker run -d -p 9000:9000 --name bdd_assistant \
   -v $STORIES_PATH:/opt/TechnologyConversationsBdd/data/stories \
-  -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites \
   -v $COMPOSITES_PATH:/opt/TechnologyConversationsBdd/composites \
   -v $SCREENSHOTS_PATH:/opt/TechnologyConversationsBdd/build/reports/tests \
   vfarcic/technologyconversationsbdd
