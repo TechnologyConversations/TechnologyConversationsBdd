@@ -28,7 +28,7 @@ class BddDbSpec extends Specification with Mockito with JsonMatchers {
 
     "return MongoDbObjectWithJson" in {
       val jsonString = bddDb.jsValueToMongoDbObject(json).toString()
-      jsonString must /("key" -> "value")
+      jsonString must /("key" -> "valuexxx")
       jsonString must /("another_key" -> true)
     }
 

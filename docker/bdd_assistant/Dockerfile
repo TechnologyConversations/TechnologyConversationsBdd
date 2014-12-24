@@ -4,31 +4,42 @@ MAINTAINER Viktor Farcic "viktor@farcic.com"
 
 # General
 RUN apt-get update
-RUN apt-get -y install wget
+RUN apt-get -y install --no-install-recommends wget unzip openjdk-7-jdk && \
+    apt-get -y autoremove && \
+    apt-get clean all
 
 # Browsers
 RUN apt-get -y install phantomjs && \
     apt-get -y autoremove && \
     apt-get clean all
 
-# BDD Assistant
-RUN apt-get -y install --no-install-recommends openjdk-7-jdk && \
-    wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
+# Installation, tests and compilation
+RUN wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     dpkg -i scala-2.11.2.deb && \
     rm scala-2.11.2.deb && \
     wget https://dl.bintray.com/sbt/debian/sbt-0.13.6.deb && \
     dpkg -i sbt-0.13.6.deb && \
     rm sbt-0.13.6.deb && \
+    apt-get -y install nodejs npm && \
     cd /opt/ && \
     apt-get -y install git && \
     git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git && \
     cd /opt/TechnologyConversationsBdd/ && \
+    npm install -g grunt-cli && \
+    npm install -g bower && \
+    ln -s /usr/bin/nodejs /usr/bin/node && \
+    bower install --allow-root && \
+    npm test && \
+    sbt ++2.10.3 test && \
+    sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path data/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy" && \
     sbt stage && \
     dpkg -r scala && \
     dpkg -r git && \
     dpkg -r sbt && \
+    dpkg -r npm && \
     apt-get -y autoremove && \
-    apt-get clean all
+    apt-get clean all && \
+    rm -rf /root/.ivy2
 
 # Run
 RUN mkdir -p /opt/TechnologyConversationsBdd/target/universal/stage/build/reports/tests/
