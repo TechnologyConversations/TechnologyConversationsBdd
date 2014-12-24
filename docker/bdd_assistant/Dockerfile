@@ -44,7 +44,7 @@ RUN wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     dpkg -r npm && \
     apt-get -y autoremove && \
     apt-get clean all && \
-    rm -rf /root/.ivy2 /root/.cache /root/.npm /root/.sbt
+    rm -rf /root/.ivy2 /root/.npm /root/.sbt
 
 # Run
 RUN mkdir -p /opt/TechnologyConversationsBdd/target/universal/stage/build/reports/tests/
