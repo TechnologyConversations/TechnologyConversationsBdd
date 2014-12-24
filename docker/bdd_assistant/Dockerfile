@@ -32,19 +32,7 @@ RUN wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     npm test && \
     sbt ++2.10.3 test && \
     sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path data/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy" && \
-    sbt stage && \
-    rm -rf .buildpacks .git .gitignore .travis.yml Gruntfile.js Procfile bower.json build.sbt gulpfile.js && \
-    rm -rf package.json phantomjsdriver.log scalastyle-config.xml system.properties && \
-    rm -rf app bower_components composites/TestViewComposites.groovy conf dist docker less node_modules logs/* && \
-    rm -rf project public/jbehave/[1-2]* scripts test && \
-    rm -rf target/resolution-cache target/scala-2.10 target/specs2-reports target/streams target/test-reports target/universal/tmp && \
-    dpkg -r scala && \
-    dpkg -r git && \
-    dpkg -r sbt && \
-    dpkg -r npm && \
-    apt-get -y autoremove && \
-    apt-get clean all && \
-    rm -rf /root/.ivy2 /root/.npm /root/.sbt
+    sbt stage
 
 # Run
 RUN mkdir -p /opt/TechnologyConversationsBdd/target/universal/stage/build/reports/tests/
