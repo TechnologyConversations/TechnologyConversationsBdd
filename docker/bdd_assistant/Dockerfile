@@ -23,8 +23,8 @@ RUN wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     apt-get -y install nodejs npm && \
     cd /opt/ && \
     apt-get -y install git && \
-    git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git && \
-    cd /opt/TechnologyConversationsBdd/ && \
+    git clone https://github.com/TechnologyConversations/TechnologyConversationsBdd.git bdd && \
+    cd /opt/bdd/ && \
     npm install -g grunt-cli && \
     npm install -g bower && \
     ln -s /usr/bin/nodejs /usr/bin/node && \
@@ -47,8 +47,8 @@ RUN wget www.scala-lang.org/files/archive/scala-2.11.2.deb && \
     rm -rf /root/.ivy2 /root/.cache /root/.npm /root/.sbt
 
 # Run
-RUN mkdir -p /opt/TechnologyConversationsBdd/target/universal/stage/build/reports/tests/
-RUN mkdir -p /opt/TechnologyConversationsBdd/build/reports/tests/
-WORKDIR /opt/TechnologyConversationsBdd/
+RUN mkdir -p /opt/bdd/target/universal/stage/build/reports/tests/
+RUN mkdir -p /opt/bdd/build/reports/tests/
+WORKDIR /opt/bdd/
 EXPOSE 9000
 CMD ["target/universal/stage/bin/tcbdd", "-Dcom.technologyconversations.bdd.steps.WebSteps.browser=phantomjs"]
