@@ -68,13 +68,13 @@ Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 
 Install [Docker](https://www.docker.com/).
 
-To run the container:
+To run the main container:
 
 ```bash
 docker run -d -p 9000:9000 --name bdd vfarcic/bdd
 ```
 
-To run the container with stories and composites directories mapped outside the container:
+To run the main container with stories, composites and screenshots directories mapped outside the container:
 
 ```bash
 STORIES_PATH=/data/bdd/data/stories
@@ -100,8 +100,8 @@ Open the [http://localhost:9000](http://localhost:9000) in you favorite browser.
 At the moment Docker container supports only PhantomJS browser
 
 
-Running the stories
--------------------
+Running stories
+---------------
 
 In cases when running stories from the Web application is not a good option, an alternative runner can be executed from the command line.
 
@@ -116,6 +116,25 @@ An example (used as part of our Travis setup):
 ```bash
 sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path data/stories/tcbdd/**/*.story -P browser=phantomjs -P url=http://localhost:1234 -P widthHeight=1024,768 --composites_path composites/TcBddComposites.groovy"
 ```
+
+### Running stories from Docker and PhantomJS
+
+Docker vfarcic/bdd-runner-phantomjs can be used to run BDD stories using PhantomJS browser.
+
+```bash
+sudo docker run -it --rm vfarcic/bdd-runner-phantomjs
+```
+
+Running it without any argument outputs help. An example run with few arguments would be:
+
+```bash
+sudo docker run -it --rm vfarcic/bdd-runner-phantomjs \
+  --story_path data/stories/tcbdd/stories/storyEditorForm.story \
+  --composites_path /opt/bdd/composites/TcBddComposites.groovy \
+  -P url=http://demo.bddassistant.com -P widthHeight=1024,768
+```
+
+Stories, composites and screenshots directories can be mapped outside the container as previously explained.
 
 
 Development prerequisites
