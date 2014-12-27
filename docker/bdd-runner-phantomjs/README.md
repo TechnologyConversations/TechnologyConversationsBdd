@@ -13,6 +13,6 @@ sudo docker run -t --rm vfarcic/bdd-runner-phantomjs \
   -P url=http://demo.bddassistant.com -P widthHeight=1024,768
 ```
 
-Stories, composites and screenshots directories can be mapped outside the container as previously explained.
+Stories, composites and screenshots directories can be mapped outside the container as explained in the [TechnologyConversations/TechnologyConversationsBdd repo](https://github.com/TechnologyConversations/TechnologyConversationsBdd).
 
 Please visit [BDD Assistant](http://bddassistant.com) and the GitHub [repository](https://github.com/TechnologyConversations/TechnologyConversationsBdd) for more info.
