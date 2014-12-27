@@ -122,13 +122,13 @@ sbt "test:run-main models.jbehave.JBehaveRunnerAssistant --story_path data/stori
 Docker vfarcic/bdd-runner-phantomjs can be used to run BDD stories using PhantomJS browser.
 
 ```bash
-sudo docker run -it --rm vfarcic/bdd-runner-phantomjs
+sudo docker run -t --rm vfarcic/bdd-runner-phantomjs
 ```
 
 Running it without any argument outputs help. An example run with few arguments would be:
 
 ```bash
-sudo docker run -it --rm vfarcic/bdd-runner-phantomjs \
+sudo docker run -t --rm vfarcic/bdd-runner-phantomjs \
   --story_path data/stories/tcbdd/stories/storyEditorForm.story \
   --composites_path /opt/bdd/composites/TcBddComposites.groovy \
   -P url=http://demo.bddassistant.com -P widthHeight=1024,768
