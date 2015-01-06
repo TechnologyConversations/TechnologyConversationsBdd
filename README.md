@@ -80,11 +80,13 @@ To run the main container with stories, composites and screenshots directories m
 STORIES_PATH=/data/bdd/data/stories
 COMPOSITES_PATH=/data/bdd/composites
 SCREENSHOTS_PATH=/data/bdd/screenshots
-mkdir -p $STORIES_PATH $COMPOSITES_PATH $SCREENSHOTS_PATH
+LOGS_PATH=/var/log/bdd
+mkdir -p $STORIES_PATH $COMPOSITES_PATH $SCREENSHOTS_PATH $LOGS_PATH
 docker run -d -p 9000:9000 --name bdd \
   -v $STORIES_PATH:/opt/bdd/data/stories \
   -v $COMPOSITES_PATH:/opt/bdd/composites \
   -v $SCREENSHOTS_PATH:/opt/bdd/build/reports/tests \
+  -v $LOGS_PATH:/opt/bdd/target/universal/stage/logs \
   vfarcic/bdd
 ```
 
